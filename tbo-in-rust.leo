@@ -142,9 +142,12 @@
 <v t="ekr.20240927151701.207"><vh>@button print-gnx</vh></v>
 </v>
 </v>
+<v t="ekr.20240927154009.1"><vh>Files</vh>
 <v t="ekr.20240927151245.1"><vh>@edit Cargo.toml</vh></v>
 <v t="ekr.20240927151332.1"><vh>@file src/main.rs</vh></v>
-<v t="ekr.20240927152759.1"></v>
+</v>
+<v t="ekr.20240927154016.1"><vh>Notes</vh></v>
+<v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -757,5 +760,22 @@ command = 'cargo run'
 subprocess.Popen(command, shell=True).communicate()
 </t>
 <t tx="ekr.20240927153018.1"></t>
+<t tx="ekr.20240927154009.1"></t>
+<t tx="ekr.20240927154016.1">@language rest
+@nowrap
+
+code:
+
+ekr-tbo-in-rust: https://github.com/edreamleo/ekr-tbo-in-rust
+ruff_python_parser: https://github.com/astral-sh/ruff/tree/main/crates/ruff_python_parser/src
+lexer.rs: https://github.com/astral-sh/ruff/blob/main/crates/ruff_python_parser/src/lexer.rs
+
+docs:
+Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
+</t>
+<t tx="ekr.20240927154323.1">@language rest
+@wrap
+
+- Create the gem.</t>
 </tnodes>
 </leo_file>
