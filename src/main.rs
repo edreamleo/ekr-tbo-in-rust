@@ -1,3 +1,6 @@
+//@+leo-ver=5-thin
+//@+node:ekr.20240927151332.1: * @file src/main.rs
+//@@language rust
 // test_lexer.main.rs
 
 // From https://docs.rs/rustpython-parser/0.3.1/rustpython_parser/lexer/index.html
@@ -20,3 +23,4 @@ fn main() {
         );
     }
 }
+//@-leo
