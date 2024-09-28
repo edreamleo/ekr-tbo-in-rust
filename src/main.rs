@@ -31,7 +31,9 @@ fn main() {
         .collect::<Vec<_>>();
 
     // :? is debugging format.
+    let mut n_tokens: usize = 0;
     for (token, range) in tokens {  // Range is a TextRange.
+        n_tokens += 1;
         if false {
             let start = range.start();  // TextSize's...
             let end = range.end();
@@ -45,6 +47,6 @@ fn main() {
     
     // Print time.
     let duration = t1.elapsed();
-    println_f!("tokenize {short_file_name} in {duration:?}\n");
+    println_f!("{short_file_name}: {n_tokens} tokens in {duration:?}\n");
 }
 //@-leo
