@@ -272,7 +272,6 @@
 <v t="ekr.20240927163812.1"><vh>from leo-editor-contrib rust_beautifier.leo</vh>
 <v t="ekr.20240927163855.1"><vh>@command test</vh></v>
 <v t="ekr.20240927163907.1"><vh>Read Me</vh></v>
-<v t="ekr.20240927163920.1"><vh>## @file src/main.rs</vh></v>
 <v t="ekr.20240927163942.1"><vh>## @file src/leotokens.rs</vh>
 <v t="ekr.20240927163942.2"><vh>&lt;&lt; leoTokens.rs: global suppressions &gt;&gt;</vh></v>
 <v t="ekr.20240927163942.3"><vh>&lt;&lt; leoTokens.rs: use statements &gt;&gt;</vh></v>
@@ -415,12 +414,37 @@
 <v t="ekr.20240927154009.1"><vh>Files</vh>
 <v t="ekr.20240927151245.1"><vh>@edit Cargo.toml</vh></v>
 <v t="ekr.20240927151332.1"><vh>@file src/main.rs</vh></v>
+<v t="ekr.20240928161210.1"><vh>@file src/tbo.rs</vh></v>
 </v>
 <v t="ekr.20240927154016.1"><vh>Notes</vh></v>
 <v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20240927151332.1"></v>
+<v t="ekr.20240928161210.1"></v>
+<v t="ekr.20240928162805.1"><vh>git diff HEAD </vh>
+<v t="ekr.20240928162805.2"><vh>diff: src/main.rs</vh>
+<v t="ekr.20240928162805.7"><vh>diff: Changed</vh>
+<v t="ekr.20240928162805.8"><vh>diff: src/main.rs</vh>
+<v t="ekr.20240928162805.9"><vh>Old:src/main.rs</vh></v>
+<v t="ekr.20240927151332.1"></v>
+</v>
+</v>
+</v>
+<v t="ekr.20240928162805.10"><vh>diff: tbo-in-rust.leo</vh></v>
+</v>
 </vnodes>
 <tnodes>
+<t tx="ekr.20240927151332.1">@language rust
+// main.rs
+
+#[macro_use]
+extern crate fstrings;
+
+mod tbo;
+
+fn main() {
+    tbo::entry();
+}
+</t>
 <t tx="ekr.20240927151701.1"></t>
 <t tx="ekr.20240927151701.100"></t>
 <t tx="ekr.20240927151701.101"></t>
@@ -1790,15 +1814,6 @@ Stats:
       read: 484.20µs
   tokenize: 11.9ms to 12.4ms
     tokens: 9739</t>
-<t tx="ekr.20240927163920.1">mod leotokens;
-
-fn main() {
-    leotokens::entry();
-}
-
-@language rust
-@tabwidth -4
-</t>
 <t tx="ekr.20240927163942.1">//! leoTokens.rs: A beautifier for Python that uses *only* tokens.
 
 &lt;&lt; leoTokens.rs: global suppressions &gt;&gt;
@@ -2692,6 +2707,238 @@ if c.changed:
 
 command = 'cargo fmt'
 subprocess.Popen(command, shell=True).communicate()
+</t>
+<t tx="ekr.20240928162805.1">@ignore
+@nosearch
+HEAD=ce3ef7a</t>
+<t tx="ekr.20240928162805.10">@ignore
+@nosearch
+@language patch
+--- HEAD
++++ uncommitted
+@@ -272,7 +272,6 @@
+ &lt;v t="ekr.20240927163812.1"&gt;&lt;vh&gt;from leo-editor-contrib rust_beautifier.leo&lt;/vh&gt;
+ &lt;v t="ekr.20240927163855.1"&gt;&lt;vh&gt;@command test&lt;/vh&gt;&lt;/v&gt;
+ &lt;v t="ekr.20240927163907.1"&gt;&lt;vh&gt;Read Me&lt;/vh&gt;&lt;/v&gt;
+-&lt;v t="ekr.20240927163920.1"&gt;&lt;vh&gt;## @file src/main.rs&lt;/vh&gt;&lt;/v&gt;
+ &lt;v t="ekr.20240927163942.1"&gt;&lt;vh&gt;## @file src/leotokens.rs&lt;/vh&gt;
+ &lt;v t="ekr.20240927163942.2"&gt;&lt;vh&gt;&amp;lt;&amp;lt; leoTokens.rs: global suppressions &amp;gt;&amp;gt;&lt;/vh&gt;&lt;/v&gt;
+ &lt;v t="ekr.20240927163942.3"&gt;&lt;vh&gt;&amp;lt;&amp;lt; leoTokens.rs: use statements &amp;gt;&amp;gt;&lt;/vh&gt;&lt;/v&gt;
+@@ -415,10 +414,12 @@
+ &lt;v t="ekr.20240927154009.1"&gt;&lt;vh&gt;Files&lt;/vh&gt;
+ &lt;v t="ekr.20240927151245.1"&gt;&lt;vh&gt;@edit Cargo.toml&lt;/vh&gt;&lt;/v&gt;
+ &lt;v t="ekr.20240927151332.1"&gt;&lt;vh&gt;@file src/main.rs&lt;/vh&gt;&lt;/v&gt;
++&lt;v t="ekr.20240928161210.1"&gt;&lt;vh&gt;@file src/tbo.rs&lt;/vh&gt;&lt;/v&gt;
+ &lt;/v&gt;
+ &lt;v t="ekr.20240927154016.1"&gt;&lt;vh&gt;Notes&lt;/vh&gt;&lt;/v&gt;
+ &lt;v t="ekr.20240927154323.1"&gt;&lt;vh&gt;** To do&lt;/vh&gt;&lt;/v&gt;
+ &lt;v t="ekr.20240927151332.1"&gt;&lt;/v&gt;
++&lt;v t="ekr.20240928161210.1"&gt;&lt;/v&gt;
+ &lt;/vnodes&gt;
+ &lt;tnodes&gt;
+ &lt;t tx="ekr.20240927151701.1"&gt;&lt;/t&gt;
+@@ -1790,15 +1791,6 @@
+       read: 484.20µs
+   tokenize: 11.9ms to 12.4ms
+     tokens: 9739&lt;/t&gt;
+-&lt;t tx="ekr.20240927163920.1"&gt;mod leotokens;
+-
+-fn main() {
+-    leotokens::entry();
+-}
+-
+-@language rust
+-@tabwidth -4
+-&lt;/t&gt;
+ &lt;t tx="ekr.20240927163942.1"&gt;//! leoTokens.rs: A beautifier for Python that uses *only* tokens.
+ 
+ &amp;lt;&amp;lt; leoTokens.rs: global suppressions &amp;gt;&amp;gt;
+@language python
+</t>
+<t tx="ekr.20240928162805.2">@ignore
+@nosearch
+@language patch
+--- HEAD
++++ uncommitted
+@@ -1,55 +1,14 @@
+ //@+leo-ver=5-thin
+ //@+node:ekr.20240927151332.1: * @file src/main.rs
+ //@@language rust
+-// test_lexer.main.rs
+-
+-// From https://docs.rs/rustpython-parser/0.3.1/rustpython_parser/lexer/index.html
+-
+-// Must be first.
+-// #![allow(unused_imports)]
+-#![allow(unused_variables)]
+-
+-extern crate rustpython_parser;
+-use rustpython_parser::{lexer::lex, Mode};
+-use std::fs;
+-use std::time::Instant; // Tok, StringKind
++// main.rs
+ 
+ #[macro_use]
+ extern crate fstrings;
+ 
++mod tbo;
++
+ fn main() {
+-    println!("");
+-    let t1 = Instant::now();
+-    // let source = "x    =      'RustPython'";
+-    let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoApp.py";
+-    let short_file_name = "leoApp.py";
+-    let contents = fs::read_to_string(file_path).expect("Can not read file");
+-
+-    // let tokens = lex(contents, Mode::Module)
+-    let tokens = lex(&amp;contents, Mode::Module)
+-        .map(|tok| tok.expect("Failed to lex"))
+-        .collect::&lt;Vec&lt;_&gt;&gt;();
+-
+-    // :? is debugging format.
+-    let mut n_tokens: usize = 0;
+-    for (token, range) in tokens {
+-        // Range is a TextRange.
+-        n_tokens += 1;
+-        // To do: Find gaps in the ranges.
+-
+-        // These conversions are fast!
+-        let start_i = usize::from(range.start());
+-        let end_i = usize::from(range.end());
+-        
+-        if true {
+-            if n_tokens &lt; 20 {
+-                println!("{start_i:&gt;3}..{end_i:3} token: {token:?}");
+-            }
+-        }
+-    }
+-
+-    // Print time.
+-    let duration = t1.elapsed();
+-    println_f!("{short_file_name}: {n_tokens} tokens in {duration:?}\n");
++    tbo::entry();
+ }
+ //@-leo
+@language python
+</t>
+<t tx="ekr.20240928162805.7"></t>
+<t tx="ekr.20240928162805.8">@ignore
+@nosearch
+@language patch
+--- HEAD
++++ uncommitted
+@@ -1,52 +1,11 @@
+ @language rust
+-// test_lexer.main.rs
+-
+-// From https://docs.rs/rustpython-parser/0.3.1/rustpython_parser/lexer/index.html
+-
+-// Must be first.
+-// #![allow(unused_imports)]
+-#![allow(unused_variables)]
+-
+-extern crate rustpython_parser;
+-use rustpython_parser::{lexer::lex, Mode};
+-use std::fs;
+-use std::time::Instant; // Tok, StringKind
++// main.rs
+ 
+ #[macro_use]
+ extern crate fstrings;
+ 
++mod tbo;
++
+ fn main() {
+-    println!("");
+-    let t1 = Instant::now();
+-    // let source = "x    =      'RustPython'";
+-    let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoApp.py";
+-    let short_file_name = "leoApp.py";
+-    let contents = fs::read_to_string(file_path).expect("Can not read file");
+-
+-    // let tokens = lex(contents, Mode::Module)
+-    let tokens = lex(&amp;contents, Mode::Module)
+-        .map(|tok| tok.expect("Failed to lex"))
+-        .collect::&lt;Vec&lt;_&gt;&gt;();
+-
+-    // :? is debugging format.
+-    let mut n_tokens: usize = 0;
+-    for (token, range) in tokens {
+-        // Range is a TextRange.
+-        n_tokens += 1;
+-        // To do: Find gaps in the ranges.
+-
+-        // These conversions are fast!
+-        let start_i = usize::from(range.start());
+-        let end_i = usize::from(range.end());
+-        
+-        if true {
+-            if n_tokens &lt; 20 {
+-                println!("{start_i:&gt;3}..{end_i:3} token: {token:?}");
+-            }
+-        }
+-    }
+-
+-    // Print time.
+-    let duration = t1.elapsed();
+-    println_f!("{short_file_name}: {n_tokens} tokens in {duration:?}\n");
++    tbo::entry();
+ }
+@language python
+</t>
+<t tx="ekr.20240928162805.9">@language rust
+// test_lexer.main.rs
+
+// From https://docs.rs/rustpython-parser/0.3.1/rustpython_parser/lexer/index.html
+
+// Must be first.
+// #![allow(unused_imports)]
+#![allow(unused_variables)]
+
+extern crate rustpython_parser;
+use rustpython_parser::{lexer::lex, Mode};
+use std::fs;
+use std::time::Instant; // Tok, StringKind
+
+#[macro_use]
+extern crate fstrings;
+
+fn main() {
+    println!("");
+    let t1 = Instant::now();
+    // let source = "x    =      'RustPython'";
+    let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoApp.py";
+    let short_file_name = "leoApp.py";
+    let contents = fs::read_to_string(file_path).expect("Can not read file");
+
+    // let tokens = lex(contents, Mode::Module)
+    let tokens = lex(&amp;contents, Mode::Module)
+        .map(|tok| tok.expect("Failed to lex"))
+        .collect::&lt;Vec&lt;_&gt;&gt;();
+
+    // :? is debugging format.
+    let mut n_tokens: usize = 0;
+    for (token, range) in tokens {
+        // Range is a TextRange.
+        n_tokens += 1;
+        // To do: Find gaps in the ranges.
+
+        // These conversions are fast!
+        let start_i = usize::from(range.start());
+        let end_i = usize::from(range.end());
+        
+        if true {
+            if n_tokens &lt; 20 {
+                println!("{start_i:&gt;3}..{end_i:3} token: {token:?}");
+            }
+        }
+    }
+
+    // Print time.
+    let duration = t1.elapsed();
+    println_f!("{short_file_name}: {n_tokens} tokens in {duration:?}\n");
+}
 </t>
 </tnodes>
 </leo_file>
