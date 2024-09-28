@@ -1,5 +1,5 @@
 [package]
-name = "test_lexer"
+name = "tbo-in-rust"
 version = "0.1.0"
 edition = "2021"
 
