@@ -140,6 +140,7 @@
 <v t="ekr.20240927151701.206"><vh>@button backup</vh></v>
 <v t="ekr.20240927152759.1"><vh>@button cargo-run</vh></v>
 <v t="ekr.20240927151701.207"><vh>@button print-gnx</vh></v>
+<v t="ekr.20240928073118.1"><vh>@button cargo-fmt</vh></v>
 </v>
 </v>
 <v t="ekr.20240927154009.1"><vh>Files</vh>
@@ -277,7 +278,6 @@
 <v t="ekr.20240927163812.1"><vh>from leo-editor-contrib rust_beautifier.leo</vh>
 <v t="ekr.20240927163855.1"><vh>@command test</vh></v>
 <v t="ekr.20240927163907.1"><vh>Read Me</vh></v>
-<v t="ekr.20240927163914.1"><vh>## @edit Cargo.toml</vh></v>
 <v t="ekr.20240927163920.1"><vh>## @file src/main.rs</vh></v>
 <v t="ekr.20240927163942.1"><vh>## @file src/leotokens.rs</vh>
 <v t="ekr.20240927163942.2"><vh>&lt;&lt; leoTokens.rs: global suppressions &gt;&gt;</vh></v>
@@ -1050,6 +1050,12 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
 
+- Make sure Rust is up-to-date.
+- Study my own code.
+
+- Read files (short &amp; long).
+- Print timing and other stats.
+
 - Create the gem.</t>
 <t tx="ekr.20240927163405.1">#[derive(Debug)]
 pub struct Beautifier {
@@ -1787,21 +1793,6 @@ Stats:
       read: 484.20µs
   tokenize: 11.9ms to 12.4ms
     tokens: 9739</t>
-<t tx="ekr.20240927163914.1">@language toml
-
-[package]
-name = "rust_beautifier"
-version = "0.1.0"
-edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-# fstrings = "0.2.3"
-# regex = "1.10.4"
-textwrap = "0.16.1"
-rustpython-parser = {version = "0.3.1", features = ["full-lexer"]}
-</t>
 <t tx="ekr.20240927163920.1">mod leotokens;
 
 fn main() {
@@ -2694,5 +2685,16 @@ fn add_input_token (&amp;mut self, kind: &amp;str, value: &amp;str) {
 }
 </t>
 <t tx="ekr.20240927164013.1"></t>
+<t tx="ekr.20240928073118.1">@language python
+g.cls()
+import os
+import subprocess
+
+if c.changed:
+    c.save()
+
+command = 'cargo fmt'
+subprocess.Popen(command, shell=True).communicate()
+</t>
 </tnodes>
 </leo_file>

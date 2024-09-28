@@ -9,27 +9,27 @@
 #![allow(unused_imports)]
 
 extern crate rustpython_parser;
-use rustpython_parser::{lexer::lex, Mode};  // Tok, StringKind
+use rustpython_parser::{lexer::lex, Mode}; // Tok, StringKind
+use std::fmt;
 
 #[macro_use]
 extern crate fstrings;
 
 fn main() {
     println!("");
-    
-    // 'x' @ 0..1
-    // '=' @ 1..2
-
     let source = "x    =      'RustPython'";
     let tokens = lex(source, Mode::Module)
         .map(|tok| tok.expect("Failed to lex"))
         .collect::<Vec<_>>();
 
     // :? is debugging format.
+
+    // for token in tokens {
+        // println!("{token:?}");
+    // }
+
     for (token, range) in tokens {
-        println!(
-            "{token:>20} @ {range:?}"
-        );
+        println!("{range:?} token: {token}");
     }
 }
 //@-leo
