@@ -9,6 +9,7 @@
 // #![allow(unused_imports)]
 
 extern crate rustpython_parser;
+use std::fs;
 use std::time::{Instant};
 use rustpython_parser::{lexer::lex, Mode}; // Tok, StringKind
 
@@ -17,23 +18,33 @@ extern crate fstrings;
 
 fn main() {
     println!("");
-    let source = "x    =      'RustPython'";
     let t1 = Instant::now();
-    let tokens = lex(source, Mode::Module)
+    // let source = "x    =      'RustPython'";
+    let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoApp.py";
+    let short_file_name = "leoApp.py";
+    let contents = fs::read_to_string(file_path)
+        .expect("Can not read file");
+
+    // let tokens = lex(contents, Mode::Module)
+    let tokens = lex(&contents, Mode::Module)
         .map(|tok| tok.expect("Failed to lex"))
         .collect::<Vec<_>>();
-    let duration = t1.elapsed();
-    println_f!("tokenize time: {duration:?}\n");
 
     // :? is debugging format.
     for (token, range) in tokens {  // Range is a TextRange.
-        let start = range.start();  // TextSize's...
-        let end = range.end();
-        let start_s = f!("{start:?}");  // String's...
-        let end_s = f!("{end:?}");
-        let start_i: usize = start_s.parse().unwrap();
-        let end_i: usize = end_s.parse().unwrap();
-        println!("{start_i:>2}..{end_i:2} token: {token}");
+        if false {
+            let start = range.start();  // TextSize's...
+            let end = range.end();
+            let start_s = f!("{start:?}");  // String's...
+            let end_s = f!("{end:?}");
+            let start_i: usize = start_s.parse().unwrap();
+            let end_i: usize = end_s.parse().unwrap();
+            println!("{start_i:>2}..{end_i:2} token: {token}");
+        }
     }
+    
+    // Print time.
+    let duration = t1.elapsed();
+    println_f!("tokenize {short_file_name} in {duration:?}\n");
 }
 //@-leo

@@ -143,12 +143,6 @@
 <v t="ekr.20240928073118.1"><vh>@button cargo-fmt</vh></v>
 </v>
 </v>
-<v t="ekr.20240927154009.1"><vh>Files</vh>
-<v t="ekr.20240927151245.1"><vh>@edit Cargo.toml</vh></v>
-<v t="ekr.20240927151332.1"><vh>@file src/main.rs</vh></v>
-</v>
-<v t="ekr.20240927154016.1"><vh>Notes</vh></v>
-<v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20240927164013.1"><vh>--- Pevious code</vh>
 <v t="ekr.20240927163405.1"><vh>class Beautifier (from backup/rust_beautifier)</vh>
 <v t="ekr.20240927163405.2"><vh>Beautifier::add_input_token</vh></v>
@@ -418,6 +412,12 @@
 </v>
 </v>
 </v>
+<v t="ekr.20240927154009.1"><vh>Files</vh>
+<v t="ekr.20240927151245.1"><vh>@edit Cargo.toml</vh></v>
+<v t="ekr.20240927151332.1"><vh>@file src/main.rs</vh></v>
+</v>
+<v t="ekr.20240927154016.1"><vh>Notes</vh></v>
+<v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20240927151332.1"></v>
 </vnodes>
 <tnodes>
@@ -1050,11 +1050,10 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
 
-Step 1: Proof of concept:
-- Read files (short &amp; long).
-- Add virtual ws tokens.
+Proof of concept:
 
-Step 2: Create the gem.</t>
+- Add virtual ws tokens.
+- Create the gem.</t>
 <t tx="ekr.20240927163405.1">#[derive(Debug)]
 pub struct Beautifier {
     args: Vec&lt;String&gt;,
