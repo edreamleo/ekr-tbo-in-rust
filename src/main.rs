@@ -33,16 +33,14 @@ fn main() {
 
     // :? is debugging format.
     let mut n_tokens: usize = 0;
-    for (_token, range) in tokens {  // Range is a TextRange.
+    for (token, range) in tokens {  // Range is a TextRange.
         n_tokens += 1;
         // To do: Find gaps in the ranges.
-        let start = range.start();  // TextSize's...
-        let end = range.end();
-        let start_s = f!("{start:?}");  // String's...
-        let end_s = f!("{end:?}");
-        let start_i: usize = start_s.parse().unwrap();
-        let end_i: usize = end_s.parse().unwrap();
-        // println!("{start_i:>2}..{end_i:2} token: {token}");
+        let start_i: usize = usize::from(range.start());
+        let end_i: usize = usize::from(range.end());
+        // if n_tokens < 20 {
+            // println!("{start_i:>3}..{end_i:3} token: {token}");
+        // }
     }
     
     // Print time.
