@@ -7,6 +7,7 @@
 
 // Must be first.
 // #![allow(unused_imports)]
+#![allow(unused_variables)] 
 
 extern crate rustpython_parser;
 use std::fs;
@@ -32,17 +33,16 @@ fn main() {
 
     // :? is debugging format.
     let mut n_tokens: usize = 0;
-    for (token, range) in tokens {  // Range is a TextRange.
+    for (_token, range) in tokens {  // Range is a TextRange.
         n_tokens += 1;
-        if false {
-            let start = range.start();  // TextSize's...
-            let end = range.end();
-            let start_s = f!("{start:?}");  // String's...
-            let end_s = f!("{end:?}");
-            let start_i: usize = start_s.parse().unwrap();
-            let end_i: usize = end_s.parse().unwrap();
-            println!("{start_i:>2}..{end_i:2} token: {token}");
-        }
+        // To do: Find gaps in the ranges.
+        let start = range.start();  // TextSize's...
+        let end = range.end();
+        let start_s = f!("{start:?}");  // String's...
+        let end_s = f!("{end:?}");
+        let start_i: usize = start_s.parse().unwrap();
+        let end_i: usize = end_s.parse().unwrap();
+        // println!("{start_i:>2}..{end_i:2} token: {token}");
     }
     
     // Print time.
