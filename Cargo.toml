@@ -6,4 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rustpython-parser = "0.4.0"
+# regex = "1.10.4"
+fstrings = "0.2.3"
+textwrap = "0.16.1"
+rustpython-parser = {version = "0.4.0", features = ["full-lexer"]}

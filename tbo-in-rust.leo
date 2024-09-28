@@ -275,7 +275,7 @@
 <v t="ekr.20240927163405.119"><vh>Beautifier::tokenize_contents</vh></v>
 </v>
 <v t="ekr.20240927163812.1"><vh>from leo-editor-contrib rust_beautifier.leo</vh>
-<v t="ekr.20240927163855.1"><vh>@command test @key=ctrl+p</vh></v>
+<v t="ekr.20240927163855.1"><vh>@command test</vh></v>
 <v t="ekr.20240927163907.1"><vh>Read Me</vh></v>
 <v t="ekr.20240927163914.1"><vh>## @edit Cargo.toml</vh></v>
 <v t="ekr.20240927163920.1"><vh>## @file src/main.rs</vh></v>
@@ -418,6 +418,7 @@
 </v>
 </v>
 </v>
+<v t="ekr.20240927151332.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -1025,6 +1026,9 @@ is true (and recent_files_omit_directories is False)
 g.cls()
 import os
 import subprocess
+
+if c.changed:
+    c.save()
 
 command = 'cargo run'
 subprocess.Popen(command, shell=True).communicate()
