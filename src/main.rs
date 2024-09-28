@@ -9,6 +9,7 @@
 // #![allow(unused_imports)]
 
 extern crate rustpython_parser;
+use std::time::{Instant};
 use rustpython_parser::{lexer::lex, Mode}; // Tok, StringKind
 
 #[macro_use]
@@ -17,9 +18,12 @@ extern crate fstrings;
 fn main() {
     println!("");
     let source = "x    =      'RustPython'";
+    let t1 = Instant::now();
     let tokens = lex(source, Mode::Module)
         .map(|tok| tok.expect("Failed to lex"))
         .collect::<Vec<_>>();
+    let duration = t1.elapsed();
+    println_f!("tokenize time: {duration:?}\n");
 
     // :? is debugging format.
     for (token, range) in tokens {  // Range is a TextRange.

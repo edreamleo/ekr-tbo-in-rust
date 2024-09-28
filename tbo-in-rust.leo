@@ -1050,13 +1050,11 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
 
-- Make sure Rust is up-to-date.
-- Study my own code.
-
+Step 1: Proof of concept:
 - Read files (short &amp; long).
-- Print timing and other stats.
+- Add virtual ws tokens.
 
-- Create the gem.</t>
+Step 2: Create the gem.</t>
 <t tx="ekr.20240927163405.1">#[derive(Debug)]
 pub struct Beautifier {
     args: Vec&lt;String&gt;,
