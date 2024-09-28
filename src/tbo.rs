@@ -18,31 +18,25 @@ fn fmt_ms(t: u128) -> String {
     //! Convert a time in microsecond to fractional millisecons.
     let ms = t / 1000;
     let micro = (t % 1000) / 10;
-    return f!("{ms}.{micro}");
+    return f!("{ms}.{micro:2}");
 }
 
 pub fn entry() {
-    // Sign on.
-    println!("");
+
     let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoApp.py";
     let short_file_name = "leoApp.py";
-    println_f!("     tbo: {short_file_name}\n");
 
     // Read leoApp.py.
     let t1 = Instant::now();
     let contents = fs::read_to_string(file_path).expect("Can not read file");
     let read_time = t1.elapsed().as_micros();
-    let read_ms = fmt_ms(read_time);
-    println_f!("    read: {read_ms:>6} ms");
 
     // Tokenize.
     let t2 = Instant::now();
     let tokens = lex(&contents, Mode::Module)
         .map(|tok| tok.expect("Failed to lex"))
         .collect::<Vec<_>>();
-    let tokenize_time = t1.elapsed().as_micros();
-    let tokenize_ms = fmt_ms(tokenize_time);
-    println_f!("tokenize: {tokenize_ms:>6} ms");
+    let tokenize_time = t2.elapsed().as_micros();
 
     // :? is debugging format.
     let t3 = Instant::now();
@@ -62,15 +56,20 @@ pub fn entry() {
             }
         }
     }
-
-    // Print stats.
     let loop_time = t3.elapsed().as_micros();
     let total_time = t1.elapsed().as_micros();
+
+    // Sign on.
+    println!("");
+    println_f!("     tbo: {short_file_name}: {n_tokens} tokens\n");
+    // Print stats.
+    let read_ms = fmt_ms(read_time);
+    println_f!("    read: {read_ms:>5} ms");
+    let tokenize_ms = fmt_ms(tokenize_time);
+    println_f!("tokenize: {tokenize_ms:>5} ms");
     let loop_ms = fmt_ms(loop_time);
     let total_ms = fmt_ms(total_time);
-    println_f!("    loop: {loop_ms:>6} ms");
-    println_f!("   total: {total_ms:>6} ms");
-    println!("");
-    println_f!("    {n_tokens} tokens");
+    println_f!("    loop: {loop_ms:>5} ms");
+    println_f!("   total: {total_ms:>5} ms");
 }
 //@-leo
