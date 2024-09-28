@@ -29,14 +29,14 @@ pub fn entry() {
     let t1 = Instant::now();
     let contents = fs::read_to_string(file_path).expect("Can not read file");
     let read_time = fmt_ms(t1.elapsed().as_micros());
-    // Tokenize.
+    // Lex.
     let t2 = Instant::now();
     let tokens = lex(&contents, Mode::Module)
         .map(|tok| tok.expect("Failed to lex"))
         .collect::<Vec<_>>();
-    let tokenize_time = fmt_ms(t2.elapsed().as_micros());
-    let t3 = Instant::now();
+    let lex_time = fmt_ms(t2.elapsed().as_micros());
     // Loop on tokens.
+    let t3 = Instant::now();
     let mut n_tokens: usize = 0;
     for (token, range) in tokens {
         // Range is a TextRange.
@@ -58,7 +58,7 @@ pub fn entry() {
     println_f!("     tbo: {short_file_name}: {n_tokens} tokens\n");
     // Print stats.
     println_f!("    read: {read_time:>5} ms");
-    println_f!("tokenize: {tokenize_time:>5} ms");
+    println_f!("     lex: {lex_time:>5} ms");
     println_f!("    loop: {loop_time:>5} ms");
     println_f!("   total: {total_time:>5} ms");
 }
