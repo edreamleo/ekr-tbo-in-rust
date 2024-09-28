@@ -23,13 +23,14 @@ fn main() {
         .collect::<Vec<_>>();
 
     // :? is debugging format.
-
-    // for token in tokens {
-        // println!("{token:?}");
-    // }
-
     for (token, range) in tokens {
-        println!("{range:?} token: {token}");
+        // Range is a TextRange.
+        let start = range.start();
+        let end = range.end();
+        let start_s = f!("{start:?}");
+        let end_s = f!("{end:?}");
+        // println!("{start:?}..{end:?} token: {token}");
+        println!("{start_s:>2}..{end_s:2} token: {token}");
     }
 }
 //@-leo
