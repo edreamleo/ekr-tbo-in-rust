@@ -36,8 +36,8 @@ fn main() {
     for (token, range) in tokens {  // Range is a TextRange.
         n_tokens += 1;
         // To do: Find gaps in the ranges.
-        let start_i: usize = usize::from(range.start());
-        let end_i: usize = usize::from(range.end());
+        let start_i = usize::from(range.start());
+        let end_i = usize::from(range.end());
         // if n_tokens < 20 {
             // println!("{start_i:>3}..{end_i:3} token: {token}");
         // }
