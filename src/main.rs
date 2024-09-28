@@ -24,11 +24,9 @@ fn main() {
 
     // :? is debugging format.
     for (token, range) in tokens {  // Range is a TextRange.
-        let start = range.start();  // A TextSize.
-        let end = range.end();
-        let start_s = f!("{start:?}");  // A String.
-        let end_s = f!("{end:?}");
-        // works:
+        let (start, end) = (range.start(), range.end());  // TextSize's.
+        let (start_s, end_s) = (f!("{start:?}"), f!("{end:?}"));  // String's.
+        // doesn't create ints.
             // println!("{start_s:>2}..{end_s:2} token: {token}");
         // Computes ints.
         let start_i: usize = start_s.parse().unwrap();
