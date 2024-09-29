@@ -5,12 +5,13 @@
 // From https://docs.rs/rustpython-parser/0.3.1/rustpython_parser/lexer/index.html
 
 // Must be first.
-// #![allow(unused_imports)]
+#![allow(unused_imports)]
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
 extern crate rustpython_parser;
 use rustpython_parser::{lexer::lex, Mode, Tok, text_size::TextRange};
+use std::env;  // For Beautifier.
 use std::fmt;  // For InputTok.
 use std::fs;
 use std::time::Instant;
@@ -39,6 +40,72 @@ impl fmt::Debug for InputTok {
             return write!(f, "InputTok: {kind_s:>10}: {value_s}");
         }
     }
+}
+//@+node:ekr.20240929074547.1: ** class Stats
+#[derive(Debug)]
+pub struct Stats {
+    // Cumulative statistics for all files.
+    n_files: usize,  // Number of files.
+    n_tokens: usize, // Number of tokens.
+    // Timing stat, in microseconds...
+    beautify_time: usize,
+    gem_time: usize,
+    lex_time: usize,
+    read_time: usize,
+    write_time: usize,
+}
+
+// #[allow(dead_code)]
+// #[allow(non_snake_case)]
+impl Stats {
+    //@+others
+    //@+node:ekr.20240929080242.1: *3* Stats::fmt_ms
+    fn fmt_ms(&mut self, t: usize) -> String {
+        //! Convert microseconds to fractional milliseconds.
+        let ms = t / 1000;
+        let micro = (t % 1000) / 10;
+        return f!("{ms}.{micro:02}");  // Two-digits for fraction.
+    }
+
+    //@+node:ekr.20240929075236.1: *3* Stats::report
+    fn report (&mut self) {
+        // Print cumulative stats, in ms, using fmt_ms.
+        println!("");
+        let total_time = self.fmt_ms(
+            self.beautify_time + self.gem_time + self.lex_time + self.read_time + self.write_time
+        );
+        let n_tokens = self.n_tokens;
+        let beautify_time = self.fmt_ms(self.beautify_time);
+        let gem_time = self.fmt_ms(self.gem_time);
+        let lex_time = self.fmt_ms(self.lex_time);
+        let read_time = self.fmt_ms(self.read_time);
+        let write_time = self.fmt_ms(self.write_time);
+        println_f!("  tokens: {n_tokens:>7} ms");
+        println_f!("beautify: {beautify_time:>7} ms");
+        println_f!("     gem: {gem_time:>7} ms");
+        println_f!("     lex: {lex_time:>7} ms");
+        println_f!("    read: {read_time:>7} ms");
+        println_f!("   write: {write_time:>7} ms");
+        println_f!("   total: {total_time:>7} ms");
+    }
+    //@+node:ekr.20240929074941.1: *3* Stats::update
+    fn update (&mut self,
+        beautify_time: usize,
+        gem_time: usize,
+        lex_time: usize,
+        n_tokens: usize,
+        read_time: usize,
+        write_time: usize
+    ) {
+        // Update cumulative stats.
+        self.beautify_time += beautify_time;
+        self.gem_time += gem_time;
+        self.lex_time += lex_time;
+        self.n_tokens += n_tokens;
+        self.read_time += read_time;
+        self.write_time += write_time;
+    }
+    //@-others
 }
 //@+node:ekr.20240929033044.1: ** function: add_input_token
 fn add_input_token (input_list: &mut Vec<InputTok>, kind: &str, value: &str) {
