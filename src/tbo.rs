@@ -135,11 +135,15 @@ pub fn entry() {
     let lex_time = fmt_ms(t2.elapsed().as_micros());
     // Loop on tokens.
     let t3 = Instant::now();
-    let input_list: Vec<InputTok> = Vec::new();
+    let mut input_list: Vec<InputTok> = Vec::new();
     // n_tokens = scan_input_list(contents, tokens);
-    let n_tokens = make_input_list(contents, input_list, tokens);
+    let n_tokens = make_input_list(contents, &mut input_list, tokens);
     let loop_time = fmt_ms(t3.elapsed().as_micros());
     let total_time = fmt_ms(t1.elapsed().as_micros());
+    
+    // Test: print input_tokens.len()
+    let n = input_list.len();
+    println!("input_list.len(): {n}");
 
     // Sign on.
     println!("");
@@ -161,7 +165,7 @@ fn fmt_ms(t: u128) -> String {
 //@+node:ekr.20240929024648.113: ** function: make_input_list
 fn make_input_list(
     contents: String,
-    mut input_list: Vec<InputTok>,
+    input_list: &mut Vec<InputTok>,
     tokens: Vec<(Tok, TextRange)>
 ) -> usize {
 
@@ -281,7 +285,8 @@ fn make_input_list(
             With => "With",
             Yield => "Yield",
         };
-        add_input_token(&mut input_list, class_name, tok_value);
+        // add_input_token(&mut input_list, class_name, tok_value);
+        add_input_token(input_list, class_name, tok_value);
     }
     return count;
 }
