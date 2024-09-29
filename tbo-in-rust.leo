@@ -422,7 +422,7 @@
 <v t="ekr.20240927151332.1"></v>
 <v t="ekr.20240928161210.1"></v>
 <v t="ekr.20240929034737.1"><vh>--- type problems</vh></v>
-<v t="ekr.20240929033044.1"><vh>function: add_input_token (not used yet)</vh></v>
+<v t="ekr.20240929033044.1"><vh>function: add_input_token</vh></v>
 <v t="ekr.20240929032636.1"><vh>function: entry</vh></v>
 <v t="ekr.20240929024648.113"><vh>function: make_input_list</vh></v>
 </vnodes>
@@ -1055,6 +1055,8 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 </t>
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
+
+*** Read about mutable references!
 
 - Create the gem. (virtual ws tokens).
 - Write to a temp file.

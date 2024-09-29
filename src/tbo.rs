@@ -40,7 +40,7 @@ impl fmt::Debug for InputTok {
         }
     }
 }
-//@+node:ekr.20240929033044.1: ** function: add_input_token (not used yet)
+//@+node:ekr.20240929033044.1: ** function: add_input_token
 fn add_input_token (input_list: &mut Vec<InputTok>, kind: &str, value: &str) {
     //! Add one token to the output list.
     // println!("{:?}", kind);
