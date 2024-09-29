@@ -6,13 +6,164 @@
 
 // Must be first.
 // #![allow(unused_imports)]
-// #![allow(dead_code)]
+#![allow(dead_code)]
 #![allow(unused_variables)]
 
 extern crate rustpython_parser;
-use rustpython_parser::{lexer::lex, Mode};
+use rustpython_parser::{lexer::lex, Mode, Tok, text_size::TextRange};
+use std::fmt;  // For InputTok.
 use std::fs;
-use std::time::Instant;  // {Duration, Instant}, 
+use std::time::Instant;
+
+//@+others
+//@+node:ekr.20240929024648.120: ** class InputTok
+// Only Clone is valid for String.
+#[derive(Clone)]
+struct InputTok {
+    kind: String,
+    value: String,
+}
+
+impl fmt::Debug for InputTok {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let kind_s = format!("{:?}", self.kind);
+        let mut value = self.value.to_string();
+        if true {
+            return write!(f, "{value} ");
+        }
+        else {  // Debug format.
+            value.truncate(60);
+            // repr format is not useful.
+            // let value_s = format!("{:?}", value);
+            let value_s = format!("{}", value);
+            return write!(f, "InputTok: {kind_s:>10}: {value_s}");
+        }
+    }
+}
+//@+node:ekr.20240929024648.113: ** function: make_input_list
+fn make_input_list(contents: String, tokens: Vec<(Tok, TextRange)>) -> usize {
+
+    let mut count: usize = 0;
+    for (token, range) in tokens { 
+        use Tok::*;
+        count += 1;
+        let tok_value = &contents[range];
+
+        // Variants names are necessary, but otherwise not used.
+        #[allow(unused_variables)]
+        
+        let class_name = match token {
+            // Tokens with values...
+            // Use tok_value for *all* values.
+            Comment(value) => "Comment",  // No idea why parens are needed here.
+            Complex { real, imag } => "Complex",
+            Float { value } => "Float",
+            Int { value } => "Int",
+            Name { name } => "Name",
+            Tok::String { value, kind, triple_quoted } => "String",
+            
+            // Common tokens...
+            Class => "Class",
+            Dedent => "Dedent",
+            Def => "Def",
+            Indent => "Indent",
+            Newline => "Newline",
+            NonLogicalNewline => "NonLogicalNewline",
+
+            // All other tokens...
+            Amper => "Amper",
+            AmperEqual => "AmperEqual",
+            And => "And",
+            As => "As",
+            Assert => "Assert",
+            Async => "Async",
+            At => "At",
+            AtEqual => "AtEqual",
+            Await => "Await",
+            Break => "Break",
+            Case => "Case",
+            CircumFlex => "CircumFlex",
+            CircumflexEqual => "CircumflexEqual",
+            Colon => "Colon",
+            ColonEqual => "ColonEqual",
+            Comma => "Comma",
+            Continue => "Continue",
+            Del => "Del",
+            Dot => "Dot",
+            DoubleSlash => "DoubleSlash",
+            DoubleSlashEqual => "DoubleSlashEqual",
+            DoubleStar => "DoubleStar",
+            DoubleStarEqual => "DoubleStarEqual",
+            Elif => "Elif",
+            Ellipsis => "Ellipsis",
+            Else => "Else",
+            EndOfFile => "EndOfFile",
+            EqEqual => "EqEqual",
+            Equal => "Equal",
+            Except => "Except",
+            False => "False",
+            Finally => "Finally",
+            For => "For",
+            From => "From",
+            Global => "Global",
+            Greater => "Greater",
+            GreaterEqual => "GreaterEqual",
+            If => "If",
+            Import => "Import",
+            In => "In",
+            Is => "Is",
+            Lambda => "Lambda",
+            Lbrace => "Lbrace",
+            LeftShift => "LeftShift",
+            LeftShiftEqual => "LeftShiftEqual",
+            Less => "Less",
+            LessEqual => "LessEqual",
+            Lpar => "Lpar",
+            Lsqb => "Lsqb",
+            Match => "Match",
+            Minus => "Minus",
+            MinusEqual => "MinusEqual",
+            None => "None",
+            Nonlocal => "Nonlocal",
+            Not => "Not",
+            NotEqual => "NotEqual",
+            Or => "Or",
+            Pass => "Pass",
+            Percent => "Percent",
+            PercentEqual => "PercentEqual",
+            Plus => "Plus",
+            PlusEqual => "PlusEqual",
+            Raise => "Raise",
+            Rarrow => "Rarrow",
+            Rbrace => "Rbrace",
+            Return => "Return",
+            RightShift => "RightShift",
+            RightShiftEqual => "RightShiftEqual",
+            Rpar => "Rpar",
+            Rsqb => "Rsqb",
+            Semi => "Semi",
+            Slash => "Slash",
+            SlashEqual => "SlashEqual",
+            Star => "Star",
+            StarEqual => "StarEqual",
+            StartExpression => "StartExpression",
+            StartInteractive => "StartInteractive",
+            StartModule => "StartModule",
+            Tilde => "Tilde",
+            True => "True",
+            Try => "Try",
+            Type => "Type",
+            Vbar => "Vbar",
+            VbarEqual => "VbarEqual",
+            While => "While",
+            With => "With",
+            Yield => "Yield",
+        };
+        // self.add_input_token(class_name, tok_value);
+    }
+    return count;
+}
+//@-others
 
 fn fmt_ms(t: u128) -> String {
     //! Convert a time in microsecond to fractional millisecons.
@@ -22,8 +173,7 @@ fn fmt_ms(t: u128) -> String {
 }
 
 pub fn entry() {
-    // Set file name.
-    // leoFrame.py is a typical size
+    // Set file name. leoFrame.py is a typical size
     let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py";
     let short_file_name = "leoFrame.py";
     // Read.
@@ -39,15 +189,19 @@ pub fn entry() {
     // Loop on tokens.
     let t3 = Instant::now();
     let mut n_tokens: usize = 0;
-    for (token, range) in tokens {
-        // Range is a TextRange.
-        n_tokens += 1;
-        // To do: Find gaps in the ranges.
-        let start_i = usize::from(range.start());
-        let end_i = usize::from(range.end());
-        if false {
-            if n_tokens < 20 {
-                println_f!("{start_i:>3}..{end_i:3} token: {token:?}");
+    if true {
+        n_tokens = make_input_list(contents, tokens);
+    } else {
+        for (token, range) in tokens {
+            // Range is a TextRange.
+            n_tokens += 1;
+            // To do: Find gaps in the ranges.
+            let start_i = usize::from(range.start());
+            let end_i = usize::from(range.end());
+            if false {
+                if n_tokens < 20 {
+                    println_f!("{start_i:>3}..{end_i:3} token: {token:?}");
+                }
             }
         }
     }

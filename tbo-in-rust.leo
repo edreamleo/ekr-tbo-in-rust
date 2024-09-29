@@ -2697,7 +2697,7 @@ tbo: leoFrame.py: 14619 tokens
 
     read:  0.50 ms
      lex: 10.63 ms
-    loop:  0.52 ms
+    loop:  0.52 ms  (0.89 with make_input_list)
    total: 11.66 ms = 0.01 sec
 
 Leo tbo:
