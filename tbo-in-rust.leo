@@ -417,6 +417,7 @@
 <v t="ekr.20240928161210.1"><vh>@file src/tbo.rs</vh></v>
 </v>
 <v t="ekr.20240927154016.1"><vh>Notes</vh></v>
+<v t="ekr.20240928185643.1"><vh>Stats</vh></v>
 <v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20240927151332.1"></v>
 <v t="ekr.20240928161210.1"></v>
@@ -1051,10 +1052,13 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
 
-Proof of concept:
+- Create the gem. (virtual ws tokens).
+- Write to a temp file.
 
-- Add virtual ws tokens.
-- Create the gem.</t>
+Get lower bound on overall time (proof of concept):
+- Stats for gem and write.
+
+</t>
 <t tx="ekr.20240927163405.1">#[derive(Debug)]
 pub struct Beautifier {
     args: Vec&lt;String&gt;,
@@ -2684,6 +2688,24 @@ if c.changed:
 
 command = 'cargo fmt'
 subprocess.Popen(command, shell=True).communicate()
+</t>
+<t tx="ekr.20240928185643.1">@language rest
+@wrap
+
+Rust tbo:
+tbo: leoFrame.py: 14619 tokens
+
+    read:  0.50 ms
+     lex: 10.63 ms
+    loop:  0.52 ms
+   total: 11.66 ms = 0.01 sec
+
+Leo tbo:
+tbo: 0.28 sec. dirty: 0   checked: 20  beautified: 0   in leo/commands
+Thats about 0.1 sec / file.
+
+So tbo-in-rust is only about 10 times faster, but without the gem and all the rest.
+
 </t>
 </tnodes>
 </leo_file>

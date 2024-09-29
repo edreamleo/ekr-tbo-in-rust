@@ -23,8 +23,9 @@ fn fmt_ms(t: u128) -> String {
 
 pub fn entry() {
     // Set file name.
-    let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoApp.py";
-    let short_file_name = "leoApp.py";
+    // leoFrame.py is a typical size
+    let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py";
+    let short_file_name = "leoFrame.py";
     // Read.
     let t1 = Instant::now();
     let contents = fs::read_to_string(file_path).expect("Can not read file");
