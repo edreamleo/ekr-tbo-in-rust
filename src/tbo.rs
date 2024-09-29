@@ -40,8 +40,65 @@ impl fmt::Debug for InputTok {
         }
     }
 }
+//@+node:ekr.20240929033044.1: ** function: add_input_token
+fn add_input_token (mut input_list: Vec<InputTok>, kind: &str, value: &str) {
+    //! Add one token to the output list.
+    // println!("{:?}", kind);
+    input_list.push(InputTok {
+        kind: kind.to_string(),
+        value: value.to_string(),
+    });
+}
+//@+node:ekr.20240929032636.1: ** function: entry
+pub fn entry() {
+    // Set file name. leoFrame.py is a typical size
+    let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py";
+    let short_file_name = "leoFrame.py";
+    // Read.
+    let t1 = Instant::now();
+    let contents = fs::read_to_string(file_path).expect("Can not read file");
+    let read_time = fmt_ms(t1.elapsed().as_micros());
+    // Lex.
+    let t2 = Instant::now();
+    let tokens = lex(&contents, Mode::Module)
+        .map(|tok| tok.expect("Failed to lex"))
+        .collect::<Vec<_>>();
+    let lex_time = fmt_ms(t2.elapsed().as_micros());
+    // Loop on tokens.
+    let t3 = Instant::now();
+    let n_tokens;
+    let input_list = Vec::new();
+    if true {
+        n_tokens = make_input_list(contents, input_list, tokens);
+    } else {
+        n_tokens = scan_input_list(contents, tokens);
+    }
+    let loop_time = fmt_ms(t3.elapsed().as_micros());
+    let total_time = fmt_ms(t1.elapsed().as_micros());
+
+    // Sign on.
+    println!("");
+    println_f!("     tbo: {short_file_name}: {n_tokens} tokens\n");
+    // Print stats.
+    println_f!("    read: {read_time:>5} ms");
+    println_f!("     lex: {lex_time:>5} ms");
+    println_f!("    loop: {loop_time:>5} ms");
+    println_f!("   total: {total_time:>5} ms");
+}
+//@+node:ekr.20240929032710.1: ** function: fmt_ms
+fn fmt_ms(t: u128) -> String {
+    //! Convert microseconds to fractional milliseconds.
+    let ms = t / 1000;
+    let micro = (t % 1000) / 10;
+    return f!("{ms}.{micro:02}");  // Two-digits for fraction.
+}
+
 //@+node:ekr.20240929024648.113: ** function: make_input_list
-fn make_input_list(contents: String, tokens: Vec<(Tok, TextRange)>) -> usize {
+fn make_input_list(
+    contents: String,
+    input_list: Vec<InputTok>,
+    tokens: Vec<(Tok, TextRange)>
+) -> usize {
 
     let mut count: usize = 0;
     for (token, range) in tokens { 
@@ -159,7 +216,7 @@ fn make_input_list(contents: String, tokens: Vec<(Tok, TextRange)>) -> usize {
             With => "With",
             Yield => "Yield",
         };
-        // self.add_input_token(class_name, tok_value);
+        // add_input_token(input_list, class_name, tok_value);
     }
     return count;
 }
@@ -183,45 +240,4 @@ fn scan_input_list(contents: String, tokens: Vec<(Tok, TextRange)>) -> usize {
 }
 //@-others
 
-fn fmt_ms(t: u128) -> String {
-    //! Convert a time in microsecond to fractional millisecons.
-    let ms = t / 1000;
-    let micro = (t % 1000) / 10;
-    return f!("{ms}.{micro:02}");
-}
-
-pub fn entry() {
-    // Set file name. leoFrame.py is a typical size
-    let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py";
-    let short_file_name = "leoFrame.py";
-    // Read.
-    let t1 = Instant::now();
-    let contents = fs::read_to_string(file_path).expect("Can not read file");
-    let read_time = fmt_ms(t1.elapsed().as_micros());
-    // Lex.
-    let t2 = Instant::now();
-    let tokens = lex(&contents, Mode::Module)
-        .map(|tok| tok.expect("Failed to lex"))
-        .collect::<Vec<_>>();
-    let lex_time = fmt_ms(t2.elapsed().as_micros());
-    // Loop on tokens.
-    let t3 = Instant::now();
-    let n_tokens;
-    if true {
-        n_tokens = make_input_list(contents, tokens);
-    } else {
-        n_tokens = scan_input_list(contents, tokens);
-    }
-    let loop_time = fmt_ms(t3.elapsed().as_micros());
-    let total_time = fmt_ms(t1.elapsed().as_micros());
-
-    // Sign on.
-    println!("");
-    println_f!("     tbo: {short_file_name}: {n_tokens} tokens\n");
-    // Print stats.
-    println_f!("    read: {read_time:>5} ms");
-    println_f!("     lex: {lex_time:>5} ms");
-    println_f!("    loop: {loop_time:>5} ms");
-    println_f!("   total: {total_time:>5} ms");
-}
 //@-leo
