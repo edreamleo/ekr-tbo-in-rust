@@ -416,7 +416,9 @@
 <v t="ekr.20240927151332.1"><vh>@file src/main.rs</vh></v>
 <v t="ekr.20240928161210.1"><vh>@file src/tbo.rs</vh></v>
 </v>
-<v t="ekr.20240927154016.1"><vh>Notes</vh></v>
+<v t="ekr.20240927154016.1"><vh>Notes</vh>
+<v t="ekr.20240929084852.1"><vh>Ownership and mutation</vh></v>
+</v>
 <v t="ekr.20240928185643.1"><vh>Stats</vh></v>
 <v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20240927163942.4"></v>
@@ -550,11 +552,6 @@
 <v t="ekr.20240929033044.1"><vh>function: add_input_token</vh></v>
 <v t="ekr.20240929032636.1"><vh>function: entry</vh></v>
 <v t="ekr.20240929024648.113"><vh>function: make_input_list</vh></v>
-<v t="ekr.20240929074547.1"><vh>class Stats</vh>
-<v t="ekr.20240929080242.1"><vh>Stats::fmt_ms</vh></v>
-<v t="ekr.20240929075236.1"><vh>Stats::report</vh></v>
-<v t="ekr.20240929074941.1"><vh>Stats::update</vh></v>
-</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -2994,12 +2991,12 @@ So tbo-in-rust is only about 10 times faster, but without the gem and all the re
 
     // Sign on.
     println!("");
-    println_f!("     tbo: {short_file_name}: {n_tokens} tokens\n");
+    println!("     tbo: {short_file_name}: {n_tokens} tokens\n");
     // Print stats.
-    println_f!("    read: {read_time:&gt;5} ms");
-    println_f!("     lex: {lex_time:&gt;5} ms");
-    println_f!("    loop: {loop_time:&gt;5} ms");
-    println_f!("   total: {total_time:&gt;5} ms");
+    println!("    read: {read_time:&gt;5} ms");
+    println!("     lex: {lex_time:&gt;5} ms");
+    println!("    loop: {loop_time:&gt;5} ms");
+    println!("   total: {total_time:&gt;5} ms");
 }
 </t>
 <t tx="ekr.20240929033044.1">fn add_input_token (input_list: &amp;mut Vec&lt;InputTok&gt;, kind: &amp;str, value: &amp;str) {
@@ -3724,68 +3721,29 @@ fn add_input_token (&amp;mut self, kind: &amp;str, value: &amp;str) {
     // self.add_output_string("StartModule", "");
 }
 </t>
-<t tx="ekr.20240929074547.1">#[derive(Debug)]
-pub struct Stats {
-    // Cumulative statistics for all files.
-    n_files: usize,  // Number of files.
-    n_tokens: usize, // Number of tokens.
-    // Timing stat, in microseconds...
-    beautify_time: usize,
-    gem_time: usize,
-    lex_time: usize,
-    read_time: usize,
-    write_time: usize,
-}
+<t tx="ekr.20240929084852.1">@language rest
+@wrap
 
-// #[allow(dead_code)]
-// #[allow(non_snake_case)]
-impl Stats {
-    @others
-}
-</t>
-<t tx="ekr.20240929074941.1">fn update (&amp;mut self,
-    beautify_time: usize,
-    gem_time: usize,
-    lex_time: usize,
-    n_tokens: usize,
-    read_time: usize,
-    write_time: usize
-) {
-    // Update cumulative stats.
-    self.beautify_time += beautify_time;
-    self.gem_time += gem_time;
-    self.lex_time += lex_time;
-    self.n_tokens += n_tokens;
-    self.read_time += read_time;
-    self.write_time += write_time;
-}</t>
-<t tx="ekr.20240929075236.1">fn report (&amp;mut self) {
-    // Print cumulative stats, in ms, using fmt_ms.
-    println!("");
-    let total_time = self.fmt_ms(
-        self.beautify_time + self.gem_time + self.lex_time + self.read_time + self.write_time
-    );
-    let n_tokens = self.n_tokens;
-    let beautify_time = self.fmt_ms(self.beautify_time);
-    let gem_time = self.fmt_ms(self.gem_time);
-    let lex_time = self.fmt_ms(self.lex_time);
-    let read_time = self.fmt_ms(self.read_time);
-    let write_time = self.fmt_ms(self.write_time);
-    println_f!("  tokens: {n_tokens:&gt;7} ms");
-    println_f!("beautify: {beautify_time:&gt;7} ms");
-    println_f!("     gem: {gem_time:&gt;7} ms");
-    println_f!("     lex: {lex_time:&gt;7} ms");
-    println_f!("    read: {read_time:&gt;7} ms");
-    println_f!("   write: {write_time:&gt;7} ms");
-    println_f!("   total: {total_time:&gt;7} ms");
-}
-</t>
-<t tx="ekr.20240929080242.1">fn fmt_ms(&amp;mut self, t: usize) -&gt; String {
-    //! Convert microseconds to fractional milliseconds.
-    let ms = t / 1000;
-    let micro = (t % 1000) / 10;
-    return f!("{ms}.{micro:02}");  // Two-digits for fraction.
-}
+Whether a value is on the stack or the heap affects how the language behaves.
+
+Rules:
+- Each value in Rust has an *owner*.
+- There can only be one owner at a time.
+- When the owner goes out of scope, the value will be dropped.
+
+String literals can't be mutated.  String objects are on the heap and can be mutated.
+The *drop* function releases heap objects.
+
+Move is a shallow copy:
+@language rust
+    let s1 = String::from("hello");
+    let s2 = s1;
+    println!("{s1}, world!");  // wrong.
+@language rest
+
+
+
+
 
 </t>
 </tnodes>

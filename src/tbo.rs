@@ -80,13 +80,13 @@ impl Stats {
         let lex_time = self.fmt_ms(self.lex_time);
         let read_time = self.fmt_ms(self.read_time);
         let write_time = self.fmt_ms(self.write_time);
-        println_f!("  tokens: {n_tokens:>7} ms");
-        println_f!("beautify: {beautify_time:>7} ms");
-        println_f!("     gem: {gem_time:>7} ms");
-        println_f!("     lex: {lex_time:>7} ms");
-        println_f!("    read: {read_time:>7} ms");
-        println_f!("   write: {write_time:>7} ms");
-        println_f!("   total: {total_time:>7} ms");
+        println!("  tokens: {n_tokens:>7} ms");
+        println!("beautify: {beautify_time:>7} ms");
+        println!("     gem: {gem_time:>7} ms");
+        println!("     lex: {lex_time:>7} ms");
+        println!("    read: {read_time:>7} ms");
+        println!("   write: {write_time:>7} ms");
+        println!("   total: {total_time:>7} ms");
     }
     //@+node:ekr.20240929074941.1: *3* Stats::update
     fn update (&mut self,
@@ -143,12 +143,12 @@ pub fn entry() {
 
     // Sign on.
     println!("");
-    println_f!("     tbo: {short_file_name}: {n_tokens} tokens\n");
+    println!("     tbo: {short_file_name}: {n_tokens} tokens\n");
     // Print stats.
-    println_f!("    read: {read_time:>5} ms");
-    println_f!("     lex: {lex_time:>5} ms");
-    println_f!("    loop: {loop_time:>5} ms");
-    println_f!("   total: {total_time:>5} ms");
+    println!("    read: {read_time:>5} ms");
+    println!("     lex: {lex_time:>5} ms");
+    println!("    loop: {loop_time:>5} ms");
+    println!("   total: {total_time:>5} ms");
 }
 //@+node:ekr.20240929032710.1: ** function: fmt_ms
 fn fmt_ms(t: u128) -> String {
@@ -297,7 +297,7 @@ fn scan_input_list(contents: String, tokens: Vec<(Tok, TextRange)>) -> usize {
         let end_i = usize::from(range.end());
         if false {
             if count < 20 {
-                println_f!("{start_i:>3}..{end_i:3} token: {token:?}");
+                println!("{start_i:>3}..{end_i:3} token: {token:?}");
             }
         }
     }

@@ -3,6 +3,7 @@
 //@@language rust
 // main.rs
 
+// For the f! macro.
 #[macro_use]
 extern crate fstrings;
 
