@@ -421,6 +421,10 @@
 <v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20240927151332.1"></v>
 <v t="ekr.20240928161210.1"></v>
+<v t="ekr.20240929034737.1"><vh>--- type problems</vh></v>
+<v t="ekr.20240929033044.1"><vh>function: add_input_token (not used yet)</vh></v>
+<v t="ekr.20240929032636.1"><vh>function: entry</vh></v>
+<v t="ekr.20240929024648.113"><vh>function: make_input_list</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -2707,5 +2711,179 @@ Thats about 0.1 sec / file.
 So tbo-in-rust is only about 10 times faster, but without the gem and all the rest.
 
 </t>
+<t tx="ekr.20240929024648.113">fn make_input_list(
+    contents: String,
+    mut input_list: Vec&lt;InputTok&gt;,
+    tokens: Vec&lt;(Tok, TextRange)&gt;
+) -&gt; usize {
+
+    let mut count: usize = 0;
+    for (token, range) in tokens { 
+        use Tok::*;
+        count += 1;
+        let tok_value = &amp;contents[range];
+
+        // Variants names are necessary, but otherwise not used.
+        #[allow(unused_variables)]
+        
+        let class_name = match token {
+            // Tokens with values...
+            // Use tok_value for *all* values.
+            Comment(value) =&gt; "Comment",  // No idea why parens are needed here.
+            Complex { real, imag } =&gt; "Complex",
+            Float { value } =&gt; "Float",
+            Int { value } =&gt; "Int",
+            Name { name } =&gt; "Name",
+            Tok::String { value, kind, triple_quoted } =&gt; "String",
+            
+            // Common tokens...
+            Class =&gt; "Class",
+            Dedent =&gt; "Dedent",
+            Def =&gt; "Def",
+            Indent =&gt; "Indent",
+            Newline =&gt; "Newline",
+            NonLogicalNewline =&gt; "NonLogicalNewline",
+
+            // All other tokens...
+            Amper =&gt; "Amper",
+            AmperEqual =&gt; "AmperEqual",
+            And =&gt; "And",
+            As =&gt; "As",
+            Assert =&gt; "Assert",
+            Async =&gt; "Async",
+            At =&gt; "At",
+            AtEqual =&gt; "AtEqual",
+            Await =&gt; "Await",
+            Break =&gt; "Break",
+            Case =&gt; "Case",
+            CircumFlex =&gt; "CircumFlex",
+            CircumflexEqual =&gt; "CircumflexEqual",
+            Colon =&gt; "Colon",
+            ColonEqual =&gt; "ColonEqual",
+            Comma =&gt; "Comma",
+            Continue =&gt; "Continue",
+            Del =&gt; "Del",
+            Dot =&gt; "Dot",
+            DoubleSlash =&gt; "DoubleSlash",
+            DoubleSlashEqual =&gt; "DoubleSlashEqual",
+            DoubleStar =&gt; "DoubleStar",
+            DoubleStarEqual =&gt; "DoubleStarEqual",
+            Elif =&gt; "Elif",
+            Ellipsis =&gt; "Ellipsis",
+            Else =&gt; "Else",
+            EndOfFile =&gt; "EndOfFile",
+            EqEqual =&gt; "EqEqual",
+            Equal =&gt; "Equal",
+            Except =&gt; "Except",
+            False =&gt; "False",
+            Finally =&gt; "Finally",
+            For =&gt; "For",
+            From =&gt; "From",
+            Global =&gt; "Global",
+            Greater =&gt; "Greater",
+            GreaterEqual =&gt; "GreaterEqual",
+            If =&gt; "If",
+            Import =&gt; "Import",
+            In =&gt; "In",
+            Is =&gt; "Is",
+            Lambda =&gt; "Lambda",
+            Lbrace =&gt; "Lbrace",
+            LeftShift =&gt; "LeftShift",
+            LeftShiftEqual =&gt; "LeftShiftEqual",
+            Less =&gt; "Less",
+            LessEqual =&gt; "LessEqual",
+            Lpar =&gt; "Lpar",
+            Lsqb =&gt; "Lsqb",
+            Match =&gt; "Match",
+            Minus =&gt; "Minus",
+            MinusEqual =&gt; "MinusEqual",
+            None =&gt; "None",
+            Nonlocal =&gt; "Nonlocal",
+            Not =&gt; "Not",
+            NotEqual =&gt; "NotEqual",
+            Or =&gt; "Or",
+            Pass =&gt; "Pass",
+            Percent =&gt; "Percent",
+            PercentEqual =&gt; "PercentEqual",
+            Plus =&gt; "Plus",
+            PlusEqual =&gt; "PlusEqual",
+            Raise =&gt; "Raise",
+            Rarrow =&gt; "Rarrow",
+            Rbrace =&gt; "Rbrace",
+            Return =&gt; "Return",
+            RightShift =&gt; "RightShift",
+            RightShiftEqual =&gt; "RightShiftEqual",
+            Rpar =&gt; "Rpar",
+            Rsqb =&gt; "Rsqb",
+            Semi =&gt; "Semi",
+            Slash =&gt; "Slash",
+            SlashEqual =&gt; "SlashEqual",
+            Star =&gt; "Star",
+            StarEqual =&gt; "StarEqual",
+            StartExpression =&gt; "StartExpression",
+            StartInteractive =&gt; "StartInteractive",
+            StartModule =&gt; "StartModule",
+            Tilde =&gt; "Tilde",
+            True =&gt; "True",
+            Try =&gt; "Try",
+            Type =&gt; "Type",
+            Vbar =&gt; "Vbar",
+            VbarEqual =&gt; "VbarEqual",
+            While =&gt; "While",
+            With =&gt; "With",
+            Yield =&gt; "Yield",
+        };
+        // add_input_token(input_list, class_name, tok_value);
+        let new_tok = InputTok{
+            kind: class_name.to_string(),value: tok_value.to_string()
+        };
+        input_list.push(new_tok);
+    }
+    return count;
+}
+</t>
+<t tx="ekr.20240929032636.1">pub fn entry() {
+    // Set file name. leoFrame.py is a typical size
+    let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py";
+    let short_file_name = "leoFrame.py";
+    // Read.
+    let t1 = Instant::now();
+    let contents = fs::read_to_string(file_path).expect("Can not read file");
+    let read_time = fmt_ms(t1.elapsed().as_micros());
+    // Lex.
+    let t2 = Instant::now();
+    let tokens = lex(&amp;contents, Mode::Module)
+        .map(|tok| tok.expect("Failed to lex"))
+        .collect::&lt;Vec&lt;_&gt;&gt;();
+    let lex_time = fmt_ms(t2.elapsed().as_micros());
+    // Loop on tokens.
+    let t3 = Instant::now();
+    let input_list: Vec&lt;InputTok&gt; = Vec::new();
+    // n_tokens = scan_input_list(contents, tokens);
+    let n_tokens = make_input_list(contents, input_list, tokens);
+    let loop_time = fmt_ms(t3.elapsed().as_micros());
+    let total_time = fmt_ms(t1.elapsed().as_micros());
+
+    // Sign on.
+    println!("");
+    println_f!("     tbo: {short_file_name}: {n_tokens} tokens\n");
+    // Print stats.
+    println_f!("    read: {read_time:&gt;5} ms");
+    println_f!("     lex: {lex_time:&gt;5} ms");
+    println_f!("    loop: {loop_time:&gt;5} ms");
+    println_f!("   total: {total_time:&gt;5} ms");
+}
+</t>
+<t tx="ekr.20240929033044.1">fn add_input_token (mut input_list: Vec&lt;InputTok&gt;, kind: &amp;str, value: &amp;str) {
+    //! Add one token to the output list.
+    // println!("{:?}", kind);
+
+    let new_tok = InputTok {
+        kind: kind.to_string(), value: value.to_string()
+    };
+    input_list.push(new_tok);
+}
+</t>
+<t tx="ekr.20240929034737.1"></t>
 </tnodes>
 </leo_file>

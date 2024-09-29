@@ -40,14 +40,15 @@ impl fmt::Debug for InputTok {
         }
     }
 }
-//@+node:ekr.20240929033044.1: ** function: add_input_token
+//@+node:ekr.20240929033044.1: ** function: add_input_token (not used yet)
 fn add_input_token (mut input_list: Vec<InputTok>, kind: &str, value: &str) {
     //! Add one token to the output list.
     // println!("{:?}", kind);
-    input_list.push(InputTok {
-        kind: kind.to_string(),
-        value: value.to_string(),
-    });
+
+    let new_tok = InputTok {
+        kind: kind.to_string(), value: value.to_string()
+    };
+    input_list.push(new_tok);
 }
 //@+node:ekr.20240929032636.1: ** function: entry
 pub fn entry() {
@@ -66,13 +67,9 @@ pub fn entry() {
     let lex_time = fmt_ms(t2.elapsed().as_micros());
     // Loop on tokens.
     let t3 = Instant::now();
-    let n_tokens;
-    let input_list = Vec::new();
-    if true {
-        n_tokens = make_input_list(contents, input_list, tokens);
-    } else {
-        n_tokens = scan_input_list(contents, tokens);
-    }
+    let input_list: Vec<InputTok> = Vec::new();
+    // n_tokens = scan_input_list(contents, tokens);
+    let n_tokens = make_input_list(contents, input_list, tokens);
     let loop_time = fmt_ms(t3.elapsed().as_micros());
     let total_time = fmt_ms(t1.elapsed().as_micros());
 
@@ -96,7 +93,7 @@ fn fmt_ms(t: u128) -> String {
 //@+node:ekr.20240929024648.113: ** function: make_input_list
 fn make_input_list(
     contents: String,
-    input_list: Vec<InputTok>,
+    mut input_list: Vec<InputTok>,
     tokens: Vec<(Tok, TextRange)>
 ) -> usize {
 
@@ -217,6 +214,10 @@ fn make_input_list(
             Yield => "Yield",
         };
         // add_input_token(input_list, class_name, tok_value);
+        let new_tok = InputTok{
+            kind: class_name.to_string(),value: tok_value.to_string()
+        };
+        input_list.push(new_tok);
     }
     return count;
 }
