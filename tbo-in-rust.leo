@@ -2833,11 +2833,7 @@ So tbo-in-rust is only about 10 times faster, but without the gem and all the re
             With =&gt; "With",
             Yield =&gt; "Yield",
         };
-        // add_input_token(input_list, class_name, tok_value);
-        let new_tok = InputTok{
-            kind: class_name.to_string(),value: tok_value.to_string()
-        };
-        input_list.push(new_tok);
+        add_input_token(&amp;mut input_list, class_name, tok_value);
     }
     return count;
 }
@@ -2874,12 +2870,13 @@ So tbo-in-rust is only about 10 times faster, but without the gem and all the re
     println_f!("   total: {total_time:&gt;5} ms");
 }
 </t>
-<t tx="ekr.20240929033044.1">fn add_input_token (mut input_list: Vec&lt;InputTok&gt;, kind: &amp;str, value: &amp;str) {
+<t tx="ekr.20240929033044.1">fn add_input_token (input_list: &amp;mut Vec&lt;InputTok&gt;, kind: &amp;str, value: &amp;str) {
     //! Add one token to the output list.
     // println!("{:?}", kind);
 
     let new_tok = InputTok {
-        kind: kind.to_string(), value: value.to_string()
+        kind: kind.to_string(),
+        value: value.to_string()
     };
     input_list.push(new_tok);
 }

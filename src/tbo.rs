@@ -41,12 +41,13 @@ impl fmt::Debug for InputTok {
     }
 }
 //@+node:ekr.20240929033044.1: ** function: add_input_token (not used yet)
-fn add_input_token (mut input_list: Vec<InputTok>, kind: &str, value: &str) {
+fn add_input_token (input_list: &mut Vec<InputTok>, kind: &str, value: &str) {
     //! Add one token to the output list.
     // println!("{:?}", kind);
 
     let new_tok = InputTok {
-        kind: kind.to_string(), value: value.to_string()
+        kind: kind.to_string(),
+        value: value.to_string()
     };
     input_list.push(new_tok);
 }
@@ -213,11 +214,7 @@ fn make_input_list(
             With => "With",
             Yield => "Yield",
         };
-        // add_input_token(input_list, class_name, tok_value);
-        let new_tok = InputTok{
-            kind: class_name.to_string(),value: tok_value.to_string()
-        };
-        input_list.push(new_tok);
+        add_input_token(&mut input_list, class_name, tok_value);
     }
     return count;
 }
