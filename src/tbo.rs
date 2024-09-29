@@ -163,6 +163,24 @@ fn make_input_list(contents: String, tokens: Vec<(Tok, TextRange)>) -> usize {
     }
     return count;
 }
+//@+node:ekr.20240929031635.1: ** function: scan_input_list
+fn scan_input_list(contents: String, tokens: Vec<(Tok, TextRange)>) -> usize {
+
+    let mut count: usize = 0;
+    for (token, range) in tokens {
+        // Range is a TextRange.
+        count += 1;
+        // To do: Find gaps in the ranges.
+        let start_i = usize::from(range.start());
+        let end_i = usize::from(range.end());
+        if false {
+            if count < 20 {
+                println_f!("{start_i:>3}..{end_i:3} token: {token:?}");
+            }
+        }
+    }
+    return count;
+}
 //@-others
 
 fn fmt_ms(t: u128) -> String {
@@ -188,22 +206,11 @@ pub fn entry() {
     let lex_time = fmt_ms(t2.elapsed().as_micros());
     // Loop on tokens.
     let t3 = Instant::now();
-    let mut n_tokens: usize = 0;
+    let n_tokens;
     if true {
         n_tokens = make_input_list(contents, tokens);
     } else {
-        for (token, range) in tokens {
-            // Range is a TextRange.
-            n_tokens += 1;
-            // To do: Find gaps in the ranges.
-            let start_i = usize::from(range.start());
-            let end_i = usize::from(range.end());
-            if false {
-                if n_tokens < 20 {
-                    println_f!("{start_i:>3}..{end_i:3} token: {token:?}");
-                }
-            }
-        }
+        n_tokens = scan_input_list(contents, tokens);
     }
     let loop_time = fmt_ms(t3.elapsed().as_micros());
     let total_time = fmt_ms(t1.elapsed().as_micros());
