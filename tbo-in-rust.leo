@@ -418,15 +418,19 @@
 </v>
 <v t="ekr.20240927154016.1"><vh>Notes</vh>
 <v t="ekr.20240929084852.1"><vh>Ownership and mutation</vh></v>
+<v t="ekr.20240929034737.1"><vh>--- input_list</vh>
+<v t="ekr.20240929032636.1"><vh>function: entry</vh></v>
+<v t="ekr.20240929024648.113"><vh>function: make_input_list</vh></v>
+<v t="ekr.20240929033044.1"><vh>function: add_input_token</vh></v>
+</v>
 </v>
 <v t="ekr.20240928185643.1"><vh>Stats</vh></v>
 <v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20240927151332.1"></v>
 <v t="ekr.20240928161210.1"></v>
-<v t="ekr.20240929034737.1"><vh>--- type problems</vh></v>
-<v t="ekr.20240929032636.1"><vh>function: entry</vh></v>
-<v t="ekr.20240929024648.113"><vh>function: make_input_list</vh></v>
-<v t="ekr.20240929033044.1"><vh>function: add_input_token</vh></v>
+<v t="ekr.20240929032636.1"></v>
+<v t="ekr.20240929024648.113"></v>
+<v t="ekr.20240930060935.1"><vh>function: gem</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -2716,7 +2720,7 @@ So tbo-in-rust is only about 10 times faster, but without the gem and all the re
 
 </t>
 <t tx="ekr.20240929024648.113">fn make_input_list(
-    contents: String,
+    contents: &amp;String,
     input_list: &amp;mut Vec&lt;InputTok&gt;,
     tokens: Vec&lt;(Tok, TextRange)&gt;
 ) -&gt; usize {
@@ -2857,21 +2861,26 @@ So tbo-in-rust is only about 10 times faster, but without the gem and all the re
         .map(|tok| tok.expect("Failed to lex"))
         .collect::&lt;Vec&lt;_&gt;&gt;();
     let lex_time = fmt_ms(t2.elapsed().as_micros());
-    // Loop on tokens.
+    // The gem.
     let t3 = Instant::now();
+    let mut ws_tokens: Vec&lt;InputTok&gt; = Vec::new();
+    let ws_tokens_n = gem(&amp;contents, &amp;tokens, &amp;mut ws_tokens);
+    let gem_time = fmt_ms(t3.elapsed().as_micros());
+    // Loop on tokens.
+    let t4 = Instant::now();
     let mut input_list: Vec&lt;InputTok&gt; = Vec::new();
-    // n_tokens = scan_input_list(contents, tokens);
-    let n_tokens = make_input_list(contents, &amp;mut input_list, tokens);
-    let loop_time = fmt_ms(t3.elapsed().as_micros());
+    let n_tokens = make_input_list(&amp;contents, &amp;mut input_list, tokens);
+    let loop_time = fmt_ms(t4.elapsed().as_micros());
     let total_time = fmt_ms(t1.elapsed().as_micros());
-
     // Sign on.
     println!("");
-    let n = input_list.len();
-    println!("     tbo: {short_file_name}: {n_tokens} tokens. input_list: {n}\n");
+    let tokens_n = input_list.len();
+    println!("     tbo: {short_file_name}");
+    println!("{n_tokens} tokens {ws_tokens_n}ws_tokens {tokens_n} in input_list\n");
     // Print stats.
     println!("    read: {read_time:&gt;5} ms");
     println!("     lex: {lex_time:&gt;5} ms");
+    println!("     gem: {gem_time:&gt;5} ms");
     println!("    loop: {loop_time:&gt;5} ms");
     println!("   total: {total_time:&gt;5} ms");
 }
@@ -2887,7 +2896,20 @@ So tbo-in-rust is only about 10 times faster, but without the gem and all the re
     input_list.push(new_tok);
 }
 </t>
-<t tx="ekr.20240929034737.1"></t>
+<t tx="ekr.20240929034737.1">@language rust
+
+// pub fn entry:
+let mut input_list: Vec&lt;InputTok&gt; = Vec::new();
+let n_tokens = make_input_list(contents, &amp;mut input_list, tokens);
+let n = input_list.len();
+
+// fn make_input_list
+fn make_input_list(input_list: &amp;mut Vec&lt;InputTok&gt;)
+add_input_token(input_list, class_name, tok_value);
+
+// fn add_input_token
+fn add_input_token (input_list: &amp;mut Vec&lt;InputTok&gt;)
+</t>
 <t tx="ekr.20240929084852.1">@language rest
 @wrap
 
@@ -2932,5 +2954,16 @@ Rules of reference:
 - At any time, you can have either one mutable reference or any number of immutable references.
 - References must always be valid.
 </t>
+<t tx="ekr.20240930060935.1">fn gem(
+    contents: &amp;String,
+    tokens: &amp;Vec&lt;(Tok, TextRange)&gt;,
+    ws_tokens: &amp;mut Vec&lt;InputTok&gt;
+) -&gt; usize {
+    // Convert the tokenizer tokens to InputTok's containing pseudo-ws tokens.
+    for (token, range) in tokens {
+    
+    }
+    return ws_tokens.len();
+}</t>
 </tnodes>
 </leo_file>

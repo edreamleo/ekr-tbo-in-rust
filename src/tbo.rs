@@ -845,21 +845,26 @@ pub fn entry() {
         .map(|tok| tok.expect("Failed to lex"))
         .collect::<Vec<_>>();
     let lex_time = fmt_ms(t2.elapsed().as_micros());
-    // Loop on tokens.
+    // The gem.
     let t3 = Instant::now();
+    let mut ws_tokens: Vec<InputTok> = Vec::new();
+    let ws_tokens_n = gem(&contents, &tokens, &mut ws_tokens);
+    let gem_time = fmt_ms(t3.elapsed().as_micros());
+    // Loop on tokens.
+    let t4 = Instant::now();
     let mut input_list: Vec<InputTok> = Vec::new();
-    // n_tokens = scan_input_list(contents, tokens);
-    let n_tokens = make_input_list(contents, &mut input_list, tokens);
-    let loop_time = fmt_ms(t3.elapsed().as_micros());
+    let n_tokens = make_input_list(&contents, &mut input_list, tokens);
+    let loop_time = fmt_ms(t4.elapsed().as_micros());
     let total_time = fmt_ms(t1.elapsed().as_micros());
-
     // Sign on.
     println!("");
-    let n = input_list.len();
-    println!("     tbo: {short_file_name}: {n_tokens} tokens. input_list: {n}\n");
+    let tokens_n = input_list.len();
+    println!("     tbo: {short_file_name}");
+    println!("{n_tokens} tokens {ws_tokens_n}ws_tokens {tokens_n} in input_list\n");
     // Print stats.
     println!("    read: {read_time:>5} ms");
     println!("     lex: {lex_time:>5} ms");
+    println!("     gem: {gem_time:>5} ms");
     println!("    loop: {loop_time:>5} ms");
     println!("   total: {total_time:>5} ms");
 }
@@ -871,9 +876,21 @@ fn fmt_ms(t: u128) -> String {
     return f!("{ms}.{micro:02}");  // Two-digits for fraction.
 }
 
+//@+node:ekr.20240930060935.1: ** function: gem
+fn gem(
+    contents: &String,
+    tokens: &Vec<(Tok, TextRange)>,
+    ws_tokens: &mut Vec<InputTok>
+) -> usize {
+    // Convert the tokenizer tokens to InputTok's containing pseudo-ws tokens.
+    for (token, range) in tokens {
+    
+    }
+    return ws_tokens.len();
+}
 //@+node:ekr.20240929024648.113: ** function: make_input_list
 fn make_input_list(
-    contents: String,
+    contents: &String,
     input_list: &mut Vec<InputTok>,
     tokens: Vec<(Tok, TextRange)>
 ) -> usize {
