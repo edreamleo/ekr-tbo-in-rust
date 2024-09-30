@@ -141,6 +141,7 @@
 <v t="ekr.20240928073118.1"><vh>@button cargo-fmt</vh></v>
 <v t="ekr.20240927152759.1"><vh>@button cargo-run</vh></v>
 <v t="ekr.20240930063740.1"><vh>@command ga</vh></v>
+<v t="ekr.20240930101156.1"><vh>@command ga-leo</vh></v>
 <v t="ekr.20240930063514.1"><vh>@command gc</vh></v>
 <v t="ekr.20240930063546.1"><vh>@command gs</vh></v>
 <v t="ekr.20240930064435.1"><vh>@command git-reset</vh></v>
@@ -430,7 +431,7 @@
 <v t="ekr.20240930100636.1"><vh>&lt;&lt; 2: lex &gt;&gt;</vh></v>
 <v t="ekr.20240930100650.1"><vh>&lt;&lt; 3: gem &gt;&gt;</vh></v>
 <v t="ekr.20240930100707.1"><vh>&lt;&lt; 4: Loop on tokens &gt;&gt;</vh></v>
-<v t="ekr.20240930100553.1"><vh>&lt;&lt; print stats &gt;&gt;</vh></v>
+<v t="ekr.20240930100553.1"><vh>&lt;&lt; 5: print stats &gt;&gt;</vh></v>
 <v t="ekr.20240929033044.1"><vh>function: add_input_token</vh></v>
 <v t="ekr.20240929032710.1"><vh>function: fmt_ms</vh></v>
 <v t="ekr.20240930060935.1"><vh>function: gem</vh></v>
@@ -2868,7 +2869,7 @@ So tbo-in-rust is only about 10 times faster, but without the gem and all the re
     &lt;&lt; 2: lex &gt;&gt;
     &lt;&lt; 3: gem &gt;&gt;
     &lt;&lt; 4: Loop on tokens &gt;&gt;
-    &lt;&lt; print stats &gt;&gt;
+    &lt;&lt; 5: print stats &gt;&gt;
 }
 </t>
 <t tx="ekr.20240929032710.1">fn fmt_ms(t: u128) -&gt; String {
@@ -2984,8 +2985,8 @@ import subprocess
 
 if c.changed:
     c.save()
-command = 'git add .'
-subprocess.Popen(command, shell=True).communicate()
+for command in ('git add *.rs', 'git status'):
+    subprocess.Popen(command, shell=True).communicate()
 </t>
 <t tx="ekr.20240930064435.1">@language python
 import os
@@ -3044,6 +3045,15 @@ let gem_time = fmt_ms(t3.elapsed().as_micros());
 let mut input_list: Vec&lt;InputTok&gt; = Vec::new();
 let n_tokens = make_input_list(&amp;contents, &amp;mut input_list, tokens);
 let loop_time = fmt_ms(t4.elapsed().as_micros());
+</t>
+<t tx="ekr.20240930101156.1">@language python
+import os
+import subprocess
+
+if c.changed:
+    c.save()
+for command in ('git add *.leo', 'git status'):
+    subprocess.Popen(command, shell=True).communicate()
 </t>
 </tnodes>
 </leo_file>
