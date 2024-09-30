@@ -425,9 +425,21 @@
 <v t="ekr.20240927154016.1"><vh>Notes</vh>
 <v t="ekr.20240929084852.1"><vh>Ownership and mutation</vh></v>
 <v t="ekr.20240929034737.1"><vh>--- input_list</vh>
-<v t="ekr.20240929032636.1"><vh>function: entry</vh></v>
-<v t="ekr.20240929024648.113"><vh>function: make_input_list</vh></v>
+<v t="ekr.20240929032636.1"><vh>function: entry &amp; helpers</vh>
+<v t="ekr.20240930100625.1"><vh>&lt;&lt; 1: read &gt;&gt;</vh></v>
+<v t="ekr.20240930100636.1"><vh>&lt;&lt; 2: lex &gt;&gt;</vh></v>
+<v t="ekr.20240930100650.1"><vh>&lt;&lt; 3: gem &gt;&gt;</vh></v>
+<v t="ekr.20240930100707.1"><vh>&lt;&lt; 4: Loop on tokens &gt;&gt;</vh></v>
+<v t="ekr.20240930100553.1"><vh>&lt;&lt; print stats &gt;&gt;</vh></v>
 <v t="ekr.20240929033044.1"><vh>function: add_input_token</vh></v>
+<v t="ekr.20240929032710.1"><vh>function: fmt_ms</vh></v>
+<v t="ekr.20240930060935.1"><vh>function: gem</vh></v>
+<v t="ekr.20240930085546.1"><vh>function: lex_contents</vh></v>
+<v t="ekr.20240929024648.113"><vh>function: make_input_list</vh></v>
+<v t="ekr.20240930084648.1"><vh>function: read</vh></v>
+</v>
+<v t="ekr.20240929024648.113"></v>
+<v t="ekr.20240929033044.1"></v>
 </v>
 </v>
 <v t="ekr.20240928185643.1"><vh>Stats</vh></v>
@@ -435,7 +447,7 @@
 <v t="ekr.20240927151332.1"></v>
 <v t="ekr.20240928161210.1"></v>
 <v t="ekr.20240929032636.1"></v>
-<v t="ekr.20240930060935.1"><vh>function: gem</vh></v>
+<v t="ekr.20240930060935.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -1066,19 +1078,13 @@ lexer.rs: https://github.com/astral-sh/ruff/blob/main/crates/ruff_python_parser/
 
 docs:
 Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
+
+Aha: Refactoring is harder in Rust.
 </t>
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
 
-*** Read about mutable references!
-
-- Create the gem. (virtual ws tokens).
-- Write to a temp file.
-
-Get lower bound on overall time (proof of concept):
-- Stats for gem and write.
-
-</t>
+- Refactor to get stats for all files in leo/core.</t>
 <t tx="ekr.20240927163405.1">#[derive(Debug)]
 pub struct Beautifier {
     args: Vec&lt;String&gt;,
@@ -2855,42 +2861,23 @@ So tbo-in-rust is only about 10 times faster, but without the gem and all the re
 }
 </t>
 <t tx="ekr.20240929032636.1">pub fn entry() {
-    // Set file name. leoFrame.py is a typical size
+    // leoFrame.py is a typical size
     let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py";
     let short_file_name = "leoFrame.py";
-    // Read.
-    let t1 = Instant::now();
-    let contents = fs::read_to_string(file_path).expect("Can not read file");
-    let read_time = fmt_ms(t1.elapsed().as_micros());
-    // Lex.
-    let t2 = Instant::now();
-    let tokens = lex(&amp;contents, Mode::Module)
-        .map(|tok| tok.expect("Failed to lex"))
-        .collect::&lt;Vec&lt;_&gt;&gt;();
-    let lex_time = fmt_ms(t2.elapsed().as_micros());
-    // The gem.
-    let t3 = Instant::now();
-    let mut ws_tokens: Vec&lt;InputTok&gt; = Vec::new();
-    let ws_tokens_n = gem(&amp;contents, &amp;tokens, &amp;mut ws_tokens);
-    let gem_time = fmt_ms(t3.elapsed().as_micros());
-    // Loop on tokens.
-    let t4 = Instant::now();
-    let mut input_list: Vec&lt;InputTok&gt; = Vec::new();
-    let n_tokens = make_input_list(&amp;contents, &amp;mut input_list, tokens);
-    let loop_time = fmt_ms(t4.elapsed().as_micros());
-    let total_time = fmt_ms(t1.elapsed().as_micros());
-    // Sign on.
-    println!("");
-    let tokens_n = input_list.len();
-    println!("     tbo: {short_file_name}");
-    println!("{n_tokens} lex tokens {ws_tokens_n} ws_tokens {tokens_n} InputToks\n");
-    // Print stats.
-    println!("    read: {read_time:&gt;5} ms");
-    println!("     lex: {lex_time:&gt;5} ms");
-    println!("     gem: {gem_time:&gt;5} ms");
-    println!("    loop: {loop_time:&gt;5} ms");
-    println!("   total: {total_time:&gt;5} ms");
+    &lt;&lt; 1: read &gt;&gt;
+    &lt;&lt; 2: lex &gt;&gt;
+    &lt;&lt; 3: gem &gt;&gt;
+    &lt;&lt; 4: Loop on tokens &gt;&gt;
+    &lt;&lt; print stats &gt;&gt;
 }
+</t>
+<t tx="ekr.20240929032710.1">fn fmt_ms(t: u128) -&gt; String {
+    //! Convert microseconds to fractional milliseconds.
+    let ms = t / 1000;
+    let micro = (t % 1000) / 10;
+    return f!("{ms}.{micro:02}");  // Two-digits for fraction.
+}
+
 </t>
 <t tx="ekr.20240929033044.1">fn add_input_token (input_list: &amp;mut Vec&lt;InputTok&gt;, kind: &amp;str, value: &amp;str) {
     //! Add one token to the output list.
@@ -3016,6 +3003,47 @@ if c.changed:
     c.save()
 command = 'git push'
 subprocess.Popen(command, shell=True).communicate()
+</t>
+<t tx="ekr.20240930084648.1">fn read(file_path: &amp;str) -&gt; String {
+    let error_s = f!("Can not read {file_path}");
+    return fs::read_to_string(file_path).expect(&amp;error_s);
+}
+</t>
+<t tx="ekr.20240930085546.1">fn lex_contents(contents: &amp;str) -&gt; Vec&lt;(Tok, TextRange)&gt; {
+    return lex(&amp;contents, Mode::Module)
+        .map(|tok| tok.expect("Failed to lex"))
+        .collect::&lt;Vec&lt;_&gt;&gt;();
+}
+</t>
+<t tx="ekr.20240930100553.1">// Compute cumulative stats.
+let total_time = fmt_ms(t1.elapsed().as_micros());
+let tokens_n = input_list.len();
+println!("");
+println!("     tbo: {short_file_name}");
+println!("{n_tokens} lex tokens {ws_tokens_n} ws_tokens {tokens_n} InputToks\n");
+println!("    read: {read_time:&gt;5} ms");
+println!("     lex: {lex_time:&gt;5} ms");
+println!("     gem: {gem_time:&gt;5} ms");
+println!("    loop: {loop_time:&gt;5} ms");
+println!("   total: {total_time:&gt;5} ms");
+</t>
+<t tx="ekr.20240930100625.1">let t1 = Instant::now();
+let contents = read(&amp;file_path);
+let read_time = fmt_ms(t1.elapsed().as_micros());
+</t>
+<t tx="ekr.20240930100636.1">let t2 = Instant::now();
+let tokens = lex_contents(&amp;contents);
+let lex_time = fmt_ms(t2.elapsed().as_micros());
+</t>
+<t tx="ekr.20240930100650.1">let t3 = Instant::now();
+let mut ws_tokens: Vec&lt;InputTok&gt; = Vec::new();
+let ws_tokens_n = gem(&amp;contents, &amp;tokens, &amp;mut ws_tokens);
+let gem_time = fmt_ms(t3.elapsed().as_micros());
+</t>
+<t tx="ekr.20240930100707.1">let t4 = Instant::now();
+let mut input_list: Vec&lt;InputTok&gt; = Vec::new();
+let n_tokens = make_input_list(&amp;contents, &amp;mut input_list, tokens);
+let loop_time = fmt_ms(t4.elapsed().as_micros());
 </t>
 </tnodes>
 </leo_file>

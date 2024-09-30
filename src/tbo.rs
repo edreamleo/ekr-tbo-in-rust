@@ -819,7 +819,53 @@ impl Stats {
     }
     //@-others
 }
-//@+node:ekr.20240929033044.1: ** function: add_input_token
+//@+node:ekr.20240929032636.1: ** function: entry & helpers
+pub fn entry() {
+    // leoFrame.py is a typical size
+    let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py";
+    let short_file_name = "leoFrame.py";
+    //@+<< 1: read >>
+    //@+node:ekr.20240930100625.1: *3* << 1: read >>
+    let t1 = Instant::now();
+    let contents = read(&file_path);
+    let read_time = fmt_ms(t1.elapsed().as_micros());
+    //@-<< 1: read >>
+    //@+<< 2: lex >>
+    //@+node:ekr.20240930100636.1: *3* << 2: lex >>
+    let t2 = Instant::now();
+    let tokens = lex_contents(&contents);
+    let lex_time = fmt_ms(t2.elapsed().as_micros());
+    //@-<< 2: lex >>
+    //@+<< 3: gem >>
+    //@+node:ekr.20240930100650.1: *3* << 3: gem >>
+    let t3 = Instant::now();
+    let mut ws_tokens: Vec<InputTok> = Vec::new();
+    let ws_tokens_n = gem(&contents, &tokens, &mut ws_tokens);
+    let gem_time = fmt_ms(t3.elapsed().as_micros());
+    //@-<< 3: gem >>
+    //@+<< 4: Loop on tokens >>
+    //@+node:ekr.20240930100707.1: *3* << 4: Loop on tokens >>
+    let t4 = Instant::now();
+    let mut input_list: Vec<InputTok> = Vec::new();
+    let n_tokens = make_input_list(&contents, &mut input_list, tokens);
+    let loop_time = fmt_ms(t4.elapsed().as_micros());
+    //@-<< 4: Loop on tokens >>
+    //@+<< print stats >>
+    //@+node:ekr.20240930100553.1: *3* << print stats >>
+    // Compute cumulative stats.
+    let total_time = fmt_ms(t1.elapsed().as_micros());
+    let tokens_n = input_list.len();
+    println!("");
+    println!("     tbo: {short_file_name}");
+    println!("{n_tokens} lex tokens {ws_tokens_n} ws_tokens {tokens_n} InputToks\n");
+    println!("    read: {read_time:>5} ms");
+    println!("     lex: {lex_time:>5} ms");
+    println!("     gem: {gem_time:>5} ms");
+    println!("    loop: {loop_time:>5} ms");
+    println!("   total: {total_time:>5} ms");
+    //@-<< print stats >>
+}
+//@+node:ekr.20240929033044.1: *3* function: add_input_token
 fn add_input_token (input_list: &mut Vec<InputTok>, kind: &str, value: &str) {
     //! Add one token to the output list.
     // println!("{:?}", kind);
@@ -830,45 +876,7 @@ fn add_input_token (input_list: &mut Vec<InputTok>, kind: &str, value: &str) {
     };
     input_list.push(new_tok);
 }
-//@+node:ekr.20240929032636.1: ** function: entry
-pub fn entry() {
-    // Set file name. leoFrame.py is a typical size
-    let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py";
-    let short_file_name = "leoFrame.py";
-    // Read.
-    let t1 = Instant::now();
-    let contents = fs::read_to_string(file_path).expect("Can not read file");
-    let read_time = fmt_ms(t1.elapsed().as_micros());
-    // Lex.
-    let t2 = Instant::now();
-    let tokens = lex(&contents, Mode::Module)
-        .map(|tok| tok.expect("Failed to lex"))
-        .collect::<Vec<_>>();
-    let lex_time = fmt_ms(t2.elapsed().as_micros());
-    // The gem.
-    let t3 = Instant::now();
-    let mut ws_tokens: Vec<InputTok> = Vec::new();
-    let ws_tokens_n = gem(&contents, &tokens, &mut ws_tokens);
-    let gem_time = fmt_ms(t3.elapsed().as_micros());
-    // Loop on tokens.
-    let t4 = Instant::now();
-    let mut input_list: Vec<InputTok> = Vec::new();
-    let n_tokens = make_input_list(&contents, &mut input_list, tokens);
-    let loop_time = fmt_ms(t4.elapsed().as_micros());
-    let total_time = fmt_ms(t1.elapsed().as_micros());
-    // Sign on.
-    println!("");
-    let tokens_n = input_list.len();
-    println!("     tbo: {short_file_name}");
-    println!("{n_tokens} lex tokens {ws_tokens_n} ws_tokens {tokens_n} InputToks\n");
-    // Print stats.
-    println!("    read: {read_time:>5} ms");
-    println!("     lex: {lex_time:>5} ms");
-    println!("     gem: {gem_time:>5} ms");
-    println!("    loop: {loop_time:>5} ms");
-    println!("   total: {total_time:>5} ms");
-}
-//@+node:ekr.20240929032710.1: ** function: fmt_ms
+//@+node:ekr.20240929032710.1: *3* function: fmt_ms
 fn fmt_ms(t: u128) -> String {
     //! Convert microseconds to fractional milliseconds.
     let ms = t / 1000;
@@ -876,7 +884,7 @@ fn fmt_ms(t: u128) -> String {
     return f!("{ms}.{micro:02}");  // Two-digits for fraction.
 }
 
-//@+node:ekr.20240930060935.1: ** function: gem
+//@+node:ekr.20240930060935.1: *3* function: gem
 fn gem(
     contents: &String,
     tokens: &Vec<(Tok, TextRange)>,
@@ -888,7 +896,13 @@ fn gem(
     }
     return ws_tokens.len();
 }
-//@+node:ekr.20240929024648.113: ** function: make_input_list
+//@+node:ekr.20240930085546.1: *3* function: lex_contents
+fn lex_contents(contents: &str) -> Vec<(Tok, TextRange)> {
+    return lex(&contents, Mode::Module)
+        .map(|tok| tok.expect("Failed to lex"))
+        .collect::<Vec<_>>();
+}
+//@+node:ekr.20240929024648.113: *3* function: make_input_list
 fn make_input_list(
     contents: &String,
     input_list: &mut Vec<InputTok>,
@@ -1015,6 +1029,11 @@ fn make_input_list(
         add_input_token(input_list, class_name, tok_value);
     }
     return count;
+}
+//@+node:ekr.20240930084648.1: *3* function: read
+fn read(file_path: &str) -> String {
+    let error_s = f!("Can not read {file_path}");
+    return fs::read_to_string(file_path).expect(&error_s);
 }
 //@+node:ekr.20240929031635.1: ** function: scan_input_list
 fn scan_input_list(contents: String, tokens: Vec<(Tok, TextRange)>) -> usize {
