@@ -860,7 +860,7 @@ pub fn entry() {
     println!("");
     let tokens_n = input_list.len();
     println!("     tbo: {short_file_name}");
-    println!("{n_tokens} tokens {ws_tokens_n}ws_tokens {tokens_n} in input_list\n");
+    println!("{n_tokens} lex tokens {ws_tokens_n} ws_tokens {tokens_n} InputToks\n");
     // Print stats.
     println!("    read: {read_time:>5} ms");
     println!("     lex: {lex_time:>5} ms");

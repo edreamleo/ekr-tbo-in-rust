@@ -138,9 +138,12 @@
 </v>
 <v t="ekr.20240927151701.203" descendentVnodeUnknownAttributes="7d710058010000003071017d7102580b0000005f5f626f6f6b6d61726b7371037d7104580700000069735f6475706571054930300a7373732e"><vh>Buttons</vh>
 <v t="ekr.20240927151701.206"><vh>@button backup</vh></v>
-<v t="ekr.20240927152759.1"><vh>@button cargo-run</vh></v>
-<v t="ekr.20240927151701.207"><vh>@button print-gnx</vh></v>
 <v t="ekr.20240928073118.1"><vh>@button cargo-fmt</vh></v>
+<v t="ekr.20240927152759.1"><vh>@button cargo-run</vh></v>
+<v t="ekr.20240930063740.1"><vh>@command ga</vh></v>
+<v t="ekr.20240930063514.1"><vh>@command gc</vh></v>
+<v t="ekr.20240930063546.1"><vh>@command gs</vh></v>
+<v t="ekr.20240927151701.207"><vh>@@button print-gnx</vh></v>
 </v>
 </v>
 <v t="ekr.20240927164013.1"><vh>--- Pevious code</vh>
@@ -429,7 +432,6 @@
 <v t="ekr.20240927151332.1"></v>
 <v t="ekr.20240928161210.1"></v>
 <v t="ekr.20240929032636.1"></v>
-<v t="ekr.20240929024648.113"></v>
 <v t="ekr.20240930060935.1"><vh>function: gem</vh></v>
 </vnodes>
 <tnodes>
@@ -2876,7 +2878,7 @@ So tbo-in-rust is only about 10 times faster, but without the gem and all the re
     println!("");
     let tokens_n = input_list.len();
     println!("     tbo: {short_file_name}");
-    println!("{n_tokens} tokens {ws_tokens_n}ws_tokens {tokens_n} in input_list\n");
+    println!("{n_tokens} lex tokens {ws_tokens_n} ws_tokens {tokens_n} InputToks\n");
     // Print stats.
     println!("    read: {read_time:&gt;5} ms");
     println!("     lex: {lex_time:&gt;5} ms");
@@ -2965,5 +2967,33 @@ Rules of reference:
     }
     return ws_tokens.len();
 }</t>
+<t tx="ekr.20240930063514.1">@language python
+import os
+import subprocess
+
+if c.changed:
+    c.save()
+
+command = 'git commit'
+subprocess.Popen(command, shell=True).communicate()
+</t>
+<t tx="ekr.20240930063546.1">@language python
+import os
+import subprocess
+
+if c.changed:
+    c.save()
+command = 'git status'
+subprocess.Popen(command, shell=True).communicate()
+</t>
+<t tx="ekr.20240930063740.1">@language python
+import os
+import subprocess
+
+if c.changed:
+    c.save()
+command = 'git add .'
+subprocess.Popen(command, shell=True).communicate()
+</t>
 </tnodes>
 </leo_file>
