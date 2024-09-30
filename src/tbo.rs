@@ -850,8 +850,8 @@ pub fn entry() {
     let n_tokens = make_input_list(&contents, &mut input_list, tokens);
     let loop_time = fmt_ms(t4.elapsed().as_micros());
     //@-<< 4: Loop on tokens >>
-    //@+<< print stats >>
-    //@+node:ekr.20240930100553.1: *3* << print stats >>
+    //@+<< 5: print stats >>
+    //@+node:ekr.20240930100553.1: *3* << 5: print stats >>
     // Compute cumulative stats.
     let total_time = fmt_ms(t1.elapsed().as_micros());
     let tokens_n = input_list.len();
@@ -863,7 +863,7 @@ pub fn entry() {
     println!("     gem: {gem_time:>5} ms");
     println!("    loop: {loop_time:>5} ms");
     println!("   total: {total_time:>5} ms");
-    //@-<< print stats >>
+    //@-<< 5: print stats >>
 }
 //@+node:ekr.20240929033044.1: *3* function: add_input_token
 fn add_input_token (input_list: &mut Vec<InputTok>, kind: &str, value: &str) {
