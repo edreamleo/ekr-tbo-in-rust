@@ -136,16 +136,19 @@
 <v t="ekr.20240927151701.179"><vh>@string view-rendered-default-kind = rst</vh></v>
 </v>
 </v>
-<v t="ekr.20240927151701.203" descendentVnodeUnknownAttributes="7d710058010000003071017d7102580b0000005f5f626f6f6b6d61726b7371037d7104580700000069735f6475706571054930300a7373732e"><vh>Buttons</vh>
+<v t="ekr.20240927151701.203" descendentVnodeUnknownAttributes="7d710058010000003071017d7102580b0000005f5f626f6f6b6d61726b7371037d7104580700000069735f6475706571054930300a7373732e"><vh>Buttons &amp; commands</vh>
 <v t="ekr.20240927151701.206"><vh>@button backup</vh></v>
 <v t="ekr.20240928073118.1"><vh>@button cargo-fmt</vh></v>
 <v t="ekr.20240927152759.1"><vh>@button cargo-run</vh></v>
 <v t="ekr.20240930063740.1"><vh>@command ga</vh></v>
 <v t="ekr.20240930063514.1"><vh>@command gc</vh></v>
 <v t="ekr.20240930063546.1"><vh>@command gs</vh></v>
+<v t="ekr.20240930064435.1"><vh>@command git-reset</vh></v>
+<v t="ekr.20240930064622.1"><vh>@command push</vh></v>
 <v t="ekr.20240927151701.207"><vh>@@button print-gnx</vh></v>
 </v>
 </v>
+<v t="ekr.20240927151701.50"></v>
 <v t="ekr.20240927164013.1"><vh>--- Pevious code</vh>
 <v t="ekr.20240927163405.1"><vh>class Beautifier (from backup/rust_beautifier)</vh>
 <v t="ekr.20240927163405.2"><vh>Beautifier::add_input_token</vh></v>
@@ -777,6 +780,10 @@ go: ^\s*(.*):([0-9]+):([0-9]+):.+$
 python: ^\s*File "(.+)", line ([0-9]+), in .+$
 rust: ^\s*--&gt; (.+):([0-9]+):([0-9]+)\s*$</t>
 <t tx="ekr.20240927151701.50">cargo-run
+gs
+ga
+gc
+git-reset
 backup
 </t>
 <t tx="ekr.20240927151701.51"># legacy: (default) Leo's legacy layout
@@ -1043,7 +1050,6 @@ import subprocess
 
 if c.changed:
     c.save()
-
 command = 'cargo run'
 subprocess.Popen(command, shell=True).communicate()
 </t>
@@ -2699,7 +2705,6 @@ import subprocess
 
 if c.changed:
     c.save()
-
 command = 'cargo fmt'
 subprocess.Popen(command, shell=True).communicate()
 </t>
@@ -2966,14 +2971,14 @@ Rules of reference:
     
     }
     return ws_tokens.len();
-}</t>
+}
+</t>
 <t tx="ekr.20240930063514.1">@language python
 import os
 import subprocess
 
 if c.changed:
     c.save()
-
 command = 'git commit'
 subprocess.Popen(command, shell=True).communicate()
 </t>
@@ -2993,6 +2998,23 @@ import subprocess
 if c.changed:
     c.save()
 command = 'git add .'
+subprocess.Popen(command, shell=True).communicate()
+</t>
+<t tx="ekr.20240930064435.1">@language python
+import os
+import subprocess
+
+if c.changed:
+    c.save()
+command = 'git reset'
+subprocess.Popen(command, shell=True).communicate()
+</t>
+<t tx="ekr.20240930064622.1">@language python
+import os
+import subprocess
+if c.changed:
+    c.save()
+command = 'git push'
 subprocess.Popen(command, shell=True).communicate()
 </t>
 </tnodes>
