@@ -111,7 +111,7 @@ impl Beautifier {
         let (n_tokens, n_ws_tokens) = self.make_input_list(&contents);
         let make_tokens_time = t3.elapsed().as_micros();
         let write_time = 0;
-        self.stats.update(n_tokens, make_tokens_time, read_time, write_time);
+        self.stats.update(n_tokens, n_ws_tokens, make_tokens_time, read_time, write_time);
         // Report
         if true { // self.enabled("--report") {
             self.stats.report();
@@ -763,8 +763,9 @@ impl Beautifier {
 #[derive(Debug)]
 pub struct Stats {
     // Cumulative statistics for all files.
-    n_files: u64,  // Number of files.
+    n_files: u64, // Number of files.
     n_tokens: u64, // Number of tokens.
+    n_ws_tokens: u64, // Number of pseudo-ws tokens.
 
     // Timing stat, in microseconds...
     make_tokens_time: u128,
@@ -782,6 +783,8 @@ impl Stats {
             // Cumulative statistics for all files.
             n_files: 0,  // Number of files.
             n_tokens: 0, // Number of tokens.
+            n_ws_tokens: 0,  // Number of pseudo-ws tokens.
+
             // Timing stat, in microseconds...
             make_tokens_time: 0,
             read_time: 0,
@@ -802,14 +805,14 @@ impl Stats {
         // Cumulative counts.
         let n_files = self.n_files;
         let n_tokens = self.n_tokens;
+        let n_ws_tokens = self.n_ws_tokens;
         // Print cumulative timing stats, in ms, using fmt_ms.
         let total_time = self.fmt_ms(self.make_tokens_time + self.read_time + self.write_time);
         let make_tokens_time = self.fmt_ms(self.make_tokens_time);
         let read_time = self.fmt_ms(self.read_time);
         let write_time = self.fmt_ms(self.write_time);
         println!("");
-        println!("     tokens: {n_files}");
-        println!("     tokens: {n_tokens}");
+        println!("     files: {n_files}, tokens: {n_tokens}, ws tokens: {n_ws_tokens}");
         println!("");
         println!("make_tokens: {make_tokens_time:>7} ms");
         println!("       read: {read_time:>7} ms");
@@ -819,6 +822,7 @@ impl Stats {
     //@+node:ekr.20240929074941.1: *3* Stats::update
     fn update (&mut self,
         n_tokens: u64,
+        n_ws_tokens: u64,
         make_tokens: u128,
         read_time: u128,
         write_time: u128
@@ -826,6 +830,7 @@ impl Stats {
         // Update cumulative stats.
         self.n_files += 1;
         self.n_tokens += n_tokens;
+        self.n_ws_tokens += n_ws_tokens;
         self.make_tokens_time += make_tokens;
         self.read_time += read_time;
         self.write_time += write_time;
