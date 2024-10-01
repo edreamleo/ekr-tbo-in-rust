@@ -105,9 +105,10 @@ impl Beautifier {
             .expect("Error reading{file_name}");
         // print_type(&contents, "contents");
         let read_time = t1.elapsed().as_micros();
-        // Tokenize.
+        // Make the list of input tokens
         let t3 = std::time::Instant::now();
-        let n_tokens = self.tokenize_contents(contents);
+        // let n_tokens = self.tokenize_contents(contents);
+        let (n_tokens, n_ws_tokens) = self.make_input_list(&contents);
         let make_tokens_time = t3.elapsed().as_micros();
         let write_time = 0;
         self.stats.update(n_tokens, make_tokens_time, read_time, write_time);
@@ -575,20 +576,33 @@ impl Beautifier {
         }
     }
     //@+node:ekr.20240929074037.112: *3* LB::make_input_list
-    fn make_input_list(&mut self, contents: &str) -> u128 {
-
-        let mut count: u128 = 0;
-        let results = lex(&contents, Mode::Module);  // An iterator yielding Option(Tok).
-        for result in results {
+    fn make_input_list(&mut self, contents: &str) -> (u128, u128) {
+        // Add InputToks to the input_list for every token given by the RustPython lex.
+        let mut tokens_n: u128 = 0;
+        let mut ws_tokens_n: u128 = 0;
+        let mut prev_start: usize = 0;
+        for token_tuple in lex(&contents, Mode::Module)
+            .map(|tok| tok.expect("Failed to lex"))
+            .collect::<Vec<_>>()
+        {
             use Tok::*;
-            count += 1;
-            let token = result.ok().unwrap();
-            let (ref tok_class, tok_range) = token;
-            let tok_value = &contents[tok_range];
+            tokens_n += 1;
+            let (token, range) = token_tuple;
+            let tok_value = &contents[range];
+            let start_i = usize::from(range.start());
+            let end_i = usize::from(range.end());
+            
+            // The gem: create a whitespace pseudo-tokens.
+            if start_i > prev_start {
+                let ws = &contents[prev_start..start_i];
+                self.add_input_token("ws", ws);
+                ws_tokens_n += 1
+            }
+            prev_start = end_i;
 
             // Variants names are necessary, but otherwise not used.
             #[allow(unused_variables)]
-            let class_name = match tok_class {
+            let class_name = match token {
                 // Tokens with values...
                 // Use tok_value for *all* values.
                 Comment(value) => "Comment",  // No idea why parens are needed here.
@@ -697,7 +711,7 @@ impl Beautifier {
             };
             self.add_input_token(class_name, tok_value);
         }
-        return count;
+        return (tokens_n, ws_tokens_n);
     }
     //@+node:ekr.20240929074037.113: *3* LB::make_output_list
     fn make_output_list(&mut self) {
@@ -742,23 +756,6 @@ impl Beautifier {
                 print!("{:?}", arg);
             }
         }
-    }
-    //@+node:ekr.20240929074037.118: *3* LB::tokenize_contents (prototype)
-    fn tokenize_contents(&mut self, contents: String ) -> u128 {
-
-        let count = self.make_input_list(&contents);
-        
-        // Simulate iterating the input list twice.
-        for _z in &self.input_list.clone() {
-        }
-        for _z in &self.input_list.clone() {
-        }
-
-        // Simulate writing strings to the output list.
-        // self.make_output_list();
-        for _z in &self.input_list.clone() {
-        }
-        return count;
     }
     //@-others
 }
