@@ -95,9 +95,12 @@ impl Beautifier {
     //@+node:ekr.20240929074037.5: *3* LB::beautify_one_file
     fn beautify_one_file(&mut self, file_name: &str) {
         // Compute short_file_name from file_name.
-        let file_path = path::Path::new(file_name);
-        let os_str = file_path.file_name().unwrap(); // &OsStr
-        let short_file_name = os_str.to_str().unwrap();
+        if true {  // Testing only.
+            let file_path = path::Path::new(file_name);
+            let os_str = file_path.file_name().unwrap(); // &OsStr
+            let short_file_name = os_str.to_str().unwrap();
+            println!("{short_file_name}");
+        }
         // Read the file into contents (a String).
         self.output_list = Vec::new();
         let t1 = std::time::Instant::now();
@@ -112,21 +115,6 @@ impl Beautifier {
         let make_tokens_time = t3.elapsed().as_micros();
         let write_time = 0;
         self.stats.update(n_tokens, n_ws_tokens, make_tokens_time, read_time, write_time);
-        // Report
-        if true { // self.enabled("--report") {
-            self.stats.report();
-            // println!(" file name: {short_file_name}");
-            // println!("      read: {:.2?}", t2);
-            // println!("  tokenize: {:.2?}", t4);
-            // println!("    tokens: {n_tokens}");
-        }
-        // Show tokens.
-        //@+<< show output_list >>
-        //@+node:ekr.20240929074037.6: *4* << show output_list >>
-        if false {  // --show-output
-            self.show_output_list()
-        }
-        //@-<< show output_list >>
     }
     //@+node:ekr.20240929074037.7: *3* LB::do_*
     //@+node:ekr.20240929074037.8: *4* LB:Handlers with values
@@ -813,7 +801,6 @@ impl Stats {
         let write_time = self.fmt_ms(self.write_time);
         println!("");
         println!("     files: {n_files}, tokens: {n_tokens}, ws tokens: {n_ws_tokens}");
-        println!("");
         println!("make_tokens: {make_tokens_time:>7} ms");
         println!("       read: {read_time:>7} ms");
         println!("      write: {write_time:>7} ms");
@@ -843,8 +830,14 @@ pub fn entry() {
     // Main line of beautifier.
     let mut x = Beautifier::new();
     if true {  // testing.
-        let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py";
-        x.beautify_one_file(&file_path);
+        println!("");
+        for file_path in [
+            "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py",
+            // "C:\\Repos\\leo-editor\\leo\\core\\leoApp.py"
+        ] {
+            x.beautify_one_file(&file_path);
+        }
+        x.stats.report();
     }
     else {
         if x.enabled("--help") || x.enabled("-h") {
