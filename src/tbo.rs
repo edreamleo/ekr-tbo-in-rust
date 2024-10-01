@@ -875,9 +875,9 @@ fn fmt_ms(t: u128) -> String {
 fn make_input_list(
     contents: &str,
     input_list: &mut Vec<InputTok>,
-    //// tokens: Vec<(Tok, TextRange)>
 ) -> (usize, usize) {
-
+    // Add InputToks to the input_list for every token given by the RustPython lex.
+    // The gem: Generate "ws" pseudo-tokens for all whitespace.
     let mut tokens_n: usize = 0;
     let mut ws_tokens_n: usize = 0;
     let mut prev_start: usize = 0;
@@ -892,10 +892,9 @@ fn make_input_list(
         let start_i: usize = usize::from(range.start());
         let end_i: usize = usize::from(range.end());
         
-        // The gem: create a whitespace token if necessary.
+        // The gem: create a whitespace pseudo-tokens.
         if start_i > prev_start {
             let ws = &contents[prev_start..start_i];
-            // println!("ws: {prev_start}..{start_i} = `{ws}`");
             add_input_token(input_list, "ws", ws);
             ws_tokens_n += 1
         }
