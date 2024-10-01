@@ -5,17 +5,16 @@
 // From https://docs.rs/rustpython-parser/0.3.1/rustpython_parser/lexer/index.html
 
 // Must be first.
-#![allow(unused_imports)]
-#![allow(dead_code)]
-#![allow(unused_variables)]
+// #![allow(unused_imports)]
+// #![allow(dead_code)]
+// #![allow(unused_variables)]
 
 extern crate rustpython_parser;
-use rustpython_parser::{lexer::lex, Mode, Tok, text_size::TextRange};
-use std::env;  // For Beautifier.
-use std::fmt;  // For InputTok.
+use rustpython_parser::{lexer::lex, Mode, Tok}; // text_size::TextRange
+use std::env;
+use std::fmt;
 use std::fs;
 use std::path;
-use std::time::Instant;
 
 //@+others
 //@+node:ekr.20240929024648.120: ** class InputTok
@@ -844,105 +843,6 @@ pub fn entry() {
         }
         x.show_args();
         x.beautify_all_files();
-    }
-}
-//@+node:ekr.20241001093308.2: *3* fn tokenize
-fn tokenize() {
-    //@+<< tokenize: define contents >>
-    //@+node:ekr.20241001093308.3: *4* << tokenize: define contents >>
-    let contents = r#"
-    def test():
-    # Comment 1.
-    print('abc')
-    # Comment 2.
-    "#;
-
-    // print("xyz")
-    // print(rf'pdb')
-    // print(fr'pdb2')
-    // return bool(i & 1)
-    //@-<< tokenize: define contents >>
-    println!("fn tokenize");
-    println!("\nSource:\n{contents}");
-
-    for debug in [true, false].iter() {
-
-        println!("{}", if *debug {"Tokens..."} else {"\nBeautified:"});
-
-        let results = lex(contents, Mode::Module);  // An iterator yielding Option(Tok).
-        let mut count = 0;
-        let mut lws = String::new();
-        for (i, result) in results.enumerate() {
-            use Tok::*;
-            let token = result.ok().unwrap();
-            let (ref tok_class, tok_range) = token;
-            let tok_value = &contents[tok_range];
-
-            if *debug {
-                let s = format!("{tok_class}");
-                print!("\nToken: {s:20} {:?}", tok_value);
-            }
-            else {
-                // Comment(value), Name(name)
-                #[allow(unused_variables)]
-                match tok_class {
-                    Comment(value) => {
-                        // print!("{value} ");  // Wrong!
-                        print!("{tok_value}");
-                    },
-                    Dedent => {
-                        lws.pop();
-                        lws.pop();
-                        print!("{lws}");
-                    },
-                    Def => {
-                        print!("{tok_value} ");
-                    },
-                    Indent => {
-                        lws.push_str("    ");
-                        print!("{lws}");
-                    },
-                    Name {name} => {
-                        print!("{tok_value} ");
-                    },
-                    Newline => {
-                        print!("{tok_value}");
-                        print!("{lws}");
-                        if false {  // old
-                            println!("");
-                            print!("{lws}");
-                        }
-                    },
-                    NonLogicalNewline => {
-                        println!("");
-                        print!("{lws}");
-                    },
-                    Return => {
-                        print!("{tok_value} ");
-                    },
-                    Tok::String {value, kind, triple_quoted} => {
-                        // correct.
-                        print!("{tok_value}");
-                        if false {  // incorrect.
-                            let quote = if *triple_quoted {"'''"} else {"'"};
-                            print!("{:?}:{quote}{value}{quote}", kind);
-                        }
-                    },
-                    _ => {
-                        print!("{tok_value}");
-                        if false {
-                            // to_string quotes values!
-                            let s = tok_class.to_string().replace("'", "");
-                            print!("{s}");
-                        }
-                    },
-                }
-            }
-            count = i
-        }
-        if *debug {
-            println!("\n{count} tokens")
-        }
     }
 }
 //@-others
