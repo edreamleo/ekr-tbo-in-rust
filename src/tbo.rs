@@ -110,11 +110,12 @@ impl Beautifier {
         let read_time = t1.elapsed().as_micros();
         // Make the list of input tokens
         let t3 = std::time::Instant::now();
-        // let n_tokens = self.tokenize_contents(contents);
-        let (n_tokens, n_ws_tokens) = self.make_input_list(&contents);
+        self.make_input_list(&contents);
         let make_tokens_time = t3.elapsed().as_micros();
+        // Update stats.
+        self.stats.n_files += 1;
         let write_time = 0;
-        self.stats.update(n_tokens, n_ws_tokens, make_tokens_time, read_time, write_time);
+        self.stats.update_times(make_tokens_time, read_time, write_time);
     }
     //@+node:ekr.20240929074037.7: *3* LB::do_*
     //@+node:ekr.20240929074037.8: *4* LB:Handlers with values
@@ -564,17 +565,17 @@ impl Beautifier {
         }
     }
     //@+node:ekr.20240929074037.112: *3* LB::make_input_list
-    fn make_input_list(&mut self, contents: &str) -> (u64, u64) {
+    fn make_input_list(&mut self, contents: &str) {
         // Add InputToks to the input_list for every token given by the RustPython lex.
-        let mut tokens_n: u64 = 0;
-        let mut ws_tokens_n: u64 = 0;
+        let mut n_tokens: u64 = 0;
+        let mut n_ws_tokens: u64 = 0;
         let mut prev_start: usize = 0;
         for token_tuple in lex(&contents, Mode::Module)
             .map(|tok| tok.expect("Failed to lex"))
             .collect::<Vec<_>>()
         {
             use Tok::*;
-            tokens_n += 1;
+            n_tokens += 1;
             let (token, range) = token_tuple;
             let tok_value = &contents[range];
             let start_i = usize::from(range.start());
@@ -584,7 +585,7 @@ impl Beautifier {
             if start_i > prev_start {
                 let ws = &contents[prev_start..start_i];
                 self.add_input_token("ws", ws);
-                ws_tokens_n += 1
+                n_ws_tokens += 1
             }
             prev_start = end_i;
 
@@ -699,7 +700,9 @@ impl Beautifier {
             };
             self.add_input_token(class_name, tok_value);
         }
-        return (tokens_n, ws_tokens_n);
+        // Update counts.
+        self.stats.n_tokens += n_tokens;
+        self.stats.n_ws_tokens += n_ws_tokens;
     }
     //@+node:ekr.20240929074037.113: *3* LB::make_output_list
     fn make_output_list(&mut self) {
@@ -806,18 +809,13 @@ impl Stats {
         println!("      write: {write_time:>7} ms");
         println!("      total: {total_time:>7} ms");
     }
-    //@+node:ekr.20240929074941.1: *3* Stats::update
-    fn update (&mut self,
-        n_tokens: u64,
-        n_ws_tokens: u64,
+    //@+node:ekr.20240929074941.1: *3* Stats::update_times
+    fn update_times (&mut self,
         make_tokens: u128,
         read_time: u128,
         write_time: u128
     ) {
-        // Update cumulative stats.
-        self.n_files += 1;
-        self.n_tokens += n_tokens;
-        self.n_ws_tokens += n_ws_tokens;
+        // Update cumulative timing stats.
         self.make_tokens_time += make_tokens;
         self.read_time += read_time;
         self.write_time += write_time;

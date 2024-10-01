@@ -417,12 +417,21 @@
 <v t="ekr.20240927163942.127"><vh>fn print_type &amp; type_of</vh></v>
 </v>
 </v>
-</v>
 <v t="ekr.20241001073040.1"><vh>--- No longer used</vh>
 <v t="ekr.20240930100636.1"><vh>&lt;&lt; 2: lex &gt;&gt;</vh></v>
 <v t="ekr.20240930085546.1"><vh>function: lex_contents</vh></v>
 <v t="ekr.20240929031635.1"><vh>function: scan_input_list</vh></v>
 <v t="ekr.20241001071914.1"><vh>function: test_loop</vh></v>
+</v>
+<v t="ekr.20240929032636.1"><vh>OLD function: entry &amp; helpers</vh>
+<v t="ekr.20240930100625.1"><vh>&lt;&lt; 1: read &gt;&gt;</vh></v>
+<v t="ekr.20240930100707.1"><vh>&lt;&lt; 2: make input_list &gt;&gt;</vh></v>
+<v t="ekr.20240930100553.1"><vh>&lt;&lt; 3: print stats &gt;&gt;</vh></v>
+<v t="ekr.20240929033044.1"><vh>function: add_input_token</vh></v>
+<v t="ekr.20240929032710.1"><vh>function: fmt_ms</vh></v>
+<v t="ekr.20240929024648.113"><vh>function: make_input_list (works)</vh></v>
+<v t="ekr.20240930084648.1"><vh>function: read</vh></v>
+</v>
 </v>
 <v t="ekr.20240927154009.1"><vh>Files</vh>
 <v t="ekr.20240105140814.1"><vh>COPY leoTokens.py</vh>
@@ -540,7 +549,6 @@
 </v>
 <v t="ekr.20240927151245.1"><vh>@edit Cargo.toml</vh></v>
 <v t="ekr.20240927151332.1"><vh>@file src/main.rs</vh></v>
-<v t="ekr.20240928161210.1"><vh>@file src/tbo.rs</vh></v>
 </v>
 <v t="ekr.20240927154016.1"><vh>Notes</vh>
 <v t="ekr.20240929084852.1"><vh>Ownership and mutation</vh></v>
@@ -549,16 +557,143 @@
 <v t="ekr.20240928185643.1"><vh>Stats</vh></v>
 </v>
 <v t="ekr.20240927154323.1"><vh>** To do</vh></v>
-<v t="ekr.20240928161210.1"></v>
-<v t="ekr.20240929032636.1"><vh>function: entry &amp; helpers</vh>
-<v t="ekr.20240930100625.1"><vh>&lt;&lt; 1: read &gt;&gt;</vh></v>
-<v t="ekr.20240930100707.1"><vh>&lt;&lt; 2: make input_list &gt;&gt;</vh></v>
-<v t="ekr.20240930100553.1"><vh>&lt;&lt; 3: print stats &gt;&gt;</vh></v>
-<v t="ekr.20240929033044.1"><vh>function: add_input_token</vh></v>
-<v t="ekr.20240929032710.1"><vh>function: fmt_ms</vh></v>
-<v t="ekr.20240929024648.113"><vh>function: make_input_list</vh></v>
-<v t="ekr.20240930084648.1"><vh>function: read</vh></v>
+<v t="ekr.20240928161210.1"><vh>@file src/tbo.rs</vh></v>
+<v t="ekr.20241001104914.1"><vh>--- classes</vh>
+<v t="ekr.20240929074547.1"><vh>class Stats</vh>
+<v t="ekr.20241001100954.1"><vh> Stats::new</vh></v>
+<v t="ekr.20240929080242.1"><vh>Stats::fmt_ms</vh></v>
+<v t="ekr.20240929075236.1"><vh>Stats::report</vh></v>
+<v t="ekr.20240929074941.1"><vh>Stats::update_times</vh></v>
 </v>
+<v t="ekr.20240929074037.1"><vh>class LeoBeautifier (new)</vh>
+<v t="ekr.20240929074037.114"><vh> LB::new</vh></v>
+<v t="ekr.20240929074037.3"><vh>LB::add_input_token</vh></v>
+<v t="ekr.20240929074037.2"><vh>LB::add_output_string</vh></v>
+<v t="ekr.20240929074037.4"><vh>LB::beautify_all_files</vh></v>
+<v t="ekr.20240929074037.5"><vh>LB::beautify_one_file</vh></v>
+<v t="ekr.20240929074037.7"><vh>LB::do_*</vh>
+<v t="ekr.20240929074037.8"><vh>LB:Handlers with values</vh>
+<v t="ekr.20240929074037.9"><vh>LB::do_Comment</vh></v>
+<v t="ekr.20240929074037.10"><vh>LB::do_Complex</vh></v>
+<v t="ekr.20240929074037.11"><vh>LB::do_Float</vh></v>
+<v t="ekr.20240929074037.12"><vh>LB::do_Int</vh></v>
+<v t="ekr.20240929074037.13"><vh>LB::do_Name</vh></v>
+<v t="ekr.20240929074037.14"><vh>LB::do_String</vh></v>
+</v>
+<v t="ekr.20240929074037.15"><vh>LB:Handlers using lws</vh>
+<v t="ekr.20240929074037.16"><vh>LB::do_Dedent</vh></v>
+<v t="ekr.20240929074037.17"><vh>LB::do_Indent</vh></v>
+<v t="ekr.20240929074037.18"><vh>LB::do_Newline</vh></v>
+<v t="ekr.20240929074037.19"><vh>LB::do_NonLogicalNewline</vh></v>
+</v>
+<v t="ekr.20240929074037.20"><vh>LB:Handlers w/o values</vh>
+<v t="ekr.20240929074037.21"><vh>LB::do_Amper</vh></v>
+<v t="ekr.20240929074037.22"><vh>LB::do_AmperEqual</vh></v>
+<v t="ekr.20240929074037.23"><vh>LB::do_And</vh></v>
+<v t="ekr.20240929074037.24"><vh>LB::do_As</vh></v>
+<v t="ekr.20240929074037.25"><vh>LB::do_Assert</vh></v>
+<v t="ekr.20240929074037.26"><vh>LB::do_Async</vh></v>
+<v t="ekr.20240929074037.27"><vh>LB::do_At</vh></v>
+<v t="ekr.20240929074037.28"><vh>LB::do_AtEqual</vh></v>
+<v t="ekr.20240929074037.29"><vh>LB::do_Await</vh></v>
+<v t="ekr.20240929074037.30"><vh>LB::do_Break</vh></v>
+<v t="ekr.20240929074037.31"><vh>LB::do_Case</vh></v>
+<v t="ekr.20240929074037.32"><vh>LB::do_CircumFlex</vh></v>
+<v t="ekr.20240929074037.33"><vh>LB::do_CircumflexEqual</vh></v>
+<v t="ekr.20240929074037.34"><vh>LB::do_Class</vh></v>
+<v t="ekr.20240929074037.35"><vh>LB::do_Colon</vh></v>
+<v t="ekr.20240929074037.36"><vh>LB::do_ColonEqual</vh></v>
+<v t="ekr.20240929074037.37"><vh>LB::do_Comma</vh></v>
+<v t="ekr.20240929074037.38"><vh>LB::do_Continue</vh></v>
+<v t="ekr.20240929074037.39"><vh>LB::do_Def</vh></v>
+<v t="ekr.20240929074037.40"><vh>LB::do_Del</vh></v>
+<v t="ekr.20240929074037.41"><vh>LB::do_Dot</vh></v>
+<v t="ekr.20240929074037.42"><vh>LB::do_DoubleSlash</vh></v>
+<v t="ekr.20240929074037.43"><vh>LB::do_DoubleSlashEqual</vh></v>
+<v t="ekr.20240929074037.44"><vh>LB::do_DoubleStar</vh></v>
+<v t="ekr.20240929074037.45"><vh>LB::do_DoubleStarEqual</vh></v>
+<v t="ekr.20240929074037.46"><vh>LB::do_Elif</vh></v>
+<v t="ekr.20240929074037.47"><vh>LB::do_Ellipsis</vh></v>
+<v t="ekr.20240929074037.48"><vh>LB::do_Else</vh></v>
+<v t="ekr.20240929074037.49"><vh>LB::do_EndOfFile</vh></v>
+<v t="ekr.20240929074037.50"><vh>LB::do_EqEqual</vh></v>
+<v t="ekr.20240929074037.51"><vh>LB::do_Equal</vh></v>
+<v t="ekr.20240929074037.52"><vh>LB::do_Except</vh></v>
+<v t="ekr.20240929074037.53"><vh>LB::do_False</vh></v>
+<v t="ekr.20240929074037.54"><vh>LB::do_Finally</vh></v>
+<v t="ekr.20240929074037.55"><vh>LB::do_For</vh></v>
+<v t="ekr.20240929074037.56"><vh>LB::do_From</vh></v>
+<v t="ekr.20240929074037.57"><vh>LB::do_Global</vh></v>
+<v t="ekr.20240929074037.58"><vh>LB::do_Greater</vh></v>
+<v t="ekr.20240929074037.59"><vh>LB::do_GreaterEqual</vh></v>
+<v t="ekr.20240929074037.60"><vh>LB::do_If</vh></v>
+<v t="ekr.20240929074037.61"><vh>LB::do_Import</vh></v>
+<v t="ekr.20240929074037.62"><vh>LB::do_In</vh></v>
+<v t="ekr.20240929074037.63"><vh>LB::do_Is</vh></v>
+<v t="ekr.20240929074037.64"><vh>LB::do_Lambda</vh></v>
+<v t="ekr.20240929074037.65"><vh>LB::do_Lbrace</vh></v>
+<v t="ekr.20240929074037.66"><vh>LB::do_LeftShift</vh></v>
+<v t="ekr.20240929074037.67"><vh>LB::do_LeftShiftEqual</vh></v>
+<v t="ekr.20240929074037.68"><vh>LB::do_Less</vh></v>
+<v t="ekr.20240929074037.69"><vh>LB::do_LessEqual</vh></v>
+<v t="ekr.20240929074037.70"><vh>LB::do_Lpar</vh></v>
+<v t="ekr.20240929074037.71"><vh>LB::do_Lsqb</vh></v>
+<v t="ekr.20240929074037.72"><vh>LB::do_Match</vh></v>
+<v t="ekr.20240929074037.73"><vh>LB::do_Minus</vh></v>
+<v t="ekr.20240929074037.74"><vh>LB::do_MinusEqual</vh></v>
+<v t="ekr.20240929074037.75"><vh>LB::do_None</vh></v>
+<v t="ekr.20240929074037.76"><vh>LB::do_Nonlocal</vh></v>
+<v t="ekr.20240929074037.77"><vh>LB::do_Not</vh></v>
+<v t="ekr.20240929074037.78"><vh>LB::do_NotEqual</vh></v>
+<v t="ekr.20240929074037.79"><vh>LB::do_Or</vh></v>
+<v t="ekr.20240929074037.80"><vh>LB::do_Pass</vh></v>
+<v t="ekr.20240929074037.81"><vh>LB::do_Percent</vh></v>
+<v t="ekr.20240929074037.82"><vh>LB::do_PercentEqual</vh></v>
+<v t="ekr.20240929074037.83"><vh>LB::do_Plus</vh></v>
+<v t="ekr.20240929074037.84"><vh>LB::do_PlusEqual</vh></v>
+<v t="ekr.20240929074037.85"><vh>LB::do_Raise</vh></v>
+<v t="ekr.20240929074037.86"><vh>LB::do_Rarrow</vh></v>
+<v t="ekr.20240929074037.87"><vh>LB::do_Rbrace</vh></v>
+<v t="ekr.20240929074037.88"><vh>LB::do_Return</vh></v>
+<v t="ekr.20240929074037.89"><vh>LB::do_RightShift</vh></v>
+<v t="ekr.20240929074037.90"><vh>LB::do_RightShiftEqual</vh></v>
+<v t="ekr.20240929074037.91"><vh>LB::do_Rpar</vh></v>
+<v t="ekr.20240929074037.92"><vh>LB::do_Rsqb</vh></v>
+<v t="ekr.20240929074037.93"><vh>LB::do_Semi</vh></v>
+<v t="ekr.20240929074037.94"><vh>LB::do_Slash</vh></v>
+<v t="ekr.20240929074037.95"><vh>LB::do_SlashEqual</vh></v>
+<v t="ekr.20240929074037.96"><vh>LB::do_Star</vh></v>
+<v t="ekr.20240929074037.97"><vh>LB::do_StarEqual</vh></v>
+<v t="ekr.20240929074037.98"><vh>LB::do_StartExpression</vh></v>
+<v t="ekr.20240929074037.99"><vh>LB::do_StartInteractive</vh></v>
+<v t="ekr.20240929074037.100"><vh>LB::do_StarModule</vh></v>
+<v t="ekr.20240929074037.101"><vh>LB::do_Tilde</vh></v>
+<v t="ekr.20240929074037.102"><vh>LB::do_True</vh></v>
+<v t="ekr.20240929074037.103"><vh>LB::do_Try</vh></v>
+<v t="ekr.20240929074037.104"><vh>LB::do_Type</vh></v>
+<v t="ekr.20240929074037.105"><vh>LB::do_Vbar</vh></v>
+<v t="ekr.20240929074037.106"><vh>LB::do_VbarEqual</vh></v>
+<v t="ekr.20240929074037.107"><vh>LB::do_While</vh></v>
+<v t="ekr.20240929074037.108"><vh>LB::do_With</vh></v>
+<v t="ekr.20240929074037.109"><vh>LB::do_Yield</vh></v>
+</v>
+</v>
+<v t="ekr.20240929074037.110"><vh>LB::enabled</vh></v>
+<v t="ekr.20240929074037.111"><vh>LB::get_args</vh></v>
+<v t="ekr.20240929074037.112"><vh>LB::make_input_list</vh></v>
+<v t="ekr.20240929074037.113"><vh>LB::make_output_list</vh></v>
+<v t="ekr.20240929074037.115"><vh>LB::show_args</vh></v>
+<v t="ekr.20240929074037.116"><vh>LB::show_help</vh></v>
+<v t="ekr.20240929074037.117"><vh>LB::show_output_list</vh></v>
+</v>
+</v>
+<v t="ekr.20241001093308.1"><vh>pub fn entry &amp; helpers</vh>
+<v t="ekr.20241001093308.2"><vh>fn tokenize</vh>
+<v t="ekr.20241001093308.3"><vh>&lt;&lt; tokenize: define contents &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20240929074037.5"></v>
+<v t="ekr.20240929074037.112"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20200107040729.1">def show_diffs(self, s1: str, s2: str) -&gt; None:  # pragma: no cover
@@ -4531,11 +4666,13 @@ subprocess.Popen(command, shell=True).communicate()
 2024/10/01:
 
 tbo: leoFrame.py
-14619 lex tokens, 5156 ws_tokens, len(input_list): 19775
 
-       read:  0.47 ms
-make_tokens: 14.65 ms
-      total: 15.13 ms
+ files: 1, tokens: 14619, ws tokens: 5156
+
+make_tokens:   14.41 ms
+       read:    0.44 ms
+      write:    0.00 ms
+      total:   14.85 ms
       
 Thats about 0.1 sec / file.
 
@@ -4722,14 +4859,775 @@ So tbo-in-rust is only about 10 times faster, but without any formatting.
 </t>
 <t tx="ekr.20240929033044.1">fn add_input_token (input_list: &amp;mut Vec&lt;InputTok&gt;, kind: &amp;str, value: &amp;str) {
     //! Add one token to the output list.
-    // println!("{:?}", kind);
-
     let new_tok = InputTok {
         kind: kind.to_string(),
         value: value.to_string()
     };
     input_list.push(new_tok);
 }
+</t>
+<t tx="ekr.20240929074037.1">#[derive(Debug)]
+pub struct Beautifier {
+    args: Vec&lt;String&gt;,
+    files_list: Vec&lt;String&gt;,
+    input_list: Vec&lt;InputTok&gt;,
+    output_list: Vec&lt;String&gt;,
+    stats: Stats,
+}
+
+///// Temporary.
+#[allow(dead_code)]
+#[allow(non_snake_case)]
+impl Beautifier {
+    @others
+}
+</t>
+<t tx="ekr.20240929074037.10">fn do_Complex(&amp;mut self, tok_value: &amp;str) {
+    self.add_output_string("Complex", tok_value);
+}
+</t>
+<t tx="ekr.20240929074037.100">fn do_StartModule(&amp;mut self) {
+    // self.add_output_string("StartModule", "");
+    println!("do_StartModule");
+}
+</t>
+<t tx="ekr.20240929074037.101">fn do_Tilde(&amp;mut self) {
+    self.add_output_string("Tilde", "~");
+}
+</t>
+<t tx="ekr.20240929074037.102">fn do_True(&amp;mut self) {
+    self.add_output_string("True", "True");
+}
+</t>
+<t tx="ekr.20240929074037.103">fn do_Try(&amp;mut self) {
+    self.add_output_string("Try", "try");
+}
+</t>
+<t tx="ekr.20240929074037.104">fn do_Type(&amp;mut self) {
+    self.add_output_string("Type", "type");
+}
+</t>
+<t tx="ekr.20240929074037.105">fn do_Vbar(&amp;mut self) {
+    self.add_output_string("Vbar", "|");
+}
+</t>
+<t tx="ekr.20240929074037.106">fn do_VbarEqual(&amp;mut self) {
+    self.add_output_string("VbarEqual", "|=");
+}
+</t>
+<t tx="ekr.20240929074037.107">fn do_While(&amp;mut self) {
+    self.add_output_string("While", "while");
+}
+</t>
+<t tx="ekr.20240929074037.108">fn do_With(&amp;mut self) {
+    self.add_output_string("With", "with");
+}
+</t>
+<t tx="ekr.20240929074037.109">fn do_Yield(&amp;mut self) {
+    self.add_output_string("Yield", "yield");
+}
+</t>
+<t tx="ekr.20240929074037.11">fn do_Float(&amp;mut self, tok_value: &amp;str) {
+    self.add_output_string("Float", tok_value);
+}
+</t>
+<t tx="ekr.20240929074037.110">fn enabled(&amp;self, arg: &amp;str) -&gt; bool {
+    //! Beautifier::enabled: return true if the given command-line argument is enabled.
+    //! Example:  x.enabled("--report");
+    return self.args.contains(&amp;arg.to_string());
+
+}
+</t>
+<t tx="ekr.20240929074037.111">fn get_args(&amp;mut self) {
+    //! Beautifier::get_args: Set the args and files_list ivars.
+    let args: Vec&lt;String&gt; = env::args().collect();
+    let valid_args = vec![
+        "--all", 
+        "--beautified",
+        "--diff",
+        "-h", "--help",
+        "--report",
+        "--write",
+    ];
+    for (i, arg) in args.iter().enumerate() {
+        if i &gt; 0 {
+            if valid_args.contains(&amp;arg.as_str()) {
+                self.args.push(arg.to_string())
+            }
+            else if 
+                arg.as_str().starts_with("--") ||
+                arg.as_str().starts_with("--")
+            {
+                println!("Ignoring invalid arg: {arg}");
+            }
+            else {
+                println!("File: {arg}");
+                self.files_list.push(arg.to_string());
+            }
+        }
+    }
+}
+</t>
+<t tx="ekr.20240929074037.112">fn make_input_list(&amp;mut self, contents: &amp;str) {
+    // Add InputToks to the input_list for every token given by the RustPython lex.
+    let mut n_tokens: u64 = 0;
+    let mut n_ws_tokens: u64 = 0;
+    let mut prev_start: usize = 0;
+    for token_tuple in lex(&amp;contents, Mode::Module)
+        .map(|tok| tok.expect("Failed to lex"))
+        .collect::&lt;Vec&lt;_&gt;&gt;()
+    {
+        use Tok::*;
+        n_tokens += 1;
+        let (token, range) = token_tuple;
+        let tok_value = &amp;contents[range];
+        let start_i = usize::from(range.start());
+        let end_i = usize::from(range.end());
+        
+        // The gem: create a whitespace pseudo-tokens.
+        if start_i &gt; prev_start {
+            let ws = &amp;contents[prev_start..start_i];
+            self.add_input_token("ws", ws);
+            n_ws_tokens += 1
+        }
+        prev_start = end_i;
+
+        // Variants names are necessary, but otherwise not used.
+        #[allow(unused_variables)]
+        let class_name = match token {
+            // Tokens with values...
+            // Use tok_value for *all* values.
+            Comment(value) =&gt; "Comment",  // No idea why parens are needed here.
+            Complex { real, imag } =&gt; "Complex",
+            Float { value } =&gt; "Float",
+            Int { value } =&gt; "Int",
+            Name { name } =&gt; "Name",
+            Tok::String { value, kind, triple_quoted } =&gt; "String",
+            
+            // Common tokens...
+            Class =&gt; "Class",
+            Dedent =&gt; "Dedent",
+            Def =&gt; "Def",
+            Indent =&gt; "Indent",
+            Newline =&gt; "Newline",
+            NonLogicalNewline =&gt; "NonLogicalNewline",
+
+            // All other tokens...
+            Amper =&gt; "Amper",
+            AmperEqual =&gt; "AmperEqual",
+            And =&gt; "And",
+            As =&gt; "As",
+            Assert =&gt; "Assert",
+            Async =&gt; "Async",
+            At =&gt; "At",
+            AtEqual =&gt; "AtEqual",
+            Await =&gt; "Await",
+            Break =&gt; "Break",
+            Case =&gt; "Case",
+            CircumFlex =&gt; "CircumFlex",
+            CircumflexEqual =&gt; "CircumflexEqual",
+            Colon =&gt; "Colon",
+            ColonEqual =&gt; "ColonEqual",
+            Comma =&gt; "Comma",
+            Continue =&gt; "Continue",
+            Del =&gt; "Del",
+            Dot =&gt; "Dot",
+            DoubleSlash =&gt; "DoubleSlash",
+            DoubleSlashEqual =&gt; "DoubleSlashEqual",
+            DoubleStar =&gt; "DoubleStar",
+            DoubleStarEqual =&gt; "DoubleStarEqual",
+            Elif =&gt; "Elif",
+            Ellipsis =&gt; "Ellipsis",
+            Else =&gt; "Else",
+            EndOfFile =&gt; "EndOfFile",
+            EqEqual =&gt; "EqEqual",
+            Equal =&gt; "Equal",
+            Except =&gt; "Except",
+            False =&gt; "False",
+            Finally =&gt; "Finally",
+            For =&gt; "For",
+            From =&gt; "From",
+            Global =&gt; "Global",
+            Greater =&gt; "Greater",
+            GreaterEqual =&gt; "GreaterEqual",
+            If =&gt; "If",
+            Import =&gt; "Import",
+            In =&gt; "In",
+            Is =&gt; "Is",
+            Lambda =&gt; "Lambda",
+            Lbrace =&gt; "Lbrace",
+            LeftShift =&gt; "LeftShift",
+            LeftShiftEqual =&gt; "LeftShiftEqual",
+            Less =&gt; "Less",
+            LessEqual =&gt; "LessEqual",
+            Lpar =&gt; "Lpar",
+            Lsqb =&gt; "Lsqb",
+            Match =&gt; "Match",
+            Minus =&gt; "Minus",
+            MinusEqual =&gt; "MinusEqual",
+            None =&gt; "None",
+            Nonlocal =&gt; "Nonlocal",
+            Not =&gt; "Not",
+            NotEqual =&gt; "NotEqual",
+            Or =&gt; "Or",
+            Pass =&gt; "Pass",
+            Percent =&gt; "Percent",
+            PercentEqual =&gt; "PercentEqual",
+            Plus =&gt; "Plus",
+            PlusEqual =&gt; "PlusEqual",
+            Raise =&gt; "Raise",
+            Rarrow =&gt; "Rarrow",
+            Rbrace =&gt; "Rbrace",
+            Return =&gt; "Return",
+            RightShift =&gt; "RightShift",
+            RightShiftEqual =&gt; "RightShiftEqual",
+            Rpar =&gt; "Rpar",
+            Rsqb =&gt; "Rsqb",
+            Semi =&gt; "Semi",
+            Slash =&gt; "Slash",
+            SlashEqual =&gt; "SlashEqual",
+            Star =&gt; "Star",
+            StarEqual =&gt; "StarEqual",
+            StartExpression =&gt; "StartExpression",
+            StartInteractive =&gt; "StartInteractive",
+            StartModule =&gt; "StartModule",
+            Tilde =&gt; "Tilde",
+            True =&gt; "True",
+            Try =&gt; "Try",
+            Type =&gt; "Type",
+            Vbar =&gt; "Vbar",
+            VbarEqual =&gt; "VbarEqual",
+            While =&gt; "While",
+            With =&gt; "With",
+            Yield =&gt; "Yield",
+        };
+        self.add_input_token(class_name, tok_value);
+    }
+    // Update counts.
+    self.stats.n_tokens += n_tokens;
+    self.stats.n_ws_tokens += n_ws_tokens;
+}
+</t>
+<t tx="ekr.20240929074037.113">fn make_output_list(&amp;mut self) {
+
+    //// Prototype only.
+    for input_token in &amp;self.input_list.clone() {
+        // println!("{:?}", input_token);
+        self.add_output_string(input_token.kind.as_str(), input_token.value.as_str());
+    }
+}
+</t>
+<t tx="ekr.20240929074037.114">pub fn new() -&gt; Beautifier {
+    let mut x = Beautifier {
+        args: Vec::new(),
+        files_list: Vec::new(),
+        input_list: Vec::new(),
+        output_list: Vec::new(),
+        stats: Stats::new(),
+    };
+    x.get_args();
+    return x;
+}
+</t>
+<t tx="ekr.20240929074037.115">fn show_args (&amp;self) {
+    println!("Command-line arguments...");
+    for (i, arg) in self.args.iter().enumerate() {
+        if i &gt; 0 {
+            println!("  {arg}");
+        }
+    }
+    for file_arg in self.files_list.iter() {
+        println!("  {file_arg}");
+    }
+}
+</t>
+<t tx="ekr.20240929074037.116">fn show_help (&amp;self) {
+    //! Beautifier::show_help: print the help messages.
+    println!("{}", textwrap::dedent("
+        Beautify or diff files.
+
+        -h --help:      Print this help message and exit.
+        --all:          Beautify all files, even unchanged files.
+        --beautified:   Report beautified files individually, even if not written.
+        --diff:         Show diffs instead of changing files.
+        --report:       Print summary report.
+        --write:        Write beautifed files (dry-run mode otherwise).
+    "));
+}
+</t>
+<t tx="ekr.20240929074037.117">fn show_output_list (&amp;self) {
+    println!("\nOutput list...");
+    for (i, arg) in self.output_list.iter().enumerate() {
+        if i &gt; 0 {
+            print!("{:?}", arg);
+        }
+    }
+}
+</t>
+<t tx="ekr.20240929074037.12">fn do_Int(&amp;mut self, tok_value: &amp;str) {
+    self.add_output_string("Int", tok_value);
+}
+</t>
+<t tx="ekr.20240929074037.13">fn do_Name(&amp;mut self, tok_value: &amp;str) {
+    self.add_output_string("Name", tok_value);
+}
+</t>
+<t tx="ekr.20240929074037.14">fn do_String(&amp;mut self, tok_value: &amp;str) {
+    // correct.
+    // print!("{tok_value}");
+    
+    // incorrect.
+        // let quote = if *triple_quoted {"'''"} else {"'"};
+        // print!("{:?}:{quote}{value}{quote}", kind);
+
+    self.add_output_string("String", tok_value);
+}
+</t>
+<t tx="ekr.20240929074037.15"></t>
+<t tx="ekr.20240929074037.16">fn do_Dedent(&amp;mut self, tok_value: &amp;str) {
+    self.add_output_string("Dedent", tok_value);
+}
+</t>
+<t tx="ekr.20240929074037.17">fn do_Indent(&amp;mut self, tok_value: &amp;str) {
+    self.add_output_string("Indent", tok_value);
+}
+</t>
+<t tx="ekr.20240929074037.18">fn do_Newline(&amp;mut self) {
+    self.add_output_string("Indent", "\n");
+}
+</t>
+<t tx="ekr.20240929074037.19">fn do_NonLogicalNewline(&amp;mut self) {
+    self.add_output_string("Indent", "\n");
+}
+</t>
+<t tx="ekr.20240929074037.2">#[allow(unused_variables)]
+fn add_output_string (&amp;mut self, kind: &amp;str, value: &amp;str) {
+    //! Add one string to the output list.
+    self.output_list.push(value.to_string())
+}
+</t>
+<t tx="ekr.20240929074037.20"></t>
+<t tx="ekr.20240929074037.21">fn do_Amper(&amp;mut self) {
+    self.add_output_string("Amper", "&amp;");
+}
+</t>
+<t tx="ekr.20240929074037.22">fn do_AmperEqual(&amp;mut self) {
+    self.add_output_string("AmperEqual", "&amp;=");
+}
+</t>
+<t tx="ekr.20240929074037.23">fn do_And(&amp;mut self) {
+    self.add_output_string("And", "and");
+}
+</t>
+<t tx="ekr.20240929074037.24">fn do_As(&amp;mut self) {
+    self.add_output_string("As", "as");
+}
+</t>
+<t tx="ekr.20240929074037.25">fn do_Assert(&amp;mut self) {
+    self.add_output_string("Assert", "assert");
+}
+</t>
+<t tx="ekr.20240929074037.26">fn do_Async(&amp;mut self) {
+    self.add_output_string("Async", "async");
+}
+</t>
+<t tx="ekr.20240929074037.27">fn do_At(&amp;mut self) {
+    self.add_output_string("At", "@");
+}
+</t>
+<t tx="ekr.20240929074037.28">fn do_AtEqual(&amp;mut self) {
+    self.add_output_string("AtEqual", "@=");
+}
+</t>
+<t tx="ekr.20240929074037.29">fn do_Await(&amp;mut self) {
+    self.add_output_string("Await", "await");
+}
+</t>
+<t tx="ekr.20240929074037.3">// #[allow(dead_code)]
+fn add_input_token (&amp;mut self, kind: &amp;str, value: &amp;str) {
+    //! Add one token to the output list.
+    self.input_list.push(InputTok {
+        kind: kind.to_string(),
+        value: value.to_string(),
+    });
+}
+</t>
+<t tx="ekr.20240929074037.30">fn do_Break(&amp;mut self) {
+    self.add_output_string("Break", "break");
+}
+</t>
+<t tx="ekr.20240929074037.31">fn do_Case(&amp;mut self) {
+    self.add_output_string("Case", "case");
+}
+</t>
+<t tx="ekr.20240929074037.32">fn do_CircumFlex(&amp;mut self) {
+    self.add_output_string("CircumFlex", "^");
+}
+</t>
+<t tx="ekr.20240929074037.33">fn do_CircumflexEqual(&amp;mut self) {
+    self.add_output_string("CircumflexEqual", "^=");
+}
+</t>
+<t tx="ekr.20240929074037.34">fn do_Class(&amp;mut self) {
+    self.add_output_string("Class", "class");
+}
+</t>
+<t tx="ekr.20240929074037.35">fn do_Colon(&amp;mut self) {
+    self.add_output_string("Colon", ":");
+}
+</t>
+<t tx="ekr.20240929074037.36">fn do_ColonEqual(&amp;mut self) {
+    self.add_output_string("ColonEqual", ":=");
+}
+</t>
+<t tx="ekr.20240929074037.37">fn do_Comma(&amp;mut self) {
+    self.add_output_string("Comma", ",");
+}
+</t>
+<t tx="ekr.20240929074037.38">fn do_Continue(&amp;mut self) {
+    self.add_output_string("Continue", "continue");
+}
+</t>
+<t tx="ekr.20240929074037.39">fn do_Def(&amp;mut self) {
+    self.add_output_string("Def", "def");
+}
+</t>
+<t tx="ekr.20240929074037.4">pub fn beautify_all_files(&amp;mut self) {
+    // for file_name in self.files_list.clone() {
+    for file_name in self.files_list.clone() {
+        self.beautify_one_file(&amp;file_name);
+    }
+}
+
+</t>
+<t tx="ekr.20240929074037.40">fn do_Del(&amp;mut self) {
+    self.add_output_string("Del", "del");
+}
+</t>
+<t tx="ekr.20240929074037.41">fn do_Dot(&amp;mut self) {
+    self.add_output_string("Dot", ".");
+}
+</t>
+<t tx="ekr.20240929074037.42">fn do_DoubleSlash(&amp;mut self) {
+    self.add_output_string("DoubleSlash", "//");
+}
+</t>
+<t tx="ekr.20240929074037.43">fn do_DoubleSlashEqual(&amp;mut self) {
+    self.add_output_string("DoubleSlashEqual", "//=");
+}
+</t>
+<t tx="ekr.20240929074037.44">fn do_DoubleStar(&amp;mut self) {
+    self.add_output_string("DoubleStar", "**");
+}
+</t>
+<t tx="ekr.20240929074037.45">fn do_DoubleStarEqual(&amp;mut self) {
+    self.add_output_string("DoubleStarEqual", "**=");
+}
+</t>
+<t tx="ekr.20240929074037.46">fn do_Elif(&amp;mut self) {
+    self.add_output_string("Elif", "elif");
+}
+</t>
+<t tx="ekr.20240929074037.47">fn do_Ellipsis(&amp;mut self) {
+    self.add_output_string("Ellipsis", "...");
+}
+</t>
+<t tx="ekr.20240929074037.48">fn do_Else(&amp;mut self) {
+    self.add_output_string("Else", "else");
+}
+</t>
+<t tx="ekr.20240929074037.49">fn do_EndOfFile(&amp;mut self) {
+    self.add_output_string("EndOfFile", "EOF");
+}
+</t>
+<t tx="ekr.20240929074037.5">fn beautify_one_file(&amp;mut self, file_name: &amp;str) {
+    // Compute short_file_name from file_name.
+    if true {  // Testing only.
+        let file_path = path::Path::new(file_name);
+        let os_str = file_path.file_name().unwrap(); // &amp;OsStr
+        let short_file_name = os_str.to_str().unwrap();
+        println!("{short_file_name}");
+    }
+    // Read the file into contents (a String).
+    self.output_list = Vec::new();
+    let t1 = std::time::Instant::now();
+    let contents = fs::read_to_string(file_name)
+        .expect("Error reading{file_name}");
+    // print_type(&amp;contents, "contents");
+    let read_time = t1.elapsed().as_micros();
+    // Make the list of input tokens
+    let t3 = std::time::Instant::now();
+    self.make_input_list(&amp;contents);
+    let make_tokens_time = t3.elapsed().as_micros();
+    // Update stats.
+    self.stats.n_files += 1;
+    let write_time = 0;
+    self.stats.update_times(make_tokens_time, read_time, write_time);
+}
+</t>
+<t tx="ekr.20240929074037.50">fn do_EqEqual(&amp;mut self) {
+    self.add_output_string("EqEqual", "==");
+}
+</t>
+<t tx="ekr.20240929074037.51">fn do_Equal(&amp;mut self) {
+    self.add_output_string("Equal", "=");
+}
+</t>
+<t tx="ekr.20240929074037.52">fn do_Except(&amp;mut self) {
+    self.add_output_string("Except", "except");
+}
+</t>
+<t tx="ekr.20240929074037.53">fn do_False(&amp;mut self) {
+    self.add_output_string("False", "False");
+}
+</t>
+<t tx="ekr.20240929074037.54">fn do_Finally(&amp;mut self) {
+    self.add_output_string("Finally", "finally");
+}
+</t>
+<t tx="ekr.20240929074037.55">fn do_For(&amp;mut self) {
+    self.add_output_string("For", "for");
+}
+</t>
+<t tx="ekr.20240929074037.56">fn do_From(&amp;mut self) {
+    self.add_output_string("From", "from");
+}
+</t>
+<t tx="ekr.20240929074037.57">fn do_Global(&amp;mut self) {
+    self.add_output_string("Global", "global");
+}
+</t>
+<t tx="ekr.20240929074037.58">fn do_Greater(&amp;mut self) {
+    self.add_output_string("Greater", "&gt;");
+}
+</t>
+<t tx="ekr.20240929074037.59">fn do_GreaterEqual(&amp;mut self) {
+    self.add_output_string("GreaterEqual", "&gt;-");
+}
+</t>
+<t tx="ekr.20240929074037.60">fn do_If(&amp;mut self) {
+    self.add_output_string("If", "if");
+}
+</t>
+<t tx="ekr.20240929074037.61">fn do_Import(&amp;mut self) {
+    self.add_output_string("Import", "import");
+}
+</t>
+<t tx="ekr.20240929074037.62">fn do_In(&amp;mut self) {
+    self.add_output_string("In", "in");
+}
+</t>
+<t tx="ekr.20240929074037.63">fn do_Is(&amp;mut self) {
+    self.add_output_string("Is", "is");
+}
+</t>
+<t tx="ekr.20240929074037.64">fn do_Lambda(&amp;mut self) {
+    self.add_output_string("Lambda", "lambda");
+}
+</t>
+<t tx="ekr.20240929074037.65">fn do_Lbrace(&amp;mut self) {
+    self.add_output_string("Lbrace", "[");
+}
+</t>
+<t tx="ekr.20240929074037.66">fn do_LeftShift(&amp;mut self) {
+    self.add_output_string("LeftShift", "&lt;&lt;");
+}
+</t>
+<t tx="ekr.20240929074037.67">fn do_LeftShiftEqual(&amp;mut self) {
+    self.add_output_string("LeftShiftEqual", "&lt;&lt;=");
+}
+</t>
+<t tx="ekr.20240929074037.68">fn do_Less(&amp;mut self) {
+    self.add_output_string("Less", "&lt;");
+}
+</t>
+<t tx="ekr.20240929074037.69">fn do_LessEqual(&amp;mut self) {
+    self.add_output_string("LessEqual", "&lt;=");
+}
+</t>
+<t tx="ekr.20240929074037.7"></t>
+<t tx="ekr.20240929074037.70">fn do_Lpar(&amp;mut self) {
+    self.add_output_string("Lpar", "(");
+}
+</t>
+<t tx="ekr.20240929074037.71">fn do_Lsqb(&amp;mut self) {
+    self.add_output_string("Lsqb", "[");
+}
+</t>
+<t tx="ekr.20240929074037.72">fn do_Match(&amp;mut self) {
+    self.add_output_string("Match", "match");
+}
+</t>
+<t tx="ekr.20240929074037.73">fn do_Minus(&amp;mut self) {
+    self.add_output_string("Minus", "-");
+}
+</t>
+<t tx="ekr.20240929074037.74">fn do_MinusEqual(&amp;mut self) {
+    self.add_output_string("MinusEqual", "-=");
+}
+</t>
+<t tx="ekr.20240929074037.75">fn do_None(&amp;mut self) {
+    self.add_output_string("None", "None");
+}
+</t>
+<t tx="ekr.20240929074037.76">fn do_Nonlocal(&amp;mut self) {
+    self.add_output_string("Nonlocal", "nonlocal");
+}
+</t>
+<t tx="ekr.20240929074037.77">fn do_Not(&amp;mut self) {
+    self.add_output_string("Not", "not");
+}
+</t>
+<t tx="ekr.20240929074037.78">fn do_NotEqual(&amp;mut self) {
+    self.add_output_string("NotEqual", "!=");
+}
+</t>
+<t tx="ekr.20240929074037.79">fn do_Or(&amp;mut self) {
+    self.add_output_string("Or", "or");
+}
+</t>
+<t tx="ekr.20240929074037.8"></t>
+<t tx="ekr.20240929074037.80">fn do_Pass(&amp;mut self) {
+    self.add_output_string("Pass", "pass");
+}
+</t>
+<t tx="ekr.20240929074037.81">fn do_Percent(&amp;mut self) {
+    self.add_output_string("Percent", "%");
+}
+</t>
+<t tx="ekr.20240929074037.82">fn do_PercentEqual(&amp;mut self) {
+    self.add_output_string("PercentEqual", "%=");
+}
+</t>
+<t tx="ekr.20240929074037.83">fn do_Plus(&amp;mut self) {
+    self.add_output_string("Plus", "+");
+}
+</t>
+<t tx="ekr.20240929074037.84">fn do_PlusEqual(&amp;mut self) {
+    self.add_output_string("PlusEqual", "+=");
+}
+</t>
+<t tx="ekr.20240929074037.85">fn do_Raise(&amp;mut self) {
+    self.add_output_string("Raise", "raise");
+}
+</t>
+<t tx="ekr.20240929074037.86">fn do_Rarrow(&amp;mut self) {
+    self.add_output_string("Rarrow", "-&gt;");
+}
+</t>
+<t tx="ekr.20240929074037.87">fn do_Rbrace(&amp;mut self) {
+    self.add_output_string("Rbrace", "]");
+}
+</t>
+<t tx="ekr.20240929074037.88">fn do_Return(&amp;mut self) {
+    self.add_output_string("Return", "return");
+}
+</t>
+<t tx="ekr.20240929074037.89">fn do_RightShift(&amp;mut self) {
+    self.add_output_string("RightShift", "&gt;&gt;");
+}
+</t>
+<t tx="ekr.20240929074037.9">fn do_Comment(&amp;mut self, tok_value: &amp;str) {
+    // print!("{tok_value}");  // Correct.
+    // print!("{value} ");  // Wrong!
+    self.add_output_string("Comment", tok_value);
+}
+</t>
+<t tx="ekr.20240929074037.90">fn do_RightShiftEqual(&amp;mut self) {
+    self.add_output_string("RightShiftEqual", "&gt;&gt;=");
+}
+</t>
+<t tx="ekr.20240929074037.91">fn do_Rpar(&amp;mut self) {
+    self.add_output_string("Rpar", ")");
+}
+</t>
+<t tx="ekr.20240929074037.92">fn do_Rsqb(&amp;mut self) {
+    self.add_output_string("Rsqb", "]");
+}
+</t>
+<t tx="ekr.20240929074037.93">fn do_Semi(&amp;mut self) {
+    self.add_output_string("Semi", ";");
+}
+</t>
+<t tx="ekr.20240929074037.94">fn do_Slash(&amp;mut self) {
+    self.add_output_string("Slash", "/");
+}
+</t>
+<t tx="ekr.20240929074037.95">fn do_SlashEqual(&amp;mut self) {
+    self.add_output_string("SlashEqual", "/=");
+}
+</t>
+<t tx="ekr.20240929074037.96">fn do_Star(&amp;mut self) {
+    self.add_output_string("Star", "*");
+}
+</t>
+<t tx="ekr.20240929074037.97">fn do_StarEqual(&amp;mut self) {
+    self.add_output_string("StarEqual", "*=");
+}
+</t>
+<t tx="ekr.20240929074037.98">fn do_StartExpression(&amp;mut self) {
+    // self.add_output_string("StartExpression", "");
+}
+</t>
+<t tx="ekr.20240929074037.99">fn do_StartInteractive(&amp;mut self) {
+    // self.add_output_string("StartModule", "");
+}
+</t>
+<t tx="ekr.20240929074547.1">#[derive(Debug)]
+pub struct Stats {
+    // Cumulative statistics for all files.
+    n_files: u64, // Number of files.
+    n_tokens: u64, // Number of tokens.
+    n_ws_tokens: u64, // Number of pseudo-ws tokens.
+
+    // Timing stat, in microseconds...
+    make_tokens_time: u128,
+    read_time: u128,
+    write_time: u128,
+}
+
+// #[allow(dead_code)]
+// #[allow(non_snake_case)]
+impl Stats {
+    @others
+}
+</t>
+<t tx="ekr.20240929074941.1">fn update_times (&amp;mut self,
+    make_tokens: u128,
+    read_time: u128,
+    write_time: u128
+) {
+    // Update cumulative timing stats.
+    self.make_tokens_time += make_tokens;
+    self.read_time += read_time;
+    self.write_time += write_time;
+}
+</t>
+<t tx="ekr.20240929075236.1">fn report (&amp;mut self) {
+    // Cumulative counts.
+    let n_files = self.n_files;
+    let n_tokens = self.n_tokens;
+    let n_ws_tokens = self.n_ws_tokens;
+    // Print cumulative timing stats, in ms, using fmt_ms.
+    let total_time = self.fmt_ms(self.make_tokens_time + self.read_time + self.write_time);
+    let make_tokens_time = self.fmt_ms(self.make_tokens_time);
+    let read_time = self.fmt_ms(self.read_time);
+    let write_time = self.fmt_ms(self.write_time);
+    println!("");
+    println!("     files: {n_files}, tokens: {n_tokens}, ws tokens: {n_ws_tokens}");
+    println!("make_tokens: {make_tokens_time:&gt;7} ms");
+    println!("       read: {read_time:&gt;7} ms");
+    println!("      write: {write_time:&gt;7} ms");
+    println!("      total: {total_time:&gt;7} ms");
+}
+</t>
+<t tx="ekr.20240929080242.1">fn fmt_ms(&amp;mut self, t: u128) -&gt; String {
+    //! Convert microseconds to fractional milliseconds.
+    let ms = t / 1000;
+    let micro = (t % 1000) / 10;
+    return f!("{ms}.{micro:02}");  // Two-digits for fraction.
+}
+
 </t>
 <t tx="ekr.20240929084852.1">@language rest
 @wrap
@@ -4940,5 +5838,143 @@ fn returns_summarizable() -&gt; impl Summary {...}
 }
 </t>
 <t tx="ekr.20241001073040.1"></t>
+<t tx="ekr.20241001093308.1">pub fn entry() {
+
+    // Main line of beautifier.
+    let mut x = Beautifier::new();
+    if true {  // testing.
+        println!("");
+        for file_path in [
+            "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py",
+            // "C:\\Repos\\leo-editor\\leo\\core\\leoApp.py"
+        ] {
+            x.beautify_one_file(&amp;file_path);
+        }
+        x.stats.report();
+    }
+    else {
+        if x.enabled("--help") || x.enabled("-h") {
+            x.show_help();
+            return;
+        }
+        x.show_args();
+        x.beautify_all_files();
+    }
+}
+</t>
+<t tx="ekr.20241001093308.2">fn tokenize() {
+    &lt;&lt; tokenize: define contents &gt;&gt;
+    println!("fn tokenize");
+    println!("\nSource:\n{contents}");
+
+    for debug in [true, false].iter() {
+
+        println!("{}", if *debug {"Tokens..."} else {"\nBeautified:"});
+
+        let results = lex(contents, Mode::Module);  // An iterator yielding Option(Tok).
+        let mut count = 0;
+        let mut lws = String::new();
+        for (i, result) in results.enumerate() {
+            use Tok::*;
+            let token = result.ok().unwrap();
+            let (ref tok_class, tok_range) = token;
+            let tok_value = &amp;contents[tok_range];
+
+            if *debug {
+                let s = format!("{tok_class}");
+                print!("\nToken: {s:20} {:?}", tok_value);
+            }
+            else {
+                // Comment(value), Name(name)
+                #[allow(unused_variables)]
+                match tok_class {
+                    Comment(value) =&gt; {
+                        // print!("{value} ");  // Wrong!
+                        print!("{tok_value}");
+                    },
+                    Dedent =&gt; {
+                        lws.pop();
+                        lws.pop();
+                        print!("{lws}");
+                    },
+                    Def =&gt; {
+                        print!("{tok_value} ");
+                    },
+                    Indent =&gt; {
+                        lws.push_str("    ");
+                        print!("{lws}");
+                    },
+                    Name {name} =&gt; {
+                        print!("{tok_value} ");
+                    },
+                    Newline =&gt; {
+                        print!("{tok_value}");
+                        print!("{lws}");
+                        if false {  // old
+                            println!("");
+                            print!("{lws}");
+                        }
+                    },
+                    NonLogicalNewline =&gt; {
+                        println!("");
+                        print!("{lws}");
+                    },
+                    Return =&gt; {
+                        print!("{tok_value} ");
+                    },
+                    Tok::String {value, kind, triple_quoted} =&gt; {
+                        // correct.
+                        print!("{tok_value}");
+                        if false {  // incorrect.
+                            let quote = if *triple_quoted {"'''"} else {"'"};
+                            print!("{:?}:{quote}{value}{quote}", kind);
+                        }
+                    },
+                    _ =&gt; {
+                        print!("{tok_value}");
+                        if false {
+                            // to_string quotes values!
+                            let s = tok_class.to_string().replace("'", "");
+                            print!("{s}");
+                        }
+                    },
+                }
+            }
+            count = i
+        }
+        if *debug {
+            println!("\n{count} tokens")
+        }
+    }
+}
+</t>
+<t tx="ekr.20241001093308.3">let contents = r#"
+def test():
+# Comment 1.
+print('abc')
+# Comment 2.
+"#;
+
+// print("xyz")
+// print(rf'pdb')
+// print(fr'pdb2')
+// return bool(i &amp; 1)
+</t>
+<t tx="ekr.20241001100954.1">pub fn new() -&gt;Stats {
+    let x = Stats {
+        // Cumulative statistics for all files.
+        n_files: 0,  // Number of files.
+        n_tokens: 0, // Number of tokens.
+        n_ws_tokens: 0,  // Number of pseudo-ws tokens.
+
+        // Timing stat, in microseconds...
+        make_tokens_time: 0,
+        read_time: 0,
+        write_time: 0,
+    };
+    return x;
+}
+</t>
+<t tx="ekr.20241001104914.1"></t>
 </tnodes>
 </leo_file>
