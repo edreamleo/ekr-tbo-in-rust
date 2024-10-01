@@ -576,10 +576,10 @@ impl Beautifier {
         }
     }
     //@+node:ekr.20240929074037.112: *3* LB::make_input_list
-    fn make_input_list(&mut self, contents: &str) -> (u128, u128) {
+    fn make_input_list(&mut self, contents: &str) -> (u64, u64) {
         // Add InputToks to the input_list for every token given by the RustPython lex.
-        let mut tokens_n: u128 = 0;
-        let mut ws_tokens_n: u128 = 0;
+        let mut tokens_n: u64 = 0;
+        let mut ws_tokens_n: u64 = 0;
         let mut prev_start: usize = 0;
         for token_tuple in lex(&contents, Mode::Module)
             .map(|tok| tok.expect("Failed to lex"))
@@ -763,8 +763,9 @@ impl Beautifier {
 #[derive(Debug)]
 pub struct Stats {
     // Cumulative statistics for all files.
-    n_files: u128,  // Number of files.
-    n_tokens: u128, // Number of tokens.
+    n_files: u64,  // Number of files.
+    n_tokens: u64, // Number of tokens.
+
     // Timing stat, in microseconds...
     make_tokens_time: u128,
     read_time: u128,
@@ -817,7 +818,7 @@ impl Stats {
     }
     //@+node:ekr.20240929074941.1: *3* Stats::update
     fn update (&mut self,
-        n_tokens: u128,
+        n_tokens: u64,
         make_tokens: u128,
         read_time: u128,
         write_time: u128
@@ -836,7 +837,7 @@ pub fn entry() {
 
     // Main line of beautifier.
     let mut x = Beautifier::new();
-    if true {
+    if true {  // testing.
         let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py";
         x.beautify_one_file(&file_path);
     }
