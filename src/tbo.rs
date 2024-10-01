@@ -836,34 +836,26 @@ pub fn entry() {
     let tokens = lex_contents(&contents);
     let lex_time = fmt_ms(t2.elapsed().as_micros());
     //@-<< 2: lex >>
-    //@+<< 3: gem >>
-    //@+node:ekr.20240930100650.1: *3* << 3: gem >>
-    let t3 = Instant::now();
-    let mut ws_tokens: Vec<InputTok> = Vec::new();
-    let ws_tokens_n = gem(&contents, &tokens, &mut ws_tokens);
-    let gem_time = fmt_ms(t3.elapsed().as_micros());
-    //@-<< 3: gem >>
-    //@+<< 4: Loop on tokens >>
-    //@+node:ekr.20240930100707.1: *3* << 4: Loop on tokens >>
+    //@+<< 3: Loop on tokens >>
+    //@+node:ekr.20240930100707.1: *3* << 3: Loop on tokens >>
     let t4 = Instant::now();
     let mut input_list: Vec<InputTok> = Vec::new();
-    let n_tokens = make_input_list(&contents, &mut input_list, tokens);
+    let (n_tokens, ws_tokens_n) = make_input_list(&contents, &mut input_list, tokens);
     let loop_time = fmt_ms(t4.elapsed().as_micros());
-    //@-<< 4: Loop on tokens >>
-    //@+<< 5: print stats >>
-    //@+node:ekr.20240930100553.1: *3* << 5: print stats >>
+    //@-<< 3: Loop on tokens >>
+    //@+<< 4: print stats >>
+    //@+node:ekr.20240930100553.1: *3* << 4: print stats >>
     // Compute cumulative stats.
     let total_time = fmt_ms(t1.elapsed().as_micros());
     let tokens_n = input_list.len();
     println!("");
-    println!("     tbo: {short_file_name}");
-    println!("{n_tokens} lex tokens {ws_tokens_n} ws_tokens {tokens_n} InputToks\n");
-    println!("    read: {read_time:>5} ms");
-    println!("     lex: {lex_time:>5} ms");
-    println!("     gem: {gem_time:>5} ms");
-    println!("    loop: {loop_time:>5} ms");
-    println!("   total: {total_time:>5} ms");
-    //@-<< 5: print stats >>
+    println!("tbo: {short_file_name}");
+    println!("{n_tokens} lex tokens, {ws_tokens_n} ws_tokens, len(input_list): {tokens_n}\n");
+    println!("       read: {read_time:>5} ms");
+    println!("        lex: {lex_time:>5} ms");
+    println!("make_tokens: {loop_time:>5} ms");
+    println!("      total: {total_time:>5} ms");
+    //@-<< 4: print stats >>
 }
 //@+node:ekr.20240929033044.1: *3* function: add_input_token
 fn add_input_token (input_list: &mut Vec<InputTok>, kind: &str, value: &str) {
@@ -884,18 +876,6 @@ fn fmt_ms(t: u128) -> String {
     return f!("{ms}.{micro:02}");  // Two-digits for fraction.
 }
 
-//@+node:ekr.20240930060935.1: *3* function: gem
-fn gem(
-    contents: &String,
-    tokens: &Vec<(Tok, TextRange)>,
-    ws_tokens: &mut Vec<InputTok>
-) -> usize {
-    // Convert the tokenizer tokens to InputTok's containing pseudo-ws tokens.
-    for (token, range) in tokens {
-    
-    }
-    return ws_tokens.len();
-}
 //@+node:ekr.20240930085546.1: *3* function: lex_contents
 fn lex_contents(contents: &str) -> Vec<(Tok, TextRange)> {
     return lex(&contents, Mode::Module)
@@ -907,13 +887,26 @@ fn make_input_list(
     contents: &String,
     input_list: &mut Vec<InputTok>,
     tokens: Vec<(Tok, TextRange)>
-) -> usize {
+) -> (usize, usize) {
 
-    let mut count: usize = 0;
+    let mut tokens_n: usize = 0;
+    let mut ws_tokens_n: usize = 0;
+    let mut prev_start: usize = 0;
     for (token, range) in tokens { 
         use Tok::*;
-        count += 1;
+        tokens_n += 1;
         let tok_value = &contents[range];
+        let start_i: usize = usize::from(range.start());
+        let end_i: usize = usize::from(range.end());
+        
+        // The gem: create a whitespace token if necessary.
+        if start_i > prev_start {
+            let ws = &contents[prev_start..start_i];
+            // println!("ws: {prev_start}..{start_i} = `{ws}`");
+            add_input_token(input_list, "ws", ws);
+            ws_tokens_n += 1
+        }
+        prev_start = end_i;
 
         // Variants names are necessary, but otherwise not used.
         #[allow(unused_variables)]
@@ -1028,7 +1021,7 @@ fn make_input_list(
         // add_input_token(&mut input_list, class_name, tok_value);
         add_input_token(input_list, class_name, tok_value);
     }
-    return count;
+    return (tokens_n, ws_tokens_n);
 }
 //@+node:ekr.20240930084648.1: *3* function: read
 fn read(file_path: &str) -> String {
