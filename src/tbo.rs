@@ -850,7 +850,8 @@ pub fn entry() {
     let tokens_n = input_list.len();
     println!("");
     println!("tbo: {short_file_name}");
-    println!("{n_tokens} lex tokens, {ws_tokens_n} ws_tokens, len(input_list): {tokens_n}\n");
+    println!("{n_tokens} lex tokens, {ws_tokens_n} ws_tokens, len(input_list): {tokens_n}");
+    println!("");
     println!("       read: {read_time:>5} ms");
     println!("        lex: {lex_time:>5} ms");
     println!("make_tokens: {loop_time:>5} ms");
