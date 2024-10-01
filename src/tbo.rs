@@ -106,11 +106,11 @@ impl Beautifier {
         let contents = fs::read_to_string(file_name)
             .expect("Error reading{file_name}");
         // print_type(&contents, "contents");
-        let read_time = t1.elapsed().as_micros();
+        let read_time = t1.elapsed().as_nanos();
         // Make the list of input tokens
         let t3 = std::time::Instant::now();
         self.make_input_list(&contents);
-        let make_tokens_time = t3.elapsed().as_micros();
+        let make_tokens_time = t3.elapsed().as_nanos();
         // Update stats.
         self.stats.n_files += 1;
         let write_time = 0;
@@ -770,24 +770,25 @@ impl Stats {
     //@+node:ekr.20241001100954.1: *3*  Stats::new
     pub fn new() ->Stats {
         let x = Stats {
-            // Cumulative statistics for all files.
+            // Cumulative counts.
             n_files: 0,  // Number of files.
             n_tokens: 0, // Number of tokens.
             n_ws_tokens: 0,  // Number of pseudo-ws tokens.
 
-            // Timing stat, in microseconds...
+            // Timing stats, in nanoseconds...
             make_tokens_time: 0,
             read_time: 0,
             write_time: 0,
         };
         return x;
     }
-    //@+node:ekr.20240929080242.1: *3* Stats::fmt_ms
-    fn fmt_ms(&mut self, t: u128) -> String {
-        //! Convert microseconds to fractional milliseconds.
-        let ms = t / 1000;
-        let micro = (t % 1000) / 10;
-        return f!("{ms}.{micro:02}");  // Two-digits for fraction.
+    //@+node:ekr.20240929080242.1: *3* Stats::fmt_ns
+    fn fmt_ns(&mut self, t: u128) -> String {
+        //! Convert nanoseconds to fractional milliseconds.
+        let ms = t / 1000000;
+        let micro = (t % 1000000) / 10000;  // 2-places only.
+        // println!("t: {t:8} ms: {ms:03} micro: {micro:02}");
+        return f!("{ms:4}.{micro:02}");
     }
 
     //@+node:ekr.20240929075236.1: *3* Stats::report
@@ -796,15 +797,15 @@ impl Stats {
         let n_files = self.n_files;
         let n_tokens = self.n_tokens;
         let n_ws_tokens = self.n_ws_tokens;
-        // Print cumulative timing stats, in ms, using fmt_ms.
-        let total_time = self.fmt_ms(self.make_tokens_time + self.read_time + self.write_time);
-        let make_tokens_time = self.fmt_ms(self.make_tokens_time);
-        let read_time = self.fmt_ms(self.read_time);
-        let write_time = self.fmt_ms(self.write_time);
+        // Print cumulative timing stats, in ms.
+        let read_time = self.fmt_ns(self.read_time);
+        let make_tokens_time = self.fmt_ns(self.make_tokens_time);
+        let write_time = self.fmt_ns(self.write_time);
+        let total_time = self.fmt_ns(self.make_tokens_time + self.read_time + self.write_time);
         println!("");
         println!("     files: {n_files}, tokens: {n_tokens}, ws tokens: {n_ws_tokens}");
-        println!("make_tokens: {make_tokens_time:>7} ms");
         println!("       read: {read_time:>7} ms");
+        println!("make_tokens: {make_tokens_time:>7} ms");
         println!("      write: {write_time:>7} ms");
         println!("      total: {total_time:>7} ms");
     }
