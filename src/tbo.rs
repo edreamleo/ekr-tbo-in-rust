@@ -49,6 +49,7 @@ pub struct Beautifier {
     files_list: Vec<String>,
     input_list: Vec<InputTok>,
     output_list: Vec<String>,
+    stats: Stats,
 }
 
 ///// Temporary.
@@ -63,6 +64,7 @@ impl Beautifier {
             files_list: Vec::new(),
             input_list: Vec::new(),
             output_list: Vec::new(),
+            stats: Stats::new(),
         };
         x.get_args();
         return x;
@@ -102,17 +104,20 @@ impl Beautifier {
         let contents = fs::read_to_string(file_name)
             .expect("Error reading{file_name}");
         // print_type(&contents, "contents");
-        let t2 = t1.elapsed();
+        let read_time = t1.elapsed().as_micros();
         // Tokenize.
         let t3 = std::time::Instant::now();
         let n_tokens = self.tokenize_contents(contents);
-        let t4 = t3.elapsed();
+        let make_tokens_time = t3.elapsed().as_micros();
+        let write_time = 0;
+        self.stats.update(n_tokens, make_tokens_time, read_time, write_time);
         // Report
         if true { // self.enabled("--report") {
-            println!(" file name: {short_file_name}");
-            println!("      read: {:.2?}", t2);
-            println!("  tokenize: {:.2?}", t4);
-            println!("    tokens: {n_tokens}");
+            self.stats.report();
+            // println!(" file name: {short_file_name}");
+            // println!("      read: {:.2?}", t2);
+            // println!("  tokenize: {:.2?}", t4);
+            // println!("    tokens: {n_tokens}");
         }
         // Show tokens.
         //@+<< show output_list >>
@@ -570,9 +575,9 @@ impl Beautifier {
         }
     }
     //@+node:ekr.20240929074037.112: *3* LB::make_input_list
-    fn make_input_list(&mut self, contents: &str) -> u32 {
+    fn make_input_list(&mut self, contents: &str) -> u128 {
 
-        let mut count: u32 = 0;
+        let mut count: u128 = 0;
         let results = lex(&contents, Mode::Module);  // An iterator yielding Option(Tok).
         for result in results {
             use Tok::*;
@@ -739,7 +744,7 @@ impl Beautifier {
         }
     }
     //@+node:ekr.20240929074037.118: *3* LB::tokenize_contents (prototype)
-    fn tokenize_contents(&mut self, contents: String ) -> u32 {
+    fn tokenize_contents(&mut self, contents: String ) -> u128 {
 
         let count = self.make_input_list(&contents);
         
@@ -761,22 +766,33 @@ impl Beautifier {
 #[derive(Debug)]
 pub struct Stats {
     // Cumulative statistics for all files.
-    n_files: usize,  // Number of files.
-    n_tokens: usize, // Number of tokens.
+    n_files: u128,  // Number of files.
+    n_tokens: u128, // Number of tokens.
     // Timing stat, in microseconds...
-    beautify_time: usize,
-    gem_time: usize,
-    lex_time: usize,
-    read_time: usize,
-    write_time: usize,
+    make_tokens_time: u128,
+    read_time: u128,
+    write_time: u128,
 }
 
 // #[allow(dead_code)]
 // #[allow(non_snake_case)]
 impl Stats {
     //@+others
+    //@+node:ekr.20241001100954.1: *3*  Stats::new
+    pub fn new() ->Stats {
+        let x = Stats {
+            // Cumulative statistics for all files.
+            n_files: 0,  // Number of files.
+            n_tokens: 0, // Number of tokens.
+            // Timing stat, in microseconds...
+            make_tokens_time: 0,
+            read_time: 0,
+            write_time: 0,
+        };
+        return x;
+    }
     //@+node:ekr.20240929080242.1: *3* Stats::fmt_ms
-    fn fmt_ms(&mut self, t: usize) -> String {
+    fn fmt_ms(&mut self, t: u128) -> String {
         //! Convert microseconds to fractional milliseconds.
         let ms = t / 1000;
         let micro = (t % 1000) / 10;
@@ -785,39 +801,34 @@ impl Stats {
 
     //@+node:ekr.20240929075236.1: *3* Stats::report
     fn report (&mut self) {
-        // Print cumulative stats, in ms, using fmt_ms.
-        println!("");
-        let total_time = self.fmt_ms(
-            self.beautify_time + self.gem_time + self.lex_time + self.read_time + self.write_time
-        );
+        // Cumulative counts.
+        let n_files = self.n_files;
         let n_tokens = self.n_tokens;
-        let beautify_time = self.fmt_ms(self.beautify_time);
-        let gem_time = self.fmt_ms(self.gem_time);
-        let lex_time = self.fmt_ms(self.lex_time);
+        // Print cumulative timing stats, in ms, using fmt_ms.
+        let total_time = self.fmt_ms(self.make_tokens_time + self.read_time + self.write_time);
+        let make_tokens_time = self.fmt_ms(self.make_tokens_time);
         let read_time = self.fmt_ms(self.read_time);
         let write_time = self.fmt_ms(self.write_time);
-        println!("  tokens: {n_tokens:>7} ms");
-        println!("beautify: {beautify_time:>7} ms");
-        println!("     gem: {gem_time:>7} ms");
-        println!("     lex: {lex_time:>7} ms");
-        println!("    read: {read_time:>7} ms");
-        println!("   write: {write_time:>7} ms");
-        println!("   total: {total_time:>7} ms");
+        println!("");
+        println!("     tokens: {n_files}");
+        println!("     tokens: {n_tokens}");
+        println!("");
+        println!("make_tokens: {make_tokens_time:>7} ms");
+        println!("       read: {read_time:>7} ms");
+        println!("      write: {write_time:>7} ms");
+        println!("      total: {total_time:>7} ms");
     }
     //@+node:ekr.20240929074941.1: *3* Stats::update
     fn update (&mut self,
-        beautify_time: usize,
-        gem_time: usize,
-        lex_time: usize,
-        n_tokens: usize,
-        read_time: usize,
-        write_time: usize
+        n_tokens: u128,
+        make_tokens: u128,
+        read_time: u128,
+        write_time: u128
     ) {
         // Update cumulative stats.
-        self.beautify_time += beautify_time;
-        self.gem_time += gem_time;
-        self.lex_time += lex_time;
+        self.n_files += 1;
         self.n_tokens += n_tokens;
+        self.make_tokens_time += make_tokens;
         self.read_time += read_time;
         self.write_time += write_time;
     }
