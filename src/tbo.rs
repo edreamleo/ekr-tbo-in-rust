@@ -14,6 +14,7 @@ use rustpython_parser::{lexer::lex, Mode, Tok, text_size::TextRange};
 use std::env;  // For Beautifier.
 use std::fmt;  // For InputTok.
 use std::fs;
+use std::path;
 use std::time::Instant;
 
 //@+others
@@ -55,36 +56,50 @@ pub struct Beautifier {
 #[allow(non_snake_case)]
 impl Beautifier {
     //@+others
+    //@+node:ekr.20240929074037.114: *3*  LB::new
+    pub fn new() -> Beautifier {
+        let mut x = Beautifier {
+            args: Vec::new(),
+            files_list: Vec::new(),
+            input_list: Vec::new(),
+            output_list: Vec::new(),
+        };
+        x.get_args();
+        return x;
+    }
+    //@+node:ekr.20240929074037.3: *3* LB::add_input_token
+    // #[allow(dead_code)]
+    fn add_input_token (&mut self, kind: &str, value: &str) {
+        //! Add one token to the output list.
+        self.input_list.push(InputTok {
+            kind: kind.to_string(),
+            value: value.to_string(),
+        });
+    }
     //@+node:ekr.20240929074037.2: *3* LB::add_output_string
     #[allow(unused_variables)]
     fn add_output_string (&mut self, kind: &str, value: &str) {
         //! Add one string to the output list.
         self.output_list.push(value.to_string())
     }
-    //@+node:ekr.20240929074037.3: *3* LB::add_input_token
-    // #[allow(dead_code)]
-    fn add_input_token (&mut self, kind: &str, value: &str) {
-        //! Add one token to the output list.
-        // println!("{:?}", kind);
-        self.input_list.push(InputTok {
-            kind: kind.to_string(),
-            value: value.to_string(),
-        });
-    }
     //@+node:ekr.20240929074037.4: *3* LB::beautify_all_files
     pub fn beautify_all_files(&mut self) {
+        // for file_name in self.files_list.clone() {
         for file_name in self.files_list.clone() {
-            self.beautify_one_file(file_name);
+            self.beautify_one_file(&file_name);
         }
     }
 
     //@+node:ekr.20240929074037.5: *3* LB::beautify_one_file
-    fn beautify_one_file(&mut self, file_name: String) {
-        // println!("beautifiy_one_file: {file_name}");
-        self.output_list = Vec::new();
+    fn beautify_one_file(&mut self, file_name: &str) {
+        // Compute short_file_name from file_name.
+        let file_path = path::Path::new(file_name);
+        let os_str = file_path.file_name().unwrap(); // &OsStr
+        let short_file_name = os_str.to_str().unwrap();
         // Read the file into contents (a String).
+        self.output_list = Vec::new();
         let t1 = std::time::Instant::now();
-        let contents = fs::read_to_string(file_name.clone())
+        let contents = fs::read_to_string(file_name)
             .expect("Error reading{file_name}");
         // print_type(&contents, "contents");
         let t2 = t1.elapsed();
@@ -93,8 +108,8 @@ impl Beautifier {
         let n_tokens = self.tokenize_contents(contents);
         let t4 = t3.elapsed();
         // Report
-        if self.enabled("--report") {
-            println!(" file name: {file_name}");
+        if true { // self.enabled("--report") {
+            println!(" file name: {short_file_name}");
             println!("      read: {:.2?}", t2);
             println!("  tokenize: {:.2?}", t4);
             println!("    tokens: {n_tokens}");
@@ -688,17 +703,6 @@ impl Beautifier {
             self.add_output_string(input_token.kind.as_str(), input_token.value.as_str());
         }
     }
-    //@+node:ekr.20240929074037.114: *3* LB::new
-    pub fn new() -> Beautifier {
-        let mut x = Beautifier {
-            args: Vec::new(),
-            files_list: Vec::new(),
-            input_list: Vec::new(),
-            output_list: Vec::new(),
-        };
-        x.get_args();
-        return x;
-    }
     //@+node:ekr.20240929074037.115: *3* LB::show_args
     fn show_args (&self) {
         println!("Command-line arguments...");
@@ -819,206 +823,122 @@ impl Stats {
     }
     //@-others
 }
-//@+node:ekr.20240929032636.1: ** function: entry & helpers
+//@+node:ekr.20241001093308.1: ** pub fn entry & helpers
 pub fn entry() {
-    // leoFrame.py is a typical size
-    let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py";
-    let short_file_name = "leoFrame.py";
-    //@+<< 1: read >>
-    //@+node:ekr.20240930100625.1: *3* << 1: read >>
-    let t1 = Instant::now();
-    let contents = read(&file_path);
-    let read_time = fmt_ms(t1.elapsed().as_micros());
-    //@-<< 1: read >>
-    //@+<< 2: Make input_list >>
-    //@+node:ekr.20240930100707.1: *3* << 2: make input_list >>
-    let t4 = Instant::now();
-    let mut input_list: Vec<InputTok> = Vec::new();
-    let (n_tokens, ws_tokens_n) = make_input_list(&contents, &mut input_list); ////, tokens);
-    let loop_time = fmt_ms(t4.elapsed().as_micros());
-    //@-<< 2: Make input_list >>
-    //@+<< 3: print stats >>
-    //@+node:ekr.20240930100553.1: *3* << 3: print stats >>
-    // Compute cumulative stats.
-    let total_time = fmt_ms(t1.elapsed().as_micros());
-    let tokens_n = input_list.len();
-    println!("");
-    println!("tbo: {short_file_name}");
-    println!("{n_tokens} lex tokens, {ws_tokens_n} ws_tokens, len(input_list): {tokens_n}");
-    println!("");
-    println!("       read: {read_time:>5} ms");
-    // println!("        lex: {lex_time:>5} ms");
-    println!("make_tokens: {loop_time:>5} ms");
-    println!("      total: {total_time:>5} ms");
-    //@-<< 3: print stats >>
-}
-//@+node:ekr.20240929033044.1: *3* function: add_input_token
-fn add_input_token (input_list: &mut Vec<InputTok>, kind: &str, value: &str) {
-    //! Add one token to the output list.
-    // println!("{:?}", kind);
 
-    let new_tok = InputTok {
-        kind: kind.to_string(),
-        value: value.to_string()
-    };
-    input_list.push(new_tok);
-}
-//@+node:ekr.20240929032710.1: *3* function: fmt_ms
-fn fmt_ms(t: u128) -> String {
-    //! Convert microseconds to fractional milliseconds.
-    let ms = t / 1000;
-    let micro = (t % 1000) / 10;
-    return f!("{ms}.{micro:02}");  // Two-digits for fraction.
-}
-
-//@+node:ekr.20240929024648.113: *3* function: make_input_list
-fn make_input_list(
-    contents: &str,
-    input_list: &mut Vec<InputTok>,
-) -> (usize, usize) {
-    // Add InputToks to the input_list for every token given by the RustPython lex.
-    // The gem: Generate "ws" pseudo-tokens for all whitespace.
-    let mut tokens_n: usize = 0;
-    let mut ws_tokens_n: usize = 0;
-    let mut prev_start: usize = 0;
-    for token_tuple in lex(&contents, Mode::Module)
-        .map(|tok| tok.expect("Failed to lex"))
-        .collect::<Vec<_>>()
-    {
-        use Tok::*;
-        tokens_n += 1;
-        let (token, range) = token_tuple;
-        let tok_value = &contents[range];
-        let start_i: usize = usize::from(range.start());
-        let end_i: usize = usize::from(range.end());
-        
-        // The gem: create a whitespace pseudo-tokens.
-        if start_i > prev_start {
-            let ws = &contents[prev_start..start_i];
-            add_input_token(input_list, "ws", ws);
-            ws_tokens_n += 1
-        }
-        prev_start = end_i;
-
-        // Variants names are necessary, but otherwise not used.
-        #[allow(unused_variables)]
-        
-        let class_name = match token {
-            // Tokens with values...
-            // Use tok_value for *all* values.
-            Comment(value) => "Comment",  // No idea why parens are needed here.
-            Complex { real, imag } => "Complex",
-            Float { value } => "Float",
-            Int { value } => "Int",
-            Name { name } => "Name",
-            Tok::String { value, kind, triple_quoted } => "String",
-            
-            // Common tokens...
-            Class => "Class",
-            Dedent => "Dedent",
-            Def => "Def",
-            Indent => "Indent",
-            Newline => "Newline",
-            NonLogicalNewline => "NonLogicalNewline",
-
-            // All other tokens...
-            Amper => "Amper",
-            AmperEqual => "AmperEqual",
-            And => "And",
-            As => "As",
-            Assert => "Assert",
-            Async => "Async",
-            At => "At",
-            AtEqual => "AtEqual",
-            Await => "Await",
-            Break => "Break",
-            Case => "Case",
-            CircumFlex => "CircumFlex",
-            CircumflexEqual => "CircumflexEqual",
-            Colon => "Colon",
-            ColonEqual => "ColonEqual",
-            Comma => "Comma",
-            Continue => "Continue",
-            Del => "Del",
-            Dot => "Dot",
-            DoubleSlash => "DoubleSlash",
-            DoubleSlashEqual => "DoubleSlashEqual",
-            DoubleStar => "DoubleStar",
-            DoubleStarEqual => "DoubleStarEqual",
-            Elif => "Elif",
-            Ellipsis => "Ellipsis",
-            Else => "Else",
-            EndOfFile => "EndOfFile",
-            EqEqual => "EqEqual",
-            Equal => "Equal",
-            Except => "Except",
-            False => "False",
-            Finally => "Finally",
-            For => "For",
-            From => "From",
-            Global => "Global",
-            Greater => "Greater",
-            GreaterEqual => "GreaterEqual",
-            If => "If",
-            Import => "Import",
-            In => "In",
-            Is => "Is",
-            Lambda => "Lambda",
-            Lbrace => "Lbrace",
-            LeftShift => "LeftShift",
-            LeftShiftEqual => "LeftShiftEqual",
-            Less => "Less",
-            LessEqual => "LessEqual",
-            Lpar => "Lpar",
-            Lsqb => "Lsqb",
-            Match => "Match",
-            Minus => "Minus",
-            MinusEqual => "MinusEqual",
-            None => "None",
-            Nonlocal => "Nonlocal",
-            Not => "Not",
-            NotEqual => "NotEqual",
-            Or => "Or",
-            Pass => "Pass",
-            Percent => "Percent",
-            PercentEqual => "PercentEqual",
-            Plus => "Plus",
-            PlusEqual => "PlusEqual",
-            Raise => "Raise",
-            Rarrow => "Rarrow",
-            Rbrace => "Rbrace",
-            Return => "Return",
-            RightShift => "RightShift",
-            RightShiftEqual => "RightShiftEqual",
-            Rpar => "Rpar",
-            Rsqb => "Rsqb",
-            Semi => "Semi",
-            Slash => "Slash",
-            SlashEqual => "SlashEqual",
-            Star => "Star",
-            StarEqual => "StarEqual",
-            StartExpression => "StartExpression",
-            StartInteractive => "StartInteractive",
-            StartModule => "StartModule",
-            Tilde => "Tilde",
-            True => "True",
-            Try => "Try",
-            Type => "Type",
-            Vbar => "Vbar",
-            VbarEqual => "VbarEqual",
-            While => "While",
-            With => "With",
-            Yield => "Yield",
-        };
-        // add_input_token(&mut input_list, class_name, tok_value);
-        add_input_token(input_list, class_name, tok_value);
+    // Main line of beautifier.
+    let mut x = Beautifier::new();
+    if true {
+        let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py";
+        x.beautify_one_file(&file_path);
     }
-    return (tokens_n, ws_tokens_n);
+    else {
+        if x.enabled("--help") || x.enabled("-h") {
+            x.show_help();
+            return;
+        }
+        x.show_args();
+        x.beautify_all_files();
+    }
 }
-//@+node:ekr.20240930084648.1: *3* function: read
-fn read(file_path: &str) -> String {
-    let error_s = f!("Can not read {file_path}");
-    return fs::read_to_string(file_path).expect(&error_s);
+//@+node:ekr.20241001093308.2: *3* fn tokenize
+fn tokenize() {
+    //@+<< tokenize: define contents >>
+    //@+node:ekr.20241001093308.3: *4* << tokenize: define contents >>
+    let contents = r#"
+    def test():
+    # Comment 1.
+    print('abc')
+    # Comment 2.
+    "#;
+
+    // print("xyz")
+    // print(rf'pdb')
+    // print(fr'pdb2')
+    // return bool(i & 1)
+    //@-<< tokenize: define contents >>
+    println!("fn tokenize");
+    println!("\nSource:\n{contents}");
+
+    for debug in [true, false].iter() {
+
+        println!("{}", if *debug {"Tokens..."} else {"\nBeautified:"});
+
+        let results = lex(contents, Mode::Module);  // An iterator yielding Option(Tok).
+        let mut count = 0;
+        let mut lws = String::new();
+        for (i, result) in results.enumerate() {
+            use Tok::*;
+            let token = result.ok().unwrap();
+            let (ref tok_class, tok_range) = token;
+            let tok_value = &contents[tok_range];
+
+            if *debug {
+                let s = format!("{tok_class}");
+                print!("\nToken: {s:20} {:?}", tok_value);
+            }
+            else {
+                // Comment(value), Name(name)
+                #[allow(unused_variables)]
+                match tok_class {
+                    Comment(value) => {
+                        // print!("{value} ");  // Wrong!
+                        print!("{tok_value}");
+                    },
+                    Dedent => {
+                        lws.pop();
+                        lws.pop();
+                        print!("{lws}");
+                    },
+                    Def => {
+                        print!("{tok_value} ");
+                    },
+                    Indent => {
+                        lws.push_str("    ");
+                        print!("{lws}");
+                    },
+                    Name {name} => {
+                        print!("{tok_value} ");
+                    },
+                    Newline => {
+                        print!("{tok_value}");
+                        print!("{lws}");
+                        if false {  // old
+                            println!("");
+                            print!("{lws}");
+                        }
+                    },
+                    NonLogicalNewline => {
+                        println!("");
+                        print!("{lws}");
+                    },
+                    Return => {
+                        print!("{tok_value} ");
+                    },
+                    Tok::String {value, kind, triple_quoted} => {
+                        // correct.
+                        print!("{tok_value}");
+                        if false {  // incorrect.
+                            let quote = if *triple_quoted {"'''"} else {"'"};
+                            print!("{:?}:{quote}{value}{quote}", kind);
+                        }
+                    },
+                    _ => {
+                        print!("{tok_value}");
+                        if false {
+                            // to_string quotes values!
+                            let s = tok_class.to_string().replace("'", "");
+                            print!("{s}");
+                        }
+                    },
+                }
+            }
+            count = i
+        }
+        if *debug {
+            println!("\n{count} tokens")
+        }
+    }
 }
 //@-others
 
