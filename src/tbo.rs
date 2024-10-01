@@ -830,33 +830,37 @@ pub fn entry() {
     let contents = read(&file_path);
     let read_time = fmt_ms(t1.elapsed().as_micros());
     //@-<< 1: read >>
-    //@+<< 2: lex >>
-    //@+node:ekr.20240930100636.1: *3* << 2: lex >>
-    let t2 = Instant::now();
-    let tokens = lex_contents(&contents);
-    let lex_time = fmt_ms(t2.elapsed().as_micros());
-    //@-<< 2: lex >>
-    //@+<< 3: Loop on tokens >>
-    //@+node:ekr.20240930100707.1: *3* << 3: Loop on tokens >>
-    let t4 = Instant::now();
-    let mut input_list: Vec<InputTok> = Vec::new();
-    let (n_tokens, ws_tokens_n) = make_input_list(&contents, &mut input_list, tokens);
-    let loop_time = fmt_ms(t4.elapsed().as_micros());
-    //@-<< 3: Loop on tokens >>
-    //@+<< 4: print stats >>
-    //@+node:ekr.20240930100553.1: *3* << 4: print stats >>
-    // Compute cumulative stats.
-    let total_time = fmt_ms(t1.elapsed().as_micros());
-    let tokens_n = input_list.len();
-    println!("");
-    println!("tbo: {short_file_name}");
-    println!("{n_tokens} lex tokens, {ws_tokens_n} ws_tokens, len(input_list): {tokens_n}");
-    println!("");
-    println!("       read: {read_time:>5} ms");
-    println!("        lex: {lex_time:>5} ms");
-    println!("make_tokens: {loop_time:>5} ms");
-    println!("      total: {total_time:>5} ms");
-    //@-<< 4: print stats >>
+    if true {
+        test_loop(&contents);
+    } else {
+        //@+<< 2: lex >>
+        //@+node:ekr.20240930100636.1: *3* << 2: lex >>
+        let t2 = Instant::now();
+        let tokens = lex_contents(&contents);
+        let lex_time = fmt_ms(t2.elapsed().as_micros());
+        //@-<< 2: lex >>
+        //@+<< 3: Loop on tokens >>
+        //@+node:ekr.20240930100707.1: *3* << 3: Loop on tokens >>
+        let t4 = Instant::now();
+        let mut input_list: Vec<InputTok> = Vec::new();
+        let (n_tokens, ws_tokens_n) = make_input_list(&contents, &mut input_list, tokens);
+        let loop_time = fmt_ms(t4.elapsed().as_micros());
+        //@-<< 3: Loop on tokens >>
+        //@+<< 4: print stats >>
+        //@+node:ekr.20240930100553.1: *3* << 4: print stats >>
+        // Compute cumulative stats.
+        let total_time = fmt_ms(t1.elapsed().as_micros());
+        let tokens_n = input_list.len();
+        println!("");
+        println!("tbo: {short_file_name}");
+        println!("{n_tokens} lex tokens, {ws_tokens_n} ws_tokens, len(input_list): {tokens_n}");
+        println!("");
+        println!("       read: {read_time:>5} ms");
+        println!("        lex: {lex_time:>5} ms");
+        println!("make_tokens: {loop_time:>5} ms");
+        println!("      total: {total_time:>5} ms");
+        //@-<< 4: print stats >>
+    }
 }
 //@+node:ekr.20240929033044.1: *3* function: add_input_token
 fn add_input_token (input_list: &mut Vec<InputTok>, kind: &str, value: &str) {
@@ -885,7 +889,7 @@ fn lex_contents(contents: &str) -> Vec<(Tok, TextRange)> {
 }
 //@+node:ekr.20240929024648.113: *3* function: make_input_list
 fn make_input_list(
-    contents: &String,
+    contents: &str,
     input_list: &mut Vec<InputTok>,
     tokens: Vec<(Tok, TextRange)>
 ) -> (usize, usize) {
@@ -1028,6 +1032,20 @@ fn make_input_list(
 fn read(file_path: &str) -> String {
     let error_s = f!("Can not read {file_path}");
     return fs::read_to_string(file_path).expect(&error_s);
+}
+//@+node:ekr.20241001071914.1: *3* function: test_loop
+fn test_loop(contents: &str) {
+    let mut n_tokens = 0;
+    for token in lex(&contents, Mode::Module)
+        .map(|tok| tok.expect("Failed to lex"))
+        .collect::<Vec<_>>()
+    {
+        if n_tokens < 10 {
+            println!("token: {token:?}")
+        }
+        n_tokens += 1;
+    }
+    println!("tokens: {n_tokens}")
 }
 //@+node:ekr.20240929031635.1: ** function: scan_input_list
 fn scan_input_list(contents: String, tokens: Vec<(Tok, TextRange)>) -> usize {
