@@ -758,132 +758,132 @@ impl Beautifier {
             n_tokens += 1;
             let (token, range) = token_tuple;
             let tok_value = &contents[range];
-            if true {
-                // The gem: create a whitespace pseudo-tokens.
-                // This code adds maybe about 1 ms when beautifying leoFrame.py.
-                // With the gem: 14.1 - 14.5 ms. Without: 13.1 - 13.7 ms.
-                let start_i = usize::from(range.start());
-                let end_i = usize::from(range.end());
-                if start_i > prev_start {
-                    let ws = &contents[prev_start..start_i];
-                    self.add_input_token("ws", ws);
-                    n_ws_tokens += 1
-                }
-                prev_start = end_i;
-                
-                //@+<< Calculate class_name using match token >>
-                //@+node:ekr.20241002113506.1: *4* << Calculate class_name using match token >>
-                // Variant names are necessary, but otherwise not used.
-                #[allow(unused_variables)]
-                let class_name = match token {
-                    // Tokens with values...
-                    Comment(value) => "Comment",
-                    Complex { real, imag } => "Complex",
-                    Float { value } => "Float",
-                    Int { value } => "Int",
-                    Name { name } => "Name",
-                    Tok::String { value, kind, triple_quoted } => "String",
-                    
-                    // Common tokens...
-                    Class => "Class",
-                    Dedent => "Dedent",
-                    Def => "Def",
-                    Indent => "Indent",
-                    Newline => "Newline",
-                    NonLogicalNewline => "NonLogicalNewline",
 
-                    // All other tokens...
-                    Amper => "Amper",
-                    AmperEqual => "AmperEqual",
-                    And => "And",
-                    As => "As",
-                    Assert => "Assert",
-                    Async => "Async",
-                    At => "At",
-                    AtEqual => "AtEqual",
-                    Await => "Await",
-                    Break => "Break",
-                    Case => "Case",
-                    CircumFlex => "CircumFlex",
-                    CircumflexEqual => "CircumflexEqual",
-                    Colon => "Colon",
-                    ColonEqual => "ColonEqual",
-                    Comma => "Comma",
-                    Continue => "Continue",
-                    Del => "Del",
-                    Dot => "Dot",
-                    DoubleSlash => "DoubleSlash",
-                    DoubleSlashEqual => "DoubleSlashEqual",
-                    DoubleStar => "DoubleStar",
-                    DoubleStarEqual => "DoubleStarEqual",
-                    Elif => "Elif",
-                    Ellipsis => "Ellipsis",
-                    Else => "Else",
-                    EndOfFile => "EndOfFile",
-                    EqEqual => "EqEqual",
-                    Equal => "Equal",
-                    Except => "Except",
-                    False => "False",
-                    Finally => "Finally",
-                    For => "For",
-                    From => "From",
-                    Global => "Global",
-                    Greater => "Greater",
-                    GreaterEqual => "GreaterEqual",
-                    If => "If",
-                    Import => "Import",
-                    In => "In",
-                    Is => "Is",
-                    Lambda => "Lambda",
-                    Lbrace => "Lbrace",
-                    LeftShift => "LeftShift",
-                    LeftShiftEqual => "LeftShiftEqual",
-                    Less => "Less",
-                    LessEqual => "LessEqual",
-                    Lpar => "Lpar",
-                    Lsqb => "Lsqb",
-                    Match => "Match",
-                    Minus => "Minus",
-                    MinusEqual => "MinusEqual",
-                    None => "None",
-                    Nonlocal => "Nonlocal",
-                    Not => "Not",
-                    NotEqual => "NotEqual",
-                    Or => "Or",
-                    Pass => "Pass",
-                    Percent => "Percent",
-                    PercentEqual => "PercentEqual",
-                    Plus => "Plus",
-                    PlusEqual => "PlusEqual",
-                    Raise => "Raise",
-                    Rarrow => "Rarrow",
-                    Rbrace => "Rbrace",
-                    Return => "Return",
-                    RightShift => "RightShift",
-                    RightShiftEqual => "RightShiftEqual",
-                    Rpar => "Rpar",
-                    Rsqb => "Rsqb",
-                    Semi => "Semi",
-                    Slash => "Slash",
-                    SlashEqual => "SlashEqual",
-                    Star => "Star",
-                    StarEqual => "StarEqual",
-                    StartExpression => "StartExpression",
-                    StartInteractive => "StartInteractive",
-                    StartModule => "StartModule",
-                    Tilde => "Tilde",
-                    True => "True",
-                    Try => "Try",
-                    Type => "Type",
-                    Vbar => "Vbar",
-                    VbarEqual => "VbarEqual",
-                    While => "While",
-                    With => "With",
-                    Yield => "Yield",
-                };
-                //@-<< Calculate class_name using match token >>
-                self.add_input_token(class_name, tok_value);
+            // The gem: create a whitespace pseudo-tokens.
+            // This code adds maybe about 1 ms when beautifying leoFrame.py.
+            // With the gem: 14.1 - 14.5 ms. Without: 13.1 - 13.7 ms.
+            let start_i = usize::from(range.start());
+            let end_i = usize::from(range.end());
+            if start_i > prev_start {
+                let ws = &contents[prev_start..start_i];
+                self.add_input_token("ws", ws);
+                n_ws_tokens += 1
             }
+            prev_start = end_i;
+
+            //@+<< Calculate class_name using match token >>
+            //@+node:ekr.20241002113506.1: *4* << Calculate class_name using match token >>
+            // Variant names are necessary, but otherwise not used.
+            #[allow(unused_variables)]
+            let class_name = match token {
+                // Tokens with values...
+                Comment(value) => "Comment",
+                Complex { real, imag } => "Complex",
+                Float { value } => "Float",
+                Int { value } => "Int",
+                Name { name } => "Name",
+                Tok::String { value, kind, triple_quoted } => "String",
+                
+                // Common tokens...
+                Class => "Class",
+                Dedent => "Dedent",
+                Def => "Def",
+                Indent => "Indent",
+                Newline => "Newline",
+                NonLogicalNewline => "NonLogicalNewline",
+
+                // All other tokens...
+                Amper => "Amper",
+                AmperEqual => "AmperEqual",
+                And => "And",
+                As => "As",
+                Assert => "Assert",
+                Async => "Async",
+                At => "At",
+                AtEqual => "AtEqual",
+                Await => "Await",
+                Break => "Break",
+                Case => "Case",
+                CircumFlex => "CircumFlex",
+                CircumflexEqual => "CircumflexEqual",
+                Colon => "Colon",
+                ColonEqual => "ColonEqual",
+                Comma => "Comma",
+                Continue => "Continue",
+                Del => "Del",
+                Dot => "Dot",
+                DoubleSlash => "DoubleSlash",
+                DoubleSlashEqual => "DoubleSlashEqual",
+                DoubleStar => "DoubleStar",
+                DoubleStarEqual => "DoubleStarEqual",
+                Elif => "Elif",
+                Ellipsis => "Ellipsis",
+                Else => "Else",
+                EndOfFile => "EndOfFile",
+                EqEqual => "EqEqual",
+                Equal => "Equal",
+                Except => "Except",
+                False => "False",
+                Finally => "Finally",
+                For => "For",
+                From => "From",
+                Global => "Global",
+                Greater => "Greater",
+                GreaterEqual => "GreaterEqual",
+                If => "If",
+                Import => "Import",
+                In => "In",
+                Is => "Is",
+                Lambda => "Lambda",
+                Lbrace => "Lbrace",
+                LeftShift => "LeftShift",
+                LeftShiftEqual => "LeftShiftEqual",
+                Less => "Less",
+                LessEqual => "LessEqual",
+                Lpar => "Lpar",
+                Lsqb => "Lsqb",
+                Match => "Match",
+                Minus => "Minus",
+                MinusEqual => "MinusEqual",
+                None => "None",
+                Nonlocal => "Nonlocal",
+                Not => "Not",
+                NotEqual => "NotEqual",
+                Or => "Or",
+                Pass => "Pass",
+                Percent => "Percent",
+                PercentEqual => "PercentEqual",
+                Plus => "Plus",
+                PlusEqual => "PlusEqual",
+                Raise => "Raise",
+                Rarrow => "Rarrow",
+                Rbrace => "Rbrace",
+                Return => "Return",
+                RightShift => "RightShift",
+                RightShiftEqual => "RightShiftEqual",
+                Rpar => "Rpar",
+                Rsqb => "Rsqb",
+                Semi => "Semi",
+                Slash => "Slash",
+                SlashEqual => "SlashEqual",
+                Star => "Star",
+                StarEqual => "StarEqual",
+                StartExpression => "StartExpression",
+                StartInteractive => "StartInteractive",
+                StartModule => "StartModule",
+                Tilde => "Tilde",
+                True => "True",
+                Try => "Try",
+                Type => "Type",
+                Vbar => "Vbar",
+                VbarEqual => "VbarEqual",
+                While => "While",
+                With => "With",
+                Yield => "Yield",
+            };
+            //@-<< Calculate class_name using match token >>
+            self.add_input_token(class_name, tok_value);
+
         }
         // Update counts.
         self.stats.n_tokens += n_tokens;
