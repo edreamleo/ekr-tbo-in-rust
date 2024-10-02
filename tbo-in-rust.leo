@@ -5055,22 +5055,22 @@ impl Beautifier {
         n_tokens += 1;
         let (token, range) = token_tuple;
         let tok_value = &amp;contents[range];
-        if true {
-            // The gem: create a whitespace pseudo-tokens.
-            // This code adds maybe about 1 ms when beautifying leoFrame.py.
-            // With the gem: 14.1 - 14.5 ms. Without: 13.1 - 13.7 ms.
-            let start_i = usize::from(range.start());
-            let end_i = usize::from(range.end());
-            if start_i &gt; prev_start {
-                let ws = &amp;contents[prev_start..start_i];
-                self.add_input_token("ws", ws);
-                n_ws_tokens += 1
-            }
-            prev_start = end_i;
-            
-            &lt;&lt; Calculate class_name using match token &gt;&gt;
-            self.add_input_token(class_name, tok_value);
+
+        // The gem: create a whitespace pseudo-tokens.
+        // This code adds maybe about 1 ms when beautifying leoFrame.py.
+        // With the gem: 14.1 - 14.5 ms. Without: 13.1 - 13.7 ms.
+        let start_i = usize::from(range.start());
+        let end_i = usize::from(range.end());
+        if start_i &gt; prev_start {
+            let ws = &amp;contents[prev_start..start_i];
+            self.add_input_token("ws", ws);
+            n_ws_tokens += 1
         }
+        prev_start = end_i;
+
+        &lt;&lt; Calculate class_name using match token &gt;&gt;
+        self.add_input_token(class_name, tok_value);
+
     }
     // Update counts.
     self.stats.n_tokens += n_tokens;
