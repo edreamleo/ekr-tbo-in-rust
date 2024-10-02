@@ -4691,15 +4691,16 @@ Rust, with nanosecond resolution.
 
  leoFrame.py
 
-     files: 1, tokens: 14619, ws tokens: 5156
-       read:    0.458 ms  Slower than python, but maybe not significant.
-make_tokens:   14.196 ms
-      write:    0.000 ms
-      total:   14.654 ms
-      
-Thats about 0.1 sec / file.
+leoFrame.py
 
-So tbo-in-rust twice as fast, but without any formatting!
+     files: 1, tokens: 14619, ws tokens: 5156
+       read:    0.51 ms
+make_tokens:   14.23 ms
+   beautify:    7.33 ms
+      write:    0.00 ms
+      total:   22.08 ms
+      
+This only 10% faster than the python code.
 </t>
 <t tx="ekr.20240929024648.113">fn make_input_list(
     contents: &amp;str,
