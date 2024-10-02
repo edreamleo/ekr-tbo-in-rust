@@ -111,10 +111,14 @@ impl Beautifier {
         let t3 = std::time::Instant::now();
         self.make_input_list(&contents);
         let make_tokens_time = t3.elapsed().as_nanos();
+        // Beautify.
+        let t4 = std::time::Instant::now();
+        self.beautify();
+        let beautify_time = t4.elapsed().as_nanos();
         // Update stats.
         self.stats.n_files += 1;
         let write_time = 0;
-        self.stats.update_times(make_tokens_time, read_time, write_time);
+        self.stats.update_times(beautify_time, make_tokens_time, read_time, write_time);
     }
     //@+node:ekr.20240929074037.7: *3* LB::do_*
     //@+node:ekr.20240929074037.8: *4* LB:Handlers with values
@@ -531,7 +535,6 @@ impl Beautifier {
         //! Beautifier::enabled: return true if the given command-line argument is enabled.
         //! Example:  x.enabled("--report");
         return self.args.contains(&arg.to_string());
-
     }
     //@+node:ekr.20240929074037.111: *3* LB::get_args
     fn get_args(&mut self) {
@@ -703,13 +706,15 @@ impl Beautifier {
         self.stats.n_tokens += n_tokens;
         self.stats.n_ws_tokens += n_ws_tokens;
     }
-    //@+node:ekr.20240929074037.113: *3* LB::make_output_list
-    fn make_output_list(&mut self) {
-
-        //// Prototype only.
-        for input_token in &self.input_list.clone() {
+    //@+node:ekr.20240929074037.113: *3* LB::beautify (to do)
+    fn beautify(&mut self) {
+        //! Beautify the input_tokens, creating the output_list.
+        for input_token in &self.input_list {
             // println!("{:?}", input_token);
-            self.add_output_string(input_token.kind.as_str(), input_token.value.as_str());
+            // let value = input_token.value.as_str();
+            // let kind = input_token.kind.as_str();
+            // self.add_output_string(kind, value);
+            self.output_list.push(input_token.value.to_string())
         }
     }
     //@+node:ekr.20240929074037.115: *3* LB::show_args
@@ -758,6 +763,7 @@ pub struct Stats {
     n_ws_tokens: u64, // Number of pseudo-ws tokens.
 
     // Timing stat, in microseconds...
+    beautify_time: u128,
     make_tokens_time: u128,
     read_time: u128,
     write_time: u128,
@@ -776,6 +782,7 @@ impl Stats {
             n_ws_tokens: 0,  // Number of pseudo-ws tokens.
 
             // Timing stats, in nanoseconds...
+            beautify_time: 0,
             make_tokens_time: 0,
             read_time: 0,
             write_time: 0,
@@ -800,22 +807,26 @@ impl Stats {
         // Print cumulative timing stats, in ms.
         let read_time = self.fmt_ns(self.read_time);
         let make_tokens_time = self.fmt_ns(self.make_tokens_time);
+        let beautify_time = self.fmt_ns(self.beautify_time);
         let write_time = self.fmt_ns(self.write_time);
-        let total_time = self.fmt_ns(self.make_tokens_time + self.read_time + self.write_time);
+        let total_time = self.fmt_ns(self.make_tokens_time + self.read_time + self.beautify_time + self.write_time);
         println!("");
         println!("     files: {n_files}, tokens: {n_tokens}, ws tokens: {n_ws_tokens}");
         println!("       read: {read_time:>7} ms");
         println!("make_tokens: {make_tokens_time:>7} ms");
+        println!("   beautify: {beautify_time:>7} ms");
         println!("      write: {write_time:>7} ms");
         println!("      total: {total_time:>7} ms");
     }
     //@+node:ekr.20240929074941.1: *3* Stats::update_times
     fn update_times (&mut self,
+        beautify: u128,
         make_tokens: u128,
         read_time: u128,
         write_time: u128
     ) {
         // Update cumulative timing stats.
+        self.beautify_time += beautify;
         self.make_tokens_time += make_tokens;
         self.read_time += read_time;
         self.write_time += write_time;
