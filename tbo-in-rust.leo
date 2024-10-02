@@ -566,10 +566,15 @@
 <v t="ekr.20240929074037.1"><vh>class LeoBeautifier (new)</vh>
 <v t="ekr.20240929074037.114"><vh> LB::new</vh></v>
 <v t="ekr.20240929074037.3"><vh>LB::add_input_token</vh></v>
-<v t="ekr.20240929074037.2"><vh>LB::add_output_string (works)</vh></v>
+<v t="ekr.20240929074037.2"><vh>LB::add_output_string</vh></v>
+<v t="ekr.20240929074037.113"><vh>LB::beautify</vh>
+<v t="ekr.20241001213329.1"><vh>&lt;&lt; LB::beautify: init ivars &gt;&gt;</vh></v>
+<v t="ekr.20241002062655.1"><vh>&lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20240929074037.4"><vh>LB::beautify_all_files</vh></v>
 <v t="ekr.20240929074037.5"><vh>LB::beautify_one_file</vh></v>
 <v t="ekr.20240929074037.7"><vh>LB::do_*</vh>
+<v t="ekr.20241002071143.1"><vh>tbo.do_ws</vh></v>
 <v t="ekr.20240929074037.8"><vh>LB:Handlers with values</vh>
 <v t="ekr.20240929074037.9"><vh>LB::do_Comment</vh></v>
 <v t="ekr.20240929074037.10"><vh>LB::do_Complex</vh></v>
@@ -679,9 +684,6 @@
 <v t="ekr.20240929074037.110"><vh>LB::enabled</vh></v>
 <v t="ekr.20240929074037.111"><vh>LB::get_args</vh></v>
 <v t="ekr.20240929074037.112"><vh>LB::make_input_list</vh></v>
-<v t="ekr.20240929074037.113"><vh>LB::beautify (to do)</vh>
-<v t="ekr.20241001213329.1"><vh>&lt;&lt; LB::beautify: init ivars &gt;&gt;</vh></v>
-</v>
 <v t="ekr.20240929074037.115"><vh>LB::show_args</vh></v>
 <v t="ekr.20240929074037.116"><vh>LB::show_help</vh></v>
 <v t="ekr.20240929074037.117"><vh>LB::show_output_list</vh></v>
@@ -694,17 +696,18 @@
 <v t="ekr.20240929074941.1"><vh>Stats::update_times</vh></v>
 </v>
 </v>
-<v t="ekr.20241001164547.1"><vh>--- recent</vh>
-<v t="ekr.20240928185643.1"></v>
-<v t="ekr.20241001093308.1"><vh>pub fn entry &amp; helpers</vh></v>
-<v t="ekr.20240929074037.112"></v>
-</v>
+<v t="ekr.20241002062737.1"><vh>--- recent</vh>
 <v t="ekr.20240929074037.5"></v>
+<v t="ekr.20240929074037.9"></v>
+<v t="ekr.20240929074037.2"></v>
+</v>
+<v t="ekr.20240929074037.1"></v>
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 <v t="ekr.20241002054443.1"><vh>--- Creating output list</vh></v>
+<v t="ekr.20240929074037.7"></v>
+<v t="ekr.20241002071143.1"></v>
 <v t="ekr.20240929074037.113"></v>
-<v t="ekr.20240929074037.2"></v>
-<v t="ekr.20240929074037.9"></v>
+<v t="ekr.20241002062655.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20200107040729.1">def show_diffs(self, s1: str, s2: str) -&gt; None:  # pragma: no cover
@@ -3039,7 +3042,10 @@ Aha: Refactoring is harder in Rust.
 
 - Transliterate python tbo.beautify (main token loop)
 
-- Create write_token! macro?</t>
+- Create write_token! macro?
+
+- File performance bug re fs::read_to_string(file_name)?
+</t>
 <t tx="ekr.20240927163405.1">#[derive(Debug)]
 pub struct Beautifier {
     args: Vec&lt;String&gt;,
@@ -5168,22 +5174,22 @@ impl Beautifier {
     self.stats.n_ws_tokens += n_ws_tokens;
 }
 </t>
-<t tx="ekr.20240929074037.113">fn beautify(&amp;mut self) {
+<t tx="ekr.20240929074037.113">fn no_visitor(&amp;self, kind: &amp;str) {
+    println!("No visitor for: {kind}")
+}
+
+fn beautify(&amp;mut self) -&gt; String {
     //! Beautify the input_tokens, creating the output_list.
     &lt;&lt; LB::beautify: init ivars &gt;&gt;
-    for input_token in &amp;self.input_list {
-        // println!("{:?}", input_token);
-        // let value = input_token.value.as_str();
-        if true {  // All these work.
-            self.output_list.push(input_token.value.to_string());  // Converts str to String
-            self.output_list.push("value".to_string());  // Converts str to String
-        } else {  // All these FAIL.
-            // self.add_output_string(&amp;"Test", &amp;"Value");  // mutable borrow occurs here.
-            // self.output_list.push(&amp;input_token.value); //  expected `String`, found `&amp;String`
-            // self.output_list.push("Value");  // expected `String`, found `&amp;str`
-            // self.output_list.push(&amp;"Value");  // expected `String`, found `&amp;&amp;str`
-        }
+    for input_token in self.input_list.clone() {
+        &lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;
     }
+    // return ''.join(self.output_list);
+    let mut result = String::new();
+    for s in &amp;self.output_list {
+        result.push_str(&amp;s);
+    }
+    return result;
 }
 </t>
 <t tx="ekr.20240929074037.114">pub fn new() -&gt; Beautifier {
@@ -5285,7 +5291,8 @@ impl Beautifier {
 </t>
 <t tx="ekr.20240929074037.2">#[allow(unused_variables)]
 fn add_output_string (&amp;mut self, kind: &amp;str, value: &amp;str) {
-    //! Add one string to the output list.
+    //! Add value to the output list.
+    //! kind is for debugging.
     if !value.is_empty() {
         self.output_list.push(value.to_string())
     }
@@ -5933,30 +5940,6 @@ fn returns_summarizable() -&gt; impl Summary {...}
 }
 </t>
 <t tx="ekr.20241001073040.1"></t>
-<t tx="ekr.20241001093308.1">pub fn entry() {
-
-    // Main line of beautifier.
-    let mut x = Beautifier::new();
-    if true {  // testing.
-        println!("");
-        for file_path in [
-            "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py",
-            // "C:\\Repos\\leo-editor\\leo\\core\\leoApp.py"
-        ] {
-            x.beautify_one_file(&amp;file_path);
-        }
-        x.stats.report();
-    }
-    else {
-        if x.enabled("--help") || x.enabled("-h") {
-            x.show_help();
-            return;
-        }
-        x.show_args();
-        x.beautify_all_files();
-    }
-}
-</t>
 <t tx="ekr.20241001093308.2">fn tokenize() {
     &lt;&lt; tokenize: define contents &gt;&gt;
     println!("fn tokenize");
@@ -6072,9 +6055,8 @@ print('abc')
 }
 </t>
 <t tx="ekr.20241001104914.1"></t>
-<t tx="ekr.20241001164547.1"></t>
-<t tx="ekr.20241001213229.1"> def no_visitor(self) -&gt; None:  # pragma: no cover
-        self.oops(f"Unknown kind: {self.input_token.kind!r}")
+<t tx="ekr.20241001213229.1"> // // // def no_visitor(self) -&gt; String:  # pragma: no cover
+        // // // self.oops(f"Unknown kind: {self.input_token.kind!r}")
 
     &lt;&lt; LB::beautify: init ivars &gt;&gt;
 
@@ -6110,7 +6092,11 @@ print('abc')
             }
 
         // Return the result. ???
-        result = ''.join(self.output_list);
+        // result = ''.join(self.output_list);
+        let result = String::new();
+        for s in self.output_list {
+            result.push(s);
+        }
         return result;
 </t>
 <t tx="ekr.20241001213329.1">// Debugging vars...
@@ -6167,6 +6153,117 @@ self.lws = String::new();   // Leading whitespace. Required!
     def __str__(self) -&gt; str:
         return f"State: {self.kind} {self.value!r}"  # pragma: no cover
 </t>
-<t tx="ekr.20241002054443.1"></t>
+<t tx="ekr.20241002054443.1">// All these FAIL in LB::beautify
+ 
+self.add_output_string(&amp;"Test", &amp;"Value");  // mutable borrow occurs here.
+self.output_list.push(&amp;input_token.value); //  expected `String`, found `&amp;String`
+self.output_list.push("Value");  // expected `String`, found `&amp;str`
+self.output_list.push(&amp;"Value");  // expected `String`, found `&amp;&amp;str`
+
+// Works.
+self.output_list.push(input_token.value.to_string());  // Converts str to String
+self.output_list.push("value".to_string());  // Converts str to String
+
+// Dispatch
+
+// let kind = &amp;input_token.kind.to_string();  // expected `&amp;String`, found `&amp;str`
+// let kind = &amp;input_token.kind; // expected `&amp;String`, found `&amp;str`
+
+// immutable borrow occurs here
+    // let kind_s = &amp;input_token.kind;
+    // let kind = kind_s.as_str();
+    </t>
+<t tx="ekr.20241002062655.1">let kind = input_token.kind.as_str();
+let value = input_token.kind.as_str();
+match kind {
+    // Some of these could be replaced by inline code.
+    "And" =&gt; self.do_And(),
+    "As" =&gt; self.do_As(),
+    "Assert" =&gt; self.do_Assert(),
+    "At" =&gt; self.do_At(),
+    "Break" =&gt; self.do_Break(),
+    "Class" =&gt; self.do_Class(),
+    "Colon" =&gt; self.do_Colon(),
+    "ColonEqual" =&gt; self.do_ColonEqual(),
+    "Comma" =&gt; self.do_Comma(),
+    "Comment" =&gt; self.do_Comment(value),
+    "Dedent" =&gt; self.do_Dedent(value),
+    "Def" =&gt; self.do_Def(),
+    "Del" =&gt; self.do_Del(),
+    "Dot" =&gt; self.do_Dot(),
+    "DoubleStar" =&gt; self.do_DoubleStar(),
+    "Elif" =&gt; self.do_Elif(),
+    "Else" =&gt; self.do_Else(),
+    "Equal" =&gt; self.do_Equal(),
+    "EqEqual" =&gt; self.do_EqEqual(),
+    "Except" =&gt; self.do_Except(),
+    "Greater" =&gt; self.do_Greater(),
+    "GreaterEqual" =&gt; self.do_GreaterEqual(),
+    "False" =&gt; self.do_False(),
+    "Finally" =&gt; self.do_Finally(),
+    "Float" =&gt; self.do_Float(value),
+    "For" =&gt; self.do_For(),
+    "From" =&gt; self.do_From(),
+    "If" =&gt; self.do_If(),
+    "In" =&gt; self.do_In(),
+    "Import" =&gt; self.do_Import(),
+    "Indent" =&gt; self.do_Indent(value),
+    "Int" =&gt; self.do_Int(value),
+    "Is" =&gt; self.do_Is(),
+    "Less" =&gt; self.do_Less(),
+    "Lbrace" =&gt; self.do_Lbrace(),
+    "Lpar" =&gt; self.do_Lpar(),
+    "Lsqb" =&gt; self.do_Lsqb(),
+    "Minus" =&gt; self.do_Minus(),
+    "MinusEqual" =&gt; self.do_MinusEqual(),
+    "Name" =&gt; self.do_Name(value),
+    "Newline" =&gt; self.do_Newline(),
+    "None" =&gt; self.do_None(),
+    "NonLogicalNewline" =&gt; self.do_NonLogicalNewline(),
+    "Not" =&gt; self.do_Not(),
+    "NotEqual" =&gt; self.do_NotEqual(),
+    "Or" =&gt; self.do_Or(),
+    "Pass" =&gt; self.do_Pass(),
+    "Plus" =&gt; self.do_Plus(),
+    "PlusEqual" =&gt; self.do_PlusEqual(),
+    "Raise" =&gt; self.do_Raise(),
+    "Rarrow" =&gt; self.do_Rarrow(),
+    "Rbrace" =&gt; self.do_Rbrace(),
+    "Return" =&gt; self.do_Return(),
+    "Rpar" =&gt; self.do_Rpar(),
+    "Rsqb" =&gt; self.do_Rsqb(),
+    "Star" =&gt; self.do_Star(),
+    "String" =&gt; self.do_String(value),
+    "True" =&gt; self.do_True(),
+    "Try" =&gt; self.do_Try(),
+    "While" =&gt; self.do_While(),
+    "ws" =&gt; self.do_ws(kind, value),
+    _ =&gt; self.no_visitor(kind),
+}
+</t>
+<t tx="ekr.20241002062737.1"></t>
+<t tx="ekr.20241002071143.1">// *** Temporary
+#[allow(unused_variables)]
+fn do_ws(&amp;mut self, kind: &amp;str, value: &amp;str) {
+    //! Handle the "ws" pseudo-token.
+    //! Put the whitespace only if if ends with backslash-newline.
+    
+    // To do.
+    
+    // let last_token = self.input_tokens[self.index - 1];
+    // let is_newline = kind in ("nl", "newline");
+    // if is_newline {
+        // self.pending_lws = val;
+        // self.pending_ws = "";
+    // }
+    // else if "\\\n" in val {
+        // self.pending_lws = "";
+        // self.pending_ws = val;
+    // }
+    // else {
+        // self.pending_ws = val
+    // }
+}
+</t>
 </tnodes>
 </leo_file>

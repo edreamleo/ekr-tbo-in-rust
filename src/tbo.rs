@@ -111,13 +111,126 @@ impl Beautifier {
             value: value.to_string(),
         });
     }
-    //@+node:ekr.20240929074037.2: *3* LB::add_output_string (works)
+    //@+node:ekr.20240929074037.2: *3* LB::add_output_string
     #[allow(unused_variables)]
     fn add_output_string (&mut self, kind: &str, value: &str) {
-        //! Add one string to the output list.
+        //! Add value to the output list.
+        //! kind is for debugging.
         if !value.is_empty() {
             self.output_list.push(value.to_string())
         }
+    }
+    //@+node:ekr.20240929074037.113: *3* LB::beautify
+    fn no_visitor(&self, kind: &str) {
+        println!("No visitor for: {kind}")
+    }
+
+    fn beautify(&mut self) -> String {
+        //! Beautify the input_tokens, creating the output_list.
+        //@+<< LB::beautify: init ivars >>
+        //@+node:ekr.20241001213329.1: *4* << LB::beautify: init ivars >>
+        // Debugging vars...
+        self.line_number = 0;  // was None?
+
+        // State vars for whitespace.
+        self.curly_brackets_level = 0;  // Number of unmatched '{' tokens.
+        self.paren_level = 0;  // Number of unmatched '(' tokens.
+        self.square_brackets_stack = Vec::new();  // A stack of bools, for self.gen_word().
+        self.indent_level = 0;  // Set only by do_indent and do_dedent.
+
+        // Parse state.
+        self.decorator_seen = false; // Set by do_name for do_op.
+        self.in_arg_list = 0;        // > 0 if in an arg list of a def.
+        self.in_doc_part = false;
+
+        // To do.
+        // self.state_stack = Vec::new();  // list[ParseState] = []  # Stack of ParseState objects.
+
+        // Leo-related state.
+        self.verbatim = false;  // True: don't beautify.
+
+        // Ivars describing the present input token...
+        self.index = 0;             // The index within the tokens array of the token being scanned.
+        self.lws = String::new();   // Leading whitespace. Required!
+        //@-<< LB::beautify: init ivars >>
+        for input_token in self.input_list.clone() {
+            //@+<< LB: beautify: dispatch on input_token.kind >>
+            //@+node:ekr.20241002062655.1: *4* << LB: beautify: dispatch on input_token.kind >>
+            let kind = input_token.kind.as_str();
+            let value = input_token.kind.as_str();
+            match kind {
+                // Some of these could be replaced by inline code.
+                "And" => self.do_And(),
+                "As" => self.do_As(),
+                "Assert" => self.do_Assert(),
+                "At" => self.do_At(),
+                "Break" => self.do_Break(),
+                "Class" => self.do_Class(),
+                "Colon" => self.do_Colon(),
+                "ColonEqual" => self.do_ColonEqual(),
+                "Comma" => self.do_Comma(),
+                "Comment" => self.do_Comment(value),
+                "Dedent" => self.do_Dedent(value),
+                "Def" => self.do_Def(),
+                "Del" => self.do_Del(),
+                "Dot" => self.do_Dot(),
+                "DoubleStar" => self.do_DoubleStar(),
+                "Elif" => self.do_Elif(),
+                "Else" => self.do_Else(),
+                "Equal" => self.do_Equal(),
+                "EqEqual" => self.do_EqEqual(),
+                "Except" => self.do_Except(),
+                "Greater" => self.do_Greater(),
+                "GreaterEqual" => self.do_GreaterEqual(),
+                "False" => self.do_False(),
+                "Finally" => self.do_Finally(),
+                "Float" => self.do_Float(value),
+                "For" => self.do_For(),
+                "From" => self.do_From(),
+                "If" => self.do_If(),
+                "In" => self.do_In(),
+                "Import" => self.do_Import(),
+                "Indent" => self.do_Indent(value),
+                "Int" => self.do_Int(value),
+                "Is" => self.do_Is(),
+                "Less" => self.do_Less(),
+                "Lbrace" => self.do_Lbrace(),
+                "Lpar" => self.do_Lpar(),
+                "Lsqb" => self.do_Lsqb(),
+                "Minus" => self.do_Minus(),
+                "MinusEqual" => self.do_MinusEqual(),
+                "Name" => self.do_Name(value),
+                "Newline" => self.do_Newline(),
+                "None" => self.do_None(),
+                "NonLogicalNewline" => self.do_NonLogicalNewline(),
+                "Not" => self.do_Not(),
+                "NotEqual" => self.do_NotEqual(),
+                "Or" => self.do_Or(),
+                "Pass" => self.do_Pass(),
+                "Plus" => self.do_Plus(),
+                "PlusEqual" => self.do_PlusEqual(),
+                "Raise" => self.do_Raise(),
+                "Rarrow" => self.do_Rarrow(),
+                "Rbrace" => self.do_Rbrace(),
+                "Return" => self.do_Return(),
+                "Rpar" => self.do_Rpar(),
+                "Rsqb" => self.do_Rsqb(),
+                "Star" => self.do_Star(),
+                "String" => self.do_String(value),
+                "True" => self.do_True(),
+                "Try" => self.do_Try(),
+                "While" => self.do_While(),
+                "ws" => self.do_ws(kind, value),
+                _ => self.no_visitor(kind),
+            }
+            //@-<< LB: beautify: dispatch on input_token.kind >>
+        }
+        // return ''.join(self.output_list);
+        let mut result = String::new();
+        for s in &self.output_list {
+            result.push_str(&s);
+        }
+        return result;
     }
     //@+node:ekr.20240929074037.4: *3* LB::beautify_all_files
     pub fn beautify_all_files(&mut self) {
@@ -157,6 +270,29 @@ impl Beautifier {
         self.stats.update_times(beautify_time, make_tokens_time, read_time, write_time);
     }
     //@+node:ekr.20240929074037.7: *3* LB::do_*
+    //@+node:ekr.20241002071143.1: *4* tbo.do_ws
+    // *** Temporary
+    #[allow(unused_variables)]
+    fn do_ws(&mut self, kind: &str, value: &str) {
+        //! Handle the "ws" pseudo-token.
+        //! Put the whitespace only if if ends with backslash-newline.
+        
+        // To do.
+        
+        // let last_token = self.input_tokens[self.index - 1];
+        // let is_newline = kind in ("nl", "newline");
+        // if is_newline {
+            // self.pending_lws = val;
+            // self.pending_ws = "";
+        // }
+        // else if "\\\n" in val {
+            // self.pending_lws = "";
+            // self.pending_ws = val;
+        // }
+        // else {
+            // self.pending_ws = val
+        // }
+    }
     //@+node:ekr.20240929074037.8: *4* LB:Handlers with values
     //@+node:ekr.20240929074037.9: *5* LB::do_Comment
     fn do_Comment(&mut self, tok_value: &str) {
@@ -741,54 +877,6 @@ impl Beautifier {
         // Update counts.
         self.stats.n_tokens += n_tokens;
         self.stats.n_ws_tokens += n_ws_tokens;
-    }
-    //@+node:ekr.20240929074037.113: *3* LB::beautify (to do)
-    fn beautify(&mut self) -> String {
-        //! Beautify the input_tokens, creating the output_list.
-        //@+<< LB::beautify: init ivars >>
-        //@+node:ekr.20241001213329.1: *4* << LB::beautify: init ivars >>
-        // Debugging vars...
-        self.line_number = 0;  // was None?
-
-        // State vars for whitespace.
-        self.curly_brackets_level = 0;  // Number of unmatched '{' tokens.
-        self.paren_level = 0;  // Number of unmatched '(' tokens.
-        self.square_brackets_stack = Vec::new();  // A stack of bools, for self.gen_word().
-        self.indent_level = 0;  // Set only by do_indent and do_dedent.
-
-        // Parse state.
-        self.decorator_seen = false; // Set by do_name for do_op.
-        self.in_arg_list = 0;        // > 0 if in an arg list of a def.
-        self.in_doc_part = false;
-
-        // To do.
-        // self.state_stack = Vec::new();  // list[ParseState] = []  # Stack of ParseState objects.
-
-        // Leo-related state.
-        self.verbatim = false;  // True: don't beautify.
-
-        // Ivars describing the present input token...
-        self.index = 0;             // The index within the tokens array of the token being scanned.
-        self.lws = String::new();   // Leading whitespace. Required!
-        //@-<< LB::beautify: init ivars >>
-        for input_token in &self.input_list {
-            // println!("{:?}", input_token);
-            // let value = input_token.value.as_str();
-            if true {  // All these work.
-                self.output_list.push(input_token.value.to_string());  // Converts str to String
-                self.output_list.push("value".to_string());  // Converts str to String
-            } else {  // All these FAIL.
-                // self.add_output_string(&"Test", &"Value");  // mutable borrow occurs here.
-                // self.output_list.push(&input_token.value); //  expected `String`, found `&String`
-                // self.output_list.push("Value");  // expected `String`, found `&str`
-                // self.output_list.push(&"Value");  // expected `String`, found `&&str`
-            }
-        }
-        let mut result = String::new();
-        for s in &self.output_list {
-            result.push_str(&s);
-        }
-        return result;
     }
     //@+node:ekr.20240929074037.115: *3* LB::show_args
     fn show_args (&self) {
