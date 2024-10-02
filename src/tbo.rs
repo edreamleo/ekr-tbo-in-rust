@@ -743,7 +743,7 @@ impl Beautifier {
         self.stats.n_ws_tokens += n_ws_tokens;
     }
     //@+node:ekr.20240929074037.113: *3* LB::beautify (to do)
-    fn beautify(&mut self) {
+    fn beautify(&mut self) -> String {
         //! Beautify the input_tokens, creating the output_list.
         //@+<< LB::beautify: init ivars >>
         //@+node:ekr.20241001213329.1: *4* << LB::beautify: init ivars >>
@@ -784,6 +784,11 @@ impl Beautifier {
                 // self.output_list.push(&"Value");  // expected `String`, found `&&str`
             }
         }
+        let mut result = String::new();
+        for s in &self.output_list {
+            result.push_str(&s);
+        }
+        return result;
     }
     //@+node:ekr.20240929074037.115: *3* LB::show_args
     fn show_args (&self) {
