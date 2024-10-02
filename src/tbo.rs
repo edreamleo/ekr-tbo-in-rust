@@ -111,11 +111,13 @@ impl Beautifier {
             value: value.to_string(),
         });
     }
-    //@+node:ekr.20240929074037.2: *3* LB::add_output_string
+    //@+node:ekr.20240929074037.2: *3* LB::add_output_string (works)
     #[allow(unused_variables)]
     fn add_output_string (&mut self, kind: &str, value: &str) {
         //! Add one string to the output list.
-        self.output_list.push(value.to_string())
+        if !value.is_empty() {
+            self.output_list.push(value.to_string())
+        }
     }
     //@+node:ekr.20240929074037.4: *3* LB::beautify_all_files
     pub fn beautify_all_files(&mut self) {
@@ -772,9 +774,15 @@ impl Beautifier {
         for input_token in &self.input_list {
             // println!("{:?}", input_token);
             // let value = input_token.value.as_str();
-            // let kind = input_token.kind.as_str();
-            // self.add_output_string(kind, value);
-            self.output_list.push(input_token.value.to_string())
+            if true {  // All these work.
+                self.output_list.push(input_token.value.to_string());  // Converts str to String
+                self.output_list.push("value".to_string());  // Converts str to String
+            } else {  // All these FAIL.
+                // self.add_output_string(&"Test", &"Value");  // mutable borrow occurs here.
+                // self.output_list.push(&input_token.value); //  expected `String`, found `&String`
+                // self.output_list.push("Value");  // expected `String`, found `&str`
+                // self.output_list.push(&"Value");  // expected `String`, found `&&str`
+            }
         }
     }
     //@+node:ekr.20240929074037.115: *3* LB::show_args

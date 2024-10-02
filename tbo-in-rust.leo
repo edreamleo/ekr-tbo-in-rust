@@ -140,16 +140,15 @@
 <v t="ekr.20240927151701.206"><vh>@button backup</vh></v>
 <v t="ekr.20240928073118.1"><vh>@button cargo-fmt</vh></v>
 <v t="ekr.20240927152759.1"><vh>@button cargo-run</vh></v>
-<v t="ekr.20240930063740.1"><vh>@command ga</vh></v>
-<v t="ekr.20240930101156.1"><vh>@command ga-leo</vh></v>
-<v t="ekr.20240930063514.1"><vh>@command gc</vh></v>
+<v t="ekr.20240930063740.1"><vh>@@command ga</vh></v>
+<v t="ekr.20240930101156.1"><vh>@@command ga-leo</vh></v>
+<v t="ekr.20240930063514.1"><vh>@@command gc</vh></v>
 <v t="ekr.20240930063546.1"><vh>@command gs</vh></v>
-<v t="ekr.20240930064435.1"><vh>@command git-reset</vh></v>
-<v t="ekr.20240930064622.1"><vh>@command push</vh></v>
+<v t="ekr.20240930064435.1"><vh>@@command git-reset</vh></v>
+<v t="ekr.20240930064622.1"><vh>@@command push</vh></v>
 <v t="ekr.20240927151701.207"><vh>@@button print-gnx</vh></v>
 </v>
 </v>
-<v t="ekr.20240927151701.50"></v>
 <v t="ekr.20240927164013.1"><vh>--- Pevious code</vh>
 <v t="ekr.20240927163405.1"><vh>class Beautifier (from backup/rust_beautifier)</vh>
 <v t="ekr.20240927163405.2"><vh>Beautifier::add_input_token</vh></v>
@@ -422,6 +421,9 @@
 <v t="ekr.20240930085546.1"><vh>function: lex_contents</vh></v>
 <v t="ekr.20240929031635.1"><vh>function: scan_input_list</vh></v>
 <v t="ekr.20241001071914.1"><vh>function: test_loop</vh></v>
+<v t="ekr.20241001093308.2"><vh>fn tokenize</vh>
+<v t="ekr.20241001093308.3"><vh>&lt;&lt; tokenize: define contents &gt;&gt;</vh></v>
+</v>
 </v>
 <v t="ekr.20240929032636.1"><vh>OLD function: entry &amp; helpers</vh>
 <v t="ekr.20240930100625.1"><vh>&lt;&lt; 1: read &gt;&gt;</vh></v>
@@ -559,16 +561,12 @@
 <v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20240928161210.1"><vh>@file src/tbo.rs</vh></v>
 <v t="ekr.20241001104914.1"><vh>--- classes</vh>
-<v t="ekr.20240929074547.1"><vh>class Stats</vh>
-<v t="ekr.20241001100954.1"><vh> Stats::new</vh></v>
-<v t="ekr.20240929080242.1"><vh>Stats::fmt_ms</vh></v>
-<v t="ekr.20240929075236.1"><vh>Stats::report</vh></v>
-<v t="ekr.20240929074941.1"><vh>Stats::update_times</vh></v>
-</v>
+<v t="ekr.20240105145241.1"></v>
+<v t="ekr.20240929024648.120"><vh>class InputTok</vh></v>
 <v t="ekr.20240929074037.1"><vh>class LeoBeautifier (new)</vh>
 <v t="ekr.20240929074037.114"><vh> LB::new</vh></v>
 <v t="ekr.20240929074037.3"><vh>LB::add_input_token</vh></v>
-<v t="ekr.20240929074037.2"><vh>LB::add_output_string</vh></v>
+<v t="ekr.20240929074037.2"><vh>LB::add_output_string (works)</vh></v>
 <v t="ekr.20240929074037.4"><vh>LB::beautify_all_files</vh></v>
 <v t="ekr.20240929074037.5"><vh>LB::beautify_one_file</vh></v>
 <v t="ekr.20240929074037.7"><vh>LB::do_*</vh>
@@ -681,19 +679,32 @@
 <v t="ekr.20240929074037.110"><vh>LB::enabled</vh></v>
 <v t="ekr.20240929074037.111"><vh>LB::get_args</vh></v>
 <v t="ekr.20240929074037.112"><vh>LB::make_input_list</vh></v>
-<v t="ekr.20240929074037.113"><vh>LB::make_output_list</vh></v>
+<v t="ekr.20240929074037.113"><vh>LB::beautify (to do)</vh>
+<v t="ekr.20241001213329.1"><vh>&lt;&lt; LB::beautify: init ivars &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20240929074037.115"><vh>LB::show_args</vh></v>
 <v t="ekr.20240929074037.116"><vh>LB::show_help</vh></v>
 <v t="ekr.20240929074037.117"><vh>LB::show_output_list</vh></v>
 </v>
+<v t="ekr.20241001215023.1"><vh>class ParseState (to do)</vh></v>
+<v t="ekr.20240929074547.1"><vh>class Stats</vh>
+<v t="ekr.20241001100954.1"><vh> Stats::new</vh></v>
+<v t="ekr.20240929080242.1"><vh>Stats::fmt_ns</vh></v>
+<v t="ekr.20240929075236.1"><vh>Stats::report</vh></v>
+<v t="ekr.20240929074941.1"><vh>Stats::update_times</vh></v>
 </v>
-<v t="ekr.20241001093308.1"><vh>pub fn entry &amp; helpers</vh>
-<v t="ekr.20241001093308.2"><vh>fn tokenize</vh>
-<v t="ekr.20241001093308.3"><vh>&lt;&lt; tokenize: define contents &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20241001164547.1"><vh>--- recent</vh>
+<v t="ekr.20240928185643.1"></v>
+<v t="ekr.20241001093308.1"><vh>pub fn entry &amp; helpers</vh></v>
+<v t="ekr.20240929074037.112"></v>
 </v>
 <v t="ekr.20240929074037.5"></v>
-<v t="ekr.20240929074037.112"></v>
+<v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
+<v t="ekr.20241002054443.1"><vh>--- Creating output list</vh></v>
+<v t="ekr.20240929074037.113"></v>
+<v t="ekr.20240929074037.2"></v>
+<v t="ekr.20240929074037.9"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20200107040729.1">def show_diffs(self, s1: str, s2: str) -&gt; None:  # pragma: no cover
@@ -2738,10 +2749,6 @@ go: ^\s*(.*):([0-9]+):([0-9]+):.+$
 python: ^\s*File "(.+)", line ([0-9]+), in .+$
 rust: ^\s*--&gt; (.+):([0-9]+):([0-9]+)\s*$</t>
 <t tx="ekr.20240927151701.50">cargo-run
-gs
-ga
-gc
-git-reset
 backup
 </t>
 <t tx="ekr.20240927151701.51"># legacy: (default) Leo's legacy layout
@@ -3030,7 +3037,9 @@ Aha: Refactoring is harder in Rust.
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
 
-- Refactor to get stats for all files in leo/core.</t>
+- Transliterate python tbo.beautify (main token loop)
+
+- Create write_token! macro?</t>
 <t tx="ekr.20240927163405.1">#[derive(Debug)]
 pub struct Beautifier {
     args: Vec&lt;String&gt;,
@@ -4663,20 +4672,28 @@ subprocess.Popen(command, shell=True).communicate()
 <t tx="ekr.20240928185643.1">@language rest
 @wrap
 
-2024/10/01:
+Python (with extra tracing code in tbo.init_tokens_from_file:
 
-tbo: leoFrame.py
+&gt; python -c "import leo.core.leoTokens" --all --report leo\core\leoFrame.py
+tbo: 0.03 sec. dirty: 0   checked: 1   beautified: 0   in leo\core\leoFrame.py
 
- files: 1, tokens: 14619, ws tokens: 5156
+       read:   0.28 ms
+make_tokens:  29.45 ms
+      total:  29.73 ms
+      
+Rust, with nanosecond resolution.
 
-make_tokens:   14.41 ms
-       read:    0.44 ms
-      write:    0.00 ms
-      total:   14.85 ms
+ leoFrame.py
+
+     files: 1, tokens: 14619, ws tokens: 5156
+       read:    0.458 ms  Slower than python, but maybe not significant.
+make_tokens:   14.196 ms
+      write:    0.000 ms
+      total:   14.654 ms
       
 Thats about 0.1 sec / file.
 
-So tbo-in-rust is only about 10 times faster, but without any formatting.
+So tbo-in-rust twice as fast, but without any formatting!
 </t>
 <t tx="ekr.20240929024648.113">fn make_input_list(
     contents: &amp;str,
@@ -4822,6 +4839,30 @@ So tbo-in-rust is only about 10 times faster, but without any formatting.
     return (tokens_n, ws_tokens_n);
 }
 </t>
+<t tx="ekr.20240929024648.120">// Only Clone is valid for String.
+#[derive(Clone)]
+struct InputTok {
+    kind: String,
+    value: String,
+}
+
+impl fmt::Debug for InputTok {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        let kind_s = format!("{:?}", self.kind);
+        let mut value = self.value.to_string();
+        if true {
+            return write!(f, "{value} ");
+        }
+        else {  // Debug format.
+            value.truncate(60);
+            // repr format is not useful.
+            // let value_s = format!("{:?}", value);
+            let value_s = format!("{}", value);
+            return write!(f, "InputTok: {kind_s:&gt;10}: {value_s}");
+        }
+    }
+}
+</t>
 <t tx="ekr.20240929031635.1">fn scan_input_list(contents: String, tokens: Vec&lt;(Tok, TextRange)&gt;) -&gt; usize {
 
     let mut count: usize = 0;
@@ -4868,11 +4909,31 @@ So tbo-in-rust is only about 10 times faster, but without any formatting.
 </t>
 <t tx="ekr.20240929074037.1">#[derive(Debug)]
 pub struct Beautifier {
+    // Set in LB:beautify_one_file...
     args: Vec&lt;String&gt;,
     files_list: Vec&lt;String&gt;,
     input_list: Vec&lt;InputTok&gt;,
     output_list: Vec&lt;String&gt;,
     stats: Stats,
+    // Set in LB:beautify...
+    // Debugging
+    line_number: i32,  // Use -1 instead of None?
+    // State vars for whitespace.
+    curly_brackets_level: i32,
+    indent_level: i32,
+    paren_level: i32,
+    square_brackets_stack: Vec&lt;bool&gt;,
+    // Parse state.
+    decorator_seen: bool,  // Set by do_name for do_op.
+    in_arg_list: i32, // &gt; 0 if in an arg list of a def.
+    in_doc_part: bool,
+    // To do
+    // state_stack = Vec&lt;ParseState&gt;,  // list[ParseState] = []  # Stack of ParseState objects.
+    // Leo-related state.
+    verbatim: bool,
+    // Ivars describing the present input token.
+    index: u32,
+    lws: String,
 }
 
 ///// Temporary.
@@ -4935,7 +4996,6 @@ impl Beautifier {
     //! Beautifier::enabled: return true if the given command-line argument is enabled.
     //! Example:  x.enabled("--report");
     return self.args.contains(&amp;arg.to_string());
-
 }
 </t>
 <t tx="ekr.20240929074037.111">fn get_args(&amp;mut self) {
@@ -5108,22 +5168,45 @@ impl Beautifier {
     self.stats.n_ws_tokens += n_ws_tokens;
 }
 </t>
-<t tx="ekr.20240929074037.113">fn make_output_list(&amp;mut self) {
-
-    //// Prototype only.
-    for input_token in &amp;self.input_list.clone() {
+<t tx="ekr.20240929074037.113">fn beautify(&amp;mut self) {
+    //! Beautify the input_tokens, creating the output_list.
+    &lt;&lt; LB::beautify: init ivars &gt;&gt;
+    for input_token in &amp;self.input_list {
         // println!("{:?}", input_token);
-        self.add_output_string(input_token.kind.as_str(), input_token.value.as_str());
+        // let value = input_token.value.as_str();
+        if true {  // All these work.
+            self.output_list.push(input_token.value.to_string());  // Converts str to String
+            self.output_list.push("value".to_string());  // Converts str to String
+        } else {  // All these FAIL.
+            // self.add_output_string(&amp;"Test", &amp;"Value");  // mutable borrow occurs here.
+            // self.output_list.push(&amp;input_token.value); //  expected `String`, found `&amp;String`
+            // self.output_list.push("Value");  // expected `String`, found `&amp;str`
+            // self.output_list.push(&amp;"Value");  // expected `String`, found `&amp;&amp;str`
+        }
     }
 }
 </t>
 <t tx="ekr.20240929074037.114">pub fn new() -&gt; Beautifier {
     let mut x = Beautifier {
+        // Set in beautify_one_file
         args: Vec::new(),
         files_list: Vec::new(),
         input_list: Vec::new(),
         output_list: Vec::new(),
         stats: Stats::new(),
+        // Set in LB::beautify.
+        // state_stack = Vec&lt;ParseState&gt;,  // list[ParseState] = []  # Stack of ParseState objects.
+        curly_brackets_level: 0,
+        decorator_seen: false,
+        in_arg_list: 0,
+        in_doc_part: false,
+        indent_level: 0,
+        index: 0,
+        line_number: 0,
+        lws: String::new(),
+        paren_level: 0,
+        square_brackets_stack: Vec::new(),
+        verbatim: false,
     };
     x.get_args();
     return x;
@@ -5203,7 +5286,9 @@ impl Beautifier {
 <t tx="ekr.20240929074037.2">#[allow(unused_variables)]
 fn add_output_string (&amp;mut self, kind: &amp;str, value: &amp;str) {
     //! Add one string to the output list.
-    self.output_list.push(value.to_string())
+    if !value.is_empty() {
+        self.output_list.push(value.to_string())
+    }
 }
 </t>
 <t tx="ekr.20240929074037.20"></t>
@@ -5354,15 +5439,19 @@ fn add_input_token (&amp;mut self, kind: &amp;str, value: &amp;str) {
     let contents = fs::read_to_string(file_name)
         .expect("Error reading{file_name}");
     // print_type(&amp;contents, "contents");
-    let read_time = t1.elapsed().as_micros();
+    let read_time = t1.elapsed().as_nanos();
     // Make the list of input tokens
     let t3 = std::time::Instant::now();
     self.make_input_list(&amp;contents);
-    let make_tokens_time = t3.elapsed().as_micros();
+    let make_tokens_time = t3.elapsed().as_nanos();
+    // Beautify.
+    let t4 = std::time::Instant::now();
+    self.beautify();
+    let beautify_time = t4.elapsed().as_nanos();
     // Update stats.
     self.stats.n_files += 1;
     let write_time = 0;
-    self.stats.update_times(make_tokens_time, read_time, write_time);
+    self.stats.update_times(beautify_time, make_tokens_time, read_time, write_time);
 }
 </t>
 <t tx="ekr.20240929074037.50">fn do_EqEqual(&amp;mut self) {
@@ -5581,6 +5670,7 @@ pub struct Stats {
     n_ws_tokens: u64, // Number of pseudo-ws tokens.
 
     // Timing stat, in microseconds...
+    beautify_time: u128,
     make_tokens_time: u128,
     read_time: u128,
     write_time: u128,
@@ -5593,11 +5683,13 @@ impl Stats {
 }
 </t>
 <t tx="ekr.20240929074941.1">fn update_times (&amp;mut self,
+    beautify: u128,
     make_tokens: u128,
     read_time: u128,
     write_time: u128
 ) {
     // Update cumulative timing stats.
+    self.beautify_time += beautify;
     self.make_tokens_time += make_tokens;
     self.read_time += read_time;
     self.write_time += write_time;
@@ -5608,24 +5700,27 @@ impl Stats {
     let n_files = self.n_files;
     let n_tokens = self.n_tokens;
     let n_ws_tokens = self.n_ws_tokens;
-    // Print cumulative timing stats, in ms, using fmt_ms.
-    let total_time = self.fmt_ms(self.make_tokens_time + self.read_time + self.write_time);
-    let make_tokens_time = self.fmt_ms(self.make_tokens_time);
-    let read_time = self.fmt_ms(self.read_time);
-    let write_time = self.fmt_ms(self.write_time);
+    // Print cumulative timing stats, in ms.
+    let read_time = self.fmt_ns(self.read_time);
+    let make_tokens_time = self.fmt_ns(self.make_tokens_time);
+    let beautify_time = self.fmt_ns(self.beautify_time);
+    let write_time = self.fmt_ns(self.write_time);
+    let total_time = self.fmt_ns(self.make_tokens_time + self.read_time + self.beautify_time + self.write_time);
     println!("");
     println!("     files: {n_files}, tokens: {n_tokens}, ws tokens: {n_ws_tokens}");
-    println!("make_tokens: {make_tokens_time:&gt;7} ms");
     println!("       read: {read_time:&gt;7} ms");
+    println!("make_tokens: {make_tokens_time:&gt;7} ms");
+    println!("   beautify: {beautify_time:&gt;7} ms");
     println!("      write: {write_time:&gt;7} ms");
     println!("      total: {total_time:&gt;7} ms");
 }
 </t>
-<t tx="ekr.20240929080242.1">fn fmt_ms(&amp;mut self, t: u128) -&gt; String {
-    //! Convert microseconds to fractional milliseconds.
-    let ms = t / 1000;
-    let micro = (t % 1000) / 10;
-    return f!("{ms}.{micro:02}");  // Two-digits for fraction.
+<t tx="ekr.20240929080242.1">fn fmt_ns(&amp;mut self, t: u128) -&gt; String {
+    //! Convert nanoseconds to fractional milliseconds.
+    let ms = t / 1000000;
+    let micro = (t % 1000000) / 10000;  // 2-places only.
+    // println!("t: {t:8} ms: {ms:03} micro: {micro:02}");
+    return f!("{ms:4}.{micro:02}");
 }
 
 </t>
@@ -5962,12 +6057,13 @@ print('abc')
 </t>
 <t tx="ekr.20241001100954.1">pub fn new() -&gt;Stats {
     let x = Stats {
-        // Cumulative statistics for all files.
+        // Cumulative counts.
         n_files: 0,  // Number of files.
         n_tokens: 0, // Number of tokens.
         n_ws_tokens: 0,  // Number of pseudo-ws tokens.
 
-        // Timing stat, in microseconds...
+        // Timing stats, in nanoseconds...
+        beautify_time: 0,
         make_tokens_time: 0,
         read_time: 0,
         write_time: 0,
@@ -5976,5 +6072,101 @@ print('abc')
 }
 </t>
 <t tx="ekr.20241001104914.1"></t>
+<t tx="ekr.20241001164547.1"></t>
+<t tx="ekr.20241001213229.1"> def no_visitor(self) -&gt; None:  # pragma: no cover
+        self.oops(f"Unknown kind: {self.input_token.kind!r}")
+
+    &lt;&lt; LB::beautify: init ivars &gt;&gt;
+
+    try:
+        // Pre-scan the token list, setting context.s
+        self.pre_scan();
+
+        // Init ivars first.
+        self.input_token = None;  // ???
+        self.pending_lws = '';  // ???
+        self.pending_ws = '';  // ???
+        self.prev_output_kind = None;    // ???
+        self.prev_output_value = None;  // ???
+
+        // Init state.
+        self.gen_token('file-start', '');
+        self.push_state('file-start');
+
+        // The main loop:
+        prev_line_number: i32 = 0;
+        for (self.index, self.input_token) in enumerate(input_tokens):
+            // Set global for visitors.
+            if prev_line_number != self.input_token.line_number {
+                prev_line_number = self.input_token.line_number;
+            }
+            // Call the proper visitor.
+            if self.verbatim {
+                self.do_verbatim();
+            } else {
+                // Use match ???
+                func = getattr(self, f"do_{self.input_token.kind}", self.no_visitor)
+                func()
+            }
+
+        // Return the result. ???
+        result = ''.join(self.output_list);
+        return result;
+</t>
+<t tx="ekr.20241001213329.1">// Debugging vars...
+self.line_number = 0;  // was None?
+
+// State vars for whitespace.
+self.curly_brackets_level = 0;  // Number of unmatched '{' tokens.
+self.paren_level = 0;  // Number of unmatched '(' tokens.
+self.square_brackets_stack = Vec::new();  // A stack of bools, for self.gen_word().
+self.indent_level = 0;  // Set only by do_indent and do_dedent.
+
+// Parse state.
+self.decorator_seen = false; // Set by do_name for do_op.
+self.in_arg_list = 0;        // &gt; 0 if in an arg list of a def.
+self.in_doc_part = false;
+
+// To do.
+// self.state_stack = Vec::new();  // list[ParseState] = []  # Stack of ParseState objects.
+
+// Leo-related state.
+self.verbatim = false;  // True: don't beautify.
+
+// Ivars describing the present input token...
+self.index = 0;             // The index within the tokens array of the token being scanned.
+self.lws = String::new();   // Leading whitespace. Required!
+</t>
+<t tx="ekr.20241001215023.1">class ParseState:
+    """
+    A class representing items in the parse state stack.
+
+    The present states:
+
+    'file-start': Ensures the stack stack is never empty.
+
+    'decorator': The last '@' was a decorator.
+
+        do_op():    push_state('decorator')
+        do_name():  pops the stack if state.kind == 'decorator'.
+
+    'indent': The indentation level for 'class' and 'def' names.
+
+        do_name():      push_state('indent', self.level)
+        do_dendent():   pops the stack once or
+                        twice if state.value == self.level.
+    """
+
+    def __init__(self, kind: str, value: Union[int, str, None]) -&gt; None:
+        self.kind = kind
+        self.value = value
+
+    def __repr__(self) -&gt; str:
+        return f"State: {self.kind} {self.value!r}"  # pragma: no cover
+
+    def __str__(self) -&gt; str:
+        return f"State: {self.kind} {self.value!r}"  # pragma: no cover
+</t>
+<t tx="ekr.20241002054443.1"></t>
 </tnodes>
 </leo_file>
