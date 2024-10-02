@@ -152,13 +152,11 @@ impl Beautifier {
         // Ivars describing the present input token...
         self.index = 0; // The index within the tokens array of the token being scanned.
         self.lws = String::new(); // Leading whitespace. Required!
-                                  //@-<< LB::beautify: init ivars >>
+        //@-<< LB::beautify: init ivars >>
         if true {
             for input_token in self.input_list.clone() {
                 //@+<< LB: beautify: dispatch on input_token.kind >>
                 //@+node:ekr.20241002062655.1: *4* << LB: beautify: dispatch on input_token.kind >>
-                // let kind = input_token.kind.as_str();
-                // let value = input_token.kind.as_str();
                 let kind = input_token.kind;
                 let value = input_token.kind;
                 match kind {

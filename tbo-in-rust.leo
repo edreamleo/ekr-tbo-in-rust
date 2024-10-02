@@ -3040,16 +3040,15 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 
 **Summary**
 
-- The tokenizer (make_input_list) is too slow.
+- LB::make_input_list is too slow.
   This code can not be significantly faster than Leo's python beautifier!
+  
+- LB:beautify is not the problem. It is fast enough.
 </t>
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
 
-make_input_list: calculate class_name w/o match statement.
-
-beautify: dispatch w/o match statement. Create dispatch dict?
-</t>
+Closing post?</t>
 <t tx="ekr.20240927163405.1">#[derive(Debug)]
 pub struct Beautifier {
     args: Vec&lt;String&gt;,
@@ -4865,8 +4864,8 @@ impl fmt::Debug for InputTok {
         let mut value = self.value.to_string();
         if true {
             return write!(f, "{value} ");
-        }
-        else {  // Debug format.
+        } else {
+            // Debug format.
             value.truncate(60);
             // repr format is not useful.
             // let value_s = format!("{:?}", value);
@@ -4930,15 +4929,15 @@ pub struct Beautifier {
     stats: Stats,
     // Set in LB:beautify...
     // Debugging
-    line_number: i32,  // Use -1 instead of None?
+    line_number: i32, // Use -1 instead of None?
     // State vars for whitespace.
     curly_brackets_level: i32,
     indent_level: i32,
     paren_level: i32,
     square_brackets_stack: Vec&lt;bool&gt;,
     // Parse state.
-    decorator_seen: bool,  // Set by do_name for do_op.
-    in_arg_list: i32, // &gt; 0 if in an arg list of a def.
+    decorator_seen: bool, // Set by do_name for do_op.
+    in_arg_list: i32,     // &gt; 0 if in an arg list of a def.
     in_doc_part: bool,
     // To do
     // state_stack = Vec&lt;ParseState&gt;,  // list[ParseState] = []  # Stack of ParseState objects.
@@ -5015,10 +5014,11 @@ impl Beautifier {
     //! Beautifier::get_args: Set the args and files_list ivars.
     let args: Vec&lt;String&gt; = env::args().collect();
     let valid_args = vec![
-        "--all", 
+        "--all",
         "--beautified",
         "--diff",
-        "-h", "--help",
+        "-h",
+        "--help",
         "--report",
         "--write",
     ];
@@ -5026,14 +5026,9 @@ impl Beautifier {
         if i &gt; 0 {
             if valid_args.contains(&amp;arg.as_str()) {
                 self.args.push(arg.to_string())
-            }
-            else if 
-                arg.as_str().starts_with("--") ||
-                arg.as_str().starts_with("--")
-            {
+            } else if arg.as_str().starts_with("--") || arg.as_str().starts_with("--") {
                 println!("Ignoring invalid arg: {arg}");
-            }
-            else {
+            } else {
                 println!("File: {arg}");
                 self.files_list.push(arg.to_string());
             }
@@ -5042,7 +5037,7 @@ impl Beautifier {
 }
 </t>
 <t tx="ekr.20240929074037.112">fn make_input_list(&amp;mut self, contents: &amp;'static str) {
-// fn make_input_list(&amp;mut self, contents: &amp;str) {
+    // fn make_input_list(&amp;mut self, contents: &amp;str) {
     // Add InputToks to the input_list for every token given by the RustPython lex.
     let mut n_tokens: u64 = 0;
     let mut n_ws_tokens: u64 = 0;
@@ -5070,7 +5065,6 @@ impl Beautifier {
 
         &lt;&lt; Calculate class_name using match token &gt;&gt;
         self.add_input_token(class_name, tok_value);
-
     }
     // Update counts.
     self.stats.n_tokens += n_tokens;
@@ -5123,7 +5117,7 @@ fn beautify(&amp;mut self) -&gt; String {
     return x;
 }
 </t>
-<t tx="ekr.20240929074037.115">fn show_args (&amp;self) {
+<t tx="ekr.20240929074037.115">fn show_args(&amp;self) {
     println!("Command-line arguments...");
     for (i, arg) in self.args.iter().enumerate() {
         if i &gt; 0 {
@@ -5135,9 +5129,12 @@ fn beautify(&amp;mut self) -&gt; String {
     }
 }
 </t>
-<t tx="ekr.20240929074037.116">fn show_help (&amp;self) {
+<t tx="ekr.20240929074037.116">fn show_help(&amp;self) {
     //! Beautifier::show_help: print the help messages.
-    println!("{}", textwrap::dedent("
+    println!(
+        "{}",
+        textwrap::dedent(
+            "
         Beautify or diff files.
 
         -h --help:      Print this help message and exit.
@@ -5146,10 +5143,12 @@ fn beautify(&amp;mut self) -&gt; String {
         --diff:         Show diffs instead of changing files.
         --report:       Print summary report.
         --write:        Write beautifed files (dry-run mode otherwise).
-    "));
+    "
+        )
+    );
 }
 </t>
-<t tx="ekr.20240929074037.117">fn show_output_list (&amp;self) {
+<t tx="ekr.20240929074037.117">fn show_output_list(&amp;self) {
     println!("\nOutput list...");
     for (i, arg) in self.output_list.iter().enumerate() {
         if i &gt; 0 {
@@ -5169,10 +5168,10 @@ fn beautify(&amp;mut self) -&gt; String {
 <t tx="ekr.20240929074037.14">fn do_String(&amp;mut self, tok_value: &amp;str) {
     // correct.
     // print!("{tok_value}");
-    
+
     // incorrect.
-        // let quote = if *triple_quoted {"'''"} else {"'"};
-        // print!("{:?}:{quote}{value}{quote}", kind);
+    // let quote = if *triple_quoted {"'''"} else {"'"};
+    // print!("{:?}:{quote}{value}{quote}", kind);
 
     self.add_output_string("String", tok_value);
 }
@@ -5195,7 +5194,7 @@ fn beautify(&amp;mut self) -&gt; String {
 }
 </t>
 <t tx="ekr.20240929074037.2">#[allow(unused_variables)]
-fn add_output_string (&amp;mut self, kind: &amp;str, value: &amp;str) {
+fn add_output_string(&amp;mut self, kind: &amp;str, value: &amp;str) {
     //! Add value to the output list.
     //! kind is for debugging.
     if !value.is_empty() {
@@ -5241,11 +5240,12 @@ fn add_output_string (&amp;mut self, kind: &amp;str, value: &amp;str) {
 }
 </t>
 <t tx="ekr.20240929074037.3">// #[allow(dead_code)]
-fn add_input_token (&amp;mut self, kind: &amp;'static str, value: &amp;'static str) {
+fn add_input_token(&amp;mut self, kind: &amp;'static str, value: &amp;'static str) {
     //! Add one token to the output list.
-    self.input_list.push(
-        InputTok {kind: kind, value: value}
-    );
+    self.input_list.push(InputTok {
+        kind: kind,
+        value: value,
+    });
 }
 </t>
 <t tx="ekr.20240929074037.30">fn do_Break(&amp;mut self) {
@@ -5338,7 +5338,8 @@ fn add_input_token (&amp;mut self, kind: &amp;'static str, value: &amp;'static s
 </t>
 <t tx="ekr.20240929074037.5">fn beautify_one_file(&amp;mut self, file_name: &amp;str) {
     // Compute short_file_name from file_name.
-    if true {  // Testing only.
+    if true {
+        // Testing only.
         let file_path = path::Path::new(file_name);
         let os_str = file_path.file_name().unwrap(); // &amp;OsStr
         let short_file_name = os_str.to_str().unwrap();
@@ -5347,8 +5348,7 @@ fn add_input_token (&amp;mut self, kind: &amp;'static str, value: &amp;'static s
     // Read the file into contents (a slice with 'static lifetime!).
     self.output_list = Vec::new();
     let t1 = std::time::Instant::now();
-    let temp_contents = fs::read_to_string(file_name)
-        .expect("Error reading{file_name}");
+    let temp_contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
     // https://stackoverflow.com/questions/23975391/how-to-convert-a-string-into-a-static-str
     let contents: &amp;'static str = self.string_to_static_str(temp_contents);
     let read_time = t1.elapsed().as_nanos();
@@ -5364,7 +5364,8 @@ fn add_input_token (&amp;mut self, kind: &amp;'static str, value: &amp;'static s
     // Update stats.
     self.stats.n_files += 1;
     let write_time = 0;
-    self.stats.update_times(beautify_time, make_tokens_time, read_time, write_time);
+    self.stats
+        .update_times(beautify_time, make_tokens_time, read_time, write_time);
 }
 </t>
 <t tx="ekr.20240929074037.50">fn do_EqEqual(&amp;mut self) {
@@ -5578,8 +5579,8 @@ fn add_input_token (&amp;mut self, kind: &amp;'static str, value: &amp;'static s
 <t tx="ekr.20240929074547.1">#[derive(Debug)]
 pub struct Stats {
     // Cumulative statistics for all files.
-    n_files: u64, // Number of files.
-    n_tokens: u64, // Number of tokens.
+    n_files: u64,     // Number of files.
+    n_tokens: u64,    // Number of tokens.
     n_ws_tokens: u64, // Number of pseudo-ws tokens.
 
     // Timing stat, in microseconds...
@@ -5595,11 +5596,12 @@ impl Stats {
     @others
 }
 </t>
-<t tx="ekr.20240929074941.1">fn update_times (&amp;mut self,
+<t tx="ekr.20240929074941.1">fn update_times(
+    &amp;mut self,
     beautify: u128,
     make_tokens: u128,
     read_time: u128,
-    write_time: u128
+    write_time: u128,
 ) {
     // Update cumulative timing stats.
     self.beautify_time += beautify;
@@ -5608,7 +5610,7 @@ impl Stats {
     self.write_time += write_time;
 }
 </t>
-<t tx="ekr.20240929075236.1">fn report (&amp;mut self) {
+<t tx="ekr.20240929075236.1">fn report(&amp;mut self) {
     // Cumulative counts.
     let n_files = self.n_files;
     let n_tokens = self.n_tokens;
@@ -5618,7 +5620,8 @@ impl Stats {
     let make_tokens_time = self.fmt_ns(self.make_tokens_time);
     let beautify_time = self.fmt_ns(self.beautify_time);
     let write_time = self.fmt_ns(self.write_time);
-    let total_time = self.fmt_ns(self.make_tokens_time + self.read_time + self.beautify_time + self.write_time);
+    let total_time = self
+        .fmt_ns(self.make_tokens_time + self.read_time + self.beautify_time + self.write_time);
     println!("");
     println!("     files: {n_files}, tokens: {n_tokens}, ws tokens: {n_ws_tokens}");
     println!("       read: {read_time:&gt;7} ms");
@@ -5631,8 +5634,8 @@ impl Stats {
 <t tx="ekr.20240929080242.1">fn fmt_ns(&amp;mut self, t: u128) -&gt; String {
     //! Convert nanoseconds to fractional milliseconds.
     let ms = t / 1000000;
-    let micro = (t % 1000000) / 10000;  // 2-places only.
-    // println!("t: {t:8} ms: {ms:03} micro: {micro:02}");
+    let micro = (t % 1000000) / 10000; // 2-places only.
+                                       // println!("t: {t:8} ms: {ms:03} micro: {micro:02}");
     return f!("{ms:4}.{micro:02}");
 }
 
@@ -5944,12 +5947,12 @@ print('abc')
 // print(fr'pdb2')
 // return bool(i &amp; 1)
 </t>
-<t tx="ekr.20241001100954.1">pub fn new() -&gt;Stats {
+<t tx="ekr.20241001100954.1">pub fn new() -&gt; Stats {
     let x = Stats {
         // Cumulative counts.
-        n_files: 0,  // Number of files.
-        n_tokens: 0, // Number of tokens.
-        n_ws_tokens: 0,  // Number of pseudo-ws tokens.
+        n_files: 0,     // Number of files.
+        n_tokens: 0,    // Number of tokens.
+        n_ws_tokens: 0, // Number of pseudo-ws tokens.
 
         // Timing stats, in nanoseconds...
         beautify_time: 0,
@@ -6006,28 +6009,28 @@ print('abc')
         return result;
 </t>
 <t tx="ekr.20241001213329.1">// Debugging vars...
-self.line_number = 0;  // was None?
+self.line_number = 0; // was None?
 
 // State vars for whitespace.
-self.curly_brackets_level = 0;  // Number of unmatched '{' tokens.
-self.paren_level = 0;  // Number of unmatched '(' tokens.
-self.square_brackets_stack = Vec::new();  // A stack of bools, for self.gen_word().
-self.indent_level = 0;  // Set only by do_indent and do_dedent.
+self.curly_brackets_level = 0; // Number of unmatched '{' tokens.
+self.paren_level = 0; // Number of unmatched '(' tokens.
+self.square_brackets_stack = Vec::new(); // A stack of bools, for self.gen_word().
+self.indent_level = 0; // Set only by do_indent and do_dedent.
 
 // Parse state.
 self.decorator_seen = false; // Set by do_name for do_op.
-self.in_arg_list = 0;        // &gt; 0 if in an arg list of a def.
+self.in_arg_list = 0; // &gt; 0 if in an arg list of a def.
 self.in_doc_part = false;
 
 // To do.
 // self.state_stack = Vec::new();  // list[ParseState] = []  # Stack of ParseState objects.
 
 // Leo-related state.
-self.verbatim = false;  // True: don't beautify.
+self.verbatim = false; // True: don't beautify.
 
 // Ivars describing the present input token...
-self.index = 0;             // The index within the tokens array of the token being scanned.
-self.lws = String::new();   // Leading whitespace. Required!
+self.index = 0; // The index within the tokens array of the token being scanned.
+self.lws = String::new(); // Leading whitespace. Required!
 </t>
 <t tx="ekr.20241001215023.1">class ParseState:
     """
@@ -6083,9 +6086,7 @@ self.output_list.push("value".to_string());  // Converts str to String
     // let kind_s = &amp;input_token.kind;
     // let kind = kind_s.as_str();
     </t>
-<t tx="ekr.20241002062655.1">// let kind = input_token.kind.as_str();
-// let value = input_token.kind.as_str();
-let kind = input_token.kind;
+<t tx="ekr.20241002062655.1">let kind = input_token.kind;
 let value = input_token.kind;
 match kind {
     // Some of these could be replaced by inline code.
@@ -6159,21 +6160,21 @@ match kind {
 fn do_ws(&amp;mut self, kind: &amp;str, value: &amp;str) {
     //! Handle the "ws" pseudo-token.
     //! Put the whitespace only if if ends with backslash-newline.
-    
+
     // To do.
-    
+
     // let last_token = self.input_tokens[self.index - 1];
     // let is_newline = kind in ("nl", "newline");
     // if is_newline {
-        // self.pending_lws = val;
-        // self.pending_ws = "";
+    // self.pending_lws = val;
+    // self.pending_ws = "";
     // }
     // else if "\\\n" in val {
-        // self.pending_lws = "";
-        // self.pending_ws = val;
+    // self.pending_lws = "";
+    // self.pending_ws = val;
     // }
     // else {
-        // self.pending_ws = val
+    // self.pending_ws = val
     // }
 }
 </t>
@@ -6186,8 +6187,12 @@ let class_name = match token {
     Float { value } =&gt; "Float",
     Int { value } =&gt; "Int",
     Name { name } =&gt; "Name",
-    Tok::String { value, kind, triple_quoted } =&gt; "String",
-    
+    Tok::String {
+        value,
+        kind,
+        triple_quoted,
+    } =&gt; "String",
+
     // Common tokens...
     Class =&gt; "Class",
     Dedent =&gt; "Dedent",
