@@ -560,7 +560,8 @@
 <v t="ekr.20240928185643.1"><vh>Stats</vh></v>
 <v t="ekr.20241002054443.1"><vh>Errors in LB:beautify</vh></v>
 </v>
-<v t="ekr.20240927154323.1"><vh>** Won't do ???</vh></v>
+<v t="ekr.20240927154323.1"><vh>** To do</vh></v>
+<v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 <v t="ekr.20241001104914.1"><vh>--- classes</vh>
 <v t="ekr.20240105145241.1"></v>
 <v t="ekr.20240929024648.120"><vh>class InputTok</vh></v>
@@ -684,7 +685,9 @@
 </v>
 <v t="ekr.20240929074037.110"><vh>LB::enabled</vh></v>
 <v t="ekr.20240929074037.111"><vh>LB::get_args</vh></v>
-<v t="ekr.20240929074037.112"><vh>LB::make_input_list</vh></v>
+<v t="ekr.20240929074037.112"><vh>LB::make_input_list</vh>
+<v t="ekr.20241002113506.1"><vh>&lt;&lt; Calculate class_name using match token &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20240929074037.115"><vh>LB::show_args</vh></v>
 <v t="ekr.20240929074037.116"><vh>LB::show_help</vh></v>
 <v t="ekr.20240929074037.117"><vh>LB::show_output_list</vh></v>
@@ -698,15 +701,12 @@
 </v>
 </v>
 <v t="ekr.20241002062737.1"><vh>--- recent</vh>
-<v t="ekr.20240929074037.2"></v>
-<v t="ekr.20240929074037.5"></v>
-<v t="ekr.20240929074037.9"></v>
-<v t="ekr.20240929074037.112"></v>
-<v t="ekr.20240929074037.7"></v>
-<v t="ekr.20241002071143.1"></v>
 <v t="ekr.20240929074037.113"></v>
+<v t="ekr.20240929074037.5"></v>
+<v t="ekr.20240929074037.7"></v>
+<v t="ekr.20240929074037.112"></v>
+<v t="ekr.20241002071143.1"></v>
 </v>
-<v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20200107040729.1">def show_diffs(self, s1: str, s2: str) -&gt; None:  # pragma: no cover
@@ -3034,12 +3034,18 @@ lexer.rs: https://github.com/astral-sh/ruff/blob/main/crates/ruff_python_parser/
 docs:
 Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 
-Aha: Refactoring is harder in Rust.
+**Summary**
+
+- The tokenizer (make_input_list) is too slow.
+  This code can not be significantly faster than Leo's python beautifier!
 </t>
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
 
-Probably won't do:
+Last chance:
+- Speed up tokenizer.
+
+Won't do:
 - Transliterate prepass.</t>
 <t tx="ekr.20240927163405.1">#[derive(Debug)]
 pub struct Beautifier {
@@ -5043,126 +5049,20 @@ impl Beautifier {
         n_tokens += 1;
         let (token, range) = token_tuple;
         let tok_value = &amp;contents[range];
-        let start_i = usize::from(range.start());
-        let end_i = usize::from(range.end());
-        
-        // The gem: create a whitespace pseudo-tokens.
-        if start_i &gt; prev_start {
-            let ws = &amp;contents[prev_start..start_i];
-            self.add_input_token("ws", ws);
-            n_ws_tokens += 1
+        if true {
+            // The gem: create a whitespace pseudo-tokens.
+            // This code adds maybe about 1 ms when beautifying leoFrame.py.
+            // With the gem: 14.1 - 14.5 ms. Without: 13.1 - 13.7 ms.
+            let start_i = usize::from(range.start());
+            let end_i = usize::from(range.end());
+            if start_i &gt; prev_start {
+                let ws = &amp;contents[prev_start..start_i];
+                self.add_input_token("ws", ws);
+                n_ws_tokens += 1
+            }
+            prev_start = end_i;
         }
-        prev_start = end_i;
-
-        // Variants names are necessary, but otherwise not used.
-        #[allow(unused_variables)]
-        let class_name = match token {
-            // Tokens with values...
-            // Use tok_value for *all* values.
-            Comment(value) =&gt; "Comment",  // No idea why parens are needed here.
-            Complex { real, imag } =&gt; "Complex",
-            Float { value } =&gt; "Float",
-            Int { value } =&gt; "Int",
-            Name { name } =&gt; "Name",
-            Tok::String { value, kind, triple_quoted } =&gt; "String",
-            
-            // Common tokens...
-            Class =&gt; "Class",
-            Dedent =&gt; "Dedent",
-            Def =&gt; "Def",
-            Indent =&gt; "Indent",
-            Newline =&gt; "Newline",
-            NonLogicalNewline =&gt; "NonLogicalNewline",
-
-            // All other tokens...
-            Amper =&gt; "Amper",
-            AmperEqual =&gt; "AmperEqual",
-            And =&gt; "And",
-            As =&gt; "As",
-            Assert =&gt; "Assert",
-            Async =&gt; "Async",
-            At =&gt; "At",
-            AtEqual =&gt; "AtEqual",
-            Await =&gt; "Await",
-            Break =&gt; "Break",
-            Case =&gt; "Case",
-            CircumFlex =&gt; "CircumFlex",
-            CircumflexEqual =&gt; "CircumflexEqual",
-            Colon =&gt; "Colon",
-            ColonEqual =&gt; "ColonEqual",
-            Comma =&gt; "Comma",
-            Continue =&gt; "Continue",
-            Del =&gt; "Del",
-            Dot =&gt; "Dot",
-            DoubleSlash =&gt; "DoubleSlash",
-            DoubleSlashEqual =&gt; "DoubleSlashEqual",
-            DoubleStar =&gt; "DoubleStar",
-            DoubleStarEqual =&gt; "DoubleStarEqual",
-            Elif =&gt; "Elif",
-            Ellipsis =&gt; "Ellipsis",
-            Else =&gt; "Else",
-            EndOfFile =&gt; "EndOfFile",
-            EqEqual =&gt; "EqEqual",
-            Equal =&gt; "Equal",
-            Except =&gt; "Except",
-            False =&gt; "False",
-            Finally =&gt; "Finally",
-            For =&gt; "For",
-            From =&gt; "From",
-            Global =&gt; "Global",
-            Greater =&gt; "Greater",
-            GreaterEqual =&gt; "GreaterEqual",
-            If =&gt; "If",
-            Import =&gt; "Import",
-            In =&gt; "In",
-            Is =&gt; "Is",
-            Lambda =&gt; "Lambda",
-            Lbrace =&gt; "Lbrace",
-            LeftShift =&gt; "LeftShift",
-            LeftShiftEqual =&gt; "LeftShiftEqual",
-            Less =&gt; "Less",
-            LessEqual =&gt; "LessEqual",
-            Lpar =&gt; "Lpar",
-            Lsqb =&gt; "Lsqb",
-            Match =&gt; "Match",
-            Minus =&gt; "Minus",
-            MinusEqual =&gt; "MinusEqual",
-            None =&gt; "None",
-            Nonlocal =&gt; "Nonlocal",
-            Not =&gt; "Not",
-            NotEqual =&gt; "NotEqual",
-            Or =&gt; "Or",
-            Pass =&gt; "Pass",
-            Percent =&gt; "Percent",
-            PercentEqual =&gt; "PercentEqual",
-            Plus =&gt; "Plus",
-            PlusEqual =&gt; "PlusEqual",
-            Raise =&gt; "Raise",
-            Rarrow =&gt; "Rarrow",
-            Rbrace =&gt; "Rbrace",
-            Return =&gt; "Return",
-            RightShift =&gt; "RightShift",
-            RightShiftEqual =&gt; "RightShiftEqual",
-            Rpar =&gt; "Rpar",
-            Rsqb =&gt; "Rsqb",
-            Semi =&gt; "Semi",
-            Slash =&gt; "Slash",
-            SlashEqual =&gt; "SlashEqual",
-            Star =&gt; "Star",
-            StarEqual =&gt; "StarEqual",
-            StartExpression =&gt; "StartExpression",
-            StartInteractive =&gt; "StartInteractive",
-            StartModule =&gt; "StartModule",
-            Tilde =&gt; "Tilde",
-            True =&gt; "True",
-            Try =&gt; "Try",
-            Type =&gt; "Type",
-            Vbar =&gt; "Vbar",
-            VbarEqual =&gt; "VbarEqual",
-            While =&gt; "While",
-            With =&gt; "With",
-            Yield =&gt; "Yield",
-        };
+        &lt;&lt; Calculate class_name using match token &gt;&gt;
         self.add_input_token(class_name, tok_value);
     }
     // Update counts.
@@ -6266,6 +6166,115 @@ fn do_ws(&amp;mut self, kind: &amp;str, value: &amp;str) {
         // self.pending_ws = val
     // }
 }
+</t>
+<t tx="ekr.20241002113506.1">// Variant names are necessary, but otherwise not used.
+#[allow(unused_variables)]
+let class_name = match token {
+    // Tokens with values...
+    Comment(value) =&gt; "Comment",
+    Complex { real, imag } =&gt; "Complex",
+    Float { value } =&gt; "Float",
+    Int { value } =&gt; "Int",
+    Name { name } =&gt; "Name",
+    Tok::String { value, kind, triple_quoted } =&gt; "String",
+    
+    // Common tokens...
+    Class =&gt; "Class",
+    Dedent =&gt; "Dedent",
+    Def =&gt; "Def",
+    Indent =&gt; "Indent",
+    Newline =&gt; "Newline",
+    NonLogicalNewline =&gt; "NonLogicalNewline",
+
+    // All other tokens...
+    Amper =&gt; "Amper",
+    AmperEqual =&gt; "AmperEqual",
+    And =&gt; "And",
+    As =&gt; "As",
+    Assert =&gt; "Assert",
+    Async =&gt; "Async",
+    At =&gt; "At",
+    AtEqual =&gt; "AtEqual",
+    Await =&gt; "Await",
+    Break =&gt; "Break",
+    Case =&gt; "Case",
+    CircumFlex =&gt; "CircumFlex",
+    CircumflexEqual =&gt; "CircumflexEqual",
+    Colon =&gt; "Colon",
+    ColonEqual =&gt; "ColonEqual",
+    Comma =&gt; "Comma",
+    Continue =&gt; "Continue",
+    Del =&gt; "Del",
+    Dot =&gt; "Dot",
+    DoubleSlash =&gt; "DoubleSlash",
+    DoubleSlashEqual =&gt; "DoubleSlashEqual",
+    DoubleStar =&gt; "DoubleStar",
+    DoubleStarEqual =&gt; "DoubleStarEqual",
+    Elif =&gt; "Elif",
+    Ellipsis =&gt; "Ellipsis",
+    Else =&gt; "Else",
+    EndOfFile =&gt; "EndOfFile",
+    EqEqual =&gt; "EqEqual",
+    Equal =&gt; "Equal",
+    Except =&gt; "Except",
+    False =&gt; "False",
+    Finally =&gt; "Finally",
+    For =&gt; "For",
+    From =&gt; "From",
+    Global =&gt; "Global",
+    Greater =&gt; "Greater",
+    GreaterEqual =&gt; "GreaterEqual",
+    If =&gt; "If",
+    Import =&gt; "Import",
+    In =&gt; "In",
+    Is =&gt; "Is",
+    Lambda =&gt; "Lambda",
+    Lbrace =&gt; "Lbrace",
+    LeftShift =&gt; "LeftShift",
+    LeftShiftEqual =&gt; "LeftShiftEqual",
+    Less =&gt; "Less",
+    LessEqual =&gt; "LessEqual",
+    Lpar =&gt; "Lpar",
+    Lsqb =&gt; "Lsqb",
+    Match =&gt; "Match",
+    Minus =&gt; "Minus",
+    MinusEqual =&gt; "MinusEqual",
+    None =&gt; "None",
+    Nonlocal =&gt; "Nonlocal",
+    Not =&gt; "Not",
+    NotEqual =&gt; "NotEqual",
+    Or =&gt; "Or",
+    Pass =&gt; "Pass",
+    Percent =&gt; "Percent",
+    PercentEqual =&gt; "PercentEqual",
+    Plus =&gt; "Plus",
+    PlusEqual =&gt; "PlusEqual",
+    Raise =&gt; "Raise",
+    Rarrow =&gt; "Rarrow",
+    Rbrace =&gt; "Rbrace",
+    Return =&gt; "Return",
+    RightShift =&gt; "RightShift",
+    RightShiftEqual =&gt; "RightShiftEqual",
+    Rpar =&gt; "Rpar",
+    Rsqb =&gt; "Rsqb",
+    Semi =&gt; "Semi",
+    Slash =&gt; "Slash",
+    SlashEqual =&gt; "SlashEqual",
+    Star =&gt; "Star",
+    StarEqual =&gt; "StarEqual",
+    StartExpression =&gt; "StartExpression",
+    StartInteractive =&gt; "StartInteractive",
+    StartModule =&gt; "StartModule",
+    Tilde =&gt; "Tilde",
+    True =&gt; "True",
+    Try =&gt; "Try",
+    Type =&gt; "Type",
+    Vbar =&gt; "Vbar",
+    VbarEqual =&gt; "VbarEqual",
+    While =&gt; "While",
+    With =&gt; "With",
+    Yield =&gt; "Yield",
+};
 </t>
 </tnodes>
 </leo_file>

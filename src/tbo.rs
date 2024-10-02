@@ -754,23 +754,26 @@ impl Beautifier {
             n_tokens += 1;
             let (token, range) = token_tuple;
             let tok_value = &contents[range];
-            let start_i = usize::from(range.start());
-            let end_i = usize::from(range.end());
-            
-            // The gem: create a whitespace pseudo-tokens.
-            if start_i > prev_start {
-                let ws = &contents[prev_start..start_i];
-                self.add_input_token("ws", ws);
-                n_ws_tokens += 1
+            if true {
+                // The gem: create a whitespace pseudo-tokens.
+                // This code adds maybe about 1 ms when beautifying leoFrame.py.
+                // With the gem: 14.1 - 14.5 ms. Without: 13.1 - 13.7 ms.
+                let start_i = usize::from(range.start());
+                let end_i = usize::from(range.end());
+                if start_i > prev_start {
+                    let ws = &contents[prev_start..start_i];
+                    self.add_input_token("ws", ws);
+                    n_ws_tokens += 1
+                }
+                prev_start = end_i;
             }
-            prev_start = end_i;
-
-            // Variants names are necessary, but otherwise not used.
+            //@+<< Calculate class_name using match token >>
+            //@+node:ekr.20241002113506.1: *4* << Calculate class_name using match token >>
+            // Variant names are necessary, but otherwise not used.
             #[allow(unused_variables)]
             let class_name = match token {
                 // Tokens with values...
-                // Use tok_value for *all* values.
-                Comment(value) => "Comment",  // No idea why parens are needed here.
+                Comment(value) => "Comment",
                 Complex { real, imag } => "Complex",
                 Float { value } => "Float",
                 Int { value } => "Int",
@@ -874,6 +877,7 @@ impl Beautifier {
                 With => "With",
                 Yield => "Yield",
             };
+            //@-<< Calculate class_name using match token >>
             self.add_input_token(class_name, tok_value);
         }
         // Update counts.
