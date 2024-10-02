@@ -436,6 +436,9 @@
 </v>
 </v>
 <v t="ekr.20240927154009.1"><vh>Files</vh>
+<v t="ekr.20240927151245.1"><vh>@edit Cargo.toml</vh></v>
+<v t="ekr.20240927151332.1"><vh>@file src/main.rs</vh></v>
+<v t="ekr.20240928161210.1"><vh>@file src/tbo.rs</vh></v>
 <v t="ekr.20240105140814.1"><vh>COPY leoTokens.py</vh>
 <v t="ekr.20240105140814.2"><vh>&lt;&lt; leoTokens.py: docstring &gt;&gt;</vh></v>
 <v t="ekr.20240105140814.3"><vh>&lt;&lt; leoTokens.py: imports &amp; annotations &gt;&gt;</vh></v>
@@ -549,17 +552,15 @@
 </v>
 </v>
 </v>
-<v t="ekr.20240927151245.1"><vh>@edit Cargo.toml</vh></v>
-<v t="ekr.20240927151332.1"><vh>@file src/main.rs</vh></v>
 </v>
 <v t="ekr.20240927154016.1"><vh>Notes</vh>
 <v t="ekr.20240929084852.1"><vh>Ownership and mutation</vh></v>
 <v t="ekr.20241001055017.1"><vh>Traits</vh></v>
 <v t="ekr.20241001060848.1"><vh>Lifetimes (to do)</vh></v>
 <v t="ekr.20240928185643.1"><vh>Stats</vh></v>
+<v t="ekr.20241002054443.1"><vh>Errors in LB:beautify</vh></v>
 </v>
-<v t="ekr.20240927154323.1"><vh>** To do</vh></v>
-<v t="ekr.20240928161210.1"><vh>@file src/tbo.rs</vh></v>
+<v t="ekr.20240927154323.1"><vh>** Won't do ???</vh></v>
 <v t="ekr.20241001104914.1"><vh>--- classes</vh>
 <v t="ekr.20240105145241.1"></v>
 <v t="ekr.20240929024648.120"><vh>class InputTok</vh></v>
@@ -697,17 +698,15 @@
 </v>
 </v>
 <v t="ekr.20241002062737.1"><vh>--- recent</vh>
+<v t="ekr.20240929074037.2"></v>
 <v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.9"></v>
-<v t="ekr.20240929074037.2"></v>
-</v>
-<v t="ekr.20240929074037.1"></v>
-<v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
-<v t="ekr.20241002054443.1"><vh>--- Creating output list</vh></v>
+<v t="ekr.20240929074037.112"></v>
 <v t="ekr.20240929074037.7"></v>
 <v t="ekr.20241002071143.1"></v>
 <v t="ekr.20240929074037.113"></v>
-<v t="ekr.20241002062655.1"></v>
+</v>
+<v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20200107040729.1">def show_diffs(self, s1: str, s2: str) -&gt; None:  # pragma: no cover
@@ -3040,12 +3039,8 @@ Aha: Refactoring is harder in Rust.
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
 
-- Transliterate python tbo.beautify (main token loop)
-
-- Create write_token! macro?
-
-- File performance bug re fs::read_to_string(file_name)?
-</t>
+Probably won't do:
+- Transliterate prepass.</t>
 <t tx="ekr.20240927163405.1">#[derive(Debug)]
 pub struct Beautifier {
     args: Vec&lt;String&gt;,
@@ -5182,8 +5177,10 @@ impl Beautifier {
 fn beautify(&amp;mut self) -&gt; String {
     //! Beautify the input_tokens, creating the output_list.
     &lt;&lt; LB::beautify: init ivars &gt;&gt;
-    for input_token in self.input_list.clone() {
-        &lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;
+    if true {
+        for input_token in self.input_list.clone() {
+            &lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;
+        }
     }
     // return ''.join(self.output_list);
     let mut result = String::new();
@@ -6067,14 +6064,14 @@ print('abc')
 
         // Init ivars first.
         self.input_token = None;  // ???
-        self.pending_lws = '';  // ???
-        self.pending_ws = '';  // ???
+        self.pending_lws = "";  // ???
+        self.pending_ws = "";  // ???
         self.prev_output_kind = None;    // ???
         self.prev_output_value = None;  // ???
 
         // Init state.
-        self.gen_token('file-start', '');
-        self.push_state('file-start');
+        self.gen_token("file-start", "");
+        self.push_state("file-start");
 
         // The main loop:
         prev_line_number: i32 = 0;
@@ -6094,9 +6091,9 @@ print('abc')
 
         // Return the result. ???
         // result = ''.join(self.output_list);
-        let result = String::new();
+        let mut result = String::new();
         for s in self.output_list {
-            result.push(s);
+            result.push_str(s);
         }
         return result;
 </t>
@@ -6154,7 +6151,11 @@ self.lws = String::new();   // Leading whitespace. Required!
     def __str__(self) -&gt; str:
         return f"State: {self.kind} {self.value!r}"  # pragma: no cover
 </t>
-<t tx="ekr.20241002054443.1">// All these FAIL in LB::beautify
+<t tx="ekr.20241002054443.1">@language rust
+
+// The clone in LB:beautify appears to be necessary.
+
+// All these FAIL in LB::beautify
  
 self.add_output_string(&amp;"Test", &amp;"Value");  // mutable borrow occurs here.
 self.output_list.push(&amp;input_token.value); //  expected `String`, found `&amp;String`
