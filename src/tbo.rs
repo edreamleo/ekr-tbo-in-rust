@@ -21,8 +21,8 @@ use std::path;
 // Only Clone is valid for String.
 #[derive(Clone)]
 struct InputTok {
-    kind: String,
-    value: String,
+    kind: &'static str,
+    value: &'static str,
 }
 
 impl fmt::Debug for InputTok {
@@ -104,12 +104,11 @@ impl Beautifier {
     }
     //@+node:ekr.20240929074037.3: *3* LB::add_input_token
     // #[allow(dead_code)]
-    fn add_input_token (&mut self, kind: &str, value: &str) {
+    fn add_input_token (&mut self, kind: &'static str, value: &'static str) {
         //! Add one token to the output list.
-        self.input_list.push(InputTok {
-            kind: kind.to_string(),
-            value: value.to_string(),
-        });
+        self.input_list.push(
+            InputTok {kind: kind, value: value}
+        );
     }
     //@+node:ekr.20240929074037.2: *3* LB::add_output_string
     #[allow(unused_variables)]
@@ -157,8 +156,10 @@ impl Beautifier {
             for input_token in self.input_list.clone() {
                 //@+<< LB: beautify: dispatch on input_token.kind >>
                 //@+node:ekr.20241002062655.1: *4* << LB: beautify: dispatch on input_token.kind >>
-                let kind = input_token.kind.as_str();
-                let value = input_token.kind.as_str();
+                // let kind = input_token.kind.as_str();
+                // let value = input_token.kind.as_str();
+                let kind = input_token.kind;
+                let value = input_token.kind;
                 match kind {
                     // Some of these could be replaced by inline code.
                     "And" => self.do_And(),
@@ -251,13 +252,15 @@ impl Beautifier {
             let short_file_name = os_str.to_str().unwrap();
             println!("{short_file_name}");
         }
-        // Read the file into contents (a String).
+        // Read the file into contents (a slice with 'static lifetime!).
         self.output_list = Vec::new();
         let t1 = std::time::Instant::now();
-        let contents = fs::read_to_string(file_name)
+        let temp_contents = fs::read_to_string(file_name)
             .expect("Error reading{file_name}");
-        // print_type(&contents, "contents");
+        // https://stackoverflow.com/questions/23975391/how-to-convert-a-string-into-a-static-str
+        let contents: &'static str = self.string_to_static_str(temp_contents);
         let read_time = t1.elapsed().as_nanos();
+
         // Make the list of input tokens
         let t3 = std::time::Instant::now();
         self.make_input_list(&contents);
@@ -741,7 +744,8 @@ impl Beautifier {
         }
     }
     //@+node:ekr.20240929074037.112: *3* LB::make_input_list
-    fn make_input_list(&mut self, contents: &str) {
+    fn make_input_list(&mut self, contents: &'static str) {
+    // fn make_input_list(&mut self, contents: &str) {
         // Add InputToks to the input_list for every token given by the RustPython lex.
         let mut n_tokens: u64 = 0;
         let mut n_ws_tokens: u64 = 0;
@@ -766,119 +770,120 @@ impl Beautifier {
                     n_ws_tokens += 1
                 }
                 prev_start = end_i;
-            }
-            //@+<< Calculate class_name using match token >>
-            //@+node:ekr.20241002113506.1: *4* << Calculate class_name using match token >>
-            // Variant names are necessary, but otherwise not used.
-            #[allow(unused_variables)]
-            let class_name = match token {
-                // Tokens with values...
-                Comment(value) => "Comment",
-                Complex { real, imag } => "Complex",
-                Float { value } => "Float",
-                Int { value } => "Int",
-                Name { name } => "Name",
-                Tok::String { value, kind, triple_quoted } => "String",
                 
-                // Common tokens...
-                Class => "Class",
-                Dedent => "Dedent",
-                Def => "Def",
-                Indent => "Indent",
-                Newline => "Newline",
-                NonLogicalNewline => "NonLogicalNewline",
+                //@+<< Calculate class_name using match token >>
+                //@+node:ekr.20241002113506.1: *4* << Calculate class_name using match token >>
+                // Variant names are necessary, but otherwise not used.
+                #[allow(unused_variables)]
+                let class_name = match token {
+                    // Tokens with values...
+                    Comment(value) => "Comment",
+                    Complex { real, imag } => "Complex",
+                    Float { value } => "Float",
+                    Int { value } => "Int",
+                    Name { name } => "Name",
+                    Tok::String { value, kind, triple_quoted } => "String",
+                    
+                    // Common tokens...
+                    Class => "Class",
+                    Dedent => "Dedent",
+                    Def => "Def",
+                    Indent => "Indent",
+                    Newline => "Newline",
+                    NonLogicalNewline => "NonLogicalNewline",
 
-                // All other tokens...
-                Amper => "Amper",
-                AmperEqual => "AmperEqual",
-                And => "And",
-                As => "As",
-                Assert => "Assert",
-                Async => "Async",
-                At => "At",
-                AtEqual => "AtEqual",
-                Await => "Await",
-                Break => "Break",
-                Case => "Case",
-                CircumFlex => "CircumFlex",
-                CircumflexEqual => "CircumflexEqual",
-                Colon => "Colon",
-                ColonEqual => "ColonEqual",
-                Comma => "Comma",
-                Continue => "Continue",
-                Del => "Del",
-                Dot => "Dot",
-                DoubleSlash => "DoubleSlash",
-                DoubleSlashEqual => "DoubleSlashEqual",
-                DoubleStar => "DoubleStar",
-                DoubleStarEqual => "DoubleStarEqual",
-                Elif => "Elif",
-                Ellipsis => "Ellipsis",
-                Else => "Else",
-                EndOfFile => "EndOfFile",
-                EqEqual => "EqEqual",
-                Equal => "Equal",
-                Except => "Except",
-                False => "False",
-                Finally => "Finally",
-                For => "For",
-                From => "From",
-                Global => "Global",
-                Greater => "Greater",
-                GreaterEqual => "GreaterEqual",
-                If => "If",
-                Import => "Import",
-                In => "In",
-                Is => "Is",
-                Lambda => "Lambda",
-                Lbrace => "Lbrace",
-                LeftShift => "LeftShift",
-                LeftShiftEqual => "LeftShiftEqual",
-                Less => "Less",
-                LessEqual => "LessEqual",
-                Lpar => "Lpar",
-                Lsqb => "Lsqb",
-                Match => "Match",
-                Minus => "Minus",
-                MinusEqual => "MinusEqual",
-                None => "None",
-                Nonlocal => "Nonlocal",
-                Not => "Not",
-                NotEqual => "NotEqual",
-                Or => "Or",
-                Pass => "Pass",
-                Percent => "Percent",
-                PercentEqual => "PercentEqual",
-                Plus => "Plus",
-                PlusEqual => "PlusEqual",
-                Raise => "Raise",
-                Rarrow => "Rarrow",
-                Rbrace => "Rbrace",
-                Return => "Return",
-                RightShift => "RightShift",
-                RightShiftEqual => "RightShiftEqual",
-                Rpar => "Rpar",
-                Rsqb => "Rsqb",
-                Semi => "Semi",
-                Slash => "Slash",
-                SlashEqual => "SlashEqual",
-                Star => "Star",
-                StarEqual => "StarEqual",
-                StartExpression => "StartExpression",
-                StartInteractive => "StartInteractive",
-                StartModule => "StartModule",
-                Tilde => "Tilde",
-                True => "True",
-                Try => "Try",
-                Type => "Type",
-                Vbar => "Vbar",
-                VbarEqual => "VbarEqual",
-                While => "While",
-                With => "With",
-                Yield => "Yield",
-            };
-            //@-<< Calculate class_name using match token >>
-            self.add_input_token(class_name, tok_value);
+                    // All other tokens...
+                    Amper => "Amper",
+                    AmperEqual => "AmperEqual",
+                    And => "And",
+                    As => "As",
+                    Assert => "Assert",
+                    Async => "Async",
+                    At => "At",
+                    AtEqual => "AtEqual",
+                    Await => "Await",
+                    Break => "Break",
+                    Case => "Case",
+                    CircumFlex => "CircumFlex",
+                    CircumflexEqual => "CircumflexEqual",
+                    Colon => "Colon",
+                    ColonEqual => "ColonEqual",
+                    Comma => "Comma",
+                    Continue => "Continue",
+                    Del => "Del",
+                    Dot => "Dot",
+                    DoubleSlash => "DoubleSlash",
+                    DoubleSlashEqual => "DoubleSlashEqual",
+                    DoubleStar => "DoubleStar",
+                    DoubleStarEqual => "DoubleStarEqual",
+                    Elif => "Elif",
+                    Ellipsis => "Ellipsis",
+                    Else => "Else",
+                    EndOfFile => "EndOfFile",
+                    EqEqual => "EqEqual",
+                    Equal => "Equal",
+                    Except => "Except",
+                    False => "False",
+                    Finally => "Finally",
+                    For => "For",
+                    From => "From",
+                    Global => "Global",
+                    Greater => "Greater",
+                    GreaterEqual => "GreaterEqual",
+                    If => "If",
+                    Import => "Import",
+                    In => "In",
+                    Is => "Is",
+                    Lambda => "Lambda",
+                    Lbrace => "Lbrace",
+                    LeftShift => "LeftShift",
+                    LeftShiftEqual => "LeftShiftEqual",
+                    Less => "Less",
+                    LessEqual => "LessEqual",
+                    Lpar => "Lpar",
+                    Lsqb => "Lsqb",
+                    Match => "Match",
+                    Minus => "Minus",
+                    MinusEqual => "MinusEqual",
+                    None => "None",
+                    Nonlocal => "Nonlocal",
+                    Not => "Not",
+                    NotEqual => "NotEqual",
+                    Or => "Or",
+                    Pass => "Pass",
+                    Percent => "Percent",
+                    PercentEqual => "PercentEqual",
+                    Plus => "Plus",
+                    PlusEqual => "PlusEqual",
+                    Raise => "Raise",
+                    Rarrow => "Rarrow",
+                    Rbrace => "Rbrace",
+                    Return => "Return",
+                    RightShift => "RightShift",
+                    RightShiftEqual => "RightShiftEqual",
+                    Rpar => "Rpar",
+                    Rsqb => "Rsqb",
+                    Semi => "Semi",
+                    Slash => "Slash",
+                    SlashEqual => "SlashEqual",
+                    Star => "Star",
+                    StarEqual => "StarEqual",
+                    StartExpression => "StartExpression",
+                    StartInteractive => "StartInteractive",
+                    StartModule => "StartModule",
+                    Tilde => "Tilde",
+                    True => "True",
+                    Try => "Try",
+                    Type => "Type",
+                    Vbar => "Vbar",
+                    VbarEqual => "VbarEqual",
+                    While => "While",
+                    With => "With",
+                    Yield => "Yield",
+                };
+                //@-<< Calculate class_name using match token >>
+                self.add_input_token(class_name, tok_value);
+            }
         }
         // Update counts.
         self.stats.n_tokens += n_tokens;
@@ -919,6 +924,11 @@ impl Beautifier {
             }
         }
     }
+    //@+node:ekr.20241002163554.1: *3* LB::string_to_static_str
+    fn string_to_static_str(&self, s: String) -> &'static str {
+        Box::leak(s.into_boxed_str())
+    }
+
     //@-others
 }
 //@+node:ekr.20240929074547.1: ** class Stats

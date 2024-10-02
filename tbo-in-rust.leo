@@ -434,6 +434,7 @@
 <v t="ekr.20240929024648.113"><vh>function: make_input_list (works)</vh></v>
 <v t="ekr.20240930084648.1"><vh>function: read</vh></v>
 </v>
+<v t="ekr.20241002164044.1"><vh>make_input_list: Calculate class name w/o match</vh></v>
 </v>
 <v t="ekr.20240927154009.1"><vh>Files</vh>
 <v t="ekr.20240927151245.1"><vh>@edit Cargo.toml</vh></v>
@@ -557,14 +558,13 @@
 <v t="ekr.20240929084852.1"><vh>Ownership and mutation</vh></v>
 <v t="ekr.20241001055017.1"><vh>Traits</vh></v>
 <v t="ekr.20241001060848.1"><vh>Lifetimes (to do)</vh></v>
-<v t="ekr.20240928185643.1"><vh>Stats</vh></v>
 <v t="ekr.20241002054443.1"><vh>Errors in LB:beautify</vh></v>
+<v t="ekr.20240928185643.1"><vh>Stats</vh></v>
 </v>
 <v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 <v t="ekr.20241001104914.1"><vh>--- classes</vh>
 <v t="ekr.20240105145241.1"></v>
-<v t="ekr.20240929024648.120"><vh>class InputTok</vh></v>
 <v t="ekr.20240929074037.1"><vh>class LeoBeautifier (new)</vh>
 <v t="ekr.20240929074037.114"><vh> LB::new</vh></v>
 <v t="ekr.20240929074037.3"><vh>LB::add_input_token</vh></v>
@@ -691,6 +691,7 @@
 <v t="ekr.20240929074037.115"><vh>LB::show_args</vh></v>
 <v t="ekr.20240929074037.116"><vh>LB::show_help</vh></v>
 <v t="ekr.20240929074037.117"><vh>LB::show_output_list</vh></v>
+<v t="ekr.20241002163554.1"><vh>LB::string_to_static_str</vh></v>
 </v>
 <v t="ekr.20241001215023.1"><vh>class ParseState (to do)</vh></v>
 <v t="ekr.20240929074547.1"><vh>class Stats</vh>
@@ -701,12 +702,15 @@
 </v>
 </v>
 <v t="ekr.20241002062737.1"><vh>--- recent</vh>
-<v t="ekr.20240929074037.113"></v>
 <v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.7"></v>
-<v t="ekr.20240929074037.112"></v>
 <v t="ekr.20241002071143.1"></v>
 </v>
+<v t="ekr.20240929024648.120"><vh>class InputTok</vh></v>
+<v t="ekr.20241002163554.1"></v>
+<v t="ekr.20240929074037.5"></v>
+<v t="ekr.20240929074037.113"></v>
+<v t="ekr.20240929074037.112"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20200107040729.1">def show_diffs(self, s1: str, s2: str) -&gt; None:  # pragma: no cover
@@ -3042,11 +3046,10 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
 
-Last chance:
-- Speed up tokenizer.
+make_input_list: calculate class_name w/o match statement.
 
-Won't do:
-- Transliterate prepass.</t>
+beautify: dispatch w/o match statement. Create dispatch dict?
+</t>
 <t tx="ekr.20240927163405.1">#[derive(Debug)]
 pub struct Beautifier {
     args: Vec&lt;String&gt;,
@@ -4695,9 +4698,11 @@ Rust, with nanosecond resolution.
 leoFrame.py
 
      files: 1, tokens: 14619, ws tokens: 5156
-       read:    0.51 ms
-make_tokens:   14.23 ms
-   beautify:    7.33 ms
+       read:    0.5 ms
+make_tokens:   14.2 ms  Full code, without slices.
+make_tokens:   11.4 ms Full code, with slices
+make_tokens:   10.7 ms  Empty loop
+   beautify:    7.3 ms
       write:    0.00 ms
       total:   22.08 ms
       
@@ -4850,8 +4855,8 @@ This only 10% faster than the python code.
 <t tx="ekr.20240929024648.120">// Only Clone is valid for String.
 #[derive(Clone)]
 struct InputTok {
-    kind: String,
-    value: String,
+    kind: &amp;'static str,
+    value: &amp;'static str,
 }
 
 impl fmt::Debug for InputTok {
@@ -5036,7 +5041,8 @@ impl Beautifier {
     }
 }
 </t>
-<t tx="ekr.20240929074037.112">fn make_input_list(&amp;mut self, contents: &amp;str) {
+<t tx="ekr.20240929074037.112">fn make_input_list(&amp;mut self, contents: &amp;'static str) {
+// fn make_input_list(&amp;mut self, contents: &amp;str) {
     // Add InputToks to the input_list for every token given by the RustPython lex.
     let mut n_tokens: u64 = 0;
     let mut n_ws_tokens: u64 = 0;
@@ -5061,9 +5067,10 @@ impl Beautifier {
                 n_ws_tokens += 1
             }
             prev_start = end_i;
+            
+            &lt;&lt; Calculate class_name using match token &gt;&gt;
+            self.add_input_token(class_name, tok_value);
         }
-        &lt;&lt; Calculate class_name using match token &gt;&gt;
-        self.add_input_token(class_name, tok_value);
     }
     // Update counts.
     self.stats.n_tokens += n_tokens;
@@ -5234,12 +5241,11 @@ fn add_output_string (&amp;mut self, kind: &amp;str, value: &amp;str) {
 }
 </t>
 <t tx="ekr.20240929074037.3">// #[allow(dead_code)]
-fn add_input_token (&amp;mut self, kind: &amp;str, value: &amp;str) {
+fn add_input_token (&amp;mut self, kind: &amp;'static str, value: &amp;'static str) {
     //! Add one token to the output list.
-    self.input_list.push(InputTok {
-        kind: kind.to_string(),
-        value: value.to_string(),
-    });
+    self.input_list.push(
+        InputTok {kind: kind, value: value}
+    );
 }
 </t>
 <t tx="ekr.20240929074037.30">fn do_Break(&amp;mut self) {
@@ -5338,13 +5344,15 @@ fn add_input_token (&amp;mut self, kind: &amp;str, value: &amp;str) {
         let short_file_name = os_str.to_str().unwrap();
         println!("{short_file_name}");
     }
-    // Read the file into contents (a String).
+    // Read the file into contents (a slice with 'static lifetime!).
     self.output_list = Vec::new();
     let t1 = std::time::Instant::now();
-    let contents = fs::read_to_string(file_name)
+    let temp_contents = fs::read_to_string(file_name)
         .expect("Error reading{file_name}");
-    // print_type(&amp;contents, "contents");
+    // https://stackoverflow.com/questions/23975391/how-to-convert-a-string-into-a-static-str
+    let contents: &amp;'static str = self.string_to_static_str(temp_contents);
     let read_time = t1.elapsed().as_nanos();
+
     // Make the list of input tokens
     let t3 = std::time::Instant::now();
     self.make_input_list(&amp;contents);
@@ -6075,8 +6083,10 @@ self.output_list.push("value".to_string());  // Converts str to String
     // let kind_s = &amp;input_token.kind;
     // let kind = kind_s.as_str();
     </t>
-<t tx="ekr.20241002062655.1">let kind = input_token.kind.as_str();
-let value = input_token.kind.as_str();
+<t tx="ekr.20241002062655.1">// let kind = input_token.kind.as_str();
+// let value = input_token.kind.as_str();
+let kind = input_token.kind;
+let value = input_token.kind;
 match kind {
     // Some of these could be replaced by inline code.
     "And" =&gt; self.do_And(),
@@ -6275,6 +6285,21 @@ let class_name = match token {
     With =&gt; "With",
     Yield =&gt; "Yield",
 };
+</t>
+<t tx="ekr.20241002163554.1">fn string_to_static_str(&amp;self, s: String) -&gt; &amp;'static str {
+    Box::leak(s.into_boxed_str())
+}
+
+</t>
+<t tx="ekr.20241002164044.1">
+    // Calculating the class name directly is slower.
+
+    // Furthermore, ':?' lists any fields that the token has.
+    let temp_class_name = f!("{token:?}");
+
+    // println!("{temp_class_name}");
+    let class_name: &amp;'static str = self.string_to_static_str(temp_class_name);
+    self.add_input_token(class_name, tok_value);
 </t>
 </tnodes>
 </leo_file>
