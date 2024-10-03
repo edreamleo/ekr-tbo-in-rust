@@ -41,7 +41,7 @@ impl fmt::Debug for InputTok {
         }
     }
 }
-//@+node:ekr.20240929074037.1: ** class LeoBeautifier (new)
+//@+node:ekr.20240929074037.1: ** class LeoBeautifier
 #[derive(Debug)]
 pub struct Beautifier {
     // Set in LB:beautify_one_file...
