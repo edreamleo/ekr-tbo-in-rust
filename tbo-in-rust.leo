@@ -250,6 +250,7 @@
 <v t="ekr.20240930085546.1"><vh>function: lex_contents</vh></v>
 <v t="ekr.20240929031635.1"><vh>function: scan_input_list</vh></v>
 <v t="ekr.20241001071914.1"><vh>function: test_loop</vh></v>
+<v t="ekr.20241003063446.121"><vh>LB::string_to_static_str</vh></v>
 <v t="ekr.20241002164044.1"><vh>make_input_list: Calculate class name w/o match</vh></v>
 <v t="ekr.20240929074941.1"><vh>Stats::update_times</vh></v>
 </v>
@@ -400,11 +401,140 @@
 <v t="ekr.20240929075236.1"><vh>Stats::report</vh></v>
 </v>
 </v>
-<v t="ekr.20241002062737.1"><vh>--- recent</vh>
-<v t="ekr.20240929074037.5"></v>
-<v t="ekr.20240929074037.112"></v>
-<v t="ekr.20240929074037.113"></v>
+<v t="ekr.20241003084853.1"><vh>--- new code: doesn't work</vh>
+<v t="ekr.20241003064504.1"><vh>functions to be added</vh>
+<v t="ekr.20241003063446.114"><vh>fn: enabled</vh></v>
+<v t="ekr.20241003063446.115"><vh>fn: get_args</vh></v>
+<v t="ekr.20241003063446.118"><vh>fn: show_args</vh></v>
+<v t="ekr.20241003063446.119"><vh>fn: show_help</vh></v>
+<v t="ekr.20241003063446.120"><vh>fn: show_output_list</vh></v>
 </v>
+<v t="ekr.20241003084902.1"><vh>COPY: pub fn entry </vh></v>
+<v t="ekr.20241003064425.1"><vh>Beautifier struct</vh></v>
+<v t="ekr.20241003063446.6"><vh>&lt;&lt; fn: beautify: init vars &gt;&gt; (to do)</vh></v>
+<v t="ekr.20241003063446.1"><vh>LeoBeautifier functions</vh>
+<v t="ekr.20241003063446.3"><vh>fn: add_input_token</vh></v>
+<v t="ekr.20241003063446.4"><vh>fn: add_output_string</vh></v>
+<v t="ekr.20241003063446.5"><vh>fn: beautify</vh>
+<v t="ekr.20241003063446.7"><vh>&lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20241003063446.8"><vh>fn: beautify_all_files</vh></v>
+<v t="ekr.20241003063446.9"><vh>fn: beautify_one_file</vh></v>
+<v t="ekr.20241003063446.116"><vh>fn: make_input_list</vh>
+<v t="ekr.20241003063446.117"><vh>&lt;&lt; Calculate class_name using match token &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20241003063446.10"><vh>fn: do_*</vh>
+<v t="ekr.20241003063446.11"><vh>tbo.do_ws</vh></v>
+<v t="ekr.20241003063446.12"><vh>LB:Handlers with values</vh>
+<v t="ekr.20241003063446.13"><vh>fn: do_Comment</vh></v>
+<v t="ekr.20241003063446.14"><vh>fn: do_Complex</vh></v>
+<v t="ekr.20241003063446.15"><vh>fn: do_Float</vh></v>
+<v t="ekr.20241003063446.16"><vh>fn: do_Int</vh></v>
+<v t="ekr.20241003063446.17"><vh>fn: do_Name</vh></v>
+<v t="ekr.20241003063446.18"><vh>fn: do_String</vh></v>
+</v>
+<v t="ekr.20241003063446.19"><vh>LB:Handlers using lws</vh>
+<v t="ekr.20241003063446.20"><vh>fn: do_Dedent</vh></v>
+<v t="ekr.20241003063446.21"><vh>fn: do_Indent</vh></v>
+<v t="ekr.20241003063446.22"><vh>fn: do_Newline</vh></v>
+<v t="ekr.20241003063446.23"><vh>fn: do_NonLogicalNewline</vh></v>
+</v>
+<v t="ekr.20241003063446.24"><vh>LB:Handlers w/o values</vh>
+<v t="ekr.20241003063446.25"><vh>fn: do_Amper</vh></v>
+<v t="ekr.20241003063446.26"><vh>fn: do_AmperEqual</vh></v>
+<v t="ekr.20241003063446.27"><vh>fn: do_And</vh></v>
+<v t="ekr.20241003063446.28"><vh>fn: do_As</vh></v>
+<v t="ekr.20241003063446.29"><vh>fn: do_Assert</vh></v>
+<v t="ekr.20241003063446.30"><vh>fn: do_Async</vh></v>
+<v t="ekr.20241003063446.31"><vh>fn: do_At</vh></v>
+<v t="ekr.20241003063446.32"><vh>fn: do_AtEqual</vh></v>
+<v t="ekr.20241003063446.33"><vh>fn: do_Await</vh></v>
+<v t="ekr.20241003063446.34"><vh>fn: do_Break</vh></v>
+<v t="ekr.20241003063446.35"><vh>fn: do_Case</vh></v>
+<v t="ekr.20241003063446.36"><vh>fn: do_CircumFlex</vh></v>
+<v t="ekr.20241003063446.37"><vh>fn: do_CircumflexEqual</vh></v>
+<v t="ekr.20241003063446.38"><vh>fn: do_Class</vh></v>
+<v t="ekr.20241003063446.39"><vh>fn: do_Colon</vh></v>
+<v t="ekr.20241003063446.40"><vh>fn: do_ColonEqual</vh></v>
+<v t="ekr.20241003063446.41"><vh>fn: do_Comma</vh></v>
+<v t="ekr.20241003063446.42"><vh>fn: do_Continue</vh></v>
+<v t="ekr.20241003063446.43"><vh>fn: do_Def</vh></v>
+<v t="ekr.20241003063446.44"><vh>fn: do_Del</vh></v>
+<v t="ekr.20241003063446.45"><vh>fn: do_Dot</vh></v>
+<v t="ekr.20241003063446.46"><vh>fn: do_DoubleSlash</vh></v>
+<v t="ekr.20241003063446.47"><vh>fn: do_DoubleSlashEqual</vh></v>
+<v t="ekr.20241003063446.48"><vh>fn: do_DoubleStar</vh></v>
+<v t="ekr.20241003063446.49"><vh>fn: do_DoubleStarEqual</vh></v>
+<v t="ekr.20241003063446.50"><vh>fn: do_Elif</vh></v>
+<v t="ekr.20241003063446.51"><vh>fn: do_Ellipsis</vh></v>
+<v t="ekr.20241003063446.52"><vh>fn: do_Else</vh></v>
+<v t="ekr.20241003063446.53"><vh>fn: do_EndOfFile</vh></v>
+<v t="ekr.20241003063446.54"><vh>fn: do_EqEqual</vh></v>
+<v t="ekr.20241003063446.55"><vh>fn: do_Equal</vh></v>
+<v t="ekr.20241003063446.56"><vh>fn: do_Except</vh></v>
+<v t="ekr.20241003063446.57"><vh>fn: do_False</vh></v>
+<v t="ekr.20241003063446.58"><vh>fn: do_Finally</vh></v>
+<v t="ekr.20241003063446.59"><vh>fn: do_For</vh></v>
+<v t="ekr.20241003063446.60"><vh>fn: do_From</vh></v>
+<v t="ekr.20241003063446.61"><vh>fn: do_Global</vh></v>
+<v t="ekr.20241003063446.62"><vh>fn: do_Greater</vh></v>
+<v t="ekr.20241003063446.63"><vh>fn: do_GreaterEqual</vh></v>
+<v t="ekr.20241003063446.64"><vh>fn: do_If</vh></v>
+<v t="ekr.20241003063446.65"><vh>fn: do_Import</vh></v>
+<v t="ekr.20241003063446.66"><vh>fn: do_In</vh></v>
+<v t="ekr.20241003063446.67"><vh>fn: do_Is</vh></v>
+<v t="ekr.20241003063446.68"><vh>fn: do_Lambda</vh></v>
+<v t="ekr.20241003063446.69"><vh>fn: do_Lbrace</vh></v>
+<v t="ekr.20241003063446.70"><vh>fn: do_LeftShift</vh></v>
+<v t="ekr.20241003063446.71"><vh>fn: do_LeftShiftEqual</vh></v>
+<v t="ekr.20241003063446.72"><vh>fn: do_Less</vh></v>
+<v t="ekr.20241003063446.73"><vh>fn: do_LessEqual</vh></v>
+<v t="ekr.20241003063446.74"><vh>fn: do_Lpar</vh></v>
+<v t="ekr.20241003063446.75"><vh>fn: do_Lsqb</vh></v>
+<v t="ekr.20241003063446.76"><vh>fn: do_Match</vh></v>
+<v t="ekr.20241003063446.77"><vh>fn: do_Minus</vh></v>
+<v t="ekr.20241003063446.78"><vh>fn: do_MinusEqual</vh></v>
+<v t="ekr.20241003063446.79"><vh>fn: do_None</vh></v>
+<v t="ekr.20241003063446.80"><vh>fn: do_Nonlocal</vh></v>
+<v t="ekr.20241003063446.81"><vh>fn: do_Not</vh></v>
+<v t="ekr.20241003063446.82"><vh>fn: do_NotEqual</vh></v>
+<v t="ekr.20241003063446.83"><vh>fn: do_Or</vh></v>
+<v t="ekr.20241003063446.84"><vh>fn: do_Pass</vh></v>
+<v t="ekr.20241003063446.85"><vh>fn: do_Percent</vh></v>
+<v t="ekr.20241003063446.86"><vh>fn: do_PercentEqual</vh></v>
+<v t="ekr.20241003063446.87"><vh>fn: do_Plus</vh></v>
+<v t="ekr.20241003063446.88"><vh>fn: do_PlusEqual</vh></v>
+<v t="ekr.20241003063446.89"><vh>fn: do_Raise</vh></v>
+<v t="ekr.20241003063446.90"><vh>fn: do_Rarrow</vh></v>
+<v t="ekr.20241003063446.91"><vh>fn: do_Rbrace</vh></v>
+<v t="ekr.20241003063446.92"><vh>fn: do_Return</vh></v>
+<v t="ekr.20241003063446.93"><vh>fn: do_RightShift</vh></v>
+<v t="ekr.20241003063446.94"><vh>fn: do_RightShiftEqual</vh></v>
+<v t="ekr.20241003063446.95"><vh>fn: do_Rpar</vh></v>
+<v t="ekr.20241003063446.96"><vh>fn: do_Rsqb</vh></v>
+<v t="ekr.20241003063446.97"><vh>fn: do_Semi</vh></v>
+<v t="ekr.20241003063446.98"><vh>fn: do_Slash</vh></v>
+<v t="ekr.20241003063446.99"><vh>fn: do_SlashEqual</vh></v>
+<v t="ekr.20241003063446.100"><vh>fn: do_Star</vh></v>
+<v t="ekr.20241003063446.101"><vh>fn: do_StarEqual</vh></v>
+<v t="ekr.20241003063446.102"><vh>fn: do_StartExpression</vh></v>
+<v t="ekr.20241003063446.103"><vh>fn: do_StartInteractive</vh></v>
+<v t="ekr.20241003063446.104"><vh>fn: do_StarModule</vh></v>
+<v t="ekr.20241003063446.105"><vh>fn: do_Tilde</vh></v>
+<v t="ekr.20241003063446.106"><vh>fn: do_True</vh></v>
+<v t="ekr.20241003063446.107"><vh>fn: do_Try</vh></v>
+<v t="ekr.20241003063446.108"><vh>fn: do_Type</vh></v>
+<v t="ekr.20241003063446.109"><vh>fn: do_Vbar</vh></v>
+<v t="ekr.20241003063446.110"><vh>fn: do_VbarEqual</vh></v>
+<v t="ekr.20241003063446.111"><vh>fn: do_While</vh></v>
+<v t="ekr.20241003063446.112"><vh>fn: do_With</vh></v>
+<v t="ekr.20241003063446.113"><vh>fn: do_Yield</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20240928161210.1"></v>
+<v t="ekr.20241001093308.1"><vh>pub fn entry (test)</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20200107040729.1">def show_diffs(self, s1: str, s2: str) -&gt; None:  # pragma: no cover
@@ -3353,6 +3483,24 @@ fn returns_summarizable() -&gt; impl Summary {...}
 }
 </t>
 <t tx="ekr.20241001073040.1"></t>
+<t tx="ekr.20241001093308.1">pub fn entry() {
+    // Test code for Vec.
+    let mut v: Vec&lt;i32&gt; = Vec::new();
+    push(&amp;mut v, 1);
+    push(&amp;mut v, 2);
+    let mut i = 3;
+    while i &lt; 10 {
+        push(&amp;mut v, i);
+        i += 1
+    }
+    println!("");
+    println!("v: {v:?}");
+}
+
+fn push(v: &amp;mut Vec&lt;i32&gt;, val: i32) {
+    v.push(val);
+}
+</t>
 <t tx="ekr.20241001093308.2">fn tokenize() {
     &lt;&lt; tokenize: define contents &gt;&gt;
     println!("fn tokenize");
@@ -3606,6 +3754,7 @@ match kind {
     "ColonEqual" =&gt; self.do_ColonEqual(),
     "Comma" =&gt; self.do_Comma(),
     "Comment" =&gt; self.do_Comment(value),
+    "Continue" =&gt; self.do_Continue(),
     "Dedent" =&gt; self.do_Dedent(value),
     "Def" =&gt; self.do_Def(),
     "Del" =&gt; self.do_Del(),
@@ -3630,6 +3779,7 @@ match kind {
     "Int" =&gt; self.do_Int(value),
     "Is" =&gt; self.do_Is(),
     "Less" =&gt; self.do_Less(),
+    "LessEqual" =&gt; self.do_LessEqual(),
     "Lbrace" =&gt; self.do_Lbrace(),
     "Lpar" =&gt; self.do_Lpar(),
     "Lsqb" =&gt; self.do_Lsqb(),
@@ -3643,6 +3793,7 @@ match kind {
     "NotEqual" =&gt; self.do_NotEqual(),
     "Or" =&gt; self.do_Or(),
     "Pass" =&gt; self.do_Pass(),
+    "Percent" =&gt; self.do_Percent(),
     "Plus" =&gt; self.do_Plus(),
     "PlusEqual" =&gt; self.do_PlusEqual(),
     "Raise" =&gt; self.do_Raise(),
@@ -3656,11 +3807,11 @@ match kind {
     "True" =&gt; self.do_True(),
     "Try" =&gt; self.do_Try(),
     "While" =&gt; self.do_While(),
+    "With" =&gt; self.do_With(),
     "ws" =&gt; self.do_ws(kind, value),
     _ =&gt; println!("No visitor for: {kind}"),
 }
 </t>
-<t tx="ekr.20241002062737.1"></t>
 <t tx="ekr.20241002071143.1">// *** Temporary
 #[allow(unused_variables)]
 fn do_ws(&amp;mut self, kind: &amp;str, value: &amp;str) {
@@ -3818,5 +3969,899 @@ let class_name = match token {
     let contents: &amp;'static str = self.string_to_static_str(temp_contents);
     let read_time = t1.elapsed().as_nanos();</t>
 <t tx="ekr.20241003062509.1"></t>
+<t tx="ekr.20241003063446.1"></t>
+<t tx="ekr.20241003063446.10"></t>
+<t tx="ekr.20241003063446.100">fn do_Star(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Star", "*");
+}
+</t>
+<t tx="ekr.20241003063446.101">fn do_StarEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "StarEqual", "*=");
+}
+</t>
+<t tx="ekr.20241003063446.102">fn do_StartExpression(output_list: Vec&lt;String&gt;) {
+    // add_output_string(output_list, "StartExpression", "");
+}
+</t>
+<t tx="ekr.20241003063446.103">fn do_StartInteractive(output_list: Vec&lt;String&gt;) {
+    // add_output_string(output_list, "StartModule", "");
+}
+</t>
+<t tx="ekr.20241003063446.104">fn do_StartModule(output_list: Vec&lt;String&gt;) {
+    // add_output_string(output_list, "StartModule", "");
+    println!("do_StartModule");
+}
+</t>
+<t tx="ekr.20241003063446.105">fn do_Tilde(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Tilde", "~");
+}
+</t>
+<t tx="ekr.20241003063446.106">fn do_True(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "True", "True");
+}
+</t>
+<t tx="ekr.20241003063446.107">fn do_Try(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Try", "try");
+}
+</t>
+<t tx="ekr.20241003063446.108">fn do_Type(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Type", "type");
+}
+</t>
+<t tx="ekr.20241003063446.109">fn do_Vbar(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Vbar", "|");
+}
+</t>
+<t tx="ekr.20241003063446.11">// *** Temporary
+#[allow(unused_variables)]
+fn do_ws(output_list: Vec&lt;String&gt;, kind: &amp;str, value: &amp;str) {
+    //! Handle the "ws" pseudo-token.
+    //! Put the whitespace only if if ends with backslash-newline.
+
+    // To do.
+
+    // let last_token = self.input_tokens[self.index - 1];
+    // let is_newline = kind in ("nl", "newline");
+    // if is_newline {
+    // self.pending_lws = val;
+    // self.pending_ws = "";
+    // }
+    // else if "\\\n" in val {
+    // self.pending_lws = "";
+    // self.pending_ws = val;
+    // }
+    // else {
+    // self.pending_ws = val
+    // }
+}
+</t>
+<t tx="ekr.20241003063446.110">fn do_VbarEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "VbarEqual", "|=");
+}
+</t>
+<t tx="ekr.20241003063446.111">fn do_While(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "While", "while");
+}
+</t>
+<t tx="ekr.20241003063446.112">fn do_With(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "With", "with");
+}
+</t>
+<t tx="ekr.20241003063446.113">fn do_Yield(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Yield", "yield");
+}
+</t>
+<t tx="ekr.20241003063446.114">fn enabled(&amp;self, arg: &amp;str) -&gt; bool {
+    //! Beautifier::enabled: return true if the given command-line argument is enabled.
+    //! Example:  x.enabled("--report");
+    return self.args.contains(&amp;arg.to_string());
+}
+</t>
+<t tx="ekr.20241003063446.115">fn get_args(&amp;mut self) {
+    //! Beautifier::get_args: Set the args and files_list ivars.
+    let args: Vec&lt;String&gt; = env::args().collect();
+    let valid_args = vec![
+        "--all",
+        "--beautified",
+        "--diff",
+        "-h",
+        "--help",
+        "--report",
+        "--write",
+    ];
+    for (i, arg) in args.iter().enumerate() {
+        if i &gt; 0 {
+            if valid_args.contains(&amp;arg.as_str()) {
+                self.args.push(arg.to_string())
+            } else if arg.as_str().starts_with("--") || arg.as_str().starts_with("--") {
+                println!("Ignoring invalid arg: {arg}");
+            } else {
+                println!("File: {arg}");
+                self.files_list.push(arg.to_string());
+            }
+        }
+    }
+}
+</t>
+<t tx="ekr.20241003063446.116">fn make_input_list(contents: &amp;str, stats: &amp;Stats) -&gt; Vec&lt;InputTok&gt; {
+    // Add InputToks to the input_list for every token given by the RustPython lex.
+    let mut n_tokens: u64 = 0;
+    let mut n_ws_tokens: u64 = 0;
+    let mut prev_start: usize = 0;
+    let mut input_list: Vec&lt;InputTok&gt; = Vec::new();
+
+    for token_tuple in lex(&amp;contents, Mode::Module)
+        .map(|tok| tok.expect("Failed to lex"))
+        .collect::&lt;Vec&lt;_&gt;&gt;()
+    {
+        use Tok::*;
+        n_tokens += 1;
+        let (token, range) = token_tuple;
+        let tok_value = &amp;contents[range];
+
+        // The gem: create a whitespace pseudo-tokens.
+        // This code adds maybe about 1 ms when beautifying leoFrame.py.
+        // With the gem: 14.1 - 14.5 ms. Without: 13.1 - 13.7 ms.
+        let start_i = usize::from(range.start());
+        let end_i = usize::from(range.end());
+        if start_i &gt; prev_start {
+            let ws = &amp;contents[prev_start..start_i];
+            add_input_token(&amp;mut input_list, "ws", ws);
+            n_ws_tokens += 1
+        }
+        prev_start = end_i;
+
+        &lt;&lt; Calculate class_name using match token &gt;&gt;
+        add_input_token(&amp;mut input_list, class_name, tok_value);
+    }
+    // Update counts.
+    stats.n_tokens += n_tokens;
+    stats.n_ws_tokens += n_ws_tokens;
+    return input_list;
+}
+</t>
+<t tx="ekr.20241003063446.117">// Variant names are necessary, but otherwise not used.
+#[allow(unused_variables)]
+let class_name = match token {
+    // Tokens with values...
+    Comment(value) =&gt; "Comment",
+    Complex { real, imag } =&gt; "Complex",
+    Float { value } =&gt; "Float",
+    Int { value } =&gt; "Int",
+    Name { name } =&gt; "Name",
+    Tok::String {
+        value,
+        kind,
+        triple_quoted,
+    } =&gt; "String",
+
+    // Common tokens...
+    Class =&gt; "Class",
+    Dedent =&gt; "Dedent",
+    Def =&gt; "Def",
+    Indent =&gt; "Indent",
+    Newline =&gt; "Newline",
+    NonLogicalNewline =&gt; "NonLogicalNewline",
+
+    // All other tokens...
+    Amper =&gt; "Amper",
+    AmperEqual =&gt; "AmperEqual",
+    And =&gt; "And",
+    As =&gt; "As",
+    Assert =&gt; "Assert",
+    Async =&gt; "Async",
+    At =&gt; "At",
+    AtEqual =&gt; "AtEqual",
+    Await =&gt; "Await",
+    Break =&gt; "Break",
+    Case =&gt; "Case",
+    CircumFlex =&gt; "CircumFlex",
+    CircumflexEqual =&gt; "CircumflexEqual",
+    Colon =&gt; "Colon",
+    ColonEqual =&gt; "ColonEqual",
+    Comma =&gt; "Comma",
+    Continue =&gt; "Continue",
+    Del =&gt; "Del",
+    Dot =&gt; "Dot",
+    DoubleSlash =&gt; "DoubleSlash",
+    DoubleSlashEqual =&gt; "DoubleSlashEqual",
+    DoubleStar =&gt; "DoubleStar",
+    DoubleStarEqual =&gt; "DoubleStarEqual",
+    Elif =&gt; "Elif",
+    Ellipsis =&gt; "Ellipsis",
+    Else =&gt; "Else",
+    EndOfFile =&gt; "EndOfFile",
+    EqEqual =&gt; "EqEqual",
+    Equal =&gt; "Equal",
+    Except =&gt; "Except",
+    False =&gt; "False",
+    Finally =&gt; "Finally",
+    For =&gt; "For",
+    From =&gt; "From",
+    Global =&gt; "Global",
+    Greater =&gt; "Greater",
+    GreaterEqual =&gt; "GreaterEqual",
+    If =&gt; "If",
+    Import =&gt; "Import",
+    In =&gt; "In",
+    Is =&gt; "Is",
+    Lambda =&gt; "Lambda",
+    Lbrace =&gt; "Lbrace",
+    LeftShift =&gt; "LeftShift",
+    LeftShiftEqual =&gt; "LeftShiftEqual",
+    Less =&gt; "Less",
+    LessEqual =&gt; "LessEqual",
+    Lpar =&gt; "Lpar",
+    Lsqb =&gt; "Lsqb",
+    Match =&gt; "Match",
+    Minus =&gt; "Minus",
+    MinusEqual =&gt; "MinusEqual",
+    None =&gt; "None",
+    Nonlocal =&gt; "Nonlocal",
+    Not =&gt; "Not",
+    NotEqual =&gt; "NotEqual",
+    Or =&gt; "Or",
+    Pass =&gt; "Pass",
+    Percent =&gt; "Percent",
+    PercentEqual =&gt; "PercentEqual",
+    Plus =&gt; "Plus",
+    PlusEqual =&gt; "PlusEqual",
+    Raise =&gt; "Raise",
+    Rarrow =&gt; "Rarrow",
+    Rbrace =&gt; "Rbrace",
+    Return =&gt; "Return",
+    RightShift =&gt; "RightShift",
+    RightShiftEqual =&gt; "RightShiftEqual",
+    Rpar =&gt; "Rpar",
+    Rsqb =&gt; "Rsqb",
+    Semi =&gt; "Semi",
+    Slash =&gt; "Slash",
+    SlashEqual =&gt; "SlashEqual",
+    Star =&gt; "Star",
+    StarEqual =&gt; "StarEqual",
+    StartExpression =&gt; "StartExpression",
+    StartInteractive =&gt; "StartInteractive",
+    StartModule =&gt; "StartModule",
+    Tilde =&gt; "Tilde",
+    True =&gt; "True",
+    Try =&gt; "Try",
+    Type =&gt; "Type",
+    Vbar =&gt; "Vbar",
+    VbarEqual =&gt; "VbarEqual",
+    While =&gt; "While",
+    With =&gt; "With",
+    Yield =&gt; "Yield",
+};
+</t>
+<t tx="ekr.20241003063446.118">fn show_args(&amp;self) {
+    println!("Command-line arguments...");
+    for (i, arg) in self.args.iter().enumerate() {
+        if i &gt; 0 {
+            println!("  {arg}");
+        }
+    }
+    for file_arg in self.files_list.iter() {
+        println!("  {file_arg}");
+    }
+}
+</t>
+<t tx="ekr.20241003063446.119">fn show_help(&amp;self) {
+    //! Beautifier::show_help: print the help messages.
+    println!(
+        "{}",
+        textwrap::dedent(
+            "
+        Beautify or diff files.
+
+        -h --help:      Print this help message and exit.
+        --all:          Beautify all files, even unchanged files.
+        --beautified:   Report beautified files individually, even if not written.
+        --diff:         Show diffs instead of changing files.
+        --report:       Print summary report.
+        --write:        Write beautifed files (dry-run mode otherwise).
+    "
+        )
+    );
+}
+</t>
+<t tx="ekr.20241003063446.12"></t>
+<t tx="ekr.20241003063446.120">fn show_output_list(&amp;self) {
+    println!("\nOutput list...");
+    for (i, arg) in self.output_list.iter().enumerate() {
+        if i &gt; 0 {
+            print!("{:?}", arg);
+        }
+    }
+}
+</t>
+<t tx="ekr.20241003063446.121">fn string_to_static_str(&amp;self, s: String) -&gt; &amp;'static str {
+    Box::leak(s.into_boxed_str())
+}
+
+</t>
+<t tx="ekr.20241003063446.13">fn do_Comment(output_list: Vec&lt;String&gt;, tok_value: &amp;str) {
+    // print!("{tok_value}");  // Correct.
+    // print!("{value} ");  // Wrong!
+    add_output_string(output_list, "Comment", tok_value);
+}
+</t>
+<t tx="ekr.20241003063446.14">fn do_Complex(output_list: Vec&lt;String&gt;, tok_value: &amp;str) {
+    add_output_string(output_list, "Complex", tok_value);
+}
+</t>
+<t tx="ekr.20241003063446.15">fn do_Float(output_list: Vec&lt;String&gt;, tok_value: &amp;str) {
+    add_output_string(output_list, "Float", tok_value);
+}
+</t>
+<t tx="ekr.20241003063446.16">fn do_Int(output_list: Vec&lt;String&gt;, tok_value: &amp;str) {
+    add_output_string(output_list, "Int", tok_value);
+}
+</t>
+<t tx="ekr.20241003063446.17">fn do_Name(output_list: Vec&lt;String&gt;, tok_value: &amp;str) {
+    add_output_string(output_list, "Name", tok_value);
+}
+</t>
+<t tx="ekr.20241003063446.18">fn do_String(output_list: Vec&lt;String&gt;, tok_value: &amp;str) {
+    // correct.
+    // print!("{tok_value}");
+
+    // incorrect.
+    // let quote = if *triple_quoted {"'''"} else {"'"};
+    // print!("{:?}:{quote}{value}{quote}", kind);
+
+    add_output_string(output_list, "String", tok_value);
+}
+</t>
+<t tx="ekr.20241003063446.19"></t>
+<t tx="ekr.20241003063446.20">fn do_Dedent(output_list: Vec&lt;String&gt;, tok_value: &amp;str) {
+    add_output_string(output_list, "Dedent", tok_value);
+}
+</t>
+<t tx="ekr.20241003063446.21">fn do_Indent(output_list: Vec&lt;String&gt;, tok_value: &amp;str) {
+    add_output_string(output_list, "Indent", tok_value);
+}
+</t>
+<t tx="ekr.20241003063446.22">fn do_Newline(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Indent", "\n");
+}
+</t>
+<t tx="ekr.20241003063446.23">fn do_NonLogicalNewline(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Indent", "\n");
+}
+</t>
+<t tx="ekr.20241003063446.24"></t>
+<t tx="ekr.20241003063446.25">fn do_Amper(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Amper", "&amp;");
+}
+</t>
+<t tx="ekr.20241003063446.26">fn do_AmperEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "AmperEqual", "&amp;=");
+}
+</t>
+<t tx="ekr.20241003063446.27">fn do_And(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "And", "and");
+}
+</t>
+<t tx="ekr.20241003063446.28">fn do_As(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "As", "as");
+}
+</t>
+<t tx="ekr.20241003063446.29">fn do_Assert(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Assert", "assert");
+}
+</t>
+<t tx="ekr.20241003063446.3">// #[allow(dead_code)]
+fn add_input_token(input_list: &amp;mut Vec&lt;InputTok&gt;, kind: &amp;str, value: &amp;str) {
+    //! Add one token to the output list.
+    input_list.push(InputTok {
+        kind: kind.to_string(),
+        value: value.to_string(),
+    });
+}
+</t>
+<t tx="ekr.20241003063446.30">fn do_Async(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Async", "async");
+}
+</t>
+<t tx="ekr.20241003063446.31">fn do_At(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "At", "@");
+}
+</t>
+<t tx="ekr.20241003063446.32">fn do_AtEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "AtEqual", "@=");
+}
+</t>
+<t tx="ekr.20241003063446.33">fn do_Await(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Await", "await");
+}
+</t>
+<t tx="ekr.20241003063446.34">fn do_Break(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Break", "break");
+}
+</t>
+<t tx="ekr.20241003063446.35">fn do_Case(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Case", "case");
+}
+</t>
+<t tx="ekr.20241003063446.36">fn do_CircumFlex(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "CircumFlex", "^");
+}
+</t>
+<t tx="ekr.20241003063446.37">fn do_CircumflexEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "CircumflexEqual", "^=");
+}
+</t>
+<t tx="ekr.20241003063446.38">fn do_Class(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Class", "class");
+}
+</t>
+<t tx="ekr.20241003063446.39">fn do_Colon(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Colon", ":");
+}
+</t>
+<t tx="ekr.20241003063446.4">#[allow(unused_variables)]
+fn add_output_string(mut output_list: Vec&lt;String&gt;, kind: &amp;str, value: &amp;str) {
+    //! Add value to the output list.
+    //! kind is for debugging.
+    if !value.is_empty() {
+        output_list.push(value.to_string())
+    }
+}
+</t>
+<t tx="ekr.20241003063446.40">fn do_ColonEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "ColonEqual", ":=");
+}
+</t>
+<t tx="ekr.20241003063446.41">fn do_Comma(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Comma", ",");
+}
+</t>
+<t tx="ekr.20241003063446.42">fn do_Continue(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Continue", "continue");
+}
+</t>
+<t tx="ekr.20241003063446.43">fn do_Def(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Def", "def");
+}
+</t>
+<t tx="ekr.20241003063446.44">fn do_Del(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Del", "del");
+}
+</t>
+<t tx="ekr.20241003063446.45">fn do_Dot(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Dot", ".");
+}
+</t>
+<t tx="ekr.20241003063446.46">fn do_DoubleSlash(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "DoubleSlash", "//");
+}
+</t>
+<t tx="ekr.20241003063446.47">fn do_DoubleSlashEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "DoubleSlashEqual", "//=");
+}
+</t>
+<t tx="ekr.20241003063446.48">fn do_DoubleStar(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "DoubleStar", "**");
+}
+</t>
+<t tx="ekr.20241003063446.49">fn do_DoubleStarEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "DoubleStarEqual", "**=");
+}
+</t>
+<t tx="ekr.20241003063446.5">fn beautify(input_list: &amp;Vec&lt;InputTok&gt;) -&gt; String {
+    //! Beautify the input_tokens, creating the output_list.
+    // &lt; &lt; fn: beautify: init vars &gt;&gt;
+    let output_list: Vec&lt;String&gt; = Vec::new();
+    if true {
+        for input_token in input_list {
+            &lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;
+        }
+    }
+    // return ''.join(self.output_list);
+    let mut result = String::new();
+    for s in output_list {
+        result.push_str(&amp;s);
+    }
+    return result;
+}
+</t>
+<t tx="ekr.20241003063446.50">fn do_Elif(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Elif", "elif");
+}
+</t>
+<t tx="ekr.20241003063446.51">fn do_Ellipsis(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Ellipsis", "...");
+}
+</t>
+<t tx="ekr.20241003063446.52">fn do_Else(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Else", "else");
+}
+</t>
+<t tx="ekr.20241003063446.53">fn do_EndOfFile(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "EndOfFile", "EOF");
+}
+</t>
+<t tx="ekr.20241003063446.54">fn do_EqEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "EqEqual", "==");
+}
+</t>
+<t tx="ekr.20241003063446.55">fn do_Equal(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Equal", "=");
+}
+</t>
+<t tx="ekr.20241003063446.56">fn do_Except(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Except", "except");
+}
+</t>
+<t tx="ekr.20241003063446.57">fn do_False(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "False", "False");
+}
+</t>
+<t tx="ekr.20241003063446.58">fn do_Finally(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Finally", "finally");
+}
+</t>
+<t tx="ekr.20241003063446.59">fn do_For(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "For", "for");
+}
+</t>
+<t tx="ekr.20241003063446.6">// Debugging vars...
+line_number = 0; // was None?
+
+// State vars for whitespace.
+curly_brackets_level = 0; // Number of unmatched '{' tokens.
+paren_level = 0; // Number of unmatched '(' tokens.
+square_brackets_stack = Vec::new(); // A stack of bools, for gen_word().
+indent_level = 0; // Set only by do_indent and do_dedent.
+
+// Parse state.
+decorator_seen = false; // Set by do_name for do_op.
+in_arg_list = 0; // &gt; 0 if in an arg list of a def.
+in_doc_part = false;
+
+// To do.
+// state_stack = Vec::new();  // list[ParseState] = []  # Stack of ParseState objects.
+
+// Leo-related state.
+verbatim = false; // True: don't beautify.
+
+// Ivars describing the present input token...
+index = 0; // The index within the tokens array of the token being scanned.
+lws = String::new(); // Leading whitespace. Required!
+</t>
+<t tx="ekr.20241003063446.60">fn do_From(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "From", "from");
+}
+</t>
+<t tx="ekr.20241003063446.61">fn do_Global(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Global", "global");
+}
+</t>
+<t tx="ekr.20241003063446.62">fn do_Greater(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Greater", "&gt;");
+}
+</t>
+<t tx="ekr.20241003063446.63">fn do_GreaterEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "GreaterEqual", "&gt;-");
+}
+</t>
+<t tx="ekr.20241003063446.64">fn do_If(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "If", "if");
+}
+</t>
+<t tx="ekr.20241003063446.65">fn do_Import(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Import", "import");
+}
+</t>
+<t tx="ekr.20241003063446.66">fn do_In(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "In", "in");
+}
+</t>
+<t tx="ekr.20241003063446.67">fn do_Is(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Is", "is");
+}
+</t>
+<t tx="ekr.20241003063446.68">fn do_Lambda(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Lambda", "lambda");
+}
+</t>
+<t tx="ekr.20241003063446.69">fn do_Lbrace(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Lbrace", "[");
+}
+</t>
+<t tx="ekr.20241003063446.7">let kind = input_token.kind.as_str();
+let value = input_token.kind.as_str();
+match kind {
+    // Some of these could be replaced by inline code.
+    "And" =&gt; do_And(output_list),
+    "As" =&gt; do_As(output_list),
+    "Assert" =&gt; do_Assert(output_list),
+    "At" =&gt; do_At(output_list),
+    "Break" =&gt; do_Break(output_list),
+    "Class" =&gt; do_Class(output_list),
+    "Colon" =&gt; do_Colon(output_list),
+    "ColonEqual" =&gt; do_ColonEqual(output_list),
+    "Comma" =&gt; do_Comma(output_list),
+    "Comment" =&gt; do_Comment(output_list, value),
+    "Continue" =&gt; do_Continue(output_list),
+    "Dedent" =&gt; do_Dedent(output_list, value),
+    "Def" =&gt; do_Def(output_list),
+    "Del" =&gt; do_Del(output_list),
+    "Dot" =&gt; do_Dot(output_list),
+    "DoubleStar" =&gt; do_DoubleStar(output_list),
+    "Elif" =&gt; do_Elif(output_list),
+    "Else" =&gt; do_Else(output_list),
+    "Equal" =&gt; do_Equal(output_list),
+    "EqEqual" =&gt; do_EqEqual(output_list),
+    "Except" =&gt; do_Except(output_list),
+    "Greater" =&gt; do_Greater(output_list),
+    "GreaterEqual" =&gt; do_GreaterEqual(output_list),
+    "False" =&gt; do_False(output_list),
+    "Finally" =&gt; do_Finally(output_list),
+    "Float" =&gt; do_Float(output_list, value),
+    "For" =&gt; do_For(output_list),
+    "From" =&gt; do_From(output_list),
+    "If" =&gt; do_If(output_list),
+    "In" =&gt; do_In(output_list),
+    "Import" =&gt; do_Import(output_list),
+    "Indent" =&gt; do_Indent(output_list, value),
+    "Int" =&gt; do_Int(output_list, value),
+    "Is" =&gt; do_Is(output_list),
+    "Less" =&gt; do_Less(output_list),
+    "LessEqual" =&gt; do_LessEqual(output_list),
+    "Lbrace" =&gt; do_Lbrace(output_list),
+    "Lpar" =&gt; do_Lpar(output_list),
+    "Lsqb" =&gt; do_Lsqb(output_list),
+    "Minus" =&gt; do_Minus(output_list),
+    "MinusEqual" =&gt; do_MinusEqual(output_list),
+    "Name" =&gt; do_Name(output_list, value),
+    "Newline" =&gt; do_Newline(output_list),
+    "None" =&gt; do_None(output_list),
+    "NonLogicalNewline" =&gt; do_NonLogicalNewline(output_list),
+    "Not" =&gt; do_Not(output_list),
+    "NotEqual" =&gt; do_NotEqual(output_list),
+    "Or" =&gt; do_Or(output_list),
+    "Pass" =&gt; do_Pass(output_list),
+    "Percent" =&gt; do_Percent(output_list),
+    "Plus" =&gt; do_Plus(output_list),
+    "PlusEqual" =&gt; do_PlusEqual(output_list),
+    "Raise" =&gt; do_Raise(output_list),
+    "Rarrow" =&gt; do_Rarrow(output_list),
+    "Rbrace" =&gt; do_Rbrace(output_list),
+    "Return" =&gt; do_Return(output_list),
+    "Rpar" =&gt; do_Rpar(output_list),
+    "Rsqb" =&gt; do_Rsqb(output_list),
+    "Star" =&gt; do_Star(output_list),
+    "String" =&gt; do_String(output_list, value),
+    "True" =&gt; do_True(output_list),
+    "Try" =&gt; do_Try(output_list),
+    "While" =&gt; do_While(output_list),
+    "With" =&gt; do_With(output_list),
+    "ws" =&gt; do_ws(output_list, kind, value),
+    _ =&gt; println!("No visitor for: {kind}"),
+}
+</t>
+<t tx="ekr.20241003063446.70">fn do_LeftShift(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "LeftShift", "&lt;&lt;");
+}
+</t>
+<t tx="ekr.20241003063446.71">fn do_LeftShiftEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "LeftShiftEqual", "&lt;&lt;=");
+}
+</t>
+<t tx="ekr.20241003063446.72">fn do_Less(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Less", "&lt;");
+}
+</t>
+<t tx="ekr.20241003063446.73">fn do_LessEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "LessEqual", "&lt;=");
+}
+</t>
+<t tx="ekr.20241003063446.74">fn do_Lpar(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Lpar", "(");
+}
+</t>
+<t tx="ekr.20241003063446.75">fn do_Lsqb(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Lsqb", "[");
+}
+</t>
+<t tx="ekr.20241003063446.76">fn do_Match(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Match", "match");
+}
+</t>
+<t tx="ekr.20241003063446.77">fn do_Minus(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Minus", "-");
+}
+</t>
+<t tx="ekr.20241003063446.78">fn do_MinusEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "MinusEqual", "-=");
+}
+</t>
+<t tx="ekr.20241003063446.79">fn do_None(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "None", "None");
+}
+</t>
+<t tx="ekr.20241003063446.8">pub fn beautify_all_files(files_list: Vec&lt;String&gt;, stats: &amp;Stats) {
+    // for file_name in self.files_list.clone() {
+    for file_name in files_list {
+        beautify_one_file(&amp;file_name, &amp;stats);
+    }
+}
+
+</t>
+<t tx="ekr.20241003063446.80">fn do_Nonlocal(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Nonlocal", "nonlocal");
+}
+</t>
+<t tx="ekr.20241003063446.81">fn do_Not(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Not", "not");
+}
+</t>
+<t tx="ekr.20241003063446.82">fn do_NotEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "NotEqual", "!=");
+}
+</t>
+<t tx="ekr.20241003063446.83">fn do_Or(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Or", "or");
+}
+</t>
+<t tx="ekr.20241003063446.84">fn do_Pass(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Pass", "pass");
+}
+</t>
+<t tx="ekr.20241003063446.85">fn do_Percent(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Percent", "%");
+}
+</t>
+<t tx="ekr.20241003063446.86">fn do_PercentEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "PercentEqual", "%=");
+}
+</t>
+<t tx="ekr.20241003063446.87">fn do_Plus(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Plus", "+");
+}
+</t>
+<t tx="ekr.20241003063446.88">fn do_PlusEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "PlusEqual", "+=");
+}
+</t>
+<t tx="ekr.20241003063446.89">fn do_Raise(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Raise", "raise");
+}
+</t>
+<t tx="ekr.20241003063446.9">fn beautify_one_file(file_name: &amp;str, stats: &amp;Stats) {
+    stats.n_files += 1;
+    if true {
+        // Testing only: print the short file name.
+        let file_path = path::Path::new(file_name);
+        let os_str = file_path.file_name().unwrap(); // &amp;OsStr
+        let short_file_name = os_str.to_str().unwrap();
+        println!("{short_file_name}");
+    }
+    // Read the file into contents (a String).
+    let t1 = std::time::Instant::now();
+    let contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
+    stats.read_time += t1.elapsed().as_nanos();
+    // Make the list of input tokens.
+    let t2 = std::time::Instant::now();
+    let input_list: Vec&lt;InputTok&gt; = make_input_list(&amp;contents, &amp;stats);
+    stats.make_tokens_time += t2.elapsed().as_nanos();
+    // Beautify.
+    let t3 = std::time::Instant::now();
+    let results: String = beautify(&amp;input_list);
+    let n =results.len();
+    println!("len(results): {n}");
+    stats.beautify_time += t3.elapsed().as_nanos();
+}
+</t>
+<t tx="ekr.20241003063446.90">fn do_Rarrow(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Rarrow", "-&gt;");
+}
+</t>
+<t tx="ekr.20241003063446.91">fn do_Rbrace(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Rbrace", "]");
+}
+</t>
+<t tx="ekr.20241003063446.92">fn do_Return(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Return", "return");
+}
+</t>
+<t tx="ekr.20241003063446.93">fn do_RightShift(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "RightShift", "&gt;&gt;");
+}
+</t>
+<t tx="ekr.20241003063446.94">fn do_RightShiftEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "RightShiftEqual", "&gt;&gt;=");
+}
+</t>
+<t tx="ekr.20241003063446.95">fn do_Rpar(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Rpar", ")");
+}
+</t>
+<t tx="ekr.20241003063446.96">fn do_Rsqb(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Rsqb", "]");
+}
+</t>
+<t tx="ekr.20241003063446.97">fn do_Semi(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Semi", ";");
+}
+</t>
+<t tx="ekr.20241003063446.98">fn do_Slash(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "Slash", "/");
+}
+</t>
+<t tx="ekr.20241003063446.99">fn do_SlashEqual(output_list: Vec&lt;String&gt;) {
+    add_output_string(output_list, "SlashEqual", "/=");
+}
+</t>
+<t tx="ekr.20241003064425.1">#[derive(Debug)]
+pub struct Beautifier {
+    // Set in LB:beautify_one_file...
+    args: Vec&lt;String&gt;,
+    files_list: Vec&lt;String&gt;,
+    input_list: Vec&lt;InputTok&gt;,
+    output_list: Vec&lt;String&gt;,
+    stats: Stats,
+    // Set in LB:beautify...
+    // Debugging
+    line_number: i32, // Use -1 instead of None?
+    // State vars for whitespace.
+    curly_brackets_level: i32,
+    indent_level: i32,
+    paren_level: i32,
+    square_brackets_stack: Vec&lt;bool&gt;,
+    // Parse state.
+    decorator_seen: bool, // Set by do_name for do_op.
+    in_arg_list: i32,     // &gt; 0 if in an arg list of a def.
+    in_doc_part: bool,
+    // To do
+    // state_stack = Vec&lt;ParseState&gt;,  // list[ParseState] = []  # Stack of ParseState objects.
+    // Leo-related state.
+    verbatim: bool,
+    // Ivars describing the present input token.
+    index: u32,
+    lws: String,
+}
+
+///// Temporary.
+#[allow(dead_code)]
+#[allow(non_snake_case)]
+impl Beautifier {
+    @others
+}
+</t>
+<t tx="ekr.20241003064504.1"></t>
+<t tx="ekr.20241003084853.1"></t>
+<t tx="ekr.20241003084902.1">pub fn entry() {
+    // Main line of beautifier.
+    //** let mut x = Beautifier::new();
+   
+    // testing.
+    println!("");
+    let mut stats = Stats {
+        n_files: 0, n_tokens: 0, n_ws_tokens: 0,
+        beautify_time: 0, make_tokens_time: 0, read_time: 0, write_time: 0,
+    };
+
+    for file_path in [
+        "C:\\Repos\\leo-editor\\leo\\core\\leoAst.py",
+        // "C:\\Repos\\leo-editor\\leo\\core\\leoTokens.py",
+        // "C:\\Repos\\leo-editor\\leo\\core\\leoApp.py"
+    ] {
+        beautify_one_file(&amp;file_path, &amp;stats);
+    }
+    stats.report();
+        
+    //*** Not yet.
+        // } else {
+            // if x.enabled("--help") || x.enabled("-h") {
+                // x.show_help();
+                // return;
+            // }
+            // x.show_args();
+            // x.beautify_all_files();
+        // }
+}
+</t>
 </tnodes>
 </leo_file>

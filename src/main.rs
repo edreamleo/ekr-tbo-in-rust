@@ -3,6 +3,8 @@
 //@@language rust
 // main.rs
 
+#![allow(unused_imports)]
+
 // For the f! macro.
 #[macro_use]
 extern crate fstrings;
