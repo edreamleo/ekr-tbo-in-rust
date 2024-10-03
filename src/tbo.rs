@@ -24,7 +24,10 @@ pub fn entry() {
     let mut v: Vec<i32> = Vec::new();
     push(&mut v, 1);
     push(&mut v, 2);
-    let mut i = 3;
+    for i in [3, 4, 6] {
+        push(&mut v, i);
+    }
+    let mut i = 7;
     while i < 10 {
         push(&mut v, i);
         i += 1
