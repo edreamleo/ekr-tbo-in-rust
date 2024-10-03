@@ -167,6 +167,7 @@ impl Beautifier {
                     "ColonEqual" => self.do_ColonEqual(),
                     "Comma" => self.do_Comma(),
                     "Comment" => self.do_Comment(value),
+                    "Continue" => self.do_Continue(),
                     "Dedent" => self.do_Dedent(value),
                     "Def" => self.do_Def(),
                     "Del" => self.do_Del(),
@@ -191,6 +192,7 @@ impl Beautifier {
                     "Int" => self.do_Int(value),
                     "Is" => self.do_Is(),
                     "Less" => self.do_Less(),
+                    "LessEqual" => self.do_LessEqual(),
                     "Lbrace" => self.do_Lbrace(),
                     "Lpar" => self.do_Lpar(),
                     "Lsqb" => self.do_Lsqb(),
@@ -204,6 +206,7 @@ impl Beautifier {
                     "NotEqual" => self.do_NotEqual(),
                     "Or" => self.do_Or(),
                     "Pass" => self.do_Pass(),
+                    "Percent" => self.do_Percent(),
                     "Plus" => self.do_Plus(),
                     "PlusEqual" => self.do_PlusEqual(),
                     "Raise" => self.do_Raise(),
@@ -217,6 +220,7 @@ impl Beautifier {
                     "True" => self.do_True(),
                     "Try" => self.do_Try(),
                     "While" => self.do_While(),
+                    "With" => self.do_With(),
                     "ws" => self.do_ws(kind, value),
                     _ => println!("No visitor for: {kind}"),
                 }
@@ -997,7 +1001,8 @@ pub fn entry() {
         // testing.
         println!("");
         for file_path in [
-            "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py",
+            "C:\\Repos\\leo-editor\\leo\\core\\leoAst.py",
+            // "C:\\Repos\\leo-editor\\leo\\core\\leoTokens.py",
             // "C:\\Repos\\leo-editor\\leo\\core\\leoApp.py"
         ] {
             x.beautify_one_file(&file_path);
