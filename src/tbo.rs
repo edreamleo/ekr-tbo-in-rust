@@ -245,6 +245,7 @@ impl Beautifier {
     //@+node:ekr.20240929074037.5: *3* LB::beautify_one_file
     fn beautify_one_file(&mut self, file_name: &str) {
         // Compute short_file_name from file_name.
+        self.stats.n_files += 1;
         if true {
             // Testing only.
             let file_path = path::Path::new(file_name);
@@ -256,20 +257,16 @@ impl Beautifier {
         self.output_list = Vec::new();
         let t1 = std::time::Instant::now();
         let contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
-        let read_time = t1.elapsed().as_nanos();
+        // let read_time = t1.elapsed().as_nanos();
+        self.stats.read_time += t1.elapsed().as_nanos();
         // Make the list of input tokens
         let t2 = std::time::Instant::now();
         self.make_input_list(&contents);
-        let make_tokens_time = t2.elapsed().as_nanos();
+        self.stats.make_tokens_time += t2.elapsed().as_nanos();
         // Beautify.
         let t3 = std::time::Instant::now();
         self.beautify();
-        let beautify_time = t3.elapsed().as_nanos();
-        // Update stats.
-        self.stats.n_files += 1;
-        self.stats.beautify_time += beautify_time;
-        self.stats.make_tokens_time += make_tokens_time;
-        self.stats.read_time += read_time;
+        self.stats.beautify_time += t3.elapsed().as_nanos();
     }
     //@+node:ekr.20240929074037.7: *3* LB::do_*
     //@+node:ekr.20241002071143.1: *4* tbo.do_ws
