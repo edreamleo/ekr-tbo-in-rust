@@ -121,10 +121,6 @@ impl Beautifier {
         }
     }
     //@+node:ekr.20240929074037.113: *3* LB::beautify
-    fn no_visitor(&self, kind: &str) {
-        println!("No visitor for: {kind}")
-    }
-
     fn beautify(&mut self) -> String {
         //! Beautify the input_tokens, creating the output_list.
         //@+<< LB::beautify: init ivars >>
@@ -222,7 +218,7 @@ impl Beautifier {
                     "Try" => self.do_Try(),
                     "While" => self.do_While(),
                     "ws" => self.do_ws(kind, value),
-                    _ => self.no_visitor(kind),
+                    _ => println!("No visitor for: {kind}"),
                 }
                 //@-<< LB: beautify: dispatch on input_token.kind >>
             }
