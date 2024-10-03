@@ -21,8 +21,8 @@ use std::path;
 // Only Clone is valid for String.
 #[derive(Clone)]
 struct InputTok {
-    kind: &'static str,
-    value: &'static str,
+    kind: String,
+    value: String,
 }
 
 impl fmt::Debug for InputTok {
@@ -104,11 +104,11 @@ impl Beautifier {
     }
     //@+node:ekr.20240929074037.3: *3* LB::add_input_token
     // #[allow(dead_code)]
-    fn add_input_token(&mut self, kind: &'static str, value: &'static str) {
+    fn add_input_token(&mut self, kind: &str, value: &str) {
         //! Add one token to the output list.
         self.input_list.push(InputTok {
-            kind: kind,
-            value: value,
+            kind: kind.to_string(),
+            value: value.to_string(),
         });
     }
     //@+node:ekr.20240929074037.2: *3* LB::add_output_string
@@ -157,8 +157,8 @@ impl Beautifier {
             for input_token in self.input_list.clone() {
                 //@+<< LB: beautify: dispatch on input_token.kind >>
                 //@+node:ekr.20241002062655.1: *4* << LB: beautify: dispatch on input_token.kind >>
-                let kind = input_token.kind;
-                let value = input_token.kind;
+                let kind = input_token.kind.as_str();
+                let value = input_token.kind.as_str();
                 match kind {
                     // Some of these could be replaced by inline code.
                     "And" => self.do_And(),
@@ -252,27 +252,24 @@ impl Beautifier {
             let short_file_name = os_str.to_str().unwrap();
             println!("{short_file_name}");
         }
-        // Read the file into contents (a slice with 'static lifetime!).
+        // Read the file into contents (a String).
         self.output_list = Vec::new();
         let t1 = std::time::Instant::now();
-        let temp_contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
-        // https://stackoverflow.com/questions/23975391/how-to-convert-a-string-into-a-static-str
-        let contents: &'static str = self.string_to_static_str(temp_contents);
+        let contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
         let read_time = t1.elapsed().as_nanos();
-
         // Make the list of input tokens
-        let t3 = std::time::Instant::now();
+        let t2 = std::time::Instant::now();
         self.make_input_list(&contents);
-        let make_tokens_time = t3.elapsed().as_nanos();
+        let make_tokens_time = t2.elapsed().as_nanos();
         // Beautify.
-        let t4 = std::time::Instant::now();
+        let t3 = std::time::Instant::now();
         self.beautify();
-        let beautify_time = t4.elapsed().as_nanos();
+        let beautify_time = t3.elapsed().as_nanos();
         // Update stats.
         self.stats.n_files += 1;
-        let write_time = 0;
-        self.stats
-            .update_times(beautify_time, make_tokens_time, read_time, write_time);
+        self.stats.beautify_time += beautify_time;
+        self.stats.make_tokens_time += make_tokens_time;
+        self.stats.read_time += read_time;
     }
     //@+node:ekr.20240929074037.7: *3* LB::do_*
     //@+node:ekr.20241002071143.1: *4* tbo.do_ws
@@ -740,8 +737,7 @@ impl Beautifier {
         }
     }
     //@+node:ekr.20240929074037.112: *3* LB::make_input_list
-    fn make_input_list(&mut self, contents: &'static str) {
-        // fn make_input_list(&mut self, contents: &str) {
+    fn make_input_list(&mut self, contents: &str) {
         // Add InputToks to the input_list for every token given by the RustPython lex.
         let mut n_tokens: u64 = 0;
         let mut n_ws_tokens: u64 = 0;
@@ -999,20 +995,6 @@ impl Stats {
         println!("   beautify: {beautify_time:>7} ms");
         println!("      write: {write_time:>7} ms");
         println!("      total: {total_time:>7} ms");
-    }
-    //@+node:ekr.20240929074941.1: *3* Stats::update_times
-    fn update_times(
-        &mut self,
-        beautify: u128,
-        make_tokens: u128,
-        read_time: u128,
-        write_time: u128,
-    ) {
-        // Update cumulative timing stats.
-        self.beautify_time += beautify;
-        self.make_tokens_time += make_tokens;
-        self.read_time += read_time;
-        self.write_time += write_time;
     }
     //@-others
 }

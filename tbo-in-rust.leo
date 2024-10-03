@@ -149,6 +149,132 @@
 <v t="ekr.20240927151701.207"><vh>@@button print-gnx</vh></v>
 </v>
 </v>
+<v t="ekr.20240927154009.1"><vh>Files</vh>
+<v t="ekr.20240927151245.1"><vh>@edit Cargo.toml</vh></v>
+<v t="ekr.20240927151332.1"><vh>@file src/main.rs</vh></v>
+<v t="ekr.20240928161210.1"><vh>@file src/tbo.rs</vh></v>
+<v t="ekr.20240105140814.1"><vh>COPY leoTokens.py</vh>
+<v t="ekr.20240105140814.2"><vh>&lt;&lt; leoTokens.py: docstring &gt;&gt;</vh></v>
+<v t="ekr.20240105140814.3"><vh>&lt;&lt; leoTokens.py: imports &amp; annotations &gt;&gt;</vh></v>
+<v t="ekr.20240214065940.1"><vh>top-level functions (leoTokens.py)</vh>
+<v t="ekr.20240105140814.41"><vh>function: dump_contents</vh></v>
+<v t="ekr.20240105140814.42"><vh>function: dump_lines</vh></v>
+<v t="ekr.20240105140814.43"><vh>function: dump_results</vh></v>
+<v t="ekr.20240105140814.44"><vh>function: dump_tokens</vh></v>
+<v t="ekr.20240105140814.27"><vh>function: input_tokens_to_string</vh></v>
+<v t="ekr.20240926050431.1"><vh>function: beautify_file (leoTokens.py) (new)</vh></v>
+<v t="ekr.20240105140814.121"><vh>function: main (leoTokens.py)</vh></v>
+<v t="ekr.20240105140814.5"><vh>function: orange_command (leoTokens.py)</vh></v>
+<v t="ekr.20240105140814.10"><vh>function: scan_args (leoTokens.py)</vh></v>
+</v>
+<v t="ekr.20240105140814.52"><vh>Classes</vh>
+<v t="ekr.20240105140814.51"><vh>class InternalBeautifierError(Exception)</vh></v>
+<v t="ekr.20240105140814.53"><vh>class InputToken</vh>
+<v t="ekr.20240105140814.54"><vh>itoken.brief_dump</vh></v>
+<v t="ekr.20240105140814.55"><vh>itoken.dump</vh></v>
+<v t="ekr.20240105140814.56"><vh>itoken.dump_header</vh></v>
+<v t="ekr.20240105140814.57"><vh>itoken.error_dump</vh></v>
+<v t="ekr.20240105140814.58"><vh>itoken.show_val</vh></v>
+</v>
+<v t="ekr.20240105143307.1"><vh>class Tokenizer</vh>
+<v t="ekr.20240105143307.2"><vh>Tokenizer.add_token</vh></v>
+<v t="ekr.20240105143214.2"><vh>Tokenizer.check_results</vh></v>
+<v t="ekr.20240105143214.3"><vh>Tokenizer.check_round_trip</vh></v>
+<v t="ekr.20240105143214.4"><vh>Tokenizer.create_input_tokens</vh></v>
+<v t="ekr.20240105143214.5"><vh>Tokenizer.do_token (the gem)</vh></v>
+<v t="ekr.20240105143214.6"><vh>Tokenizer.make_input_tokens (entry)</vh></v>
+<v t="ekr.20240105143214.7"><vh>Tokenizer.tokens_to_string</vh></v>
+</v>
+<v t="ekr.20240105140814.108"><vh>class ParseState</vh></v>
+<v t="ekr.20240128114842.1"><vh>class ScanState</vh></v>
+<v t="ekr.20240105145241.1"><vh>class TokenBasedOrange</vh>
+<v t="ekr.20240119062227.1"><vh>&lt;&lt; TokenBasedOrange: docstring &gt;&gt;</vh></v>
+<v t="ekr.20240111035404.1"><vh>&lt;&lt; TokenBasedOrange: __slots__ &gt;&gt;</vh></v>
+<v t="ekr.20240116040458.1"><vh>&lt;&lt; TokenBasedOrange: python-related constants &gt;&gt;</vh></v>
+<v t="ekr.20240105145241.2"><vh>tbo.ctor</vh></v>
+<v t="ekr.20240126012433.1"><vh>tbo: Checking &amp; dumping</vh>
+<v t="ekr.20240106220724.1"><vh>tbo.dump_token_range</vh></v>
+<v t="ekr.20240112082350.1"><vh>tbo.internal_error_message</vh></v>
+<v t="ekr.20240226131015.1"><vh>tbo.user_error_message</vh></v>
+<v t="ekr.20240117053310.1"><vh>tbo.oops</vh></v>
+</v>
+<v t="ekr.20240105145241.4"><vh>tbo: Entries &amp; helpers</vh>
+<v t="ekr.20240105145241.5"><vh>tbo.beautify (main token loop)</vh>
+<v t="ekr.20240112023403.1"><vh>&lt;&lt; tbo.beautify: init ivars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20240105145241.6"><vh>tbo.beautify_file (entry) (stats &amp; diffs)</vh></v>
+<v t="ekr.20240105145241.8"><vh>tbo.init_tokens_from_file</vh></v>
+<v t="ekr.20240105140814.12"><vh>tbo.regularize_newlines</vh></v>
+<v t="ekr.20240105140814.17"><vh>tbo.write_file</vh></v>
+<v t="ekr.20200107040729.1"><vh>tbo.show_diffs</vh></v>
+</v>
+<v t="ekr.20240105145241.9"><vh>tbo: Visitors &amp; generators</vh>
+<v t="ekr.20240105145241.10"><vh>tbo.do_comment</vh>
+<v t="ekr.20240420034216.1"><vh>&lt;&lt; do_comment: update comment-related state &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20240111051726.1"><vh>tbo.do_dedent</vh></v>
+<v t="ekr.20240105145241.11"><vh>tbo.do_encoding</vh></v>
+<v t="ekr.20240105145241.12"><vh>tbo.do_endmarker</vh></v>
+<v t="ekr.20240105145241.14"><vh>tbo.do_indent</vh></v>
+<v t="ekr.20240105145241.16"><vh>tbo.do_name &amp; generators</vh>
+<v t="ekr.20240418050017.1"><vh>tbo.do_name</vh></v>
+<v t="ekr.20240105145241.40"><vh>tbo.gen_word</vh></v>
+<v t="ekr.20240107141830.1"><vh>tbo.gen_word_op</vh></v>
+</v>
+<v t="ekr.20240105145241.17"><vh>tbo.do_newline, do_nl &amp; generators</vh>
+<v t="ekr.20240418043826.1"><vh>tbo.do_newline</vh></v>
+<v t="ekr.20240418043827.1"><vh>tbo.do_nl</vh></v>
+</v>
+<v t="ekr.20240105145241.18"><vh>tbo.do_number</vh></v>
+<v t="ekr.20240105145241.19"><vh>tbo.do_op &amp; generators</vh>
+<v t="ekr.20240418045924.1"><vh>tbo.do_op</vh></v>
+<v t="ekr.20240105145241.31"><vh>tbo.gen_colon &amp; helper</vh></v>
+<v t="ekr.20240109035004.1"><vh>tbo.gen_dot_op &amp; _next</vh>
+<v t="ekr.20240105145241.43"><vh>tbo._next</vh></v>
+</v>
+<v t="ekr.20240105145241.20"><vh>tbo.gen_equal_op</vh></v>
+<v t="ekr.20240105145241.35"><vh>tbo.gen_lt</vh></v>
+<v t="ekr.20240105145241.37"><vh>tbo.gen_possible_unary_op &amp; helper</vh>
+<v t="ekr.20240109082712.1"><vh>tbo.is_unary_op &amp; _prev</vh>
+<v t="ekr.20240115233050.1"><vh>tbo._prev</vh></v>
+</v>
+</v>
+<v t="ekr.20240105145241.36"><vh>tbo.gen_rt</vh></v>
+<v t="ekr.20240105145241.38"><vh>tbo.gen_star_op</vh></v>
+<v t="ekr.20240105145241.39"><vh>tbo.gen_star_star_op</vh></v>
+<v t="ekr.20240105145241.3"><vh>tbo.push_state</vh></v>
+</v>
+<v t="ekr.20240105145241.21"><vh>tbo.do_string</vh></v>
+<v t="ekr.20240105145241.22"><vh>tbo.do_verbatim</vh></v>
+<v t="ekr.20240105145241.23"><vh>tbo.do_ws</vh></v>
+<v t="ekr.20240105145241.27"><vh>tbo.gen_blank</vh></v>
+<v t="ekr.20240105145241.26"><vh>tbo.gen_token</vh></v>
+</v>
+<v t="ekr.20240110205127.1"><vh>tbo: Scanning</vh>
+<v t="ekr.20240128114622.1"><vh>tbo.pre_scan &amp; helpers</vh>
+<v t="ekr.20240128230812.1"><vh>&lt;&lt; pre-scan 'newline' tokens &gt;&gt;</vh></v>
+<v t="ekr.20240128123117.1"><vh>&lt;&lt; pre-scan 'op' tokens &gt;&gt;</vh></v>
+<v t="ekr.20240128231119.1"><vh>&lt;&lt; pre-scan 'name' tokens &gt;&gt;</vh></v>
+<v t="ekr.20240129041304.1"><vh>tbo.finish_arg</vh></v>
+<v t="ekr.20240128233406.1"><vh>tbo.finish_slice</vh></v>
+<v t="ekr.20240129040347.1"><vh>tbo.finish_dict</vh></v>
+</v>
+<v t="ekr.20240129034209.1"><vh>tbo.is_unary_op_with_prev</vh></v>
+<v t="ekr.20240129035336.1"><vh>tbo.is_python_keyword</vh></v>
+<v t="ekr.20240106170746.1"><vh>tbo.set_context</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20240927154016.1"><vh>Notes</vh>
+<v t="ekr.20240929084852.1"><vh>Ownership and mutation</vh></v>
+<v t="ekr.20241001055017.1"><vh>Traits</vh></v>
+<v t="ekr.20241001060848.1"><vh>Lifetimes (to do)</vh></v>
+<v t="ekr.20241002054443.1"><vh>Errors in LB:beautify</vh></v>
+<v t="ekr.20240928185643.1"><vh>Stats</vh></v>
+</v>
+<v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20240927164013.1"><vh>--- Pevious code</vh>
 <v t="ekr.20240927163405.1"><vh>class Beautifier (from backup/rust_beautifier)</vh>
 <v t="ekr.20240927163405.2"><vh>Beautifier::add_input_token</vh></v>
@@ -424,6 +550,7 @@
 <v t="ekr.20241001093308.2"><vh>fn tokenize</vh>
 <v t="ekr.20241001093308.3"><vh>&lt;&lt; tokenize: define contents &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20240929074941.1"><vh>Stats::update_times</vh></v>
 </v>
 <v t="ekr.20240929032636.1"><vh>OLD function: entry &amp; helpers</vh>
 <v t="ekr.20240930100625.1"><vh>&lt;&lt; 1: read &gt;&gt;</vh></v>
@@ -435,136 +562,11 @@
 <v t="ekr.20240930084648.1"><vh>function: read</vh></v>
 </v>
 <v t="ekr.20241002164044.1"><vh>make_input_list: Calculate class name w/o match</vh></v>
+<v t="ekr.20241003055233.1"><vh>beautify_one_file: 'static</vh></v>
 </v>
-<v t="ekr.20240927154009.1"><vh>Files</vh>
-<v t="ekr.20240927151245.1"><vh>@edit Cargo.toml</vh></v>
-<v t="ekr.20240927151332.1"><vh>@file src/main.rs</vh></v>
-<v t="ekr.20240928161210.1"><vh>@file src/tbo.rs</vh></v>
-<v t="ekr.20240105140814.1"><vh>COPY leoTokens.py</vh>
-<v t="ekr.20240105140814.2"><vh>&lt;&lt; leoTokens.py: docstring &gt;&gt;</vh></v>
-<v t="ekr.20240105140814.3"><vh>&lt;&lt; leoTokens.py: imports &amp; annotations &gt;&gt;</vh></v>
-<v t="ekr.20240214065940.1"><vh>top-level functions (leoTokens.py)</vh>
-<v t="ekr.20240105140814.41"><vh>function: dump_contents</vh></v>
-<v t="ekr.20240105140814.42"><vh>function: dump_lines</vh></v>
-<v t="ekr.20240105140814.43"><vh>function: dump_results</vh></v>
-<v t="ekr.20240105140814.44"><vh>function: dump_tokens</vh></v>
-<v t="ekr.20240105140814.27"><vh>function: input_tokens_to_string</vh></v>
-<v t="ekr.20240926050431.1"><vh>function: beautify_file (leoTokens.py) (new)</vh></v>
-<v t="ekr.20240105140814.121"><vh>function: main (leoTokens.py)</vh></v>
-<v t="ekr.20240105140814.5"><vh>function: orange_command (leoTokens.py)</vh></v>
-<v t="ekr.20240105140814.10"><vh>function: scan_args (leoTokens.py)</vh></v>
-</v>
-<v t="ekr.20240105140814.52"><vh>Classes</vh>
-<v t="ekr.20240105140814.51"><vh>class InternalBeautifierError(Exception)</vh></v>
-<v t="ekr.20240105140814.53"><vh>class InputToken</vh>
-<v t="ekr.20240105140814.54"><vh>itoken.brief_dump</vh></v>
-<v t="ekr.20240105140814.55"><vh>itoken.dump</vh></v>
-<v t="ekr.20240105140814.56"><vh>itoken.dump_header</vh></v>
-<v t="ekr.20240105140814.57"><vh>itoken.error_dump</vh></v>
-<v t="ekr.20240105140814.58"><vh>itoken.show_val</vh></v>
-</v>
-<v t="ekr.20240105143307.1"><vh>class Tokenizer</vh>
-<v t="ekr.20240105143307.2"><vh>Tokenizer.add_token</vh></v>
-<v t="ekr.20240105143214.2"><vh>Tokenizer.check_results</vh></v>
-<v t="ekr.20240105143214.3"><vh>Tokenizer.check_round_trip</vh></v>
-<v t="ekr.20240105143214.4"><vh>Tokenizer.create_input_tokens</vh></v>
-<v t="ekr.20240105143214.5"><vh>Tokenizer.do_token (the gem)</vh></v>
-<v t="ekr.20240105143214.6"><vh>Tokenizer.make_input_tokens (entry)</vh></v>
-<v t="ekr.20240105143214.7"><vh>Tokenizer.tokens_to_string</vh></v>
-</v>
-<v t="ekr.20240105140814.108"><vh>class ParseState</vh></v>
-<v t="ekr.20240128114842.1"><vh>class ScanState</vh></v>
-<v t="ekr.20240105145241.1"><vh>class TokenBasedOrange</vh>
-<v t="ekr.20240119062227.1"><vh>&lt;&lt; TokenBasedOrange: docstring &gt;&gt;</vh></v>
-<v t="ekr.20240111035404.1"><vh>&lt;&lt; TokenBasedOrange: __slots__ &gt;&gt;</vh></v>
-<v t="ekr.20240116040458.1"><vh>&lt;&lt; TokenBasedOrange: python-related constants &gt;&gt;</vh></v>
-<v t="ekr.20240105145241.2"><vh>tbo.ctor</vh></v>
-<v t="ekr.20240126012433.1"><vh>tbo: Checking &amp; dumping</vh>
-<v t="ekr.20240106220724.1"><vh>tbo.dump_token_range</vh></v>
-<v t="ekr.20240112082350.1"><vh>tbo.internal_error_message</vh></v>
-<v t="ekr.20240226131015.1"><vh>tbo.user_error_message</vh></v>
-<v t="ekr.20240117053310.1"><vh>tbo.oops</vh></v>
-</v>
-<v t="ekr.20240105145241.4"><vh>tbo: Entries &amp; helpers</vh>
-<v t="ekr.20240105145241.5"><vh>tbo.beautify (main token loop)</vh>
-<v t="ekr.20240112023403.1"><vh>&lt;&lt; tbo.beautify: init ivars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20240105145241.6"><vh>tbo.beautify_file (entry) (stats &amp; diffs)</vh></v>
-<v t="ekr.20240105145241.8"><vh>tbo.init_tokens_from_file</vh></v>
-<v t="ekr.20240105140814.12"><vh>tbo.regularize_newlines</vh></v>
-<v t="ekr.20240105140814.17"><vh>tbo.write_file</vh></v>
-<v t="ekr.20200107040729.1"><vh>tbo.show_diffs</vh></v>
-</v>
-<v t="ekr.20240105145241.9"><vh>tbo: Visitors &amp; generators</vh>
-<v t="ekr.20240105145241.10"><vh>tbo.do_comment</vh>
-<v t="ekr.20240420034216.1"><vh>&lt;&lt; do_comment: update comment-related state &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20240111051726.1"><vh>tbo.do_dedent</vh></v>
-<v t="ekr.20240105145241.11"><vh>tbo.do_encoding</vh></v>
-<v t="ekr.20240105145241.12"><vh>tbo.do_endmarker</vh></v>
-<v t="ekr.20240105145241.14"><vh>tbo.do_indent</vh></v>
-<v t="ekr.20240105145241.16"><vh>tbo.do_name &amp; generators</vh>
-<v t="ekr.20240418050017.1"><vh>tbo.do_name</vh></v>
-<v t="ekr.20240105145241.40"><vh>tbo.gen_word</vh></v>
-<v t="ekr.20240107141830.1"><vh>tbo.gen_word_op</vh></v>
-</v>
-<v t="ekr.20240105145241.17"><vh>tbo.do_newline, do_nl &amp; generators</vh>
-<v t="ekr.20240418043826.1"><vh>tbo.do_newline</vh></v>
-<v t="ekr.20240418043827.1"><vh>tbo.do_nl</vh></v>
-</v>
-<v t="ekr.20240105145241.18"><vh>tbo.do_number</vh></v>
-<v t="ekr.20240105145241.19"><vh>tbo.do_op &amp; generators</vh>
-<v t="ekr.20240418045924.1"><vh>tbo.do_op</vh></v>
-<v t="ekr.20240105145241.31"><vh>tbo.gen_colon &amp; helper</vh></v>
-<v t="ekr.20240109035004.1"><vh>tbo.gen_dot_op &amp; _next</vh>
-<v t="ekr.20240105145241.43"><vh>tbo._next</vh></v>
-</v>
-<v t="ekr.20240105145241.20"><vh>tbo.gen_equal_op</vh></v>
-<v t="ekr.20240105145241.35"><vh>tbo.gen_lt</vh></v>
-<v t="ekr.20240105145241.37"><vh>tbo.gen_possible_unary_op &amp; helper</vh>
-<v t="ekr.20240109082712.1"><vh>tbo.is_unary_op &amp; _prev</vh>
-<v t="ekr.20240115233050.1"><vh>tbo._prev</vh></v>
-</v>
-</v>
-<v t="ekr.20240105145241.36"><vh>tbo.gen_rt</vh></v>
-<v t="ekr.20240105145241.38"><vh>tbo.gen_star_op</vh></v>
-<v t="ekr.20240105145241.39"><vh>tbo.gen_star_star_op</vh></v>
-<v t="ekr.20240105145241.3"><vh>tbo.push_state</vh></v>
-</v>
-<v t="ekr.20240105145241.21"><vh>tbo.do_string</vh></v>
-<v t="ekr.20240105145241.22"><vh>tbo.do_verbatim</vh></v>
-<v t="ekr.20240105145241.23"><vh>tbo.do_ws</vh></v>
-<v t="ekr.20240105145241.27"><vh>tbo.gen_blank</vh></v>
-<v t="ekr.20240105145241.26"><vh>tbo.gen_token</vh></v>
-</v>
-<v t="ekr.20240110205127.1"><vh>tbo: Scanning</vh>
-<v t="ekr.20240128114622.1"><vh>tbo.pre_scan &amp; helpers</vh>
-<v t="ekr.20240128230812.1"><vh>&lt;&lt; pre-scan 'newline' tokens &gt;&gt;</vh></v>
-<v t="ekr.20240128123117.1"><vh>&lt;&lt; pre-scan 'op' tokens &gt;&gt;</vh></v>
-<v t="ekr.20240128231119.1"><vh>&lt;&lt; pre-scan 'name' tokens &gt;&gt;</vh></v>
-<v t="ekr.20240129041304.1"><vh>tbo.finish_arg</vh></v>
-<v t="ekr.20240128233406.1"><vh>tbo.finish_slice</vh></v>
-<v t="ekr.20240129040347.1"><vh>tbo.finish_dict</vh></v>
-</v>
-<v t="ekr.20240129034209.1"><vh>tbo.is_unary_op_with_prev</vh></v>
-<v t="ekr.20240129035336.1"><vh>tbo.is_python_keyword</vh></v>
-<v t="ekr.20240106170746.1"><vh>tbo.set_context</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20240927154016.1"><vh>Notes</vh>
-<v t="ekr.20240929084852.1"><vh>Ownership and mutation</vh></v>
-<v t="ekr.20241001055017.1"><vh>Traits</vh></v>
-<v t="ekr.20241001060848.1"><vh>Lifetimes (to do)</vh></v>
-<v t="ekr.20241002054443.1"><vh>Errors in LB:beautify</vh></v>
-<v t="ekr.20240928185643.1"><vh>Stats</vh></v>
-</v>
-<v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 <v t="ekr.20241001104914.1"><vh>--- classes</vh>
-<v t="ekr.20240105145241.1"></v>
+<v t="ekr.20240929024648.120"><vh>class InputTok</vh></v>
 <v t="ekr.20240929074037.1"><vh>class LeoBeautifier (new)</vh>
 <v t="ekr.20240929074037.114"><vh> LB::new</vh></v>
 <v t="ekr.20240929074037.3"><vh>LB::add_input_token</vh></v>
@@ -698,16 +700,14 @@
 <v t="ekr.20241001100954.1"><vh> Stats::new</vh></v>
 <v t="ekr.20240929080242.1"><vh>Stats::fmt_ns</vh></v>
 <v t="ekr.20240929075236.1"><vh>Stats::report</vh></v>
-<v t="ekr.20240929074941.1"><vh>Stats::update_times</vh></v>
 </v>
+<v t="ekr.20240105145241.1"></v>
 </v>
 <v t="ekr.20241002062737.1"><vh>--- recent</vh>
 <v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.7"></v>
 <v t="ekr.20241002071143.1"></v>
 </v>
-<v t="ekr.20240929024648.120"><vh>class InputTok</vh></v>
-<v t="ekr.20241002163554.1"></v>
 <v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.113"></v>
 <v t="ekr.20240929074037.112"></v>
@@ -3048,7 +3048,16 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
 
-Closing post?</t>
+- Revert code: don't use 'static lifetimes!
+
+- Revise the *design* (refactoring if possible):
+  Use &amp;str instead of &amp;mut str?
+  Use &amp;Self instead of &amp;mut Self?
+  Use functional style?
+  
+- Can I use helper vars to avoid problems with borrow checker?
+  - Can this trick avoid calls to x.clone()?
+</t>
 <t tx="ekr.20240927163405.1">#[derive(Debug)]
 pub struct Beautifier {
     args: Vec&lt;String&gt;,
@@ -4854,8 +4863,8 @@ This only 10% faster than the python code.
 <t tx="ekr.20240929024648.120">// Only Clone is valid for String.
 #[derive(Clone)]
 struct InputTok {
-    kind: &amp;'static str,
-    value: &amp;'static str,
+    kind: String,
+    value: String,
 }
 
 impl fmt::Debug for InputTok {
@@ -5036,8 +5045,7 @@ impl Beautifier {
     }
 }
 </t>
-<t tx="ekr.20240929074037.112">fn make_input_list(&amp;mut self, contents: &amp;'static str) {
-    // fn make_input_list(&amp;mut self, contents: &amp;str) {
+<t tx="ekr.20240929074037.112">fn make_input_list(&amp;mut self, contents: &amp;str) {
     // Add InputToks to the input_list for every token given by the RustPython lex.
     let mut n_tokens: u64 = 0;
     let mut n_ws_tokens: u64 = 0;
@@ -5240,11 +5248,11 @@ fn add_output_string(&amp;mut self, kind: &amp;str, value: &amp;str) {
 }
 </t>
 <t tx="ekr.20240929074037.3">// #[allow(dead_code)]
-fn add_input_token(&amp;mut self, kind: &amp;'static str, value: &amp;'static str) {
+fn add_input_token(&amp;mut self, kind: &amp;str, value: &amp;str) {
     //! Add one token to the output list.
     self.input_list.push(InputTok {
-        kind: kind,
-        value: value,
+        kind: kind.to_string(),
+        value: value.to_string(),
     });
 }
 </t>
@@ -5345,27 +5353,24 @@ fn add_input_token(&amp;mut self, kind: &amp;'static str, value: &amp;'static st
         let short_file_name = os_str.to_str().unwrap();
         println!("{short_file_name}");
     }
-    // Read the file into contents (a slice with 'static lifetime!).
+    // Read the file into contents (a String).
     self.output_list = Vec::new();
     let t1 = std::time::Instant::now();
-    let temp_contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
-    // https://stackoverflow.com/questions/23975391/how-to-convert-a-string-into-a-static-str
-    let contents: &amp;'static str = self.string_to_static_str(temp_contents);
+    let contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
     let read_time = t1.elapsed().as_nanos();
-
     // Make the list of input tokens
-    let t3 = std::time::Instant::now();
+    let t2 = std::time::Instant::now();
     self.make_input_list(&amp;contents);
-    let make_tokens_time = t3.elapsed().as_nanos();
+    let make_tokens_time = t2.elapsed().as_nanos();
     // Beautify.
-    let t4 = std::time::Instant::now();
+    let t3 = std::time::Instant::now();
     self.beautify();
-    let beautify_time = t4.elapsed().as_nanos();
+    let beautify_time = t3.elapsed().as_nanos();
     // Update stats.
     self.stats.n_files += 1;
-    let write_time = 0;
-    self.stats
-        .update_times(beautify_time, make_tokens_time, read_time, write_time);
+    self.stats.beautify_time += beautify_time;
+    self.stats.make_tokens_time += make_tokens_time;
+    self.stats.read_time += read_time;
 }
 </t>
 <t tx="ekr.20240929074037.50">fn do_EqEqual(&amp;mut self) {
@@ -6086,8 +6091,8 @@ self.output_list.push("value".to_string());  // Converts str to String
     // let kind_s = &amp;input_token.kind;
     // let kind = kind_s.as_str();
     </t>
-<t tx="ekr.20241002062655.1">let kind = input_token.kind;
-let value = input_token.kind;
+<t tx="ekr.20241002062655.1">let kind = input_token.kind.as_str();
+let value = input_token.kind.as_str();
 match kind {
     // Some of these could be replaced by inline code.
     "And" =&gt; self.do_And(),
@@ -6306,5 +6311,10 @@ let class_name = match token {
     let class_name: &amp;'static str = self.string_to_static_str(temp_class_name);
     self.add_input_token(class_name, tok_value);
 </t>
+<t tx="ekr.20241003055233.1">    // Don't use static lifetime!  It won't work with multiple files.
+    let temp_contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
+    // https://stackoverflow.com/questions/23975391/how-to-convert-a-string-into-a-static-str
+    let contents: &amp;'static str = self.string_to_static_str(temp_contents);
+    let read_time = t1.elapsed().as_nanos();</t>
 </tnodes>
 </leo_file>
