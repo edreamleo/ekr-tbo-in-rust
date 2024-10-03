@@ -244,10 +244,9 @@ impl Beautifier {
 
     //@+node:ekr.20240929074037.5: *3* LB::beautify_one_file
     fn beautify_one_file(&mut self, file_name: &str) {
-        // Compute short_file_name from file_name.
         self.stats.n_files += 1;
         if true {
-            // Testing only.
+            // Testing only: print the short file name.
             let file_path = path::Path::new(file_name);
             let os_str = file_path.file_name().unwrap(); // &OsStr
             let short_file_name = os_str.to_str().unwrap();
