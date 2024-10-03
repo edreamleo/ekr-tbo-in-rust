@@ -534,7 +534,8 @@
 </v>
 </v>
 <v t="ekr.20240928161210.1"></v>
-<v t="ekr.20241001093308.1"><vh>pub fn entry (test)</vh></v>
+<v t="ekr.20241003094218.2"><vh>fn test_struct</vh></v>
+<v t="ekr.20241003094218.1"><vh>fn test_vec &amp; push_vec</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20200107040729.1">def show_diffs(self, s1: str, s2: str) -&gt; None:  # pragma: no cover
@@ -3483,24 +3484,6 @@ fn returns_summarizable() -&gt; impl Summary {...}
 }
 </t>
 <t tx="ekr.20241001073040.1"></t>
-<t tx="ekr.20241001093308.1">pub fn entry() {
-    // Test code for Vec.
-    let mut v: Vec&lt;i32&gt; = Vec::new();
-    push(&amp;mut v, 1);
-    push(&amp;mut v, 2);
-    let mut i = 3;
-    while i &lt; 10 {
-        push(&amp;mut v, i);
-        i += 1
-    }
-    println!("");
-    println!("v: {v:?}");
-}
-
-fn push(v: &amp;mut Vec&lt;i32&gt;, val: i32) {
-    v.push(val);
-}
-</t>
 <t tx="ekr.20241001093308.2">fn tokenize() {
     &lt;&lt; tokenize: define contents &gt;&gt;
     println!("fn tokenize");
@@ -4861,6 +4844,56 @@ impl Beautifier {
             // x.show_args();
             // x.beautify_all_files();
         // }
+}
+</t>
+<t tx="ekr.20241003094218.1">fn test_vec() {
+    // Test code for Vec.
+    let mut v: Vec&lt;i32&gt; = Vec::new();
+    push_vec(&amp;mut v, 1);
+    push_vec(&amp;mut v, 2);
+    for i in [3, 4, 6] {
+        push_vec(&amp;mut v, i);
+    }
+    let mut i = 7;
+    while i &lt; 10 {
+        push_vec(&amp;mut v, i);
+        i += 1
+    }
+    println!("");
+    println!("v: {v:?}");
+}
+
+fn push_vec(v: &amp;mut Vec&lt;i32&gt;, val: i32) {
+    v.push(val);
+}
+</t>
+<t tx="ekr.20241003094218.2">fn test_struct() {
+    // Test code for Vec.
+    let mut v: Vec&lt;TestTok&gt; = Vec::new();
+    push_struct(&amp;mut v, 1);
+    push_struct(&amp;mut v, 2);
+    for i in [3, 4, 6] {
+        push_struct(&amp;mut v, i);
+    }
+    let mut i = 7;
+    while i &lt; 10 {
+        push_struct(&amp;mut v, i);
+        i += 1
+    }
+    // This fails
+    // let mut tok = v[0];
+    // tok.value = 666;
+    // println!("{tok:?}");
+    println!("");
+    for z in v {
+        println!("{z:?}");
+    }
+}
+
+fn push_struct(v: &amp;mut Vec&lt;TestTok&gt;, val: i32) {
+    let mut tok = TestTok{value: 0};
+    tok.value = val;  // To test mutability.
+    v.push(tok);
 }
 </t>
 </tnodes>
