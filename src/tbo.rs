@@ -256,7 +256,6 @@ impl Beautifier {
         self.output_list = Vec::new();
         let t1 = std::time::Instant::now();
         let contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
-        // let read_time = t1.elapsed().as_nanos();
         self.stats.read_time += t1.elapsed().as_nanos();
         // Make the list of input tokens
         let t2 = std::time::Instant::now();
