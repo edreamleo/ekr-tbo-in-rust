@@ -35,6 +35,41 @@ impl AnnotatedInputTok {
         }
     }
 }
+//@+node:ekr.20241004110721.1: ** class Annotator
+struct Annotator {
+    // The present input token...
+    index: u32,  // The index within the tokens array of the token being scanned.
+    lws: String,  // Leading whitespace. Required!
+    // For whitespace.
+    curly_brackets_level: u32,  // Number of unmatched '{' tokens.
+    paren_level: u32,  // Number of unmatched '(' tokens.
+    square_brackets_stack: Vec<bool>,  // A stack of bools, for     gen_word().
+    indent_level: u32,  // Set only by do_indent and do_dedent.
+    // Parse state.
+    decorator_seen: bool,  // Set by do_name for do_op.
+    in_arg_list: u32,  // > 0 if in an arg list of a def.
+    in_doc_part: bool,
+    // *** state_stack: Vec:<ParseState>,  // Stack of ParseState objects.
+    verbatim: bool,  // True: don't beautify.
+}
+
+impl Annotator {
+    fn new() -> Annotator {
+        Annotator {
+            curly_brackets_level: 0,
+            decorator_seen: false,
+            in_arg_list: 0,  // > 0 if in an arg list of a def.
+            in_doc_part: false,
+            indent_level: 0,
+            index: 0,
+            lws: String::new(),
+            paren_level: 0,
+            // *** state_stack: ParseState::new(),
+            square_brackets_stack: Vec::new(),
+            verbatim: false, 
+        }
+    }
+}
 //@+node:ekr.20240929074547.1: ** class Stats
 #[derive(Debug)]
 pub struct Stats {

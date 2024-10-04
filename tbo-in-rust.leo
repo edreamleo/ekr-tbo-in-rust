@@ -402,6 +402,7 @@
 <v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20241001104914.1"><vh>--- classes</vh>
 <v t="ekr.20241004095931.1"><vh>class AnnotatedInputTok</vh></v>
+<v t="ekr.20241004110721.1"><vh>class Annotator</vh></v>
 <v t="ekr.20240929024648.120"><vh>class InputTok</vh>
 <v t="ekr.20241004091919.1"><vh>InputTok::new</vh></v>
 </v>
@@ -418,8 +419,18 @@
 <v t="ekr.20241002062655.1"><vh>&lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="ekr.20241004110911.1"><vh>COPY: pre_scan &amp; helpers</vh>
+<v t="ekr.20241004110911.2"><vh>&lt;&lt; pre-scan 'newline' tokens &gt;&gt;</vh></v>
+<v t="ekr.20241004110911.3"><vh>&lt;&lt; pre-scan 'op' tokens &gt;&gt;</vh></v>
+<v t="ekr.20241004110911.4"><vh>&lt;&lt; pre-scan 'name' tokens &gt;&gt;</vh></v>
+<v t="ekr.20241004110911.5"><vh>tbo.finish_arg</vh></v>
+<v t="ekr.20241004110911.6"><vh>tbo.finish_slice</vh></v>
+<v t="ekr.20241004110911.7"><vh>tbo.finish_dict</vh></v>
+</v>
+<v t="ekr.20241004110956.1"><vh>COPY &lt;&lt; tbo.beautify: init ivars &gt;&gt;</vh></v>
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 <v t="ekr.20241004095735.1"><vh>LB::annotate_tokens (** finish)</vh></v>
+<v t="ekr.20241004110721.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20200107040729.1">def show_diffs(self, s1: str, s2: str) -&gt; None:  # pragma: no cover
@@ -4065,6 +4076,274 @@ impl AnnotatedInputTok {
         }
     }
 }
+</t>
+<t tx="ekr.20241004110721.1">struct Annotator {
+    // The present input token...
+    index: u32,  // The index within the tokens array of the token being scanned.
+    lws: String,  // Leading whitespace. Required!
+    // For whitespace.
+    curly_brackets_level: u32,  // Number of unmatched '{' tokens.
+    paren_level: u32,  // Number of unmatched '(' tokens.
+    square_brackets_stack: Vec&lt;bool&gt;,  // A stack of bools, for     gen_word().
+    indent_level: u32,  // Set only by do_indent and do_dedent.
+    // Parse state.
+    decorator_seen: bool,  // Set by do_name for do_op.
+    in_arg_list: u32,  // &gt; 0 if in an arg list of a def.
+    in_doc_part: bool,
+    // *** state_stack: Vec:&lt;ParseState&gt;,  // Stack of ParseState objects.
+    verbatim: bool,  // True: don't beautify.
+}
+
+impl Annotator {
+    fn new() -&gt; Annotator {
+        Annotator {
+            curly_brackets_level: 0,
+            decorator_seen: false,
+            in_arg_list: 0,  // &gt; 0 if in an arg list of a def.
+            in_doc_part: false,
+            indent_level: 0,
+            index: 0,
+            lws: String::new(),
+            paren_level: 0,
+            // *** state_stack: ParseState::new(),
+            square_brackets_stack: Vec::new(),
+            verbatim: false, 
+        }
+    }
+}</t>
+<t tx="ekr.20241004110911.1">def pre_scan(self) -&gt; None:
+    """
+    Scan the entire file in one iterative pass, adding context to a few
+    kinds of tokens as follows:
+
+    Token   Possible Contexts (or None)
+    =====   ===========================
+    ':'     'annotation', 'dict', 'complex-slice', 'simple-slice'
+    '='     'annotation', 'initializer'
+    '*'     'arg'
+    '**'    'arg'
+    '.'     'import'
+    """
+
+    # The main loop.
+    in_import = False
+    scan_stack: list[ScanState] = []
+    prev_token: Optional[InputToken] = None
+    for i, token in enumerate(self.input_tokens):
+        kind, value = token.kind, token.value
+        if kind in 'newline':
+            &lt;&lt; pre-scan 'newline' tokens &gt;&gt;
+        elif kind == 'op':
+            &lt;&lt; pre-scan 'op' tokens &gt;&gt;
+        elif kind == 'name':
+            &lt;&lt; pre-scan 'name' tokens &gt;&gt;
+        # Remember the previous significant token.
+        if kind not in self.insignificant_kinds:
+            prev_token = token
+    # Sanity check.
+    if scan_stack:  # pragma: no cover
+        print('pre_scan: non-empty scan_stack')
+        print(scan_stack)
+</t>
+<t tx="ekr.20241004110911.2"># 'import' and 'from x import' statements may span lines.
+# 'ws' tokens represent continued lines like this:   ws: ' \\\n    '
+if in_import and not scan_stack:
+    in_import = False
+</t>
+<t tx="ekr.20241004110911.3">top_state: Optional[ScanState] = scan_stack[-1] if scan_stack else None
+
+# Handle '[' and ']'.
+if value == '[':
+    scan_stack.append(ScanState('slice', token))
+elif value == ']':
+    assert top_state and top_state.kind == 'slice'
+    self.finish_slice(i, top_state)
+    scan_stack.pop()
+
+# Handle '{' and '}'.
+if value == '{':
+    scan_stack.append(ScanState('dict', token))
+elif value == '}':
+    assert top_state and top_state.kind == 'dict'
+    self.finish_dict(i, top_state)
+    scan_stack.pop()
+
+# Handle '(' and ')'
+elif value == '(':
+    if self.is_python_keyword(prev_token) or prev_token and prev_token.kind != 'name':
+        state_kind = '('
+    else:
+        state_kind = 'arg'
+    scan_stack.append(ScanState(state_kind, token))
+elif value == ')':
+    assert top_state and top_state.kind in ('(', 'arg'), repr(top_state)
+    if top_state.kind == 'arg':
+        self.finish_arg(i, top_state)
+    scan_stack.pop()
+
+# Handle interior tokens in 'arg' and 'slice' states.
+if top_state:
+    if top_state.kind in ('dict', 'slice') and value == ':':
+        top_state.value.append(i)
+    if top_state.kind == 'arg' and value in '**=:,':
+        top_state.value.append(i)
+
+# Handle '.' and '(' tokens inside 'import' and 'from' statements.
+if in_import and value in '(.':
+    self.set_context(i, 'import')
+</t>
+<t tx="ekr.20241004110911.4">prev_is_yield = prev_token and prev_token.kind == 'name' and prev_token.value == 'yield'
+if value in ('from', 'import') and not prev_is_yield:
+    # 'import' and 'from x import' statements should be at the outer level.
+    assert not scan_stack, scan_stack
+    in_import = True
+</t>
+<t tx="ekr.20241004110911.5">def finish_arg(self, end: int, state: Optional[ScanState]) -&gt; None:
+    """Set context for all ':' when scanning from '(' to ')'."""
+
+    # Sanity checks.
+    if not state:
+        return
+    assert state.kind == 'arg', repr(state)
+    token = state.token
+    assert token.value == '(', repr(token)
+    values = state.value
+    assert isinstance(values, list), repr(values)
+    i1 = token.index
+    assert i1 &lt; end, (i1, end)
+    if not values:
+        return
+
+    # Compute the context for each *separate* '=' token.
+    equal_context = 'initializer'
+    for i in values:
+        token = self.input_tokens[i]
+        assert token.kind == 'op', repr(token)
+        if token.value == ',':
+            equal_context = 'initializer'
+        elif token.value == ':':
+            equal_context = 'annotation'
+        elif token.value == '=':
+            self.set_context(i, equal_context)
+            equal_context = 'initializer'
+
+    # Set the context of all outer-level ':', '*', and '**' tokens.
+    prev: Optional[InputToken] = None
+    for i in range(i1, end):
+        token = self.input_tokens[i]
+        if token.kind not in self.insignificant_kinds:
+            if token.kind == 'op':
+                if token.value in ('*', '**'):
+                    if self.is_unary_op_with_prev(prev, token):
+                        self.set_context(i, 'arg')
+                elif token.value == '=':
+                    # The code above has set the context.
+                    assert token.context in ('initializer', 'annotation'), (i, repr(token.context))
+                elif token.value == ':':
+                    self.set_context(i, 'annotation')
+            prev = token
+</t>
+<t tx="ekr.20241004110911.6">def finish_slice(self, end: int, state: ScanState) -&gt; None:
+    """Set context for all ':' when scanning from '[' to ']'."""
+
+    # Sanity checks.
+    assert state.kind == 'slice', repr(state)
+    token = state.token
+    assert token.value == '[', repr(token)
+    colons = state.value
+    assert isinstance(colons, list), repr(colons)
+    i1 = token.index
+    assert i1 &lt; end, (i1, end)
+
+    # Do nothing if there are no ':' tokens in the slice.
+    if not colons:
+        return
+
+    # Compute final context by scanning the tokens.
+    final_context = 'simple-slice'
+    inter_colon_tokens = 0
+    prev = token
+    for i in range(i1 + 1, end - 1):
+        token = self.input_tokens[i]
+        kind, value = token.kind, token.value
+        if kind not in self.insignificant_kinds:
+            if kind == 'op':
+                if value == '.':
+                    # Ignore '.' tokens and any preceding 'name' token.
+                    if prev and prev.kind == 'name':  # pragma: no cover
+                        inter_colon_tokens -= 1
+                elif value == ':':
+                    inter_colon_tokens = 0
+                elif value in '-+':
+                    # Ignore unary '-' or '+' tokens.
+                    if not self.is_unary_op_with_prev(prev, token):
+                        inter_colon_tokens += 1
+                        if inter_colon_tokens &gt; 1:
+                            final_context = 'complex-slice'
+                            break
+                elif value == '~':
+                    # '~' is always a unary op.
+                    pass
+                else:
+                    # All other ops contribute.
+                    inter_colon_tokens += 1
+                    if inter_colon_tokens &gt; 1:
+                        final_context = 'complex-slice'
+                        break
+            else:
+                inter_colon_tokens += 1
+                if inter_colon_tokens &gt; 1:
+                    final_context = 'complex-slice'
+                    break
+            prev = token
+
+    # Set the context of all outer-level ':' tokens.
+    for i in colons:
+        self.set_context(i, final_context)
+</t>
+<t tx="ekr.20241004110911.7">def finish_dict(self, end: int, state: Optional[ScanState]) -&gt; None:
+    """
+    Set context for all ':' when scanning from '{' to '}'
+
+    Strictly speaking, setting this context is unnecessary because
+    tbo.gen_colon generates the same code regardless of this context.
+
+    In other words, this method can be a do-nothing!
+    """
+
+    # Sanity checks.
+    if not state:
+        return
+    assert state.kind == 'dict', repr(state)
+    token = state.token
+    assert token.value == '{', repr(token)
+    colons = state.value
+    assert isinstance(colons, list), repr(colons)
+    i1 = token.index
+    assert i1 &lt; end, (i1, end)
+
+    # Set the context for all ':' tokens.
+    for i in colons:
+        self.set_context(i, 'dict')
+</t>
+<t tx="ekr.20241004110956.1"># State vars for whitespace.
+self.curly_brackets_level = 0  # Number of unmatched '{' tokens.
+self.paren_level = 0  # Number of unmatched '(' tokens.
+self.square_brackets_stack: list[bool] = []  # A stack of bools, for self.gen_word().
+self.indent_level = 0  # Set only by do_indent and do_dedent.
+
+# Parse state.
+self.decorator_seen = False  # Set by do_name for do_op.
+self.in_arg_list = 0  # &gt; 0 if in an arg list of a def.
+self.in_doc_part = False
+self.state_stack: list[ParseState] = []  # Stack of ParseState objects.
+
+# Leo-related state.
+self.verbatim = False  # True: don't beautify.
+
+# Ivars describing the present input token...
+self.index = 0  # The index within the tokens array of the token being scanned.
+self.lws = ''  # Leading whitespace. Required!
 </t>
 </tnodes>
 </leo_file>
