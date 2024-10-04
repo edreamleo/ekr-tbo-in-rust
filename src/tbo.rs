@@ -17,6 +17,22 @@ use std::fs;
 use std::path;
 
 //@+others
+//@+node:ekr.20241004095931.1: ** class AnnotatedInputTok
+// Only Clone is valid for String.
+#[derive(Clone)]
+struct AnnotatedInputTok {
+    kind: String,
+    value: String,
+}
+
+impl AnnotatedInputTok {
+    fn new(kind: &str, value: &str) -> AnnotatedInputTok {
+        AnnotatedInputTok {
+            kind: kind.to_string(),
+            value: value.to_string(),
+        }
+    }
+}
 //@+node:ekr.20240929074547.1: ** class Stats
 #[derive(Debug)]
 pub struct Stats {
@@ -75,11 +91,11 @@ impl Stats {
         let make_tokens_time = self.fmt_ns(self.make_tokens_time);
         let read_time = self.fmt_ns(self.read_time);
         let write_time = self.fmt_ns(self.write_time);
-        let total_time_ns = self.annotation_time +
-            self.beautify_time +
-            self.make_tokens_time +
-            self.read_time +
-            self.write_time;
+        let total_time_ns = self.annotation_time
+            + self.beautify_time
+            + self.make_tokens_time
+            + self.read_time
+            + self.write_time;
         let total_time = self.fmt_ns(total_time_ns);
         println!("");
         println!("     files: {n_files}, tokens: {n_tokens}, ws tokens: {n_ws_tokens}");
@@ -145,7 +161,7 @@ pub struct Beautifier {
 impl Beautifier {
     //@+others
     //@+node:ekr.20240929074037.114: *3*  LB::new
-    pub fn new() -> Beautifier{
+    pub fn new() -> Beautifier {
         let mut x = Beautifier {
             // Set in beautify_one_file
             args: Vec::new(),
@@ -179,8 +195,18 @@ impl Beautifier {
             self.output_list.push(value.to_string())
         }
     }
+    //@+node:ekr.20241004095735.1: *3* LB::annotate_tokens (** finish)
+    fn annotate_tokens(&mut self, input_list: &Vec<InputTok>) -> Vec::<AnnotatedInputTok> {
+        //! Do the prepass, returning annotated tokens.
+        let mut result = Vec::new();
+        for token in input_list {
+            let annotated_tok = AnnotatedInputTok::new(&token.kind, &token.value);
+            result.push(annotated_tok)
+        }
+        return result;
+    }
     //@+node:ekr.20240929074037.113: *3* LB::beautify
-    fn beautify(&mut self, input_list: &Vec<InputTok>) -> String {
+    fn beautify(&mut self, annotated_list: &Vec<AnnotatedInputTok>) -> String {
         //! Beautify the input_tokens, creating the output String.
         //@+<< LB::beautify: init ivars >>
         //@+node:ekr.20241001213329.1: *4* << LB::beautify: init ivars >>
@@ -208,7 +234,7 @@ impl Beautifier {
         self.index = 0; // The index within the tokens array of the token being scanned.
         self.lws = String::new(); // Leading whitespace. Required!
         //@-<< LB::beautify: init ivars >>
-        for input_token in input_list {
+        for input_token in annotated_list {
             //@+<< LB: beautify: dispatch on input_token.kind >>
             //@+node:ekr.20241002062655.1: *4* << LB: beautify: dispatch on input_token.kind >>
             let kind = input_token.kind.as_str();
@@ -322,13 +348,13 @@ impl Beautifier {
         let t2 = std::time::Instant::now();
         let input_tokens = self.make_input_list(&contents);
         self.stats.make_tokens_time += t2.elapsed().as_nanos();
-        // *** Annotate tokens (the prepass).
+        // Annotate tokens (the prepass).
         let t3 = std::time::Instant::now();
-        // let annotated tokens = self.annotate(&input_tokens);
+        let annotated_tokens = self.annotate_tokens(&input_tokens);
         self.stats.annotation_time += t3.elapsed().as_nanos();
         // Beautify.
         let t4 = std::time::Instant::now();
-        self.beautify(&input_tokens);
+        self.beautify(&annotated_tokens);
         self.stats.beautify_time += t4.elapsed().as_nanos();
     }
     //@+node:ekr.20240929074037.7: *3* LB::do_*
@@ -985,9 +1011,7 @@ impl Beautifier {
     //@-others
 }
 //@+node:ekr.20241003094145.1: **  struct TestTok
-#[derive(Clone)]
-#[derive(Debug)]
-// Weird
+#[derive(Clone, Debug)]
 #[allow(dead_code)]
 pub struct TestTok {
     value: i32,
@@ -1043,12 +1067,13 @@ fn test_struct() {
         i += 1
     }
     println!("");
-    for z in &v {  // or just v.
+    for z in &v {
+        // or just v.
         println!("{z:?}");
     }
-    let tok = &v[0];  // v[0] fails.
+    let tok = &v[0]; // v[0] fails.
     println!("\ntok: {tok:?}");
-   
+
     // A data race happens when these three behaviors occur:
 
     // - Two or more pointers access the same data at the same time.
@@ -1056,15 +1081,15 @@ fn test_struct() {
     // - There’s no mechanism being used to synchronize access to the data.
 
     // So This fails
-        // {
-            // let tok = v[0];
-            // println!("{tok:?}");
-        // }
+    // {
+    // let tok = v[0];
+    // println!("{tok:?}");
+    // }
 }
 
 fn push_struct(v: &mut Vec<TestTok>, val: i32) {
-    let mut tok = TestTok{value: 0};
-    tok.value = val;  // To test mutability.
+    let mut tok = TestTok { value: 0 };
+    tok.value = val; // To test mutability.
     v.push(tok);
 }
 //@+node:ekr.20241003094218.1: *3* fn test_vec & push_vec

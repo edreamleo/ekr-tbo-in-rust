@@ -399,23 +399,37 @@
 <v t="ekr.20241002054443.1"><vh>Errors in LB:beautify</vh></v>
 <v t="ekr.20240928185643.1"><vh>Stats</vh></v>
 </v>
-<v t="ekr.20240927154323.1"><vh>** To do</vh>
-<v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
-</v>
-<v t="ekr.20240928161210.1"></v>
+<v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20241001104914.1"><vh>--- classes</vh>
+<v t="ekr.20241004095931.1"><vh>class AnnotatedInputTok</vh></v>
 <v t="ekr.20240929024648.120"><vh>class InputTok</vh>
 <v t="ekr.20241004091919.1"><vh>InputTok::new</vh></v>
 </v>
+<v t="ekr.20240929074547.1"><vh>class Stats</vh>
+<v t="ekr.20241001100954.1"><vh> Stats::new</vh></v>
+<v t="ekr.20240929080242.1"><vh>Stats::fmt_ns</vh></v>
+<v t="ekr.20240929075236.1"><vh>Stats::report</vh></v>
+</v>
+</v>
+<v t="ekr.20241004073317.1"><vh>--- Recent</vh>
+<v t="ekr.20240929074037.5"><vh>LB::beautify_one_file</vh></v>
+<v t="ekr.20240929074037.112"><vh>LB::make_input_list</vh>
+<v t="ekr.20241002113506.1"><vh>&lt;&lt; Calculate class_name using match token &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20240929074037.2"><vh>LB::add_output_string</vh></v>
+</v>
+<v t="ekr.20241004094235.1"><vh>--- Calling sequence</vh></v>
+<v t="ekr.20241004095931.1"></v>
 <v t="ekr.20240929074037.1"><vh>class LeoBeautifier</vh>
 <v t="ekr.20240929074037.114"><vh> LB::new</vh></v>
-<v t="ekr.20240929074037.2"><vh>LB::add_output_string</vh></v>
+<v t="ekr.20240929074037.2"></v>
+<v t="ekr.20241004095735.1"><vh>LB::annotate_tokens (** finish)</vh></v>
 <v t="ekr.20240929074037.113"><vh>LB::beautify</vh>
 <v t="ekr.20241001213329.1"><vh>&lt;&lt; LB::beautify: init ivars &gt;&gt;</vh></v>
 <v t="ekr.20241002062655.1"><vh>&lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20240929074037.4"><vh>LB::beautify_all_files</vh></v>
-<v t="ekr.20240929074037.5"><vh>LB::beautify_one_file</vh></v>
+<v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.7"><vh>LB::do_*</vh>
 <v t="ekr.20241002071143.1"><vh>tbo.do_ws</vh></v>
 <v t="ekr.20240929074037.8"><vh>LB:Handlers with values</vh>
@@ -526,25 +540,17 @@
 </v>
 <v t="ekr.20240929074037.110"><vh>LB::enabled</vh></v>
 <v t="ekr.20240929074037.111"><vh>LB::get_args</vh></v>
-<v t="ekr.20240929074037.112"><vh>LB::make_input_list</vh>
-<v t="ekr.20241002113506.1"><vh>&lt;&lt; Calculate class_name using match token &gt;&gt;</vh></v>
-</v>
+<v t="ekr.20240929074037.112"></v>
 <v t="ekr.20240929074037.115"><vh>LB::show_args</vh></v>
 <v t="ekr.20240929074037.116"><vh>LB::show_help</vh></v>
 <v t="ekr.20241002163554.1"><vh>LB::string_to_static_str</vh></v>
 </v>
-<v t="ekr.20240929074547.1"><vh>class Stats</vh>
-<v t="ekr.20241001100954.1"><vh> Stats::new</vh></v>
-<v t="ekr.20240929080242.1"><vh>Stats::fmt_ns</vh></v>
-<v t="ekr.20240929075236.1"><vh>Stats::report</vh></v>
-</v>
-</v>
-<v t="ekr.20241004073317.1"><vh>--- Recent</vh>
+<v t="ekr.20240929075236.1"></v>
 <v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.112"></v>
-<v t="ekr.20240929074037.2"></v>
+<v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
+<v t="ekr.20241004095735.1"></v>
 <v t="ekr.20240929074037.113"></v>
-</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20200107040729.1">def show_diffs(self, s1: str, s2: str) -&gt; None:  # pragma: no cover
@@ -2328,8 +2334,12 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
 
-- Use InputTok::new().
+- Create annotate_
 
+- Add prepass
+  - As a separate method??
+  - Create AnnotatedInputTok class.
+  - It should return Vec::&lt;AnnotatedInputTok&gt;.
 </t>
 <t tx="ekr.20240928073118.1">@language python
 g.cls()
@@ -2727,10 +2737,10 @@ impl Beautifier {
     return result;
 }
 </t>
-<t tx="ekr.20240929074037.113">fn beautify(&amp;mut self, input_list: &amp;Vec&lt;InputTok&gt;) -&gt; String {
+<t tx="ekr.20240929074037.113">fn beautify(&amp;mut self, annotated_list: &amp;Vec&lt;AnnotatedInputTok&gt;) -&gt; String {
     //! Beautify the input_tokens, creating the output String.
     &lt;&lt; LB::beautify: init ivars &gt;&gt;
-    for input_token in input_list {
+    for input_token in annotated_list {
         &lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;
     }
     // return ''.join(self.output_list);
@@ -2745,7 +2755,7 @@ impl Beautifier {
     return result;
 }
 </t>
-<t tx="ekr.20240929074037.114">pub fn new() -&gt; Beautifier{
+<t tx="ekr.20240929074037.114">pub fn new() -&gt; Beautifier {
     let mut x = Beautifier {
         // Set in beautify_one_file
         args: Vec::new(),
@@ -3007,10 +3017,14 @@ fn add_input_token(&amp;mut self, kind: &amp;str, value: &amp;str) {
     let t2 = std::time::Instant::now();
     let input_tokens = self.make_input_list(&amp;contents);
     self.stats.make_tokens_time += t2.elapsed().as_nanos();
-    // Beautify.
+    // Annotate tokens (the prepass).
     let t3 = std::time::Instant::now();
-    self.beautify(&amp;input_tokens);
-    self.stats.beautify_time += t3.elapsed().as_nanos();
+    let annotated_tokens = self.annotate_tokens(&amp;input_tokens);
+    self.stats.annotation_time += t3.elapsed().as_nanos();
+    // Beautify.
+    let t4 = std::time::Instant::now();
+    self.beautify(&amp;annotated_tokens);
+    self.stats.beautify_time += t4.elapsed().as_nanos();
 }
 </t>
 <t tx="ekr.20240929074037.50">fn do_EqEqual(&amp;mut self) {
@@ -3229,6 +3243,7 @@ pub struct Stats {
     n_ws_tokens: u64, // Number of pseudo-ws tokens.
 
     // Timing stat, in microseconds...
+    annotation_time: u128,
     beautify_time: u128,
     make_tokens_time: u128,
     read_time: u128,
@@ -3261,16 +3276,22 @@ impl Stats {
     let n_tokens = self.n_tokens;
     let n_ws_tokens = self.n_ws_tokens;
     // Print cumulative timing stats, in ms.
-    let read_time = self.fmt_ns(self.read_time);
-    let make_tokens_time = self.fmt_ns(self.make_tokens_time);
+    let annotation_time = self.fmt_ns(self.annotation_time);
     let beautify_time = self.fmt_ns(self.beautify_time);
+    let make_tokens_time = self.fmt_ns(self.make_tokens_time);
+    let read_time = self.fmt_ns(self.read_time);
     let write_time = self.fmt_ns(self.write_time);
-    let total_time_ns = self.make_tokens_time + self.read_time + self.beautify_time + self.write_time;
+    let total_time_ns = self.annotation_time
+        + self.beautify_time
+        + self.make_tokens_time
+        + self.read_time
+        + self.write_time;
     let total_time = self.fmt_ns(total_time_ns);
     println!("");
     println!("     files: {n_files}, tokens: {n_tokens}, ws tokens: {n_ws_tokens}");
     println!("       read: {read_time:&gt;7} ms");
     println!("make_tokens: {make_tokens_time:&gt;7} ms");
+    println!(" annotation: {annotation_time:&gt;7} ms");
     println!("   beautify: {beautify_time:&gt;7} ms");
     println!("      write: {write_time:&gt;7} ms");
     println!("      total: {total_time:&gt;7} ms");
@@ -3599,6 +3620,7 @@ print('abc')
         n_ws_tokens: 0, // Number of pseudo-ws tokens.
 
         // Timing stats, in nanoseconds...
+        annotation_time: 0,
         beautify_time: 0,
         make_tokens_time: 0,
         read_time: 0,
@@ -4875,5 +4897,32 @@ impl Beautifier {
         }
     }
 }</t>
+<t tx="ekr.20241004094235.1"></t>
+<t tx="ekr.20241004095735.1">fn annotate_tokens(&amp;mut self, input_list: &amp;Vec&lt;InputTok&gt;) -&gt; Vec::&lt;AnnotatedInputTok&gt; {
+    //! Do the prepass, returning annotated tokens.
+    let mut result = Vec::new();
+    for token in input_list {
+        let annotated_tok = AnnotatedInputTok::new(&amp;token.kind, &amp;token.value);
+        result.push(annotated_tok)
+    }
+    return result;
+}
+</t>
+<t tx="ekr.20241004095931.1">// Only Clone is valid for String.
+#[derive(Clone)]
+struct AnnotatedInputTok {
+    kind: String,
+    value: String,
+}
+
+impl AnnotatedInputTok {
+    fn new(kind: &amp;str, value: &amp;str) -&gt; AnnotatedInputTok {
+        AnnotatedInputTok {
+            kind: kind.to_string(),
+            value: value.to_string(),
+        }
+    }
+}
+</t>
 </tnodes>
 </leo_file>
