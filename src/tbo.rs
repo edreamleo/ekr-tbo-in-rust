@@ -21,13 +21,15 @@ use std::path;
 // Only Clone is valid for String.
 #[derive(Clone)]
 struct AnnotatedInputTok {
+    context: Vec::<String>,
     kind: String,
     value: String,
 }
 
 impl AnnotatedInputTok {
-    fn new(kind: &str, value: &str) -> AnnotatedInputTok {
+    fn new(context: Vec<String>, kind: &str, value: &str) -> AnnotatedInputTok {
         AnnotatedInputTok {
+            context: context,
             kind: kind.to_string(),
             value: value.to_string(),
         }
@@ -197,10 +199,11 @@ impl Beautifier {
     }
     //@+node:ekr.20241004095735.1: *3* LB::annotate_tokens (** finish)
     fn annotate_tokens(&mut self, input_list: &Vec<InputTok>) -> Vec::<AnnotatedInputTok> {
-        //! Do the prepass, returning annotated tokens.
+        //! Do the prepass, returning tokens annotated with context.
         let mut result = Vec::new();
         for token in input_list {
-            let annotated_tok = AnnotatedInputTok::new(&token.kind, &token.value);
+            let context = Vec::new();
+            let annotated_tok = AnnotatedInputTok::new(context, &token.kind, &token.value);
             result.push(annotated_tok)
         }
         return result;

@@ -4899,10 +4899,11 @@ impl Beautifier {
 }</t>
 <t tx="ekr.20241004094235.1"></t>
 <t tx="ekr.20241004095735.1">fn annotate_tokens(&amp;mut self, input_list: &amp;Vec&lt;InputTok&gt;) -&gt; Vec::&lt;AnnotatedInputTok&gt; {
-    //! Do the prepass, returning annotated tokens.
+    //! Do the prepass, returning tokens annotated with context.
     let mut result = Vec::new();
     for token in input_list {
-        let annotated_tok = AnnotatedInputTok::new(&amp;token.kind, &amp;token.value);
+        let context = Vec::new();
+        let annotated_tok = AnnotatedInputTok::new(context, &amp;token.kind, &amp;token.value);
         result.push(annotated_tok)
     }
     return result;
@@ -4911,13 +4912,15 @@ impl Beautifier {
 <t tx="ekr.20241004095931.1">// Only Clone is valid for String.
 #[derive(Clone)]
 struct AnnotatedInputTok {
+    context: Vec::&lt;String&gt;,
     kind: String,
     value: String,
 }
 
 impl AnnotatedInputTok {
-    fn new(kind: &amp;str, value: &amp;str) -&gt; AnnotatedInputTok {
+    fn new(context: Vec&lt;String&gt;, kind: &amp;str, value: &amp;str) -&gt; AnnotatedInputTok {
         AnnotatedInputTok {
+            context: context,
             kind: kind.to_string(),
             value: value.to_string(),
         }
