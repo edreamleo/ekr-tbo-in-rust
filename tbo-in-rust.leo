@@ -534,6 +534,11 @@
 <v t="ekr.20240929075236.1"><vh>Stats::report</vh></v>
 </v>
 </v>
+<v t="ekr.20240929074037.1"></v>
+<v t="ekr.20241004073317.1"><vh>--- Remove clone. Return input list in place?</vh></v>
+<v t="ekr.20240929074037.5"></v>
+<v t="ekr.20240929074037.112"></v>
+<v t="ekr.20240929074037.113"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20200107040729.1">def show_diffs(self, s1: str, s2: str) -&gt; None:  # pragma: no cover
@@ -2687,11 +2692,12 @@ impl Beautifier {
     }
 }
 </t>
-<t tx="ekr.20240929074037.112">fn make_input_list(&amp;mut self, contents: &amp;str) {
+<t tx="ekr.20240929074037.112">fn make_input_list(&amp;mut self, contents: &amp;str) -&gt; Vec&lt;InputTok&gt; {
     // Add InputToks to the input_list for every token given by the RustPython lex.
     let mut n_tokens: u64 = 0;
     let mut n_ws_tokens: u64 = 0;
     let mut prev_start: usize = 0;
+    let result: Vec&lt;InputTok&gt; = Vec::new();
     for token_tuple in lex(&amp;contents, Mode::Module)
         .map(|tok| tok.expect("Failed to lex"))
         .collect::&lt;Vec&lt;_&gt;&gt;()
@@ -2719,16 +2725,17 @@ impl Beautifier {
     // Update counts.
     self.stats.n_tokens += n_tokens;
     self.stats.n_ws_tokens += n_ws_tokens;
+    return result;
 }
 </t>
-<t tx="ekr.20240929074037.113">fn beautify(&amp;mut self) -&gt; String {
+<t tx="ekr.20240929074037.113">fn beautify(&amp;mut self, input_list: &amp;Vec&lt;InputTok&gt;) -&gt; String {
     //! Beautify the input_tokens, creating the output_list.
+
     &lt;&lt; LB::beautify: init ivars &gt;&gt;
-    if true {
-        for input_token in self.input_list.clone() {
-            &lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;
-        }
+    for input_token in input_list {
+        &lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;
     }
+
     // return ''.join(self.output_list);
     let mut result = String::new();
     for s in &amp;self.output_list {
@@ -2998,11 +3005,11 @@ fn add_input_token(&amp;mut self, kind: &amp;str, value: &amp;str) {
     self.stats.read_time += t1.elapsed().as_nanos();
     // Make the list of input tokens
     let t2 = std::time::Instant::now();
-    self.make_input_list(&amp;contents);
+    let input_tokens = self.make_input_list(&amp;contents);
     self.stats.make_tokens_time += t2.elapsed().as_nanos();
     // Beautify.
     let t3 = std::time::Instant::now();
-    self.beautify();
+    self.beautify(&amp;input_tokens);
     self.stats.beautify_time += t3.elapsed().as_nanos();
 }
 </t>
@@ -3953,7 +3960,7 @@ let class_name = match token {
     // https://stackoverflow.com/questions/23975391/how-to-convert-a-string-into-a-static-str
     let contents: &amp;'static str = self.string_to_static_str(temp_contents);
     let read_time = t1.elapsed().as_nanos();</t>
-<t tx="ekr.20241003062509.1"></t>
+<t tx="ekr.20241003062509.1">@nosearch</t>
 <t tx="ekr.20241003063446.1"></t>
 <t tx="ekr.20241003063446.10"></t>
 <t tx="ekr.20241003063446.100">fn do_Star(output_list: Vec&lt;String&gt;) {
@@ -4816,7 +4823,7 @@ impl Beautifier {
 }
 </t>
 <t tx="ekr.20241003064504.1"></t>
-<t tx="ekr.20241003084853.1"></t>
+<t tx="ekr.20241003084853.1">@nosearch</t>
 <t tx="ekr.20241003084902.1">pub fn entry() {
     // Main line of beautifier.
     //** let mut x = Beautifier::new();
@@ -4848,5 +4855,6 @@ impl Beautifier {
         // }
 }
 </t>
+<t tx="ekr.20241004073317.1"></t>
 </tnodes>
 </leo_file>
