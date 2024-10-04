@@ -254,6 +254,138 @@
 <v t="ekr.20241002164044.1"><vh>make_input_list: Calculate class name w/o match</vh></v>
 <v t="ekr.20240929074941.1"><vh>Stats::update_times</vh></v>
 </v>
+<v t="ekr.20241003084853.1"><vh>--- new code: doesn't work</vh>
+<v t="ekr.20241003064504.1"><vh>functions to be added</vh>
+<v t="ekr.20241003063446.114"><vh>fn: enabled</vh></v>
+<v t="ekr.20241003063446.115"><vh>fn: get_args</vh></v>
+<v t="ekr.20241003063446.118"><vh>fn: show_args</vh></v>
+<v t="ekr.20241003063446.119"><vh>fn: show_help</vh></v>
+<v t="ekr.20241003063446.120"><vh>fn: show_output_list</vh></v>
+</v>
+<v t="ekr.20241003084902.1"><vh>COPY: pub fn entry </vh></v>
+<v t="ekr.20241003064425.1"><vh>Beautifier struct</vh></v>
+<v t="ekr.20241003063446.6"><vh>&lt;&lt; fn: beautify: init vars &gt;&gt; (to do)</vh></v>
+<v t="ekr.20241003063446.1"><vh>LeoBeautifier functions</vh>
+<v t="ekr.20241003063446.3"><vh>fn: add_input_token</vh></v>
+<v t="ekr.20241003063446.4"><vh>fn: add_output_string</vh></v>
+<v t="ekr.20241003063446.5"><vh>fn: beautify</vh>
+<v t="ekr.20241003063446.7"><vh>&lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20241003063446.8"><vh>fn: beautify_all_files</vh></v>
+<v t="ekr.20241003063446.9"><vh>fn: beautify_one_file</vh></v>
+<v t="ekr.20241003063446.116"><vh>fn: make_input_list</vh>
+<v t="ekr.20241003063446.117"><vh>&lt;&lt; Calculate class_name using match token &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20241003063446.10"><vh>fn: do_*</vh>
+<v t="ekr.20241003063446.11"><vh>tbo.do_ws</vh></v>
+<v t="ekr.20241003063446.12"><vh>LB:Handlers with values</vh>
+<v t="ekr.20241003063446.13"><vh>fn: do_Comment</vh></v>
+<v t="ekr.20241003063446.14"><vh>fn: do_Complex</vh></v>
+<v t="ekr.20241003063446.15"><vh>fn: do_Float</vh></v>
+<v t="ekr.20241003063446.16"><vh>fn: do_Int</vh></v>
+<v t="ekr.20241003063446.17"><vh>fn: do_Name</vh></v>
+<v t="ekr.20241003063446.18"><vh>fn: do_String</vh></v>
+</v>
+<v t="ekr.20241003063446.19"><vh>LB:Handlers using lws</vh>
+<v t="ekr.20241003063446.20"><vh>fn: do_Dedent</vh></v>
+<v t="ekr.20241003063446.21"><vh>fn: do_Indent</vh></v>
+<v t="ekr.20241003063446.22"><vh>fn: do_Newline</vh></v>
+<v t="ekr.20241003063446.23"><vh>fn: do_NonLogicalNewline</vh></v>
+</v>
+<v t="ekr.20241003063446.24"><vh>LB:Handlers w/o values</vh>
+<v t="ekr.20241003063446.25"><vh>fn: do_Amper</vh></v>
+<v t="ekr.20241003063446.26"><vh>fn: do_AmperEqual</vh></v>
+<v t="ekr.20241003063446.27"><vh>fn: do_And</vh></v>
+<v t="ekr.20241003063446.28"><vh>fn: do_As</vh></v>
+<v t="ekr.20241003063446.29"><vh>fn: do_Assert</vh></v>
+<v t="ekr.20241003063446.30"><vh>fn: do_Async</vh></v>
+<v t="ekr.20241003063446.31"><vh>fn: do_At</vh></v>
+<v t="ekr.20241003063446.32"><vh>fn: do_AtEqual</vh></v>
+<v t="ekr.20241003063446.33"><vh>fn: do_Await</vh></v>
+<v t="ekr.20241003063446.34"><vh>fn: do_Break</vh></v>
+<v t="ekr.20241003063446.35"><vh>fn: do_Case</vh></v>
+<v t="ekr.20241003063446.36"><vh>fn: do_CircumFlex</vh></v>
+<v t="ekr.20241003063446.37"><vh>fn: do_CircumflexEqual</vh></v>
+<v t="ekr.20241003063446.38"><vh>fn: do_Class</vh></v>
+<v t="ekr.20241003063446.39"><vh>fn: do_Colon</vh></v>
+<v t="ekr.20241003063446.40"><vh>fn: do_ColonEqual</vh></v>
+<v t="ekr.20241003063446.41"><vh>fn: do_Comma</vh></v>
+<v t="ekr.20241003063446.42"><vh>fn: do_Continue</vh></v>
+<v t="ekr.20241003063446.43"><vh>fn: do_Def</vh></v>
+<v t="ekr.20241003063446.44"><vh>fn: do_Del</vh></v>
+<v t="ekr.20241003063446.45"><vh>fn: do_Dot</vh></v>
+<v t="ekr.20241003063446.46"><vh>fn: do_DoubleSlash</vh></v>
+<v t="ekr.20241003063446.47"><vh>fn: do_DoubleSlashEqual</vh></v>
+<v t="ekr.20241003063446.48"><vh>fn: do_DoubleStar</vh></v>
+<v t="ekr.20241003063446.49"><vh>fn: do_DoubleStarEqual</vh></v>
+<v t="ekr.20241003063446.50"><vh>fn: do_Elif</vh></v>
+<v t="ekr.20241003063446.51"><vh>fn: do_Ellipsis</vh></v>
+<v t="ekr.20241003063446.52"><vh>fn: do_Else</vh></v>
+<v t="ekr.20241003063446.53"><vh>fn: do_EndOfFile</vh></v>
+<v t="ekr.20241003063446.54"><vh>fn: do_EqEqual</vh></v>
+<v t="ekr.20241003063446.55"><vh>fn: do_Equal</vh></v>
+<v t="ekr.20241003063446.56"><vh>fn: do_Except</vh></v>
+<v t="ekr.20241003063446.57"><vh>fn: do_False</vh></v>
+<v t="ekr.20241003063446.58"><vh>fn: do_Finally</vh></v>
+<v t="ekr.20241003063446.59"><vh>fn: do_For</vh></v>
+<v t="ekr.20241003063446.60"><vh>fn: do_From</vh></v>
+<v t="ekr.20241003063446.61"><vh>fn: do_Global</vh></v>
+<v t="ekr.20241003063446.62"><vh>fn: do_Greater</vh></v>
+<v t="ekr.20241003063446.63"><vh>fn: do_GreaterEqual</vh></v>
+<v t="ekr.20241003063446.64"><vh>fn: do_If</vh></v>
+<v t="ekr.20241003063446.65"><vh>fn: do_Import</vh></v>
+<v t="ekr.20241003063446.66"><vh>fn: do_In</vh></v>
+<v t="ekr.20241003063446.67"><vh>fn: do_Is</vh></v>
+<v t="ekr.20241003063446.68"><vh>fn: do_Lambda</vh></v>
+<v t="ekr.20241003063446.69"><vh>fn: do_Lbrace</vh></v>
+<v t="ekr.20241003063446.70"><vh>fn: do_LeftShift</vh></v>
+<v t="ekr.20241003063446.71"><vh>fn: do_LeftShiftEqual</vh></v>
+<v t="ekr.20241003063446.72"><vh>fn: do_Less</vh></v>
+<v t="ekr.20241003063446.73"><vh>fn: do_LessEqual</vh></v>
+<v t="ekr.20241003063446.74"><vh>fn: do_Lpar</vh></v>
+<v t="ekr.20241003063446.75"><vh>fn: do_Lsqb</vh></v>
+<v t="ekr.20241003063446.76"><vh>fn: do_Match</vh></v>
+<v t="ekr.20241003063446.77"><vh>fn: do_Minus</vh></v>
+<v t="ekr.20241003063446.78"><vh>fn: do_MinusEqual</vh></v>
+<v t="ekr.20241003063446.79"><vh>fn: do_None</vh></v>
+<v t="ekr.20241003063446.80"><vh>fn: do_Nonlocal</vh></v>
+<v t="ekr.20241003063446.81"><vh>fn: do_Not</vh></v>
+<v t="ekr.20241003063446.82"><vh>fn: do_NotEqual</vh></v>
+<v t="ekr.20241003063446.83"><vh>fn: do_Or</vh></v>
+<v t="ekr.20241003063446.84"><vh>fn: do_Pass</vh></v>
+<v t="ekr.20241003063446.85"><vh>fn: do_Percent</vh></v>
+<v t="ekr.20241003063446.86"><vh>fn: do_PercentEqual</vh></v>
+<v t="ekr.20241003063446.87"><vh>fn: do_Plus</vh></v>
+<v t="ekr.20241003063446.88"><vh>fn: do_PlusEqual</vh></v>
+<v t="ekr.20241003063446.89"><vh>fn: do_Raise</vh></v>
+<v t="ekr.20241003063446.90"><vh>fn: do_Rarrow</vh></v>
+<v t="ekr.20241003063446.91"><vh>fn: do_Rbrace</vh></v>
+<v t="ekr.20241003063446.92"><vh>fn: do_Return</vh></v>
+<v t="ekr.20241003063446.93"><vh>fn: do_RightShift</vh></v>
+<v t="ekr.20241003063446.94"><vh>fn: do_RightShiftEqual</vh></v>
+<v t="ekr.20241003063446.95"><vh>fn: do_Rpar</vh></v>
+<v t="ekr.20241003063446.96"><vh>fn: do_Rsqb</vh></v>
+<v t="ekr.20241003063446.97"><vh>fn: do_Semi</vh></v>
+<v t="ekr.20241003063446.98"><vh>fn: do_Slash</vh></v>
+<v t="ekr.20241003063446.99"><vh>fn: do_SlashEqual</vh></v>
+<v t="ekr.20241003063446.100"><vh>fn: do_Star</vh></v>
+<v t="ekr.20241003063446.101"><vh>fn: do_StarEqual</vh></v>
+<v t="ekr.20241003063446.102"><vh>fn: do_StartExpression</vh></v>
+<v t="ekr.20241003063446.103"><vh>fn: do_StartInteractive</vh></v>
+<v t="ekr.20241003063446.104"><vh>fn: do_StarModule</vh></v>
+<v t="ekr.20241003063446.105"><vh>fn: do_Tilde</vh></v>
+<v t="ekr.20241003063446.106"><vh>fn: do_True</vh></v>
+<v t="ekr.20241003063446.107"><vh>fn: do_Try</vh></v>
+<v t="ekr.20241003063446.108"><vh>fn: do_Type</vh></v>
+<v t="ekr.20241003063446.109"><vh>fn: do_Vbar</vh></v>
+<v t="ekr.20241003063446.110"><vh>fn: do_VbarEqual</vh></v>
+<v t="ekr.20241003063446.111"><vh>fn: do_While</vh></v>
+<v t="ekr.20241003063446.112"><vh>fn: do_With</vh></v>
+<v t="ekr.20241003063446.113"><vh>fn: do_Yield</vh></v>
+</v>
+</v>
+</v>
+</v>
 </v>
 <v t="ekr.20240927154016.1"><vh>Notes</vh>
 <v t="ekr.20240929084852.1"><vh>Ownership and mutation</vh></v>
@@ -265,6 +397,7 @@
 <v t="ekr.20240927154323.1"><vh>** To do</vh>
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 </v>
+<v t="ekr.20240928161210.1"></v>
 <v t="ekr.20241001104914.1"><vh>--- classes</vh>
 <v t="ekr.20240929024648.120"><vh>class InputTok</vh></v>
 <v t="ekr.20240929074037.1"><vh>class LeoBeautifier</vh>
@@ -401,139 +534,6 @@
 <v t="ekr.20240929075236.1"><vh>Stats::report</vh></v>
 </v>
 </v>
-<v t="ekr.20241003084853.1"><vh>--- new code: doesn't work</vh>
-<v t="ekr.20241003064504.1"><vh>functions to be added</vh>
-<v t="ekr.20241003063446.114"><vh>fn: enabled</vh></v>
-<v t="ekr.20241003063446.115"><vh>fn: get_args</vh></v>
-<v t="ekr.20241003063446.118"><vh>fn: show_args</vh></v>
-<v t="ekr.20241003063446.119"><vh>fn: show_help</vh></v>
-<v t="ekr.20241003063446.120"><vh>fn: show_output_list</vh></v>
-</v>
-<v t="ekr.20241003084902.1"><vh>COPY: pub fn entry </vh></v>
-<v t="ekr.20241003064425.1"><vh>Beautifier struct</vh></v>
-<v t="ekr.20241003063446.6"><vh>&lt;&lt; fn: beautify: init vars &gt;&gt; (to do)</vh></v>
-<v t="ekr.20241003063446.1"><vh>LeoBeautifier functions</vh>
-<v t="ekr.20241003063446.3"><vh>fn: add_input_token</vh></v>
-<v t="ekr.20241003063446.4"><vh>fn: add_output_string</vh></v>
-<v t="ekr.20241003063446.5"><vh>fn: beautify</vh>
-<v t="ekr.20241003063446.7"><vh>&lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20241003063446.8"><vh>fn: beautify_all_files</vh></v>
-<v t="ekr.20241003063446.9"><vh>fn: beautify_one_file</vh></v>
-<v t="ekr.20241003063446.116"><vh>fn: make_input_list</vh>
-<v t="ekr.20241003063446.117"><vh>&lt;&lt; Calculate class_name using match token &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20241003063446.10"><vh>fn: do_*</vh>
-<v t="ekr.20241003063446.11"><vh>tbo.do_ws</vh></v>
-<v t="ekr.20241003063446.12"><vh>LB:Handlers with values</vh>
-<v t="ekr.20241003063446.13"><vh>fn: do_Comment</vh></v>
-<v t="ekr.20241003063446.14"><vh>fn: do_Complex</vh></v>
-<v t="ekr.20241003063446.15"><vh>fn: do_Float</vh></v>
-<v t="ekr.20241003063446.16"><vh>fn: do_Int</vh></v>
-<v t="ekr.20241003063446.17"><vh>fn: do_Name</vh></v>
-<v t="ekr.20241003063446.18"><vh>fn: do_String</vh></v>
-</v>
-<v t="ekr.20241003063446.19"><vh>LB:Handlers using lws</vh>
-<v t="ekr.20241003063446.20"><vh>fn: do_Dedent</vh></v>
-<v t="ekr.20241003063446.21"><vh>fn: do_Indent</vh></v>
-<v t="ekr.20241003063446.22"><vh>fn: do_Newline</vh></v>
-<v t="ekr.20241003063446.23"><vh>fn: do_NonLogicalNewline</vh></v>
-</v>
-<v t="ekr.20241003063446.24"><vh>LB:Handlers w/o values</vh>
-<v t="ekr.20241003063446.25"><vh>fn: do_Amper</vh></v>
-<v t="ekr.20241003063446.26"><vh>fn: do_AmperEqual</vh></v>
-<v t="ekr.20241003063446.27"><vh>fn: do_And</vh></v>
-<v t="ekr.20241003063446.28"><vh>fn: do_As</vh></v>
-<v t="ekr.20241003063446.29"><vh>fn: do_Assert</vh></v>
-<v t="ekr.20241003063446.30"><vh>fn: do_Async</vh></v>
-<v t="ekr.20241003063446.31"><vh>fn: do_At</vh></v>
-<v t="ekr.20241003063446.32"><vh>fn: do_AtEqual</vh></v>
-<v t="ekr.20241003063446.33"><vh>fn: do_Await</vh></v>
-<v t="ekr.20241003063446.34"><vh>fn: do_Break</vh></v>
-<v t="ekr.20241003063446.35"><vh>fn: do_Case</vh></v>
-<v t="ekr.20241003063446.36"><vh>fn: do_CircumFlex</vh></v>
-<v t="ekr.20241003063446.37"><vh>fn: do_CircumflexEqual</vh></v>
-<v t="ekr.20241003063446.38"><vh>fn: do_Class</vh></v>
-<v t="ekr.20241003063446.39"><vh>fn: do_Colon</vh></v>
-<v t="ekr.20241003063446.40"><vh>fn: do_ColonEqual</vh></v>
-<v t="ekr.20241003063446.41"><vh>fn: do_Comma</vh></v>
-<v t="ekr.20241003063446.42"><vh>fn: do_Continue</vh></v>
-<v t="ekr.20241003063446.43"><vh>fn: do_Def</vh></v>
-<v t="ekr.20241003063446.44"><vh>fn: do_Del</vh></v>
-<v t="ekr.20241003063446.45"><vh>fn: do_Dot</vh></v>
-<v t="ekr.20241003063446.46"><vh>fn: do_DoubleSlash</vh></v>
-<v t="ekr.20241003063446.47"><vh>fn: do_DoubleSlashEqual</vh></v>
-<v t="ekr.20241003063446.48"><vh>fn: do_DoubleStar</vh></v>
-<v t="ekr.20241003063446.49"><vh>fn: do_DoubleStarEqual</vh></v>
-<v t="ekr.20241003063446.50"><vh>fn: do_Elif</vh></v>
-<v t="ekr.20241003063446.51"><vh>fn: do_Ellipsis</vh></v>
-<v t="ekr.20241003063446.52"><vh>fn: do_Else</vh></v>
-<v t="ekr.20241003063446.53"><vh>fn: do_EndOfFile</vh></v>
-<v t="ekr.20241003063446.54"><vh>fn: do_EqEqual</vh></v>
-<v t="ekr.20241003063446.55"><vh>fn: do_Equal</vh></v>
-<v t="ekr.20241003063446.56"><vh>fn: do_Except</vh></v>
-<v t="ekr.20241003063446.57"><vh>fn: do_False</vh></v>
-<v t="ekr.20241003063446.58"><vh>fn: do_Finally</vh></v>
-<v t="ekr.20241003063446.59"><vh>fn: do_For</vh></v>
-<v t="ekr.20241003063446.60"><vh>fn: do_From</vh></v>
-<v t="ekr.20241003063446.61"><vh>fn: do_Global</vh></v>
-<v t="ekr.20241003063446.62"><vh>fn: do_Greater</vh></v>
-<v t="ekr.20241003063446.63"><vh>fn: do_GreaterEqual</vh></v>
-<v t="ekr.20241003063446.64"><vh>fn: do_If</vh></v>
-<v t="ekr.20241003063446.65"><vh>fn: do_Import</vh></v>
-<v t="ekr.20241003063446.66"><vh>fn: do_In</vh></v>
-<v t="ekr.20241003063446.67"><vh>fn: do_Is</vh></v>
-<v t="ekr.20241003063446.68"><vh>fn: do_Lambda</vh></v>
-<v t="ekr.20241003063446.69"><vh>fn: do_Lbrace</vh></v>
-<v t="ekr.20241003063446.70"><vh>fn: do_LeftShift</vh></v>
-<v t="ekr.20241003063446.71"><vh>fn: do_LeftShiftEqual</vh></v>
-<v t="ekr.20241003063446.72"><vh>fn: do_Less</vh></v>
-<v t="ekr.20241003063446.73"><vh>fn: do_LessEqual</vh></v>
-<v t="ekr.20241003063446.74"><vh>fn: do_Lpar</vh></v>
-<v t="ekr.20241003063446.75"><vh>fn: do_Lsqb</vh></v>
-<v t="ekr.20241003063446.76"><vh>fn: do_Match</vh></v>
-<v t="ekr.20241003063446.77"><vh>fn: do_Minus</vh></v>
-<v t="ekr.20241003063446.78"><vh>fn: do_MinusEqual</vh></v>
-<v t="ekr.20241003063446.79"><vh>fn: do_None</vh></v>
-<v t="ekr.20241003063446.80"><vh>fn: do_Nonlocal</vh></v>
-<v t="ekr.20241003063446.81"><vh>fn: do_Not</vh></v>
-<v t="ekr.20241003063446.82"><vh>fn: do_NotEqual</vh></v>
-<v t="ekr.20241003063446.83"><vh>fn: do_Or</vh></v>
-<v t="ekr.20241003063446.84"><vh>fn: do_Pass</vh></v>
-<v t="ekr.20241003063446.85"><vh>fn: do_Percent</vh></v>
-<v t="ekr.20241003063446.86"><vh>fn: do_PercentEqual</vh></v>
-<v t="ekr.20241003063446.87"><vh>fn: do_Plus</vh></v>
-<v t="ekr.20241003063446.88"><vh>fn: do_PlusEqual</vh></v>
-<v t="ekr.20241003063446.89"><vh>fn: do_Raise</vh></v>
-<v t="ekr.20241003063446.90"><vh>fn: do_Rarrow</vh></v>
-<v t="ekr.20241003063446.91"><vh>fn: do_Rbrace</vh></v>
-<v t="ekr.20241003063446.92"><vh>fn: do_Return</vh></v>
-<v t="ekr.20241003063446.93"><vh>fn: do_RightShift</vh></v>
-<v t="ekr.20241003063446.94"><vh>fn: do_RightShiftEqual</vh></v>
-<v t="ekr.20241003063446.95"><vh>fn: do_Rpar</vh></v>
-<v t="ekr.20241003063446.96"><vh>fn: do_Rsqb</vh></v>
-<v t="ekr.20241003063446.97"><vh>fn: do_Semi</vh></v>
-<v t="ekr.20241003063446.98"><vh>fn: do_Slash</vh></v>
-<v t="ekr.20241003063446.99"><vh>fn: do_SlashEqual</vh></v>
-<v t="ekr.20241003063446.100"><vh>fn: do_Star</vh></v>
-<v t="ekr.20241003063446.101"><vh>fn: do_StarEqual</vh></v>
-<v t="ekr.20241003063446.102"><vh>fn: do_StartExpression</vh></v>
-<v t="ekr.20241003063446.103"><vh>fn: do_StartInteractive</vh></v>
-<v t="ekr.20241003063446.104"><vh>fn: do_StarModule</vh></v>
-<v t="ekr.20241003063446.105"><vh>fn: do_Tilde</vh></v>
-<v t="ekr.20241003063446.106"><vh>fn: do_True</vh></v>
-<v t="ekr.20241003063446.107"><vh>fn: do_Try</vh></v>
-<v t="ekr.20241003063446.108"><vh>fn: do_Type</vh></v>
-<v t="ekr.20241003063446.109"><vh>fn: do_Vbar</vh></v>
-<v t="ekr.20241003063446.110"><vh>fn: do_VbarEqual</vh></v>
-<v t="ekr.20241003063446.111"><vh>fn: do_While</vh></v>
-<v t="ekr.20241003063446.112"><vh>fn: do_With</vh></v>
-<v t="ekr.20241003063446.113"><vh>fn: do_Yield</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20240928161210.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20200107040729.1">def show_diffs(self, s1: str, s2: str) -&gt; None:  # pragma: no cover
