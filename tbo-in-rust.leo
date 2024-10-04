@@ -534,8 +534,6 @@
 </v>
 </v>
 <v t="ekr.20240928161210.1"></v>
-<v t="ekr.20241003094218.2"><vh>fn test_struct</vh></v>
-<v t="ekr.20241003094218.1"><vh>fn test_vec &amp; push_vec</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20200107040729.1">def show_diffs(self, s1: str, s2: str) -&gt; None:  # pragma: no cover
@@ -2739,7 +2737,7 @@ impl Beautifier {
     return result;
 }
 </t>
-<t tx="ekr.20240929074037.114">pub fn new() -&gt; Beautifier {
+<t tx="ekr.20240929074037.114">pub fn new() -&gt; Beautifier{
     let mut x = Beautifier {
         // Set in beautify_one_file
         args: Vec::new(),
@@ -4848,66 +4846,6 @@ impl Beautifier {
             // x.show_args();
             // x.beautify_all_files();
         // }
-}
-</t>
-<t tx="ekr.20241003094218.1">fn test_vec() {
-    //! Test code for Vec.
-    let mut v: Vec&lt;i32&gt; = Vec::new();
-    push_vec(&amp;mut v, 1);
-    push_vec(&amp;mut v, 2);
-    for i in [3, 4, 6] {
-        push_vec(&amp;mut v, i);
-    }
-    let mut i = 7;
-    while i &lt; 10 {
-        push_vec(&amp;mut v, i);
-        i += 1
-    }
-    println!("");
-    println!("v: {v:?}");
-}
-
-fn push_vec(v: &amp;mut Vec&lt;i32&gt;, val: i32) {
-    v.push(val);
-}
-</t>
-<t tx="ekr.20241003094218.2">fn test_struct() {
-    //! Test code for Vec.
-    let mut v: Vec&lt;TestTok&gt; = Vec::new();
-    push_struct(&amp;mut v, 1);
-    push_struct(&amp;mut v, 2);
-    for i in [3, 4, 6] {
-        push_struct(&amp;mut v, i);
-    }
-    let mut i = 7;
-    while i &lt; 10 {
-        push_struct(&amp;mut v, i);
-        i += 1
-    }
-    println!("");
-    for z in &amp;v {  // or just v.
-        println!("{z:?}");
-    }
-    let tok = &amp;v[0];  // v[0] fails.
-    println!("\ntok: {tok:?}");
-   
-    // A data race happens when these three behaviors occur:
-
-    // - Two or more pointers access the same data at the same time.
-    // - At least one of the pointers is being used to write to the data.
-    // - There’s no mechanism being used to synchronize access to the data.
-
-    // So This fails
-        // {
-            // let tok = v[0];
-            // println!("{tok:?}");
-        // }
-}
-
-fn push_struct(v: &amp;mut Vec&lt;TestTok&gt;, val: i32) {
-    let mut tok = TestTok{value: 0};
-    tok.value = val;  // To test mutability.
-    v.push(tok);
 }
 </t>
 </tnodes>
