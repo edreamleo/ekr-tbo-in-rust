@@ -324,7 +324,7 @@ impl Beautifier {
         let t1 = std::time::Instant::now();
         let contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
         self.stats.read_time += t1.elapsed().as_nanos();
-        // Make the list of input tokens
+        // Create (an immutable!) list of input tokens.
         let t2 = std::time::Instant::now();
         let input_tokens = self.make_input_list(&contents);
         self.stats.make_tokens_time += t2.elapsed().as_nanos();
