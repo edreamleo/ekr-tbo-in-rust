@@ -92,24 +92,18 @@ struct InputTok {
     value: String,
 }
 
-impl fmt::Debug for InputTok {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let kind_s = format!("{:?}", self.kind);
-        let mut value = self.value.to_string();
-        if true {
-            return write!(f, "{value} ");
-        } else {
-            // Debug format.
-            value.truncate(60);
-            // repr format is not useful.
-            // let value_s = format!("{:?}", value);
-            let value_s = format!("{}", value);
-            return write!(f, "InputTok: {kind_s:>10}: {value_s}");
+impl InputTok {
+    fn new(kind: &str, value: &str) -> InputTok {
+        InputTok {
+            kind: kind.to_string(),
+            value: value.to_string(),
         }
     }
 }
+//@+node:ekr.20241004091919.1: *3* InputTok::new
 //@+node:ekr.20240929074037.1: ** class LeoBeautifier
 #[derive(Debug)]
+
 pub struct Beautifier {
     // Set in LB:beautify_one_file...
     args: Vec<String>,
@@ -288,7 +282,7 @@ impl Beautifier {
         for output_token in &self.output_list {
             result.push_str(output_token);
         }
-        if true {
+        if false {
             let n = result.len();
             println!("result: {n} characters");
         }
@@ -313,7 +307,6 @@ impl Beautifier {
             println!("{short_file_name}");
         }
         // Read the file into contents (a String).
-        //*** self.output_list = Vec::new();
         let t1 = std::time::Instant::now();
         let contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
         self.stats.read_time += t1.elapsed().as_nanos();
@@ -803,7 +796,6 @@ impl Beautifier {
             .collect::<Vec<_>>()
         {
             use Tok::*;
-            n_tokens += 1;
             let (token, range) = token_tuple;
             let tok_value = &contents[range];
 
@@ -814,10 +806,7 @@ impl Beautifier {
             let end_i = usize::from(range.end());
             if start_i > prev_start {
                 let ws = &contents[prev_start..start_i];
-                result.push(InputTok {
-                    kind: "ws".to_string(),
-                    value: ws.to_string(),
-                });
+                result.push(InputTok::new("ws", ws));
                 n_ws_tokens += 1
             }
             prev_start = end_i;
@@ -937,10 +926,8 @@ impl Beautifier {
                 Yield => "Yield",
             };
             //@-<< Calculate class_name using match token >>
-            result.push(InputTok {
-                kind: class_name.to_string(),
-                value: tok_value.to_string(),
-            });
+            n_tokens += 1;
+            result.push(InputTok::new(class_name, tok_value));
         }
         // Update counts.
         self.stats.n_tokens += n_tokens;
