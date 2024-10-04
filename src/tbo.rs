@@ -170,26 +170,7 @@ pub struct Beautifier {
     args: Vec<String>,
     files_list: Vec<String>,
     stats: Stats,
-    // Set in LB:beautify...
     output_list: Vec<String>,
-    // Debugging
-    line_number: i32, // Use -1 instead of None?
-    // State vars for whitespace.
-    curly_brackets_level: i32,
-    indent_level: i32,
-    paren_level: i32,
-    square_brackets_stack: Vec<bool>,
-    // Parse state.
-    decorator_seen: bool, // Set by do_name for do_op.
-    in_arg_list: i32,     // > 0 if in an arg list of a def.
-    in_doc_part: bool,
-    // To do
-    // state_stack = Vec<ParseState>,  // list[ParseState] = []  # Stack of ParseState objects.
-    // Leo-related state.
-    verbatim: bool,
-    // Ivars describing the present input token.
-    index: u32,
-    lws: String,
 }
 
 ///// Temporary.
@@ -205,20 +186,6 @@ impl Beautifier {
             files_list: Vec::new(),
             output_list: Vec::new(),
             stats: Stats::new(),
-
-            // Set in LB::beautify.
-            // state_stack = Vec<ParseState>,  // list[ParseState] = []  # Stack of ParseState objects.
-            curly_brackets_level: 0,
-            decorator_seen: false,
-            in_arg_list: 0,
-            in_doc_part: false,
-            indent_level: 0,
-            index: 0,
-            line_number: 0,
-            lws: String::new(),
-            paren_level: 0,
-            square_brackets_stack: Vec::new(),
-            verbatim: false,
         };
         x.get_args();
         return x;
@@ -246,32 +213,6 @@ impl Beautifier {
     //@+node:ekr.20240929074037.113: *3* LB::beautify
     fn beautify(&mut self, annotated_list: &Vec<AnnotatedInputTok>) -> String {
         //! Beautify the input_tokens, creating the output String.
-        //@+<< LB::beautify: init ivars >>
-        //@+node:ekr.20241001213329.1: *4* << LB::beautify: init ivars >>
-        // Debugging vars...
-        self.line_number = 0; // was None?
-
-        // State vars for whitespace.
-        self.curly_brackets_level = 0; // Number of unmatched '{' tokens.
-        self.paren_level = 0; // Number of unmatched '(' tokens.
-        self.square_brackets_stack = Vec::new(); // A stack of bools, for self.gen_word().
-        self.indent_level = 0; // Set only by do_indent and do_dedent.
-
-        // Parse state.
-        self.decorator_seen = false; // Set by do_name for do_op.
-        self.in_arg_list = 0; // > 0 if in an arg list of a def.
-        self.in_doc_part = false;
-
-        // To do.
-        // self.state_stack = Vec::new();  // list[ParseState] = []  # Stack of ParseState objects.
-
-        // Leo-related state.
-        self.verbatim = false; // True: don't beautify.
-
-        // Ivars describing the present input token...
-        self.index = 0; // The index within the tokens array of the token being scanned.
-        self.lws = String::new(); // Leading whitespace. Required!
-        //@-<< LB::beautify: init ivars >>
         for input_token in annotated_list {
             //@+<< LB: beautify: dispatch on input_token.kind >>
             //@+node:ekr.20241002062655.1: *4* << LB: beautify: dispatch on input_token.kind >>
