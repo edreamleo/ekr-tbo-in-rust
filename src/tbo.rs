@@ -114,10 +114,9 @@ pub struct Beautifier {
     // Set in LB:beautify_one_file...
     args: Vec<String>,
     files_list: Vec<String>,
-    input_list: Vec<InputTok>,
-    output_list: Vec<String>,
     stats: Stats,
     // Set in LB:beautify...
+    output_list: Vec<String>,
     // Debugging
     line_number: i32, // Use -1 instead of None?
     // State vars for whitespace.
@@ -149,9 +148,9 @@ impl Beautifier {
             // Set in beautify_one_file
             args: Vec::new(),
             files_list: Vec::new(),
-            input_list: Vec::new(),
             output_list: Vec::new(),
             stats: Stats::new(),
+
             // Set in LB::beautify.
             // state_stack = Vec<ParseState>,  // list[ParseState] = []  # Stack of ParseState objects.
             curly_brackets_level: 0,
@@ -180,7 +179,7 @@ impl Beautifier {
     }
     //@+node:ekr.20240929074037.113: *3* LB::beautify
     fn beautify(&mut self, input_list: &Vec<InputTok>) -> String {
-        //! Beautify the input_tokens, creating the output_list.
+        //! Beautify the input_tokens, creating the output String.
         //@+<< LB::beautify: init ivars >>
         //@+node:ekr.20241001213329.1: *4* << LB::beautify: init ivars >>
         // Debugging vars...
@@ -224,6 +223,7 @@ impl Beautifier {
                 "ColonEqual" => self.do_ColonEqual(),
                 "Comma" => self.do_Comma(),
                 "Comment" => self.do_Comment(value),
+                "Complex" => self.do_Complex(value),
                 "Continue" => self.do_Continue(),
                 "Dedent" => self.do_Dedent(value),
                 "Def" => self.do_Def(),
@@ -285,12 +285,12 @@ impl Beautifier {
         }
         // return ''.join(self.output_list);
         let mut result = String::new();
-        for token in input_list {
-            result.push_str(&token.value);
+        for output_token in &self.output_list {
+            result.push_str(output_token);
         }
         if true {
             let n = result.len();
-            println!("result.len(): {n}");
+            println!("result: {n} characters");
         }
         return result;
     }
@@ -313,7 +313,7 @@ impl Beautifier {
             println!("{short_file_name}");
         }
         // Read the file into contents (a String).
-        self.output_list = Vec::new();
+        //*** self.output_list = Vec::new();
         let t1 = std::time::Instant::now();
         let contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
         self.stats.read_time += t1.elapsed().as_nanos();
@@ -977,15 +977,6 @@ impl Beautifier {
         "
             )
         );
-    }
-    //@+node:ekr.20240929074037.117: *3* LB::show_output_list
-    fn show_output_list(&self) {
-        println!("\nOutput list...");
-        for (i, arg) in self.output_list.iter().enumerate() {
-            if i > 0 {
-                print!("{:?}", arg);
-            }
-        }
     }
     //@+node:ekr.20241002163554.1: *3* LB::string_to_static_str
     fn string_to_static_str(&self, s: String) -> &'static str {
