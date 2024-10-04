@@ -72,8 +72,8 @@ impl Stats {
         let make_tokens_time = self.fmt_ns(self.make_tokens_time);
         let beautify_time = self.fmt_ns(self.beautify_time);
         let write_time = self.fmt_ns(self.write_time);
-        let total_time = self
-            .fmt_ns(self.make_tokens_time + self.read_time + self.beautify_time + self.write_time);
+        let total_time_ns = self.make_tokens_time + self.read_time + self.beautify_time + self.write_time;
+        let total_time = self.fmt_ns(total_time_ns);
         println!("");
         println!("     files: {n_files}, tokens: {n_tokens}, ws tokens: {n_ws_tokens}");
         println!("       read: {read_time:>7} ms");
@@ -169,15 +169,6 @@ impl Beautifier {
         x.get_args();
         return x;
     }
-    //@+node:ekr.20240929074037.3: *3* LB::add_input_token
-    // #[allow(dead_code)]
-    fn add_input_token(&mut self, kind: &str, value: &str) {
-        //! Add one token to the output list.
-        self.input_list.push(InputTok {
-            kind: kind.to_string(),
-            value: value.to_string(),
-        });
-    }
     //@+node:ekr.20240929074037.2: *3* LB::add_output_string
     #[allow(unused_variables)]
     fn add_output_string(&mut self, kind: &str, value: &str) {
@@ -190,7 +181,6 @@ impl Beautifier {
     //@+node:ekr.20240929074037.113: *3* LB::beautify
     fn beautify(&mut self, input_list: &Vec<InputTok>) -> String {
         //! Beautify the input_tokens, creating the output_list.
-
         //@+<< LB::beautify: init ivars >>
         //@+node:ekr.20241001213329.1: *4* << LB::beautify: init ivars >>
         // Debugging vars...
@@ -293,11 +283,14 @@ impl Beautifier {
             }
             //@-<< LB: beautify: dispatch on input_token.kind >>
         }
-
         // return ''.join(self.output_list);
         let mut result = String::new();
-        for s in &self.output_list {
-            result.push_str(&s);
+        for token in input_list {
+            result.push_str(&token.value);
+        }
+        if true {
+            let n = result.len();
+            println!("result.len(): {n}");
         }
         return result;
     }
@@ -800,11 +793,11 @@ impl Beautifier {
     }
     //@+node:ekr.20240929074037.112: *3* LB::make_input_list
     fn make_input_list(&mut self, contents: &str) -> Vec<InputTok> {
-        // Add InputToks to the input_list for every token given by the RustPython lex.
+        //! Return an input_list from the tokens given by the RustPython lex.
         let mut n_tokens: u64 = 0;
         let mut n_ws_tokens: u64 = 0;
         let mut prev_start: usize = 0;
-        let result: Vec<InputTok> = Vec::new();
+        let mut result: Vec<InputTok> = Vec::new();
         for token_tuple in lex(&contents, Mode::Module)
             .map(|tok| tok.expect("Failed to lex"))
             .collect::<Vec<_>>()
@@ -821,7 +814,10 @@ impl Beautifier {
             let end_i = usize::from(range.end());
             if start_i > prev_start {
                 let ws = &contents[prev_start..start_i];
-                self.add_input_token("ws", ws);
+                result.push(InputTok {
+                    kind: "ws".to_string(),
+                    value: ws.to_string(),
+                });
                 n_ws_tokens += 1
             }
             prev_start = end_i;
@@ -941,7 +937,10 @@ impl Beautifier {
                 Yield => "Yield",
             };
             //@-<< Calculate class_name using match token >>
-            self.add_input_token(class_name, tok_value);
+            result.push(InputTok {
+                kind: class_name.to_string(),
+                value: tok_value.to_string(),
+            });
         }
         // Update counts.
         self.stats.n_tokens += n_tokens;
