@@ -52,6 +52,7 @@ impl AnnotatedInputTok {
 //@+node:ekr.20241004110721.1: ** class Annotator
 struct Annotator {
     // The present input token...
+    input_tokens: Vec<InputToken>,
     index: u32,  // The index within the tokens array of the token being scanned.
     lws: String,  // Leading whitespace. Required!
     // For whitespace.
@@ -68,7 +69,9 @@ struct Annotator {
 }
 
 impl Annotator {
-    fn new() -> Annotator {
+    //@+others
+    //@+node:ekr.20241004153742.1: *3* Annotator.new
+    fn new(input_tokens: &Vec<InputToken>) -> Annotator {
         Annotator {
             curly_brackets_level: 0,
             decorator_seen: false,
@@ -76,6 +79,7 @@ impl Annotator {
             in_doc_part: false,
             indent_level: 0,
             index: 0,
+            input_tokens: input_tokens,
             lws: String::new(),
             paren_level: 0,
             state_stack: Vec::new(),
@@ -83,6 +87,293 @@ impl Annotator {
             verbatim: false, 
         }
     }
+    //@+node:ekr.20241004153802.1: *3* Annotator.pre_pass (** to do)
+    fn pre_scan(&mut self) {
+        //! Scan the entire file in one iterative pass, adding context to a few
+        //! kinds of tokens as follows:
+        //!
+        //! Token   Possible Contexts (or None)
+        //! =====   ===========================
+        //! ":"     "annotation", "dict", "complex-slice", "simple-slice"
+        //! "="     "annotation", "initializer"
+        //! "*"     "arg"
+        //! "**"    "arg"
+        //! "."     "import"
+
+        // The main loop.
+        let mut in_import = false;
+        let scan_stack: Vec<ScanState> = Vec::new();
+        let mut prev_token: InputToken = None;
+        // for i, token in enumerate(self.input_tokens):
+        for token in self.input_tokens {
+            let (kind, value) = (token.kind, token.value);
+            if kind == "newline" {
+                //@+<< pre-scan newline tokens >>
+                //@+node:ekr.20241004154345.2: *4* << pre-scan newline tokens >>
+                // "import" and "from x import" statements may span lines.
+                // "ws" tokens represent continued lines like this:   ws: " \\\n    "
+                if in_import && not scan_stack {  // ***
+                    in_import = false;
+                }
+                //@-<< pre-scan newline tokens >>
+            }
+            else if kind == "op" {
+                //@+<< pre-scan op tokens >>
+                //@+node:ekr.20241004154345.3: *4* << pre-scan op tokens >>
+                // top_state: Optional[fScanState] = scan_stack[-1] if scan_stack else None
+                let top_state::<ScanState> = None;
+
+                // Handle "[" and "]".
+                if value == "[" {
+                    scan_stack.append(ScanState("slice", token));
+                }
+                else if  value == "]" {
+                    // assert top_state and top_state.kind == "slice"
+                    self.finish_slice(i, top_state);
+                    scan_stack.pop();
+                }
+                // Handle "{" and "}".
+                if value == "{" {
+                    scan_stack.append(ScanState("dict", token));
+                }
+                else if value == "}" {
+                    // assert top_state and top_state.kind == "dict"
+                    self.finish_dict(i, top_state);
+                    scan_stack.pop();
+                }
+                // Handle "(" and ")"
+                else if value == "(" {
+                    if self.is_python_keyword(prev_token) || prev_token &&prev_token.kind != "name" {
+                        state_kind = "(";
+                    }
+                    else {
+                        state_kind = "arg";
+                    }
+                    scan_stack.append(ScanState(state_kind, token));
+                }
+                else if value == ")" {
+                    // assert top_state and top_state.kind in ("(", "arg"), repr(top_state)
+                    if top_state.kind == "arg" {
+                        self.finish_arg(i, top_state, &input_tokes);
+                    }
+                    scan_stack.pop()
+                }
+                // Handle interior tokens in "arg" and "slice" states.
+                if top_state {
+                    if (top_state.kind == "dict" || top.state.kind =="slice") && value == ":" {
+                        top_state.value.append(i);
+                    }
+                    if top_state.kind == "arg" && value in ["**", "*", "=", ":", ","] {
+                        top_state.value.append(i);
+                    }
+                }
+                // Handle "." and "(" tokens inside "import" and "from" statements.
+                if in_import && value in "(." {
+                    self.set_context(i, "import");
+                }
+                //@-<< pre-scan op tokens >>
+            }
+            else if kind == "name" {
+                //@+<< pre-scan name tokens >>
+                //@+node:ekr.20241004154345.4: *4* << pre-scan name tokens >>
+                prev_is_yield = prev_token && prev_token.kind == "name" & prev_token.value == "yield";
+                if value in ("from", "import") && not prev_is_yield:
+                    // "import" and "from x import" statements should be at the outer level.
+                    // assert not scan_stack, scan_stack
+                    in_import = true;
+                //@-<< pre-scan name tokens >>
+            }
+            // Remember the previous significant token.
+            if kind not in self.insignificant_kinds:
+                prev_token = token;
+        }
+        // Sanity check.
+        if scan_stack {
+            println!("pre_scan: non-empty scan_stack");
+            // *** print(scan_stack);
+        }
+    }
+    //@+node:ekr.20241004154345.5: *4* Annotator.finish_arg
+    fn finish_arg(&mut self, end: int, state: ScanState) {
+        //! Set context for all ":" when scanning from "(" to ")".
+
+        // Sanity checks.
+        if not state {  // ***
+            return
+        }
+        // assert state.kind == "arg", repr(state)
+        let mut token = state.token;
+        // assert token.value == "(", repr(token)
+        let mut values = state.value;
+        // assert isinstance(values, list), repr(values)
+        let mut i1 = token.index;
+        // assert i1 < end, (i1, end)
+        if !values {
+            return;
+        }
+        // Compute the context for each *separate* "=" token.
+        let mut equal_context = "initializer";
+        for i in values {
+            let token = self.input_tokens[i];
+            assert token.kind == "op", repr(token)
+            if token.value == "," {
+                equal_context = "initializer";
+            }
+            elif token.value == ":" {
+                equal_context = "annotation";
+            }
+            elif token.value == "=" {
+                self.set_context(i, equal_context)
+                equal_context = "initializer";
+            }
+        }
+        // Set the context of all outer-level ":", "*", and "**" tokens.
+        let prev:<InputToken> = None;
+        for i in range(i1, end) {
+            token = self.input_tokens[i]
+            if token.kind ! in self.insignificant_kinds {
+                if token.kind == "op" {
+                    if token.value in ("*", "**") {
+                        if self.is_unary_op_with_prev(prev, token) {
+                            self.set_context(i, "arg");
+                        }
+                    }
+                    else if token.value == "=" {
+                        // The code above has set the context.
+                        // assert token.context in ("initializer", "annotation"), (i, repr(token.context))
+                    }
+                    else if token.value == ":" {
+                        self.set_context(i, "annotation")
+                    }
+                }
+                prev = token;
+            }
+        }
+    }
+    //@+node:ekr.20241004154345.6: *4* Annotator.finish_slice
+    fn finish_slice(&mut self, end: int, state: ScanState) {
+        //! Set context for all ":" when scanning from "[" to "]".
+
+        // Sanity checks.
+        // assert state.kind == "slice", repr(state)
+        let mut token = state.token;
+        // assert token.value == "[", repr(token)
+        let mut colons = state.value;
+        // assert isinstance(colons, list), repr(colons)
+        let mut i1 = token.index;
+        // assert i1 < end, (i1, end)
+
+        // Do nothing if there are no ":" tokens in the slice.
+        if !colons {
+            return;
+        }
+
+        // Compute final context by scanning the tokens.
+        let mut final_context = "simple-slice";
+        let mut inter_colon_tokens = 0;
+        let mut prev = token;
+        for i in range(i1 + 1, end - 1) {
+            token = self.input_tokens[i]
+            kind, value = token.kind, token.value
+            if kind !in self.insignificant_kinds {
+                if kind == "op" {
+                    if value == "." {
+                        // Ignore "." tokens and any preceding "name" token.
+                        if prev && prev.kind == "name" {
+                            inter_colon_tokens -= 1;
+                        }
+                    }
+                    else if value == ":" {
+                        inter_colon_tokens = 0;
+                    }
+                    else if value in "-+" {
+                        // Ignore unary "-" or "+" tokens.
+                        if !self.is_unary_op_with_prev(prev, token) {
+                            inter_colon_tokens += 1
+                            if inter_colon_tokens > 1 {
+                                final_context = "complex-slice"
+                                break;
+                            }
+                        }
+                    }
+                    else if value == "~" {
+                        // "~" is always a unary op.
+                    }
+                    else {
+                        // All other ops contribute.
+                        inter_colon_tokens += 1
+                        if inter_colon_tokens > 1 {
+                            final_context = "complex-slice";
+                            break;
+                        }
+                    }
+                }
+                else {
+                    inter_colon_tokens += 1
+                    if inter_colon_tokens > 1 {
+                        final_context = "complex-slice";
+                        break;
+                    }
+                }
+                prev = token;
+            }
+        }
+        // Set the context of all outer-level ":" tokens.
+        for i in colons {
+            self.set_context(i, final_context);
+        }    
+    }
+    //@+node:ekr.20241004154345.7: *4* Annotator.finish_dict
+    fn finish_dict(&mut self, end: int, state: Optional[ScanState]) {
+        //! Set context for all ":" when scanning from "{" to "}"
+        //! 
+        //! Strictly speaking, setting this context is unnecessary because
+        //! Annotator.gen_colon generates the same code regardless of this context.
+        //! 
+        //! In other words, this method can be a do-nothing!
+
+        // Sanity checks.
+        if not state {  // ***
+            return;
+        }
+        // assert state.kind == "dict", repr(state)
+        let token = state.token;
+        // assert token.value == "{", repr(token)
+        let colons = state.value;
+        // assert isinstance(colons, list), repr(colons)
+        let i1 = token.index;
+        // assert i1 < end, (i1, end)
+
+        // Set the context for all ":" tokens.
+        for i in colons {
+            self.set_context(i, "dict");
+        }
+    }
+    //@+node:ekr.20241004163018.1: *4* Annotator.set_context
+    fn set_context(&mut self, i: int, context: &str) {
+        //! Set self.input_tokens[i].context, but only if it does not already exist!
+        //! See the docstring for pre_scan for details.
+
+        let trace = false;  // Do not delete the trace below.
+        let valid_contexts = [
+            "annotation", "arg", "complex-slice", "simple-slice",
+            "dict", "import", "initializer",
+        ];
+        if !context in valid_contexts {
+            // self.oops(f"Unexpected context! {context!r}")
+            println!("Unexpected context! {context:?}");
+        }
+        let token = self.input_tokens[i];
+        if trace {  // Do not delete.
+            let token_s = f!("<{token.kind}: {token.show_val(12)}>");
+            let ignore_s = "Ignore" if token.context else " " * 6;
+            println!("{i:3} {ignore_s} token: {token_s} context: {context}");
+        }
+        if !token.context {
+            token.context = context;
+        }
+    }
+    //@-others
 }
 //@+node:ekr.20240929024648.120: ** class InputTok
 // Only Clone is valid for String.
@@ -264,7 +555,7 @@ impl Beautifier {
         self.stats.read_time += t1.elapsed().as_nanos();
         // Create (an immutable!) list of input tokens.
         let t2 = std::time::Instant::now();
-        let input_tokens = self.make_input_list(&contents);
+        let input_tokens: Vec<InputTok> = self.make_input_list(&contents);
         self.stats.make_tokens_time += t2.elapsed().as_nanos();
         // Annotate tokens (the prepass).
         let t3 = std::time::Instant::now();
@@ -956,6 +1247,35 @@ struct ParseState {
     kind: String,
     value: String,
 }
+//@+node:ekr.20241004165555.1: **  class ScanState 
+struct ScanState {
+    //! A class representing tbo.pre_scan's scanning state.
+    //! Valid (kind, value) pairs:
+    //! kind  Value
+    //! ====  =====
+    //! 'args' None
+    //! 'from' None
+    //! 'import' None
+    //! 'slice' list of colon indices
+    //! 'dict' list of colon indices
+    
+    kind: &str,
+    token: InputToken,
+    value: Vec<u32>,  // Not always used.
+}
+
+    // __slots__ = ('kind', 'token', 'value')
+
+    // def __init__(self, kind: str, token: InputToken) -> None:
+        // self.kind = kind
+        // self.token = token
+        // self.value: list[int] = []  # Not always used.
+
+    // def __repr__(self) -> str:  # pragma: no cover
+        // return f"ScanState: i: {self.token.index:<4} kind: {self.kind} value: {self.value}"
+
+    // def __str__(self) -> str:  # pragma: no cover
+        // return f"ScanState: i: {self.token.index:<4} kind: {self.kind} value: {self.value}"
 //@+node:ekr.20240929074547.1: ** class Stats
 #[derive(Debug)]
 pub struct Stats {
