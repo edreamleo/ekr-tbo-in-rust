@@ -45,7 +45,7 @@ fn test() {
 }
 //@+node:ekr.20241003094218.2: ** fn test_struct
 fn test_struct() {
-    // Test code for Vec.
+    //! Test code for Vec.
     let mut v: Vec<TestTok> = Vec::new();
     push_struct(&mut v, 1);
     push_struct(&mut v, 2);
@@ -57,14 +57,24 @@ fn test_struct() {
         push_struct(&mut v, i);
         i += 1
     }
-    // This fails
-    // let mut tok = v[0];
-    // tok.value = 666;
-    // println!("{tok:?}");
     println!("");
-    for z in v {
+    for z in &v {  // or just v.
         println!("{z:?}");
     }
+    let tok = &v[0];  // v[0] fails.
+    println!("\ntok: {tok:?}");
+   
+    // A data race happens when these three behaviors occur:
+
+    // - Two or more pointers access the same data at the same time.
+    // - At least one of the pointers is being used to write to the data.
+    // - There’s no mechanism being used to synchronize access to the data.
+
+    // So This fails
+        // {
+            // let tok = v[0];
+            // println!("{tok:?}");
+        // }
 }
 
 fn push_struct(v: &mut Vec<TestTok>, val: i32) {
@@ -74,7 +84,7 @@ fn push_struct(v: &mut Vec<TestTok>, val: i32) {
 }
 //@+node:ekr.20241003094218.1: ** fn test_vec & push_vec
 fn test_vec() {
-    // Test code for Vec.
+    //! Test code for Vec.
     let mut v: Vec<i32> = Vec::new();
     push_vec(&mut v, 1);
     push_vec(&mut v, 2);

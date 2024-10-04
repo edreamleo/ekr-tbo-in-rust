@@ -2318,7 +2318,8 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
 
-*** Use functional style???
+- Read Rust code!
+
 </t>
 <t tx="ekr.20240928073118.1">@language python
 g.cls()
@@ -3288,6 +3289,7 @@ Rules:
 - Each value in Rust has an *owner*.
 - There can only be one owner at a time.
 - When the owner goes out of scope, the value will be dropped.
+  **The scope ends when value last used**.
 
 String literals can't be mutated.  String objects are on the heap and can be mutated.
 The *drop* function releases heap objects.
@@ -3301,7 +3303,9 @@ Move is a shallow copy:
 
 *clone* makes a deep copy.
 
-Stack-only vars have *copy trait*.
+*small (stack-only) values are copied when passed as params*.
+
+Stack-only values have *copy trait*.
 Can't add `copy` trait if object implements `drop`.
 
 Ownership and functions:
@@ -4847,7 +4851,7 @@ impl Beautifier {
 }
 </t>
 <t tx="ekr.20241003094218.1">fn test_vec() {
-    // Test code for Vec.
+    //! Test code for Vec.
     let mut v: Vec&lt;i32&gt; = Vec::new();
     push_vec(&amp;mut v, 1);
     push_vec(&amp;mut v, 2);
@@ -4868,7 +4872,7 @@ fn push_vec(v: &amp;mut Vec&lt;i32&gt;, val: i32) {
 }
 </t>
 <t tx="ekr.20241003094218.2">fn test_struct() {
-    // Test code for Vec.
+    //! Test code for Vec.
     let mut v: Vec&lt;TestTok&gt; = Vec::new();
     push_struct(&amp;mut v, 1);
     push_struct(&amp;mut v, 2);
@@ -4880,14 +4884,24 @@ fn push_vec(v: &amp;mut Vec&lt;i32&gt;, val: i32) {
         push_struct(&amp;mut v, i);
         i += 1
     }
-    // This fails
-    // let mut tok = v[0];
-    // tok.value = 666;
-    // println!("{tok:?}");
     println!("");
-    for z in v {
+    for z in &amp;v {  // or just v.
         println!("{z:?}");
     }
+    let tok = &amp;v[0];  // v[0] fails.
+    println!("\ntok: {tok:?}");
+   
+    // A data race happens when these three behaviors occur:
+
+    // - Two or more pointers access the same data at the same time.
+    // - At least one of the pointers is being used to write to the data.
+    // - There’s no mechanism being used to synchronize access to the data.
+
+    // So This fails
+        // {
+            // let tok = v[0];
+            // println!("{tok:?}");
+        // }
 }
 
 fn push_struct(v: &amp;mut Vec&lt;TestTok&gt;, val: i32) {
