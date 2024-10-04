@@ -26,6 +26,7 @@ pub struct Stats {
     n_ws_tokens: u64, // Number of pseudo-ws tokens.
 
     // Timing stat, in microseconds...
+    annotation_time: u128,
     beautify_time: u128,
     make_tokens_time: u128,
     read_time: u128,
@@ -45,6 +46,7 @@ impl Stats {
             n_ws_tokens: 0, // Number of pseudo-ws tokens.
 
             // Timing stats, in nanoseconds...
+            annotation_time: 0,
             beautify_time: 0,
             make_tokens_time: 0,
             read_time: 0,
@@ -68,16 +70,22 @@ impl Stats {
         let n_tokens = self.n_tokens;
         let n_ws_tokens = self.n_ws_tokens;
         // Print cumulative timing stats, in ms.
-        let read_time = self.fmt_ns(self.read_time);
-        let make_tokens_time = self.fmt_ns(self.make_tokens_time);
+        let annotation_time = self.fmt_ns(self.annotation_time);
         let beautify_time = self.fmt_ns(self.beautify_time);
+        let make_tokens_time = self.fmt_ns(self.make_tokens_time);
+        let read_time = self.fmt_ns(self.read_time);
         let write_time = self.fmt_ns(self.write_time);
-        let total_time_ns = self.make_tokens_time + self.read_time + self.beautify_time + self.write_time;
+        let total_time_ns = self.annotation_time +
+            self.beautify_time +
+            self.make_tokens_time +
+            self.read_time +
+            self.write_time;
         let total_time = self.fmt_ns(total_time_ns);
         println!("");
         println!("     files: {n_files}, tokens: {n_tokens}, ws tokens: {n_ws_tokens}");
         println!("       read: {read_time:>7} ms");
         println!("make_tokens: {make_tokens_time:>7} ms");
+        println!(" annotation: {annotation_time:>7} ms");
         println!("   beautify: {beautify_time:>7} ms");
         println!("      write: {write_time:>7} ms");
         println!("      total: {total_time:>7} ms");
@@ -314,10 +322,14 @@ impl Beautifier {
         let t2 = std::time::Instant::now();
         let input_tokens = self.make_input_list(&contents);
         self.stats.make_tokens_time += t2.elapsed().as_nanos();
-        // Beautify.
+        // *** Annotate tokens (the prepass).
         let t3 = std::time::Instant::now();
+        // let annotated tokens = self.annotate(&input_tokens);
+        self.stats.annotation_time += t3.elapsed().as_nanos();
+        // Beautify.
+        let t4 = std::time::Instant::now();
         self.beautify(&input_tokens);
-        self.stats.beautify_time += t3.elapsed().as_nanos();
+        self.stats.beautify_time += t4.elapsed().as_nanos();
     }
     //@+node:ekr.20240929074037.7: *3* LB::do_*
     //@+node:ekr.20241002071143.1: *4* tbo.do_ws
