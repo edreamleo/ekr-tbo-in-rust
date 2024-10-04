@@ -17,6 +17,20 @@ use std::fs;
 use std::path;
 
 //@+others
+//@+node:ekr.20241003093554.1: **  pub fn entry
+pub fn entry() {
+    if false {
+        test();
+    } else {
+        main();
+    }
+}
+//@+node:ekr.20241003094145.1: **  struct TestTok
+#[derive(Clone, Debug)]
+#[allow(dead_code)]
+pub struct TestTok {
+    value: i32,
+}
 //@+node:ekr.20241004095931.1: ** class AnnotatedInputTok
 // Only Clone is valid for String.
 #[derive(Clone)]
@@ -49,7 +63,7 @@ struct Annotator {
     decorator_seen: bool,  // Set by do_name for do_op.
     in_arg_list: u32,  // > 0 if in an arg list of a def.
     in_doc_part: bool,
-    // *** state_stack: Vec:<ParseState>,  // Stack of ParseState objects.
+    state_stack: Vec<ParseState>,  // Stack of ParseState objects.
     verbatim: bool,  // True: don't beautify.
 }
 
@@ -64,86 +78,11 @@ impl Annotator {
             index: 0,
             lws: String::new(),
             paren_level: 0,
-            // *** state_stack: ParseState::new(),
+            state_stack: Vec::new(),
             square_brackets_stack: Vec::new(),
             verbatim: false, 
         }
     }
-}
-//@+node:ekr.20240929074547.1: ** class Stats
-#[derive(Debug)]
-pub struct Stats {
-    // Cumulative statistics for all files.
-    n_files: u64,     // Number of files.
-    n_tokens: u64,    // Number of tokens.
-    n_ws_tokens: u64, // Number of pseudo-ws tokens.
-
-    // Timing stat, in microseconds...
-    annotation_time: u128,
-    beautify_time: u128,
-    make_tokens_time: u128,
-    read_time: u128,
-    write_time: u128,
-}
-
-// #[allow(dead_code)]
-// #[allow(non_snake_case)]
-impl Stats {
-    //@+others
-    //@+node:ekr.20241001100954.1: *3*  Stats::new
-    pub fn new() -> Stats {
-        let x = Stats {
-            // Cumulative counts.
-            n_files: 0,     // Number of files.
-            n_tokens: 0,    // Number of tokens.
-            n_ws_tokens: 0, // Number of pseudo-ws tokens.
-
-            // Timing stats, in nanoseconds...
-            annotation_time: 0,
-            beautify_time: 0,
-            make_tokens_time: 0,
-            read_time: 0,
-            write_time: 0,
-        };
-        return x;
-    }
-    //@+node:ekr.20240929080242.1: *3* Stats::fmt_ns
-    fn fmt_ns(&mut self, t: u128) -> String {
-        //! Convert nanoseconds to fractional milliseconds.
-        let ms = t / 1000000;
-        let micro = (t % 1000000) / 10000; // 2-places only.
-                                           // println!("t: {t:8} ms: {ms:03} micro: {micro:02}");
-        return f!("{ms:4}.{micro:02}");
-    }
-
-    //@+node:ekr.20240929075236.1: *3* Stats::report
-    fn report(&mut self) {
-        // Cumulative counts.
-        let n_files = self.n_files;
-        let n_tokens = self.n_tokens;
-        let n_ws_tokens = self.n_ws_tokens;
-        // Print cumulative timing stats, in ms.
-        let annotation_time = self.fmt_ns(self.annotation_time);
-        let beautify_time = self.fmt_ns(self.beautify_time);
-        let make_tokens_time = self.fmt_ns(self.make_tokens_time);
-        let read_time = self.fmt_ns(self.read_time);
-        let write_time = self.fmt_ns(self.write_time);
-        let total_time_ns = self.annotation_time
-            + self.beautify_time
-            + self.make_tokens_time
-            + self.read_time
-            + self.write_time;
-        let total_time = self.fmt_ns(total_time_ns);
-        println!("");
-        println!("     files: {n_files}, tokens: {n_tokens}, ws tokens: {n_ws_tokens}");
-        println!("       read: {read_time:>7} ms");
-        println!("make_tokens: {make_tokens_time:>7} ms");
-        println!(" annotation: {annotation_time:>7} ms");
-        println!("   beautify: {beautify_time:>7} ms");
-        println!("      write: {write_time:>7} ms");
-        println!("      total: {total_time:>7} ms");
-    }
-    //@-others
 }
 //@+node:ekr.20240929024648.120: ** class InputTok
 // Only Clone is valid for String.
@@ -989,19 +928,108 @@ impl Beautifier {
 
     //@-others
 }
-//@+node:ekr.20241003094145.1: **  struct TestTok
-#[derive(Clone, Debug)]
-#[allow(dead_code)]
-pub struct TestTok {
-    value: i32,
+//@+node:ekr.20241004112826.1: ** class ParseState
+struct ParseState {
+    //@+<< docstring: ParseState >>
+    //@+node:ekr.20241004113118.1: *3* << docstring: ParseState >>
+    //@@language rest
+    //@+doc
+    //
+    // A class representing items in the parse state stack.
+    //
+    // The present states:
+    //
+    // 'file-start': Ensures the stack stack is never empty.
+    //
+    // 'decorator': The last '@' was a decorator.
+    //
+    //     do_op():    push_state('decorator')
+    //     do_name():  pops the stack if state.kind == 'decorator'.
+    //
+    // 'indent': The indentation level for 'class' and 'def' names.
+    //
+    //     do_name():      push_state('indent', self.level)
+    //     do_dendent():   pops the stack once or
+    //                     twice if state.value == self.level.
+    //
+    //@-<< docstring: ParseState >>
+    kind: String,
+    value: String,
 }
-//@+node:ekr.20241003093554.1: **  pub fn entry
-pub fn entry() {
-    if false {
-        test();
-    } else {
-        main();
+//@+node:ekr.20240929074547.1: ** class Stats
+#[derive(Debug)]
+pub struct Stats {
+    // Cumulative statistics for all files.
+    n_files: u64,     // Number of files.
+    n_tokens: u64,    // Number of tokens.
+    n_ws_tokens: u64, // Number of pseudo-ws tokens.
+
+    // Timing stat, in microseconds...
+    annotation_time: u128,
+    beautify_time: u128,
+    make_tokens_time: u128,
+    read_time: u128,
+    write_time: u128,
+}
+
+// #[allow(dead_code)]
+// #[allow(non_snake_case)]
+impl Stats {
+    //@+others
+    //@+node:ekr.20241001100954.1: *3*  Stats::new
+    pub fn new() -> Stats {
+        let x = Stats {
+            // Cumulative counts.
+            n_files: 0,     // Number of files.
+            n_tokens: 0,    // Number of tokens.
+            n_ws_tokens: 0, // Number of pseudo-ws tokens.
+
+            // Timing stats, in nanoseconds...
+            annotation_time: 0,
+            beautify_time: 0,
+            make_tokens_time: 0,
+            read_time: 0,
+            write_time: 0,
+        };
+        return x;
     }
+    //@+node:ekr.20240929080242.1: *3* Stats::fmt_ns
+    fn fmt_ns(&mut self, t: u128) -> String {
+        //! Convert nanoseconds to fractional milliseconds.
+        let ms = t / 1000000;
+        let micro = (t % 1000000) / 10000; // 2-places only.
+                                           // println!("t: {t:8} ms: {ms:03} micro: {micro:02}");
+        return f!("{ms:4}.{micro:02}");
+    }
+
+    //@+node:ekr.20240929075236.1: *3* Stats::report
+    fn report(&mut self) {
+        // Cumulative counts.
+        let n_files = self.n_files;
+        let n_tokens = self.n_tokens;
+        let n_ws_tokens = self.n_ws_tokens;
+        // Print cumulative timing stats, in ms.
+        let annotation_time = self.fmt_ns(self.annotation_time);
+        let beautify_time = self.fmt_ns(self.beautify_time);
+        let make_tokens_time = self.fmt_ns(self.make_tokens_time);
+        let read_time = self.fmt_ns(self.read_time);
+        let write_time = self.fmt_ns(self.write_time);
+        let total_time_ns = self.annotation_time
+            + self.beautify_time
+            + self.make_tokens_time
+            + self.read_time
+            + self.write_time;
+        let total_time = self.fmt_ns(total_time_ns);
+        println!("");
+        println!("     files: {n_files}, tokens: {n_tokens}, ws tokens: {n_ws_tokens}");
+        println!("       read: {read_time:>7} ms");
+        println!("make_tokens: {make_tokens_time:>7} ms");
+        println!(" annotation: {annotation_time:>7} ms");
+        println!("   beautify: {beautify_time:>7} ms");
+        println!("      write: {write_time:>7} ms");
+        println!("      total: {total_time:>7} ms");
+    }
+    //@-others
 }
 //@+node:ekr.20241003093722.1: ** fn main
 pub fn main() {

@@ -550,10 +550,12 @@
 <v t="ekr.20241004110911.6"><vh>tbo.finish_slice</vh></v>
 <v t="ekr.20241004110911.7"><vh>tbo.finish_dict</vh></v>
 </v>
-<v t="ekr.20241004110956.1"><vh>COPY &lt;&lt; tbo.beautify: init ivars &gt;&gt;</vh></v>
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 <v t="ekr.20241004095735.1"></v>
 <v t="ekr.20241004110721.1"></v>
+<v t="ekr.20241004112826.1"><vh>class ParseState</vh>
+<v t="ekr.20241004113118.1"><vh>&lt;&lt; docstring: ParseState &gt;&gt;</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20200107040729.1">def show_diffs(self, s1: str, s2: str) -&gt; None:  # pragma: no cover
@@ -4884,7 +4886,7 @@ impl AnnotatedInputTok {
     decorator_seen: bool,  // Set by do_name for do_op.
     in_arg_list: u32,  // &gt; 0 if in an arg list of a def.
     in_doc_part: bool,
-    // *** state_stack: Vec:&lt;ParseState&gt;,  // Stack of ParseState objects.
+    state_stack: Vec&lt;ParseState&gt;,  // Stack of ParseState objects.
     verbatim: bool,  // True: don't beautify.
 }
 
@@ -4899,7 +4901,7 @@ impl Annotator {
             index: 0,
             lws: String::new(),
             paren_level: 0,
-            // *** state_stack: ParseState::new(),
+            state_stack: Vec::new(),
             square_brackets_stack: Vec::new(),
             verbatim: false, 
         }
@@ -5120,24 +5122,32 @@ if value in ('from', 'import') and not prev_is_yield:
     for i in colons:
         self.set_context(i, 'dict')
 </t>
-<t tx="ekr.20241004110956.1"># State vars for whitespace.
-self.curly_brackets_level = 0  # Number of unmatched '{' tokens.
-self.paren_level = 0  # Number of unmatched '(' tokens.
-self.square_brackets_stack: list[bool] = []  # A stack of bools, for self.gen_word().
-self.indent_level = 0  # Set only by do_indent and do_dedent.
+<t tx="ekr.20241004112826.1">struct ParseState {
+    &lt;&lt; docstring: ParseState &gt;&gt;
+    kind: String,
+    value: String,
+}
+</t>
+<t tx="ekr.20241004113118.1">@language rest
+@doc
 
-# Parse state.
-self.decorator_seen = False  # Set by do_name for do_op.
-self.in_arg_list = 0  # &gt; 0 if in an arg list of a def.
-self.in_doc_part = False
-self.state_stack: list[ParseState] = []  # Stack of ParseState objects.
+A class representing items in the parse state stack.
 
-# Leo-related state.
-self.verbatim = False  # True: don't beautify.
+The present states:
 
-# Ivars describing the present input token...
-self.index = 0  # The index within the tokens array of the token being scanned.
-self.lws = ''  # Leading whitespace. Required!
+'file-start': Ensures the stack stack is never empty.
+
+'decorator': The last '@' was a decorator.
+
+    do_op():    push_state('decorator')
+    do_name():  pops the stack if state.kind == 'decorator'.
+
+'indent': The indentation level for 'class' and 'def' names.
+
+    do_name():      push_state('indent', self.level)
+    do_dendent():   pops the stack once or
+                    twice if state.value == self.level.
+
 </t>
 </tnodes>
 </leo_file>
