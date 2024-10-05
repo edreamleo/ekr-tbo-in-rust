@@ -112,84 +112,13 @@
 <v t="ekr.20240928161210.1"><vh>@file src/tbo.rs</vh></v>
 </v>
 <v t="ekr.20241001073040.1"><vh>--- Not used</vh>
-<v t="ekr.20240105145241.1"><vh>COPY: class TokenBasedOrange</vh>
-<v t="ekr.20240119062227.1"><vh>&lt;&lt; TokenBasedOrange: docstring &gt;&gt;</vh></v>
-<v t="ekr.20240111035404.1"><vh>&lt;&lt; TokenBasedOrange: __slots__ &gt;&gt;</vh></v>
-<v t="ekr.20240116040458.1"><vh>&lt;&lt; TokenBasedOrange: python-related constants &gt;&gt;</vh></v>
-<v t="ekr.20240105145241.2"><vh>tbo.ctor</vh></v>
-<v t="ekr.20240126012433.1"><vh>tbo: Checking &amp; dumping</vh>
-<v t="ekr.20240106220724.1"><vh>tbo.dump_token_range</vh></v>
-<v t="ekr.20240112082350.1"><vh>tbo.internal_error_message</vh></v>
-<v t="ekr.20240226131015.1"><vh>tbo.user_error_message</vh></v>
-<v t="ekr.20240117053310.1"><vh>tbo.oops</vh></v>
+<v t="ekr.20241005031511.1"><vh>COPY (Python) class InputToken</vh>
+<v t="ekr.20241005031511.2"><vh>itoken.brief_dump</vh></v>
+<v t="ekr.20241005031511.3"><vh>itoken.dump</vh></v>
+<v t="ekr.20241005031511.4"><vh>itoken.dump_header</vh></v>
+<v t="ekr.20241005031511.5"><vh>itoken.error_dump</vh></v>
+<v t="ekr.20241005031511.6"><vh>itoken.show_val</vh></v>
 </v>
-<v t="ekr.20240105145241.4"><vh>tbo: Entries &amp; helpers</vh>
-<v t="ekr.20240105145241.5"><vh>tbo.beautify (main token loop)</vh>
-<v t="ekr.20240112023403.1"><vh>&lt;&lt; tbo.beautify: init ivars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20240105145241.6"><vh>tbo.beautify_file (entry) (stats &amp; diffs)</vh></v>
-<v t="ekr.20240105145241.8"><vh>tbo.init_tokens_from_file</vh></v>
-<v t="ekr.20240105140814.12"><vh>tbo.regularize_newlines</vh></v>
-<v t="ekr.20240105140814.17"><vh>tbo.write_file</vh></v>
-<v t="ekr.20200107040729.1"><vh>tbo.show_diffs</vh></v>
-</v>
-<v t="ekr.20240105145241.9"><vh>tbo: Visitors &amp; generators</vh>
-<v t="ekr.20240105145241.10"><vh>tbo.do_comment</vh>
-<v t="ekr.20240420034216.1"><vh>&lt;&lt; do_comment: update comment-related state &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20240111051726.1"><vh>tbo.do_dedent</vh></v>
-<v t="ekr.20240105145241.11"><vh>tbo.do_encoding</vh></v>
-<v t="ekr.20240105145241.12"><vh>tbo.do_endmarker</vh></v>
-<v t="ekr.20240105145241.14"><vh>tbo.do_indent</vh></v>
-<v t="ekr.20240105145241.16"><vh>tbo.do_name &amp; generators</vh>
-<v t="ekr.20240418050017.1"><vh>tbo.do_name</vh></v>
-<v t="ekr.20240105145241.40"><vh>tbo.gen_word</vh></v>
-<v t="ekr.20240107141830.1"><vh>tbo.gen_word_op</vh></v>
-</v>
-<v t="ekr.20240105145241.17"><vh>tbo.do_newline, do_nl &amp; generators</vh>
-<v t="ekr.20240418043826.1"><vh>tbo.do_newline</vh></v>
-<v t="ekr.20240418043827.1"><vh>tbo.do_nl</vh></v>
-</v>
-<v t="ekr.20240105145241.18"><vh>tbo.do_number</vh></v>
-<v t="ekr.20240105145241.19"><vh>tbo.do_op &amp; generators</vh>
-<v t="ekr.20240418045924.1"><vh>tbo.do_op</vh></v>
-<v t="ekr.20240105145241.31"><vh>tbo.gen_colon &amp; helper</vh></v>
-<v t="ekr.20240109035004.1"><vh>tbo.gen_dot_op &amp; _next</vh>
-<v t="ekr.20240105145241.43"><vh>tbo._next</vh></v>
-</v>
-<v t="ekr.20240105145241.20"><vh>tbo.gen_equal_op</vh></v>
-<v t="ekr.20240105145241.35"><vh>tbo.gen_lt</vh></v>
-<v t="ekr.20240105145241.37"><vh>tbo.gen_possible_unary_op &amp; helper</vh>
-<v t="ekr.20240109082712.1"><vh>tbo.is_unary_op &amp; _prev</vh>
-<v t="ekr.20240115233050.1"><vh>tbo._prev</vh></v>
-</v>
-</v>
-<v t="ekr.20240105145241.36"><vh>tbo.gen_rt</vh></v>
-<v t="ekr.20240105145241.38"><vh>tbo.gen_star_op</vh></v>
-<v t="ekr.20240105145241.39"><vh>tbo.gen_star_star_op</vh></v>
-<v t="ekr.20240105145241.3"><vh>tbo.push_state</vh></v>
-</v>
-<v t="ekr.20240105145241.21"><vh>tbo.do_string</vh></v>
-<v t="ekr.20240105145241.22"><vh>tbo.do_verbatim</vh></v>
-<v t="ekr.20240105145241.23"><vh>tbo.do_ws</vh></v>
-<v t="ekr.20240105145241.27"><vh>tbo.gen_blank</vh></v>
-<v t="ekr.20240105145241.26"><vh>tbo.gen_token</vh></v>
-</v>
-<v t="ekr.20240110205127.1"><vh>tbo: Scanning</vh>
-<v t="ekr.20240128114622.1"><vh>tbo.pre_scan &amp; helpers</vh>
-<v t="ekr.20240128230812.1"><vh>&lt;&lt; pre-scan 'newline' tokens &gt;&gt;</vh></v>
-<v t="ekr.20240128123117.1"><vh>&lt;&lt; pre-scan op tokens &gt;&gt;</vh></v>
-<v t="ekr.20240128231119.1"><vh>&lt;&lt; pre-scan 'name' tokens &gt;&gt;</vh></v>
-<v t="ekr.20240129041304.1"><vh>tbo.finish_arg</vh></v>
-<v t="ekr.20240128233406.1"><vh>tbo.finish_slice</vh></v>
-<v t="ekr.20240129040347.1"><vh>tbo.finish_dict</vh></v>
-</v>
-<v t="ekr.20240129034209.1"><vh>tbo.is_unary_op_with_prev</vh></v>
-<v t="ekr.20240129035336.1"><vh>tbo.is_python_keyword</vh></v>
-<v t="ekr.20240106170746.1"><vh>tbo.set_context</vh></v>
-</v>
-</v>
-<v t="ekr.20241001215023.1"><vh>COPY: class ParseState</vh></v>
 <v t="ekr.20241003062509.1"><vh>--- old Rust code</vh>
 <v t="ekr.20241003055233.1"><vh>beautify_one_file: 'static</vh></v>
 <v t="ekr.20241001093308.2"><vh>fn tokenize</vh>
@@ -361,7 +290,7 @@
 <v t="ekr.20241004095931.1"><vh>class AnnotatedInputTok</vh></v>
 <v t="ekr.20241004110721.1"><vh>class Annotator</vh>
 <v t="ekr.20241004153742.1"><vh>Annotator.new</vh></v>
-<v t="ekr.20241004153802.1"><vh>Annotator.pre_pass (** to do)</vh>
+<v t="ekr.20241004153802.1"><vh>Annotator.pre_pass</vh>
 <v t="ekr.20241004154345.2"><vh>&lt;&lt; pre-scan newline tokens &gt;&gt;</vh></v>
 <v t="ekr.20241004154345.3"><vh>&lt;&lt; pre-scan op tokens &gt;&gt;</vh></v>
 <v t="ekr.20241004154345.4"><vh>&lt;&lt; pre-scan name tokens &gt;&gt;</vh></v>
@@ -508,1168 +437,19 @@
 <v t="ekr.20240929080242.1"><vh>Stats::fmt_ns</vh></v>
 <v t="ekr.20240929075236.1"><vh>Stats::report</vh></v>
 </v>
-<v t="ekr.20241004110721.1"></v>
+<v t="ekr.20241004165555.1"><vh>class ScanState </vh></v>
 </v>
 <v t="ekr.20241004073317.1"><vh>--- Recent</vh>
 <v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.113"></v>
 </v>
+<v t="ekr.20241004165555.1"></v>
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
-<v t="ekr.20241004165555.1"><vh> class ScanState </vh></v>
 <v t="ekr.20241004095735.1"></v>
 <v t="ekr.20241004153802.1"></v>
 <v t="ekr.20241004110721.1"></v>
 </vnodes>
 <tnodes>
-<t tx="ekr.20200107040729.1">def show_diffs(self, s1: str, s2: str) -&gt; None:  # pragma: no cover
-    """Print diffs between strings s1 and s2."""
-    filename = self.filename
-    lines = list(difflib.unified_diff(
-        g.splitLines(s1),
-        g.splitLines(s2),
-        fromfile=f"Old {filename}",
-        tofile=f"New {filename}",
-    ))
-    print('')
-    print(f"Diffs for {filename}")
-    for line in lines:
-        print(line)
-</t>
-<t tx="ekr.20240105140814.12">def regularize_newlines(self, s: str) -&gt; str:
-    """Regularize newlines within s."""
-    return s.replace('\r\n', '\n').replace('\r', '\n')
-</t>
-<t tx="ekr.20240105140814.17">def write_file(self, filename: str, s: str) -&gt; None:  # pragma: no cover
-    """
-    Write the string s to the file whose name is given.
-
-    Handle all exceptions.
-
-    Before calling this function, the caller should ensure
-    that the file actually has been changed.
-    """
-    try:
-        s2 = g.toEncodedString(s)  # May raise exception.
-        with open(filename, 'wb') as f:
-            f.write(s2)
-    except Exception as e:  # pragma: no cover
-        print(f"Error {e!r}: {filename!r}")
-</t>
-<t tx="ekr.20240105145241.1">class TokenBasedOrange:  # Orange is the new Black.
-
-    &lt;&lt; TokenBasedOrange: docstring &gt;&gt;
-    &lt;&lt; TokenBasedOrange: __slots__ &gt;&gt;
-    &lt;&lt; TokenBasedOrange: python-related constants &gt;&gt;
-
-    @others
-</t>
-<t tx="ekr.20240105145241.10">def do_comment(self) -&gt; None:
-    """Handle a comment token."""
-    val = self.input_token.value
-    &lt;&lt; do_comment: update comment-related state &gt;&gt;
-
-    # Generate the comment.
-    self.pending_lws = ''
-    self.pending_ws = ''
-    entire_line = self.input_token.line.lstrip().startswith('#')
-
-    if entire_line:
-        # The comment includes all ws.
-        # #1496: No further munging needed.
-        val = self.input_token.line.rstrip()
-        # #3056: Insure one space after '#' in non-sentinel comments.
-        #        Do not change bang lines or '##' comments.
-        if m := self.comment_pat.match(val):
-            i = len(m.group(1))
-            val = val[:i] + '# ' + val[i + 1 :]
-    else:
-        # Exactly two spaces before trailing comments.
-        val = '  ' + val.rstrip()
-    self.gen_token('comment', val)
-</t>
-<t tx="ekr.20240105145241.11">def do_encoding(self) -&gt; None:
-    """Handle the encoding token."""
-</t>
-<t tx="ekr.20240105145241.12">def do_endmarker(self) -&gt; None:
-    """Handle an endmarker token."""
-
-    # Ensure exactly one newline at the end of file.
-    if self.prev_output_kind not in (
-        'indent', 'dedent', 'line-indent', 'newline',
-    ):
-        self.output_list.append('\n')
-    self.pending_lws = ''  # Defensive.
-    self.pending_ws = ''  # Defensive.
-</t>
-<t tx="ekr.20240105145241.14">consider_message = 'consider using python/Tools/scripts/reindent.py'
-
-def do_indent(self) -&gt; None:
-    """Handle indent token."""
-
-    # Only warn about indentation errors.
-    if '\t' in self.input_token.value:  # pragma: no cover
-        print(f"Found tab character in {self.filename}")
-        print(self.consider_message)
-    elif (len(self.input_token.value) % self.tab_width) != 0:  # pragma: no cover
-        print(f"Indentation error in {self.filename}")
-        print(self.consider_message)
-
-    # Handle the token!
-    new_indent = self.input_token.value
-    old_indent = self.indent_level * self.tab_width * ' '
-    if new_indent &gt; old_indent:
-        self.indent_level += 1
-    elif new_indent &lt; old_indent:  # pragma: no cover (defensive)
-        print(f"\n===== do_indent: can not happen {new_indent!r}, {old_indent!r}")
-
-    self.lws = new_indent
-    self.pending_lws = self.lws
-    self.pending_ws = ''
-    self.prev_output_kind = 'indent'
-</t>
-<t tx="ekr.20240105145241.16"></t>
-<t tx="ekr.20240105145241.17"></t>
-<t tx="ekr.20240105145241.18">def do_number(self) -&gt; None:
-    """Handle a number token."""
-    self.gen_blank()
-    self.gen_token('number', self.input_token.value)
-</t>
-<t tx="ekr.20240105145241.19"></t>
-<t tx="ekr.20240105145241.2">def __init__(self, settings: Optional[Settings] = None):
-    """Ctor for Orange class."""
-
-    # Set default settings.
-    if settings is None:
-        settings = {}
-
-    # Hard-code 4-space tabs.
-    self.tab_width = 4
-
-    # Define tokens even for empty files.
-    self.input_token: InputToken = None
-    self.input_tokens: list[InputToken] = []
-    self.lws: str = ""  # Set only by Indent/Dedent tokens.
-    self.pending_lws: str = ""
-    self.pending_ws: str = ""
-
-    # Set by gen_token and all do_* methods that bypass gen_token.
-    self.prev_output_kind: str = None
-    self.prev_output_value: str = None
-
-    # Set ivars from the settings dict *without* using setattr.
-    self.all = settings.get('all', False)
-    self.beautified = settings.get('beautified', False)
-    self.diff = settings.get('diff', False)
-    self.report = settings.get('report', False)
-    self.write = settings.get('write', False)
-
-    # The list of tokens that tbo._next/_prev skip.
-    self.insignificant_tokens = (
-        'comment', 'dedent', 'indent', 'newline', 'nl', 'ws',
-    )
-
-    # General patterns.
-    self.beautify_pat = re.compile(
-        r'#\s*pragma:\s*beautify\b|#\s*@@beautify|#\s*@\+node|#\s*@[+-]others|#\s*@[+-]&lt;&lt;')
-    self.comment_pat = re.compile(r'^(\s*)#[^@!# \n]')
-    self.nobeautify_pat = re.compile(r'\s*#\s*pragma:\s*no\s*beautify\b|#\s*@@nobeautify')
-
-    # Patterns from FastAtRead class, specialized for python delims.
-    self.node_pat = re.compile(r'^(\s*)#@\+node:([^:]+): \*(\d+)?(\*?) (.*)$')  # @node
-    self.start_doc_pat = re.compile(r'^\s*#@\+(at|doc)?(\s.*?)?$')  # @doc or @
-    self.at_others_pat = re.compile(r'^(\s*)#@(\+|-)others\b(.*)$')  # @others
-
-    # Doc parts end with @c or a node sentinel. Specialized for python.
-    self.end_doc_pat = re.compile(r"^\s*#@(@(c(ode)?)|([+]node\b.*))$")
-</t>
-<t tx="ekr.20240105145241.20">def gen_equal_op(self) -&gt; None:
-
-    val = self.input_token.value
-    context = self.input_token.context
-
-    if context == 'initializer':
-        # Pep 8: Don't use spaces around the = sign when used to indicate
-        #        a keyword argument or a default parameter value.
-        #        However, when combining an argument annotation with a default value,
-        #        *do* use spaces around the = sign.
-        self.pending_ws = ''
-        self.gen_token('op-no-blanks', val)
-    else:
-        self.gen_blank()
-        self.gen_token('op', val)
-        self.gen_blank()
-</t>
-<t tx="ekr.20240105145241.21">def do_string(self) -&gt; None:
-    """
-    Handle a 'string' token.
-
-    The Tokenizer converts all f-string tokens to a single 'string' token.
-    """
-    # Careful: continued strings may contain '\r'
-    val = self.regularize_newlines(self.input_token.value)
-    self.gen_token('string', val)
-    self.gen_blank()
-</t>
-<t tx="ekr.20240105145241.22">def do_verbatim(self) -&gt; None:
-    """
-    Handle one token in verbatim mode.
-    End verbatim mode when the appropriate comment is seen.
-    """
-    kind = self.input_token.kind
-    #
-    # Careful: tokens may contain '\r'
-    val = self.regularize_newlines(self.input_token.value)
-    if kind == 'comment':
-        if self.beautify_pat.match(val):
-            self.verbatim = False
-        val = val.rstrip()
-        self.gen_token('comment', val)
-        return
-    if kind == 'indent':
-        self.indent_level += 1
-        self.lws = self.indent_level * self.tab_width * ' '
-    if kind == 'dedent':
-        self.indent_level -= 1
-        self.lws = self.indent_level * self.tab_width * ' '
-    self.gen_token('verbatim', val)
-</t>
-<t tx="ekr.20240105145241.23">def do_ws(self) -&gt; None:
-    """
-    Handle the "ws" pseudo-token.  See Tokenizer.itok.do_token (the gem).
-
-    Put the whitespace only if if ends with backslash-newline.
-    """
-    val = self.input_token.value
-    last_token = self.input_tokens[self.index - 1]
-
-    if last_token.kind in ('nl', 'newline'):
-        self.pending_lws = val
-        self.pending_ws = ''
-    elif '\\\n' in val:
-        self.pending_lws = ''
-        self.pending_ws = val
-    else:
-        self.pending_ws = val
-</t>
-<t tx="ekr.20240105145241.26">def gen_token(self, kind: str, value: Any) -&gt; None:
-    """Add an output token to the code list."""
-
-    if self.pending_lws:
-        self.output_list.append(self.pending_lws)
-    elif self.pending_ws:
-        self.output_list.append(self.pending_ws)
-
-    self.output_list.append(value)
-    self.pending_lws = ''
-    self.pending_ws = ''
-    self.prev_output_value = value
-    self.prev_output_kind = kind
-</t>
-<t tx="ekr.20240105145241.27">def gen_blank(self) -&gt; None:
-    """
-    Queue a *request* a blank.
-    Change *neither* prev_output_kind *nor* pending_lws.
-    """
-
-    prev_kind = self.prev_output_kind
-    if prev_kind == 'op-no-blanks':
-        # A demand that no blank follows this op.
-        self.pending_ws = ''
-    elif prev_kind == 'hard-blank':
-        # Eat any further blanks.
-        self.pending_ws = ''
-    elif prev_kind in (
-        'dedent',
-        'file-start',
-        'indent',
-        'line-indent',
-        'newline',
-    ):
-        # Suppress the blank, but do *not* change the pending ws.
-        pass
-    elif self.pending_ws:
-        # Use the existing pending ws.
-        pass
-    else:
-        self.pending_ws = ' '
-</t>
-<t tx="ekr.20240105145241.3">def push_state(self, kind: str, value: Union[int, str, None] = None) -&gt; None:
-    """Append a state to the state stack."""
-    state = ParseState(kind, value)
-    self.state_stack.append(state)
-</t>
-<t tx="ekr.20240105145241.31">def gen_colon(self) -&gt; None:
-    """Handle a colon."""
-    val = self.input_token.value
-    context = self.input_token.context
-
-    self.pending_ws = ''
-    if context == 'complex-slice':
-        if self.prev_output_value not in '[:':
-            self.gen_blank()
-        self.gen_token('op', val)
-        self.gen_blank()
-    elif context == 'simple-slice':
-        self.gen_token('op-no-blanks', val)
-    elif context == 'dict':
-        self.gen_token('op', val)
-        self.gen_blank()
-    else:
-        self.gen_token('op', val)
-        self.gen_blank()
-</t>
-<t tx="ekr.20240105145241.35">def gen_lt(self) -&gt; None:
-    """Generate code for a left paren or curly/square bracket."""
-    val = self.input_token.value
-    assert val in '([{', repr(val)
-
-    # Update state vars.
-    if val == '(':
-        self.paren_level += 1
-    elif val == '[':
-        self.square_brackets_stack.append(False)
-    else:
-        self.curly_brackets_level += 1
-
-    # Generate or suppress the leading blank.
-    # Update self.in_arg_list if necessary.
-    if self.input_token.context == 'import':
-        self.gen_blank()
-    elif self.prev_output_kind in ('op', 'word-op'):
-        self.gen_blank()
-    elif self.prev_output_kind == 'word':
-        # Only suppress blanks before '(' or '[' for non-keywords.
-        if val == '{' or self.prev_output_value in (
-            'if', 'else', 'elif', 'return', 'for', 'while',
-        ):
-            self.gen_blank()
-        elif val == '(':
-            self.in_arg_list += 1
-            self.pending_ws = ''
-        else:
-            self.pending_ws = ''
-    elif self.prev_output_kind != 'line-indent':
-        self.pending_ws = ''
-
-    # Output the token!
-    self.gen_token('op-no-blanks', val)
-</t>
-<t tx="ekr.20240105145241.36">def gen_rt(self) -&gt; None:
-    """Generate code for a right paren or curly/square bracket."""
-    val = self.input_token.value
-    assert val in ')]}', repr(val)
-
-    # Update state vars.
-    if val == ')':
-        self.paren_level -= 1
-        self.in_arg_list = max(0, self.in_arg_list - 1)
-    elif val == ']':
-        self.square_brackets_stack.pop()
-    else:
-        self.curly_brackets_level -= 1
-
-    if self.prev_output_kind != 'line-indent':
-        self.pending_ws = ''
-    self.gen_token('rt', val)
-</t>
-<t tx="ekr.20240105145241.37">def gen_possible_unary_op(self) -&gt; None:
-    """Add a unary or binary op to the token list."""
-    val = self.input_token.value
-    if self.is_unary_op(self.index, val):
-        prev = self.input_token
-        if prev.kind == 'lt':
-            self.gen_token('op-no-blanks', val)
-        else:
-            self.gen_blank()
-            self.gen_token('op-no-blanks', val)
-    else:
-        self.gen_blank()
-        self.gen_token('op', val)
-        self.gen_blank()
-
-</t>
-<t tx="ekr.20240105145241.38">def gen_star_op(self) -&gt; None:
-    """Put a '*' op, with special cases for *args."""
-    val = self.input_token.value
-    context = self.input_token.context
-
-    if context == 'arg':
-        self.gen_blank()
-        self.gen_token('op-no-blanks', val)
-    else:
-        self.gen_blank()
-        self.gen_token('op', val)
-        self.gen_blank()
-</t>
-<t tx="ekr.20240105145241.39">def gen_star_star_op(self) -&gt; None:
-    """Put a ** operator, with a special case for **kwargs."""
-    val = self.input_token.value
-    context = self.input_token.context
-
-    if context == 'arg':
-        self.gen_blank()
-        self.gen_token('op-no-blanks', val)
-    else:
-        self.gen_blank()
-        self.gen_token('op', val)
-        self.gen_blank()
-</t>
-<t tx="ekr.20240105145241.4"></t>
-<t tx="ekr.20240105145241.40">def gen_word(self, s: str) -&gt; None:
-    """Add a word request to the code list."""
-    assert s == self.input_token.value
-    assert s and isinstance(s, str), repr(s)
-    self.gen_blank()
-    self.gen_token('word', s)
-    self.gen_blank()
-</t>
-<t tx="ekr.20240105145241.43">def _next(self, i: int) -&gt; Optional[int]:
-    """
-    Return the next *significant* input token.
-
-    Ignore insignificant tokens: whitespace, indentation, comments, etc.
-
-    The **Global Token Ratio** is tbo.n_scanned_tokens / len(tbo.tokens),
-    where tbo.n_scanned_tokens is the total number of calls calls to
-    tbo.next or tbo.prev.
-
-    For Leo's sources, this ratio ranges between 0.48 and 1.51!
-
-    The orange_command function warns if this ratio is greater than 2.5.
-    Previous versions of this code suffered much higher ratios.
-    """
-    i += 1
-    while i &lt; len(self.input_tokens):
-        token = self.input_tokens[i]
-        if token.kind not in self.insignificant_tokens:
-            # g.trace(f"token: {token!r}")
-            return i
-        i += 1
-    return None  # pragma: no cover
-</t>
-<t tx="ekr.20240105145241.5">def no_visitor(self) -&gt; None:  # pragma: no cover
-    self.oops(f"Unknown kind: {self.input_token.kind!r}")
-
-def beautify(self,
-    contents: str, filename: str, input_tokens: list[InputToken],
-) -&gt; str:
-    """
-    The main line. Create output tokens and return the result as a string.
-
-    beautify_file and beautify_file_def call this method.
-    """
-    &lt;&lt; tbo.beautify: init ivars &gt;&gt;
-
-    try:
-        # Pre-scan the token list, setting context.s
-        self.pre_scan()
-
-        # Init ivars first.
-        self.input_token = None
-        self.pending_lws = ''
-        self.pending_ws = ''
-        self.prev_output_kind = None
-        self.prev_output_value = None
-
-        # Init state.
-        self.gen_token('file-start', '')
-        self.push_state('file-start')
-
-        # The main loop:
-        prev_line_number: int = 0
-        for self.index, self.input_token in enumerate(input_tokens):
-            # Set global for visitors.
-            if prev_line_number != self.input_token.line_number:
-                prev_line_number = self.input_token.line_number
-            # Call the proper visitor.
-            if self.verbatim:
-                self.do_verbatim()
-            else:
-                func = getattr(self, f"do_{self.input_token.kind}", self.no_visitor)
-                func()
-
-        # Return the result.
-        result = ''.join(self.output_list)
-        return result
-
-    # Make no change if there is any error.
-    except InternalBeautifierError as e:  # pragma: no cover
-        # oops calls self.internal_error_message to creates e.
-        print(repr(e))
-    except AssertionError as e:  # pragma: no cover
-        print(self.internal_error_message(repr(e)))
-    return contents
-</t>
-<t tx="ekr.20240105145241.6">def beautify_file(self, filename: str) -&gt; bool:  # pragma: no cover
-    """
-    TokenBasedOrange: Beautify the the given external file.
-
-    Return True if the file was beautified.
-    """
-    if 0:
-        print(
-            f"all: {int(self.all)} "
-            f"beautified: {int(self.beautified)} "
-            f"diff: {int(self.diff)} "
-            f"report: {int(self.report)} "
-            f"write: {int(self.write)} "
-            f"{g.shortFileName(filename)}"
-        )
-    self.filename = filename
-    contents, tokens = self.init_tokens_from_file(filename)
-    if not (contents and tokens):
-        return False  # Not an error.
-    if not isinstance(tokens[0], InputToken):
-        self.oops(f"Not an InputToken: {tokens[0]!r}")
-
-    # Beautify the contents, returning the original contents on any error.
-    results = self.beautify(contents, filename, tokens)
-
-    # Ignore changes only to newlines.
-    if self.regularize_newlines(contents) == self.regularize_newlines(results):
-        return False
-
-    # Print reports.
-    if self.beautified:  # --beautified.
-        print(f"tbo: beautified: {g.shortFileName(filename)}")
-    if self.diff:  # --diff.
-        print(f"Diffs: {filename}")
-        self.show_diffs(contents, results)
-
-    # Write the (changed) file .
-    if self.write:  # --write.
-        self.write_file(filename, results)
-    return True
-</t>
-<t tx="ekr.20240105145241.8">def init_tokens_from_file(self, filename: str) -&gt; tuple[
-    str, list[InputToken]
-]:  # pragma: no cover
-    """
-    Create the list of tokens for the given file.
-    Return (contents, encoding, tokens).
-    """
-    self.indent_level = 0
-    self.filename = filename
-    contents = g.readFile(filename)
-    if not contents:
-        self.input_tokens = []
-        return '', []
-    self.input_tokens = input_tokens = Tokenizer().make_input_tokens(contents)
-    return contents, input_tokens
-</t>
-<t tx="ekr.20240105145241.9"># Visitors (tbo.do_* methods) handle input tokens.
-# Generators (tbo.gen_* methods) create zero or more output tokens.
-</t>
-<t tx="ekr.20240106170746.1">def set_context(self, i: int, context: str) -&gt; None:
-    """
-    Set self.input_tokens[i].context, but only if it does not already exist!
-
-    See the docstring for pre_scan for details.
-    """
-
-    trace = False  # Do not delete the trace below.
-
-    valid_contexts = (
-        'annotation', 'arg', 'complex-slice', 'simple-slice',
-        'dict', 'import', 'initializer',
-    )
-    if context not in valid_contexts:
-        self.oops(f"Unexpected context! {context!r}")  # pragma: no cover
-
-    token = self.input_tokens[i]
-
-    if trace:  # pragma: no cover
-        token_s = f"&lt;{token.kind}: {token.show_val(12)}&gt;"
-        ignore_s = 'Ignore' if token.context else ' ' * 6
-        print(f"{i:3} {ignore_s} token: {token_s} context: {context}")
-
-    if not token.context:
-        token.context = context
-</t>
-<t tx="ekr.20240106220724.1">def dump_token_range(self, i1: int, i2: int, tag: Optional[str] = None) -&gt; None:  # pragma: no cover
-    """Dump the given range of input tokens."""
-    if tag:
-        print(tag)
-    for token in self.input_tokens[i1 : i2 + 1]:
-        print(token.dump())
-</t>
-<t tx="ekr.20240107141830.1">def gen_word_op(self, s: str) -&gt; None:
-    """Add a word-op request to the code list."""
-    assert s == self.input_token.value
-    assert s and isinstance(s, str), repr(s)
-    self.gen_blank()
-    self.gen_token('word-op', s)
-    self.gen_blank()
-</t>
-<t tx="ekr.20240109035004.1">def gen_dot_op(self) -&gt; None:
-    """Handle the '.' input token."""
-    context = self.input_token.context
-
-    # Get the previous significant **input** token.
-    # This is the only call to next(i) anywhere!
-    next_i = self._next(self.index)
-    next = 'None' if next_i is None else self.input_tokens[next_i]
-    import_is_next = next and next.kind == 'name' and next.value == 'import'
-
-    if context == 'import':
-        if (
-            self.prev_output_kind == 'word'
-            and self.prev_output_value in ('from', 'import')
-        ):
-            self.gen_blank()
-            op = 'op' if import_is_next else 'op-no-blanks'
-            self.gen_token(op, '.')
-        elif import_is_next:
-            self.gen_token('op', '.')
-            self.gen_blank()
-        else:
-            self.pending_ws = ''
-            self.gen_token('op-no-blanks', '.')
-    else:
-        self.pending_ws = ''
-        self.gen_token('op-no-blanks', '.')
-</t>
-<t tx="ekr.20240109082712.1">def is_unary_op(self, i: int, val: str) -&gt; bool:
-
-    if val == '~':
-        return True
-    if val not in '+-':  # pragma: no cover
-        return False
-
-    # Get the previous significant **input** token.
-    # This is the only call to _prev(i) anywhere!
-    prev_i = self._prev(i)
-    prev_token = None if prev_i is None else self.input_tokens[prev_i]
-    kind = prev_token.kind if prev_token else ''
-    value = prev_token.value if prev_token else ''
-
-    if kind in ('number', 'string'):
-        return_val = False
-    elif kind == 'op' and value in ')]':
-        return_val = False
-    elif kind == 'op' and value in '{([:':
-        return_val = True
-    elif kind != 'name':
-        return_val = True
-    else:
-        # The hard case: prev_token is a 'name' token.
-        # Any Python keyword indicates a unary operator.
-        return_val = keyword.iskeyword(value) or keyword.issoftkeyword(value)
-    return return_val
-</t>
-<t tx="ekr.20240110205127.1"># The parser calls scanner methods to move through the list of input tokens.
-</t>
-<t tx="ekr.20240111035404.1">__slots__ = [
-    # Command-line arguments.
-    'all', 'beautified', 'diff', 'report', 'write',
-
-    # Global data.
-    'contents', 'filename', 'input_tokens', 'output_list', 'tab_width',
-    'insignificant_tokens',  # New.
-
-    # Token-related data for visitors.
-    'index', 'input_token', 'line_number',
-    'pending_lws', 'pending_ws', 'prev_output_kind', 'prev_output_value',  # New.
-
-    # Parsing state for visitors.
-    'decorator_seen', 'in_arg_list', 'in_doc_part', 'state_stack', 'verbatim',
-
-    # Whitespace state. Don't even *think* about changing these!
-    'curly_brackets_level', 'indent_level', 'lws', 'paren_level', 'square_brackets_stack',
-
-    # Regular expressions.
-    'at_others_pat', 'beautify_pat', 'comment_pat', 'end_doc_pat',
-    'nobeautify_pat', 'node_pat', 'start_doc_pat',
-]
-</t>
-<t tx="ekr.20240111051726.1">def do_dedent(self) -&gt; None:
-    """Handle dedent token."""
-    # Note: other methods use self.indent_level.
-    self.indent_level -= 1
-    self.lws = self.indent_level * self.tab_width * ' '
-    self.pending_lws = self.lws
-    self.pending_ws = ''
-    self.prev_output_kind = 'dedent'
-</t>
-<t tx="ekr.20240112023403.1"># Debugging vars...
-self.contents = contents
-self.filename = filename
-self.line_number: Optional[int] = None
-
-# The input and output lists...
-self.output_list: list[str] = []
-self.input_tokens = input_tokens  # The list of input tokens.
-
-# State vars for whitespace.
-self.curly_brackets_level = 0  # Number of unmatched '{' tokens.
-self.paren_level = 0  # Number of unmatched '(' tokens.
-self.square_brackets_stack: list[bool] = []  # A stack of bools, for self.gen_word().
-self.indent_level = 0  # Set only by do_indent and do_dedent.
-
-# Parse state.
-self.decorator_seen = False  # Set by do_name for do_op.
-self.in_arg_list = 0  # &gt; 0 if in an arg list of a def.
-self.in_doc_part = False
-self.state_stack: list[ParseState] = []  # Stack of ParseState objects.
-
-# Leo-related state.
-self.verbatim = False  # True: don't beautify.
-
-# Ivars describing the present input token...
-self.index = 0  # The index within the tokens array of the token being scanned.
-self.lws = ''  # Leading whitespace. Required!
-</t>
-<t tx="ekr.20240112082350.1">def internal_error_message(self, message: str) -&gt; str:  # pragma: no cover
-    """Print a message about an error in the beautifier itself."""
-    # Compute lines_s.
-    line_number = self.input_token.line_number
-    lines = g.splitLines(self.contents)
-    n1 = max(0, line_number - 5)
-    n2 = min(line_number + 5, len(lines))
-    prev_lines = ['\n']
-    for i in range(n1, n2):
-        marker_s = '***' if i + 1 == line_number else '   '
-        prev_lines.append(f"Line {i+1:5}:{marker_s}{lines[i]!r}\n")
-    context_s = ''.join(prev_lines) + '\n'
-
-    # Return the full error message.
-    return (
-        # '\n\n'
-        'Error in token-based beautifier!\n'
-        f"{message.strip()}\n"
-        '\n'
-        f"At token {self.index}, line: {line_number} file: {self.filename}\n"
-        f"{context_s}"
-        "Please report this message to Leo's developers"
-    )
-</t>
-<t tx="ekr.20240115233050.1">def _prev(self, i: int) -&gt; Optional[int]:
-    """
-    Return the previous *significant* input token.
-
-    Ignore insignificant tokens: whitespace, indentation, comments, etc.
-    """
-    i -= 1
-    while i &gt;= 0:
-        token = self.input_tokens[i]
-        if token.kind not in self.insignificant_tokens:
-            return i
-        i -= 1
-    return None  # pragma: no cover
-</t>
-<t tx="ekr.20240116040458.1">insignificant_kinds = (
-    'comment', 'dedent', 'encoding', 'endmarker', 'indent', 'newline', 'nl', 'ws',
-)
-
-# 'name' tokens that may appear in expressions.
-operator_keywords = (
-    'await',  # Debatable.
-    'and', 'in', 'not', 'not in', 'or',  # Operators.
-    'True', 'False', 'None',  # Values.
-)
-</t>
-<t tx="ekr.20240117053310.1">def oops(self, message: str) -&gt; None:  # pragma: no cover
-    """Raise InternalBeautifierError."""
-    raise InternalBeautifierError(self.internal_error_message(message))
-</t>
-<t tx="ekr.20240119062227.1">@language rest
-@wrap
-
-"""
-Leo's token-based beautifier, three times faster than the beautifier in leoAst.py.
-
-**Design**
-
-The *pre_scan* method is the heart of the algorithm. It sets context
-for the `:`, `=`, `**` and `.` tokens *without* using the parse tree.
-*pre_scan* calls three *finishers*.
-
-Each finisher uses a list of *relevant earlier tokens* to set the
-context for one kind of (input) token. Finishers look behind (in the
-stream of input tokens) with essentially no cost.
-
-After the pre-scan, *tbo.beautify* (the main loop) calls *visitors*
-for each separate type of *input* token.
-
-Visitors call *code generators* to generate strings in the output
-list, using *lazy evaluation* to generate whitespace.
-"""
-</t>
-<t tx="ekr.20240126012433.1"></t>
-<t tx="ekr.20240128114622.1">def pre_scan(self) -&gt; None:
-    """
-    Scan the entire file in one iterative pass, adding context to a few
-    kinds of tokens as follows:
-
-    Token   Possible Contexts (or None)
-    =====   ===========================
-    ':'     'annotation', 'dict', 'complex-slice', 'simple-slice'
-    '='     'annotation', 'initializer'
-    '*'     'arg'
-    '**'    'arg'
-    '.'     'import'
-    """
-
-    # The main loop.
-    in_import = False
-    scan_stack: list[ScanState] = []
-    prev_token: Optional[InputToken] = None
-    for i, token in enumerate(self.input_tokens):
-        kind, value = token.kind, token.value
-        if kind in 'newline':
-            &lt;&lt; pre-scan 'newline' tokens &gt;&gt;
-        elif kind == 'op':
-            &lt;&lt; pre-scan 'op' tokens &gt;&gt;
-        elif kind == 'name':
-            &lt;&lt; pre-scan 'name' tokens &gt;&gt;
-        # Remember the previous significant token.
-        if kind not in self.insignificant_kinds:
-            prev_token = token
-    # Sanity check.
-    if scan_stack:  # pragma: no cover
-        print('pre_scan: non-empty scan_stack')
-        print(scan_stack)
-</t>
-<t tx="ekr.20240128123117.1">// top_state: Optional[ScanState] = scan_stack[-1] if scan_stack else None
-let n = scan_stack.len();
-let top_state: Option&lt;ScanState&gt; = if n &gt; 0 { scan_stack[n - 1] } else { None };
-
-// Handle '[' and ']'.
-if value == '[' {
-    scan_stack.push(ScanState("slice", token))
-}
-else if value == ']' {
-    // assert top_state and top_state.kind == 'slice'
-    self.finish_slice(i, top_state)
-    scan_stack.pop();
-}
-// Handle '{' and '}'.
-if value == '{' {
-    scan_stack.append(ScanState('dict', token))
-}
-elif value == '}':
-    assert top_state and top_state.kind == 'dict'
-    self.finish_dict(i, top_state)
-    scan_stack.pop()
-
-# Handle '(' and ')'
-elif value == '(':
-    if self.is_python_keyword(prev_token) or prev_token and prev_token.kind != 'name':
-        state_kind = '('
-    else:
-        state_kind = 'arg'
-    scan_stack.append(ScanState(state_kind, token))
-elif value == ')':
-    assert top_state and top_state.kind in ('(', 'arg'), repr(top_state)
-    if top_state.kind == 'arg':
-        self.finish_arg(i, top_state)
-    scan_stack.pop()
-
-# Handle interior tokens in 'arg' and 'slice' states.
-if top_state:
-    if top_state.kind in ('dict', 'slice') and value == ':':
-        top_state.value.append(i)
-    if top_state.kind == 'arg' and value in '**=:,':
-        top_state.value.append(i)
-
-# Handle '.' and '(' tokens inside 'import' and 'from' statements.
-if in_import and value in '(.':
-    self.set_context(i, 'import')
-</t>
-<t tx="ekr.20240128230812.1"># 'import' and 'from x import' statements may span lines.
-# 'ws' tokens represent continued lines like this:   ws: ' \\\n    '
-if in_import and not scan_stack:
-    in_import = False
-</t>
-<t tx="ekr.20240128231119.1">prev_is_yield = prev_token and prev_token.kind == 'name' and prev_token.value == 'yield'
-if value in ('from', 'import') and not prev_is_yield:
-    # 'import' and 'from x import' statements should be at the outer level.
-    assert not scan_stack, scan_stack
-    in_import = True
-</t>
-<t tx="ekr.20240128233406.1">def finish_slice(self, end: int, state: ScanState) -&gt; None:
-    """Set context for all ':' when scanning from '[' to ']'."""
-
-    # Sanity checks.
-    assert state.kind == 'slice', repr(state)
-    token = state.token
-    assert token.value == '[', repr(token)
-    colons = state.value
-    assert isinstance(colons, list), repr(colons)
-    i1 = token.index
-    assert i1 &lt; end, (i1, end)
-
-    # Do nothing if there are no ':' tokens in the slice.
-    if not colons:
-        return
-
-    # Compute final context by scanning the tokens.
-    final_context = 'simple-slice'
-    inter_colon_tokens = 0
-    prev = token
-    for i in range(i1 + 1, end - 1):
-        token = self.input_tokens[i]
-        kind, value = token.kind, token.value
-        if kind not in self.insignificant_kinds:
-            if kind == 'op':
-                if value == '.':
-                    # Ignore '.' tokens and any preceding 'name' token.
-                    if prev and prev.kind == 'name':  # pragma: no cover
-                        inter_colon_tokens -= 1
-                elif value == ':':
-                    inter_colon_tokens = 0
-                elif value in '-+':
-                    # Ignore unary '-' or '+' tokens.
-                    if not self.is_unary_op_with_prev(prev, token):
-                        inter_colon_tokens += 1
-                        if inter_colon_tokens &gt; 1:
-                            final_context = 'complex-slice'
-                            break
-                elif value == '~':
-                    # '~' is always a unary op.
-                    pass
-                else:
-                    # All other ops contribute.
-                    inter_colon_tokens += 1
-                    if inter_colon_tokens &gt; 1:
-                        final_context = 'complex-slice'
-                        break
-            else:
-                inter_colon_tokens += 1
-                if inter_colon_tokens &gt; 1:
-                    final_context = 'complex-slice'
-                    break
-            prev = token
-
-    # Set the context of all outer-level ':' tokens.
-    for i in colons:
-        self.set_context(i, final_context)
-</t>
-<t tx="ekr.20240129034209.1">def is_unary_op_with_prev(self, prev: Optional[InputToken], token: InputToken) -&gt; bool:
-    """
-    Return True if token is a unary op in the context of prev, the previous
-    significant token.
-    """
-    if token.value == '~':  # pragma: no cover
-        return True
-    if prev is None:
-        return True  # pragma: no cover
-    assert token.value in '**-+', repr(token.value)
-    if prev.kind in ('number', 'string'):
-        return_val = False
-    elif prev.kind == 'op' and prev.value in ')]':
-         # An unnecessary test?
-        return_val = False  # pragma: no cover
-    elif prev.kind == 'op' and prev.value in '{([:,':
-        return_val = True
-    elif prev.kind != 'name':
-        # An unnecessary test?
-        return_val = True  # pragma: no cover
-    else:
-        # prev is a'name' token.
-        return self.is_python_keyword(token)
-    return return_val
-</t>
-<t tx="ekr.20240129035336.1">def is_python_keyword(self, token: Optional[InputToken]) -&gt; bool:
-    """Return True if token is a 'name' token referring to a Python keyword."""
-    if not token or token.kind != 'name':
-        return False
-    return keyword.iskeyword(token.value) or keyword.issoftkeyword(token.value)
-</t>
-<t tx="ekr.20240129040347.1">def finish_dict(self, end: int, state: Optional[ScanState]) -&gt; None:
-    """
-    Set context for all ':' when scanning from '{' to '}'
-
-    Strictly speaking, setting this context is unnecessary because
-    tbo.gen_colon generates the same code regardless of this context.
-
-    In other words, this method can be a do-nothing!
-    """
-
-    # Sanity checks.
-    if not state:
-        return
-    assert state.kind == 'dict', repr(state)
-    token = state.token
-    assert token.value == '{', repr(token)
-    colons = state.value
-    assert isinstance(colons, list), repr(colons)
-    i1 = token.index
-    assert i1 &lt; end, (i1, end)
-
-    # Set the context for all ':' tokens.
-    for i in colons:
-        self.set_context(i, 'dict')
-</t>
-<t tx="ekr.20240129041304.1">def finish_arg(self, end: int, state: Optional[ScanState]) -&gt; None:
-    """Set context for all ':' when scanning from '(' to ')'."""
-
-    # Sanity checks.
-    if not state:
-        return
-    assert state.kind == 'arg', repr(state)
-    token = state.token
-    assert token.value == '(', repr(token)
-    values = state.value
-    assert isinstance(values, list), repr(values)
-    i1 = token.index
-    assert i1 &lt; end, (i1, end)
-    if not values:
-        return
-
-    # Compute the context for each *separate* '=' token.
-    equal_context = 'initializer'
-    for i in values:
-        token = self.input_tokens[i]
-        assert token.kind == 'op', repr(token)
-        if token.value == ',':
-            equal_context = 'initializer'
-        elif token.value == ':':
-            equal_context = 'annotation'
-        elif token.value == '=':
-            self.set_context(i, equal_context)
-            equal_context = 'initializer'
-
-    # Set the context of all outer-level ':', '*', and '**' tokens.
-    prev: Optional[InputToken] = None
-    for i in range(i1, end):
-        token = self.input_tokens[i]
-        if token.kind not in self.insignificant_kinds:
-            if token.kind == 'op':
-                if token.value in ('*', '**'):
-                    if self.is_unary_op_with_prev(prev, token):
-                        self.set_context(i, 'arg')
-                elif token.value == '=':
-                    # The code above has set the context.
-                    assert token.context in ('initializer', 'annotation'), (i, repr(token.context))
-                elif token.value == ':':
-                    self.set_context(i, 'annotation')
-            prev = token
-</t>
-<t tx="ekr.20240226131015.1">def user_error_message(self, message: str) -&gt; str:  # pragma: no cover
-    """Print a message about a user error."""
-    # Compute lines_s.
-    line_number = self.input_token.line_number
-    lines = g.splitLines(self.contents)
-    n1 = max(0, line_number - 5)
-    n2 = min(line_number + 5, len(lines))
-    prev_lines = ['\n']
-    for i in range(n1, n2):
-        marker_s = '***' if i + 1 == line_number else '   '
-        prev_lines.append(f"Line {i+1:5}:{marker_s}{lines[i]!r}\n")
-    context_s = ''.join(prev_lines) + '\n'
-
-    # Return the full error message.
-    return (
-        f"{message.strip()}\n"
-        '\n'
-        f"At token {self.index}, line: {line_number} file: {self.filename}\n"
-        f"{context_s}"
-    )
-</t>
-<t tx="ekr.20240418043826.1">def do_newline(self) -&gt; None:
-    """
-    do_newline: Handle a regular newline.
-
-    From https://docs.python.org/3/library/token.html
-
-    NEWLINE tokens end *logical* lines of Python code.
-    """
-
-    self.output_list.append('\n')
-    self.pending_lws = ''  # Set only by 'dedent', 'indent' or 'ws' tokens.
-    self.pending_ws = ''
-    self.prev_output_kind = 'newline'
-    self.prev_output_value = '\n'
-</t>
-<t tx="ekr.20240418043827.1">def do_nl(self) -&gt; None:
-    """
-    do_nl: Handle a continuation line.
-
-    From https://docs.python.org/3/library/token.html
-
-    NL tokens end *physical* lines. They appear when when a logical line of
-    code spans multiple physical lines.
-    """
-    return self.do_newline()
-</t>
-<t tx="ekr.20240418045924.1">def do_op(self) -&gt; None:
-    """Handle an op token."""
-    val = self.input_token.value
-
-    if val == '.':
-        self.gen_dot_op()
-    elif val == '@':
-        self.gen_token('op-no-blanks', val)
-        self.push_state('decorator')
-    elif val == ':':
-        # Treat slices differently.
-        self.gen_colon()
-    elif val in ',;':
-        # Pep 8: Avoid extraneous whitespace immediately before
-        # comma, semicolon, or colon.
-        self.pending_ws = ''
-        self.gen_token('op', val)
-        self.gen_blank()
-    elif val in '([{':
-        # Pep 8: Avoid extraneous whitespace immediately inside
-        # parentheses, brackets or braces.
-        self.gen_lt()
-    elif val in ')]}':
-        # Ditto.
-        self.gen_rt()
-    elif val == '=':
-        self.gen_equal_op()
-    elif val in '~+-':
-        self.gen_possible_unary_op()
-    elif val == '*':
-        self.gen_star_op()
-    elif val == '**':
-        self.gen_star_star_op()
-    else:
-        # Pep 8: always surround binary operators with a single space.
-        # '==','+=','-=','*=','**=','/=','//=','%=','!=','&lt;=','&gt;=','&lt;','&gt;',
-        # '^','~','*','**','&amp;','|','/','//',
-        # Pep 8: If operators with different priorities are used, consider
-        # adding whitespace around the operators with the lowest priorities.
-        self.gen_blank()
-        self.gen_token('op', val)
-        self.gen_blank()
-</t>
-<t tx="ekr.20240418050017.1">def do_name(self) -&gt; None:
-    """Handle a name token."""
-    name = self.input_token.value
-    if name in self.operator_keywords:
-        self.gen_word_op(name)
-    else:
-        self.gen_word(name)
-</t>
-<t tx="ekr.20240420034216.1"># Leo-specific code...
-if self.node_pat.match(val):
-    # Clear per-node state.
-    self.in_doc_part = False
-    self.verbatim = False
-    self.decorator_seen = False
-    # Do *not* clear other state, which may persist across @others.
-        # self.curly_brackets_level = 0
-        # self.in_arg_list = 0
-        # self.indent_level = 0
-        # self.lws = ''
-        # self.paren_level = 0
-        # self.square_brackets_stack = []
-        # self.state_stack = []
-else:
-    # Keep track of verbatim mode.
-    if self.beautify_pat.match(val):
-        self.verbatim = False
-    elif self.nobeautify_pat.match(val):
-        self.verbatim = True
-    # Keep trace of @doc parts, to honor the convention for splitting lines.
-    if self.start_doc_pat.match(val):
-        self.in_doc_part = True
-    if self.end_doc_pat.match(val):
-        self.in_doc_part = False
-</t>
 <t tx="ekr.20240927151701.1"></t>
 <t tx="ekr.20240927151701.100"></t>
 <t tx="ekr.20240927151701.101"></t>
@@ -2070,8 +850,9 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 </t>
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
+@nosearch
 
-- Study assert!</t>
+- Can't patch InputTok with context.</t>
 <t tx="ekr.20240928073118.1">@language python
 g.cls()
 import os
@@ -3373,36 +2154,6 @@ print('abc')
         }
         return result;
 </t>
-<t tx="ekr.20241001215023.1">class ParseState:
-    """
-    A class representing items in the parse state stack.
-
-    The present states:
-
-    'file-start': Ensures the stack stack is never empty.
-
-    'decorator': The last '@' was a decorator.
-
-        do_op():    push_state('decorator')
-        do_name():  pops the stack if state.kind == 'decorator'.
-
-    'indent': The indentation level for 'class' and 'def' names.
-
-        do_name():      push_state('indent', self.level)
-        do_dendent():   pops the stack once or
-                        twice if state.value == self.level.
-    """
-
-    def __init__(self, kind: str, value: Union[int, str, None]) -&gt; None:
-        self.kind = kind
-        self.value = value
-
-    def __repr__(self) -&gt; str:
-        return f"State: {self.kind} {self.value!r}"  # pragma: no cover
-
-    def __str__(self) -&gt; str:
-        return f"State: {self.kind} {self.value!r}"  # pragma: no cover
-</t>
 <t tx="ekr.20241002054443.1">@language rust
 
 // The clone in LB:beautify appears to be necessary.
@@ -4679,8 +3430,12 @@ The present states:
 
     // The main loop.
     let mut in_import = false;
+    // Avoid Option complications by creating a dummy token and scan state.
+    let dummy_token = InputTok::new("dummy", "");
+    let dummy_state = ScanState::new("dummy", dummy_token);
     let scan_stack: Vec&lt;ScanState&gt; = Vec::new();
-    let mut prev_token: Option&lt;InputTok&gt; = None;
+    scan_stack.push(dummy_state);
+    let mut prev_token = dummy_token;
     for (i, token) in self.input_tokens.iter().enumerate() {
         let (kind, value) = (token.kind, token.value);
         if kind == "newline" {
@@ -4694,11 +3449,11 @@ The present states:
         }
         // Remember the previous significant token.
         if !self.insignificant_kinds.contains(kind) {
-            prev_token = token;
+            prev_token = token.clone();
         }
     }
     // Sanity check.
-    if scan_stack {
+    if scan_stack.len() &gt; 0 {
         println!("pre_scan: non-empty scan_stack");
         // *** print(scan_stack);
     }
@@ -4711,47 +3466,47 @@ if in_import &amp;&amp; scan_stack.len() == 0 {
 }
 </t>
 <t tx="ekr.20241004154345.3">// top_state: Optional[fScanState] = scan_stack[-1] if scan_stack else None
-let top_state = if scan_stack.len() &gt; 1 {scan_stack[scan_stack.len() - 1]} else { None};
+// The scan_stack always contains at least a dummy state.
+let top_state = scan_stack[scan_stack.len() - 1];
 
 // Handle "[" and "]".
 if value == "[" {
-    // scan_stack.push(ScanState("slice", token));
-    scan_stack.push(ScanState { kind: "slice", token: token, value: None });  // *** None??
+    scan_stack.push(ScanState::new("slice", token.clone()));
 }
 else if  value == "]" {
-    // assert top_state and top_state.kind == "slice"
+    assert!(top_state.kind == "slice");
     self.finish_slice(i, top_state);
     scan_stack.pop();
 }
 // Handle "{" and "}".
 if value == "{" {
-    scan_stack.push(ScanState { kind: "dict", token: token, value: None });  // *** None??
+    scan_stack.push(ScanState::new("dict", token.clone()));
 }
 else if value == "}" {
-    // assert top_state and top_state.kind == "dict"
+    assert!(top_state.kind == "dict");
     self.finish_dict(i, top_state);
     scan_stack.pop();
 }
 // Handle "(" and ")"
 else if value == "(" {
     let state_kind: &amp;str;
-    if self.is_python_keyword(prev_token) || prev_token &amp;&amp;prev_token.kind != "name" {
+    if self.is_python_keyword(prev_token) || prev_token.kind != "name" {
         state_kind = "(";
     }
     else {
         state_kind = "arg";
     }
-    scan_stack.push(ScanState { kind: state_kind, token: token, value: None });  // *** None??
+    scan_stack.push(ScanState::new(state_kind, token.clone()));
 }
 else if value == ")" {
-    // assert top_state and top_state.kind in ("(", "arg"), repr(top_state)
+    // *** assert(["(", "arg"].contains(top_state.kind));
     if top_state.kind == "arg" {
         self.finish_arg(i, top_state);
     }
-    scan_stack.pop()
+    scan_stack.pop();
 }
 // Handle interior tokens in "arg" and "slice" states.
-if top_state {
+if top_state.kind != "dummy" {
     if (top_state.kind == "dict" || top_state.kind =="slice") &amp;&amp; value == ":" {
         top_state.value.push(i);
     }
@@ -4764,18 +3519,19 @@ if in_import &amp;&amp; ["(", "."].contains(value) {
     self.set_context(i, "import");
 }
 </t>
-<t tx="ekr.20241004154345.4">let prev_is_yield = prev_token &amp;&amp; prev_token.kind == "name" &amp;&amp; prev_token.value == "yield";
+<t tx="ekr.20241004154345.4">let prev_is_yield = prev_token.kind == "name" &amp;&amp; prev_token.value == "yield";
 if ["from", "import"].contains(value) &amp;&amp; !prev_is_yield {
     // "import" and "from x import" statements should be at the outer level.
     // assert not scan_stack, scan_stack
+    assert!(scan_stack.len() == 1 &amp;&amp; scan_stack[0].kind == "dummy");
     in_import = true;
 }
 </t>
-<t tx="ekr.20241004154345.5">fn finish_arg(&amp;mut self, end: u32, state: Option&lt;ScanState&gt;) {
+<t tx="ekr.20241004154345.5">fn finish_arg(&amp;mut self, end: usize, state: ScanState) {
     //! Set context for all ":" when scanning from "(" to ")".
 
     // Sanity checks.
-    if state.unwrap() == None {  // ***
+    if state.kind == "dummy" {  // ***
         return;
     }
     // assert state.kind == "arg", repr(state)
@@ -4785,7 +3541,7 @@ if ["from", "import"].contains(value) &amp;&amp; !prev_is_yield {
     // assert isinstance(values, list), repr(values)
     let mut i1 = token.index;
     // assert i1 &lt; end, (i1, end)
-    if !values {
+    if values.len() == 0 {
         return;
     }
     // Compute the context for each *separate* "=" token.
@@ -4805,13 +3561,13 @@ if ["from", "import"].contains(value) &amp;&amp; !prev_is_yield {
         }
     }
     // Set the context of all outer-level ":", "*", and "**" tokens.
-    let prev: Option&lt;InputTok&gt; = None;
+    let mut prev_token = InputTok::new("dummy", "");
     for i in i1..end {
         token = self.input_tokens[i];
         if !self.insignificant_kinds.contains(token.kind) {
             if token.kind == "op" {
                 if ["*", "**"].contains(token.value) {
-                    if self.is_unary_op_with_prev(prev, token) {
+                    if self.is_unary_op_with_prev(prev_token, token) {
                         self.set_context(i, "arg");
                     }
                 }
@@ -4823,12 +3579,12 @@ if ["from", "import"].contains(value) &amp;&amp; !prev_is_yield {
                     self.set_context(i, "annotation")
                 }
             }
-            prev = token;
+            prev_token = token;
         }
     }
 }
 </t>
-<t tx="ekr.20241004154345.6">fn finish_slice(&amp;mut self, end: usize, state: Option&lt;ScanState&gt;) {
+<t tx="ekr.20241004154345.6">fn finish_slice(&amp;mut self, end: usize, state: ScanState) {
     //! Set context for all ":" when scanning from "[" to "]".
 
     // Sanity checks.
@@ -4856,7 +3612,7 @@ if ["from", "import"].contains(value) &amp;&amp; !prev_is_yield {
             if kind == "op" {
                 if value == "." {
                     // Ignore "." tokens and any preceding "name" token.
-                    if prev &amp;&amp; prev.kind == "name" {
+                    if prev.kind == "name" {
                         inter_colon_tokens -= 1;
                     }
                 }
@@ -4901,7 +3657,7 @@ if ["from", "import"].contains(value) &amp;&amp; !prev_is_yield {
     }    
 }
 </t>
-<t tx="ekr.20241004154345.7">fn finish_dict(&amp;mut self, end: usize, state: Option&lt;ScanState&gt;) {
+<t tx="ekr.20241004154345.7">fn finish_dict(&amp;mut self, end: usize, state: ScanState) {
     //! Set context for all ":" when scanning from "{" to "}"
     //! 
     //! Strictly speaking, setting this context is unnecessary because
@@ -4910,7 +3666,7 @@ if ["from", "import"].contains(value) &amp;&amp; !prev_is_yield {
     //! In other words, this method can be a do-nothing!
 
     // Sanity checks.
-    if state.unwrap() == None {
+    if state.kind == "Dummy" {
         return;
     }
     // assert state.kind == "dict", repr(state)
@@ -4945,7 +3701,7 @@ if ["from", "import"].contains(value) &amp;&amp; !prev_is_yield {
         let token_kind = token.kind;
         let token_val = token.show_val(12);
         let token_s = f!("&lt;{token_kind}: {token_val}&gt;");
-        let ignore_s = if token.context { "Ignore" } else { " " * 6 };
+        let ignore_s = if token.context { "Ignore" } else { "      "};
         println!("{i:3} {ignore_s} token: {token_s} context: {context}");
     }
     if token.context.len() == 0 {  // **
@@ -4958,22 +3714,106 @@ if ["from", "import"].contains(value) &amp;&amp; !prev_is_yield {
     // Valid (kind, value) pairs:
     // kind  Value
     // ====  =====
-    // "args" None
-    // "from" None
-    // "import" None
+    // "args" Not used
+    // "from" Not used
+    // "import" Not used
     // "slice" list of colon indices
     // "dict" list of colon indices
-    
     kind: String,
     token: InputTok,
-    value: Vec&lt;u32&gt;,  // Only used for some kinds of tokens.
+    value: Vec&lt;usize&gt;,  // Only used for some kinds of tokens.
 }
+
+impl ScanState {
+    fn new(kind: &amp;str, token: InputTok) -&gt; ScanState {
+        ScanState {
+            kind: kind.to_string(),
+            token: token,
+            value: Vec::new(),
+        }
+    }
+}
+
 
     // def __repr__(self) -&gt; str:
         // return f"ScanState: i: {self.token.index:&lt;4} kind: {self.kind} value: {self.value}"
 
     // def __str__(self) -&gt; str:
         // return f"ScanState: i: {self.token.index:&lt;4} kind: {self.kind} value: {self.value}"
+</t>
+<t tx="ekr.20241005031511.1">class InputToken:  # leoTokens.py.
+    """A class representing a TBO input token."""
+
+    __slots__ = (
+        'context',
+        'index',
+        'kind',
+        'line',
+        'line_number',
+        'value',
+    )
+
+    def __init__(
+        self, kind: str, value: str, index: int, line: str, line_number: int,
+    ) -&gt; None:
+        self.context: Optional[str] = None
+        self.index = index
+        self.kind = kind
+        self.line = line  # The entire line containing the token.
+        self.line_number = line_number
+        self.value = value
+
+    def __repr__(self) -&gt; str:  # pragma: no cover
+        s = f"{self.index:&lt;5} {self.kind:&gt;8}"
+        return f"Token {s}: {self.show_val(20):22}"
+
+    def __str__(self) -&gt; str:  # pragma: no cover
+        s = f"{self.index:&lt;5} {self.kind:&gt;8}"
+        return f"Token {s}: {self.show_val(20):22}"
+
+    def to_string(self) -&gt; str:
+        """Return the contribution of the token to the source file."""
+        return self.value if isinstance(self.value, str) else ''
+
+    @others
+</t>
+<t tx="ekr.20241005031511.2">def brief_dump(self) -&gt; str:  # pragma: no cover
+    """Dump a token."""
+    token_s = f"{self.kind:&gt;10} : {self.show_val(10):12}"
+    return f"&lt;line: {self.line_number} index: {self.index:3} {token_s}&gt;"
+
+</t>
+<t tx="ekr.20241005031511.3">def dump(self) -&gt; str:  # pragma: no cover
+    """Dump a token and related links."""
+    return (
+        f"{self.line_number:4} "
+        f"{self.index:&gt;5} {self.kind:&gt;15} "
+        f"{self.show_val(100)}"
+    )
+</t>
+<t tx="ekr.20241005031511.4">def dump_header(self) -&gt; None:  # pragma: no cover
+    """Print the header for token.dump"""
+    print(
+        f"\n"
+        f"         node    {'':10} token {'':10}   token\n"
+        f"line index class {'':10} index {'':10} kind value\n"
+        f"==== ===== ===== {'':10} ===== {'':10} ==== =====\n")
+</t>
+<t tx="ekr.20241005031511.5">def error_dump(self) -&gt; str:  # pragma: no cover
+    """Dump a token for error message."""
+    return f"index: {self.index:&lt;3} {self.kind:&gt;12} {self.show_val(20):&lt;20}"
+</t>
+<t tx="ekr.20241005031511.6">def show_val(self, truncate_n: int = 8) -&gt; str:  # pragma: no cover
+    """Return the token.value field."""
+    if self.kind in ('dedent', 'indent', 'newline', 'ws'):
+        # val = str(len(self.value))
+        val = repr(self.value)
+    elif self.kind == 'string' or self.kind.startswith('fstring'):
+        # repr would be confusing.
+        val = g.truncate(self.value, truncate_n)
+    else:
+        val = g.truncate(repr(self.value), truncate_n)
+    return val
 </t>
 </tnodes>
 </leo_file>
