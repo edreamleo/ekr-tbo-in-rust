@@ -53,6 +53,7 @@ impl AnnotatedInputTok {
 struct Annotator {
     // The present input token...
     input_tokens: Vec<InputTok>,
+    insignificant_tokens: [String; 6],
     index: u32,  // The index within the tokens array of the token being scanned.
     lws: String,  // Leading whitespace. Required!
     // For whitespace.
@@ -80,6 +81,10 @@ impl Annotator {
             indent_level: 0,
             index: 0,
             input_tokens: input_tokens,
+            insignificant_tokens: [
+                "comment".to_string(), "dedent".to_string(), "indent".to_string(),
+                "newline".to_string(), "nl".to_string(), "ws".to_string(),
+            ],
             lws: String::new(),
             paren_level: 0,
             state_stack: Vec::new(),
@@ -105,11 +110,11 @@ impl Annotator {
         // Avoid Option complications by creating a dummy token and scan state.
         let dummy_token = InputTok::new("dummy", "");
         let dummy_state = ScanState::new("dummy", dummy_token);
-        let scan_stack: Vec<ScanState> = Vec::new();
+        let mut scan_stack: Vec<ScanState> = Vec::new();
         scan_stack.push(dummy_state);
-        let mut prev_token = dummy_token;
+        let mut prev_token = InputTok::new("dummy", "");
         for (i, token) in self.input_tokens.iter().enumerate() {
-            let (kind, value) = (token.kind, token.value);
+            let (kind, value) = (token.kind.clone(), token.value.clone());  // ***
             if kind == "newline" {
                 //@+<< pre-scan newline tokens >>
                 //@+node:ekr.20241004154345.2: *4* << pre-scan newline tokens >>
@@ -125,7 +130,7 @@ impl Annotator {
                 //@+node:ekr.20241004154345.3: *4* << pre-scan op tokens >>
                 // top_state: Optional[fScanState] = scan_stack[-1] if scan_stack else None
                 // The scan_stack always contains at least a dummy state.
-                let top_state = scan_stack[scan_stack.len() - 1];
+                let mut top_state = scan_stack[scan_stack.len() - 1].clone();
 
                 // Handle "[" and "]".
                 if value == "[" {
@@ -148,7 +153,7 @@ impl Annotator {
                 // Handle "(" and ")"
                 else if value == "(" {
                     let state_kind: &str;
-                    if self.is_python_keyword(prev_token) || prev_token.kind != "name" {
+                    if self.is_python_keyword(prev_token.clone()) || prev_token.kind != "name" {
                         state_kind = "(";
                     }
                     else {
@@ -168,12 +173,13 @@ impl Annotator {
                     if (top_state.kind == "dict" || top_state.kind =="slice") && value == ":" {
                         top_state.value.push(i);
                     }
-                    if top_state.kind == "arg" && ["**", "*", "=", ":", ","].contains(value) {
+                    if false {  // *** top_state.kind == "arg" && ["**", "*", "=", ":", ","].contains(value) {
                         top_state.value.push(i);
                     }
                 }
                 // Handle "." and "(" tokens inside "import" and "from" statements.
-                if in_import && ["(", "."].contains(value) {
+                // if in_import && ["(", "."].contains(value) {
+                if in_import && (value == *"," || value == *".") {
                     self.set_context(i, "import");
                 }
                 //@-<< pre-scan op tokens >>
@@ -182,7 +188,8 @@ impl Annotator {
                 //@+<< pre-scan name tokens >>
                 //@+node:ekr.20241004154345.4: *4* << pre-scan name tokens >>
                 let prev_is_yield = prev_token.kind == "name" && prev_token.value == "yield";
-                if ["from", "import"].contains(value) && !prev_is_yield {
+                // if ["from", "import"].contains(value) && !prev_is_yield {
+                if !prev_is_yield && (value == *"from" || value == *"import") {
                     // "import" and "from x import" statements should be at the outer level.
                     // assert not scan_stack, scan_stack
                     assert!(scan_stack.len() == 1 && scan_stack[0].kind == "dummy");
@@ -191,22 +198,21 @@ impl Annotator {
                 //@-<< pre-scan name tokens >>
             }
             // Remember the previous significant token.
-            if !self.insignificant_kinds.contains(kind) {
+            if !self.insignificant_tokens.contains(&kind.to_string()) {
                 prev_token = token.clone();
             }
         }
         // Sanity check.
         if scan_stack.len() > 0 {
             println!("pre_scan: non-empty scan_stack");
-            // *** print(scan_stack);
         }
     }
-    //@+node:ekr.20241004154345.5: *4* Annotator.finish_arg
+    //@+node:ekr.20241004154345.5: *3* Annotator.finish_arg
     fn finish_arg(&mut self, end: usize, state: ScanState) {
         //! Set context for all ":" when scanning from "(" to ")".
 
         // Sanity checks.
-        if state.kind == "dummy" {  // ***
+        if state.kind == "dummy" {
             return;
         }
         // assert state.kind == "arg", repr(state)
@@ -214,7 +220,9 @@ impl Annotator {
         // assert token.value == "(", repr(token)
         let mut values = state.value;
         // assert isinstance(values, list), repr(values)
-        let mut i1 = token.index;
+        // *** let mut i1 = token.index;
+        let mut i1 = 0;
+
         // assert i1 < end, (i1, end)
         if values.len() == 0 {
             return;
@@ -239,9 +247,10 @@ impl Annotator {
         let mut prev_token = InputTok::new("dummy", "");
         for i in i1..end {
             token = self.input_tokens[i];
-            if !self.insignificant_kinds.contains(token.kind) {
+            if !self.insignificant_tokens.contains(&token.kind.to_string()) {
                 if token.kind == "op" {
-                    if ["*", "**"].contains(token.value) {
+                    // if ["*", "**"].contains(token.value) {
+                    if token.value == *"*" || token.value == *"**" {
                         if self.is_unary_op_with_prev(prev_token, token) {
                             self.set_context(i, "arg");
                         }
@@ -258,7 +267,7 @@ impl Annotator {
             }
         }
     }
-    //@+node:ekr.20241004154345.6: *4* Annotator.finish_slice
+    //@+node:ekr.20241004154345.6: *3* Annotator.finish_slice
     fn finish_slice(&mut self, end: usize, state: ScanState) {
         //! Set context for all ":" when scanning from "[" to "]".
 
@@ -268,7 +277,9 @@ impl Annotator {
         // assert token.value == "[", repr(token)
         let mut colons = state.value;
         // assert isinstance(colons, list), repr(colons)
-        let mut i1 = token.index;
+        // *** let mut i1 = token.index;
+        
+        let mut i1 = 0;
         // assert i1 < end, (i1, end)
 
         // Do nothing if there are no ":" tokens in the slice.
@@ -283,18 +294,18 @@ impl Annotator {
         for i in i1 + 1..end - 1 {
             let token = self.input_tokens[i];
             let (kind, value) = (token.kind, token.value);
-            if !self.insignificant_kinds.contains(kind) {
+            if !self.insignificant_tokens.contains(&kind.to_string()) {
                 if kind == "op" {
-                    if value == "." {
+                    if *value == *"." {
                         // Ignore "." tokens and any preceding "name" token.
                         if prev.kind == "name" {
                             inter_colon_tokens -= 1;
                         }
                     }
-                    else if value == ":" {
+                    else if *value == *":" {
                         inter_colon_tokens = 0;
                     }
-                    else if ["-", "+"].contains(value) {
+                    else if *value == *"-" || *value == *"+" {
                         // Ignore unary "-" or "+" tokens.
                         if !self.is_unary_op_with_prev(prev, token) {
                             inter_colon_tokens += 1;
@@ -304,7 +315,7 @@ impl Annotator {
                             }
                         }
                     }
-                    else if value == "~" {
+                    else if *value == *"~" {
                         // "~" is always a unary op.
                     }
                     else {
@@ -331,7 +342,9 @@ impl Annotator {
             self.set_context(i, final_context);
         }    
     }
-    //@+node:ekr.20241004154345.7: *4* Annotator.finish_dict
+    //@+node:ekr.20241004154345.7: *3* Annotator.finish_dict
+    // ***
+    #[allow(unused_variables)]
     fn finish_dict(&mut self, end: usize, state: ScanState) {
         //! Set context for all ":" when scanning from "{" to "}"
         //! 
@@ -345,43 +358,56 @@ impl Annotator {
             return;
         }
         // assert state.kind == "dict", repr(state)
-        let token = state.unwrap().token;
+        let token = state.token;
         // assert token.value == "{", repr(token)
         let colons = state.value;
         // assert isinstance(colons, list), repr(colons)
-        let i1 = token.index;
-        // assert i1 < end, (i1, end)
+        
+        // *** Rewrite
+            // let i1 = token.index;
+            // assert i1 < end, (i1, end)
 
         // Set the context for all ":" tokens.
         for i in colons {
             self.set_context(i, "dict");
         }
     }
-    //@+node:ekr.20241004163018.1: *4* Annotator.set_context
-    fn set_context(&mut self, i: usize, context: &str) {
+    //@+node:ekr.20241005091217.1: *3* Annotator.is_python_keyword (to do)
+    fn is_python_keyword(&mut self, _token: InputTok) -> bool {  // *** Temp.
+        return false;  // ***
+    }
+    //@+node:ekr.20241005092549.1: *3* Annotator.is_unary_op_with_prev (to do)
+    fn is_unary_op_with_prev(&mut self, _prev_token: InputTok, _token: InputTok) -> bool {  // *** Temp.
+        return false;  // ***
+    }
+    //@+node:ekr.20241004163018.1: *3* Annotator.set_context
+    fn set_context(&mut self, _i: usize, _context: &str) {  // *** temp.
         //! Set self.input_tokens[i].context, but only if it does not already exist!
         //! See the docstring for pre_scan for details.
 
-        let trace = false;  // Do not delete the trace below.
-        let valid_contexts = [
-            "annotation", "arg", "complex-slice", "simple-slice",
-            "dict", "import", "initializer",
-        ];
-        if !valid_contexts.contain(context) {
-            // self.oops(f"Unexpected context! {context!r}")
-            println!("Unexpected context! {context:?}");
-        }
-        let token = self.input_tokens[i];
-        if trace {  // Do not delete.
-            let token_kind = token.kind;
-            let token_val = token.show_val(12);
-            let token_s = f!("<{token_kind}: {token_val}>");
-            let ignore_s = if token.context { "Ignore" } else { "      "};
-            println!("{i:3} {ignore_s} token: {token_s} context: {context}");
-        }
-        if token.context.len() == 0 {  // **
-            token.context.push(context);
-        }
+        // *** Rewrite.
+
+        // let trace = false;  // Do not delete the trace below.
+        // let valid_contexts = [
+            // "annotation", "arg", "complex-slice", "simple-slice",
+            // "dict", "import", "initializer",
+        // ];
+        // if !valid_contexts.contain(context) {
+            // // self.oops(f"Unexpected context! {context!r}")
+            // println!("Unexpected context! {context:?}");
+        // }
+        // let token = self.input_tokens[i];
+        // if trace {  // Do not delete.
+            // let token_kind = token.kind;
+            // let token_val = token.show_val(12);
+            // let token_s = f!("<{token_kind}: {token_val}>");
+            // let ignore_s = if token.context { "Ignore" } else { "      "};
+            // println!("{i:3} {ignore_s} token: {token_s} context: {context}");
+        // }
+        // *** Rewrite
+        // if token.context.len() == 0 {  // **
+            // token.context.push(context);
+        // }
     }
     //@-others
 }
@@ -565,7 +591,7 @@ impl Beautifier {
         self.stats.read_time += t1.elapsed().as_nanos();
         // Create (an immutable!) list of input tokens.
         let t2 = std::time::Instant::now();
-        let input_tokens: Vec<InputTok> = self.make_input_list(&contents);
+        let input_tokens = self.make_input_list(&contents);  // : Vec<InputTok> = 
         self.stats.make_tokens_time += t2.elapsed().as_nanos();
         // Annotate tokens (the prepass).
         let t3 = std::time::Instant::now();
@@ -1258,6 +1284,7 @@ struct ParseState {
     value: String,
 }
 //@+node:ekr.20241004165555.1: ** class ScanState 
+#[derive(Clone)]
 struct ScanState {
     // A class representing tbo.pre_scan's scanning state.
     // Valid (kind, value) pairs:
