@@ -257,8 +257,12 @@ impl Annotator<'_> {
             i += 1;
         }
         // Sanity check.
-        if scan_stack.len() > 0 {
+        if scan_stack.len() > 1 || scan_stack[0].kind != "dummy" {
+            println!("");
             println!("pre_scan: non-empty scan_stack");
+            for scan_state in scan_stack {
+                println!("{scan_state:?}");
+            }
         }
     }
     //@+node:ekr.20241004154345.5: *4* Annotator.finish_arg
@@ -516,11 +520,16 @@ impl Beautifier {
         
         let mut result = Vec::new();
         let mut annotator = Annotator::new(input_list);
+        
+        // To do: return a list of (i, context) pairs.
         annotator.pre_scan();
 
+        // *** To do: create the annotated tokens.
         // for annotated_token in annotated_tokens {
             // result.push(result.push(annotated_token));
         // }
+        
+        // *** temp.
         for token in input_list {
             let context = Vec::new();
             let annotated_tok = AnnotatedInputTok::new(context, &token.kind, &token.value);

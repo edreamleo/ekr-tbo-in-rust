@@ -446,13 +446,6 @@
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 <v t="ekr.20241004095735.1"></v>
 <v t="ekr.20241004110721.1"></v>
-<v t="ekr.20241006071239.1"><vh>Found 5:insignificant_tokens</vh>
-<v t="ekr.20241004154345.5"></v>
-<v t="ekr.20241004154345.6"></v>
-<v t="ekr.20241004153742.1"></v>
-<v t="ekr.20241004153802.1"></v>
-<v t="ekr.20241004110721.1"></v>
-</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -3339,11 +3332,16 @@ impl Beautifier {
     
     let mut result = Vec::new();
     let mut annotator = Annotator::new(input_list);
+    
+    // To do: return a list of (i, context) pairs.
     annotator.pre_scan();
 
+    // *** To do: create the annotated tokens.
     // for annotated_token in annotated_tokens {
         // result.push(result.push(annotated_token));
     // }
+    
+    // *** temp.
     for token in input_list {
         let context = Vec::new();
         let annotated_tok = AnnotatedInputTok::new(context, &amp;token.kind, &amp;token.value);
@@ -3456,9 +3454,8 @@ The present states:
     let dummy_state = ScanState::new("dummy", &amp;dummy_token);
     let mut scan_stack: Vec&lt;ScanState&gt; = Vec::new();
     scan_stack.push(dummy_state);
-    let mut prev_token = InputTok::new("dummy", "");
+    let mut prev_token = &amp;dummy_token;
     let mut i = 0;
-    // for token in &amp;self.input_tokens {
     for token in self.input_tokens {
         let (kind, value) = (token.kind, token.value);
         if kind == "newline" {
@@ -3472,13 +3469,17 @@ The present states:
         }
         // Remember the previous significant token.
         if !self.insignificant_tokens.contains(&amp;kind) { 
-            prev_token = token.clone();
+            prev_token = token;
         }
         i += 1;
     }
     // Sanity check.
-    if scan_stack.len() &gt; 0 {
+    if scan_stack.len() &gt; 1 || scan_stack[0].kind != "dummy" {
+        println!("");
         println!("pre_scan: non-empty scan_stack");
+        for scan_state in scan_stack {
+            println!("{scan_state:?}");
+        }
     }
 }
 </t>
@@ -3904,10 +3905,5 @@ fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;Inp
     return false;  // ***
 }
 </t>
-<t tx="ekr.20241006071239.1">@nosearch
-
-# Word, Head, Body
-
-# found 5 nodes</t>
 </tnodes>
 </leo_file>
