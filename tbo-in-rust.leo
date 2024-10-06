@@ -444,9 +444,8 @@
 <v t="ekr.20240929074037.113"></v>
 </v>
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
-<v t="ekr.20241004095735.1"></v>
 <v t="ekr.20241004110721.1"></v>
-<v t="ekr.20241004153802.1"></v>
+<v t="ekr.20241004095735.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
