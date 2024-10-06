@@ -51,11 +51,13 @@ impl AnnotatedInputTok {
 }
 //@+node:ekr.20241004110721.1: ** class Annotator
 struct Annotator<'a> {
+    // Classes of tokens
+    insignificant_tokens: [&'a str; 7],
+    op_kinds: [&'a str; 29],
     // The present input token...
     input_tokens: &'a Vec<InputTok<'a>>,
-    insignificant_tokens: [&'a str; 7],
     index: u32,  // The index within the tokens array of the token being scanned.
-    index_dict: HashMap<u32, Vec<&'a str>>,
+    index_dict: HashMap<usize, String>,
     lws: String,  // Leading whitespace. Required!
     // For whitespace.
     curly_brackets_level: u32,  // Number of unmatched '{' tokens.
@@ -84,8 +86,24 @@ impl Annotator<'_> {
             index: 0,
             index_dict: HashMap::new(),
             input_tokens: input_tokens,
-            insignificant_tokens: ["dummy", "comment", "dedent", "indent", "newline", "nl", "ws"],
+            insignificant_tokens: [
+                "dummy", "ws",  // pseudo-tokens.
+                "Comment", "Dedent", "Indent", "Newline", "Nl",  // Real tokens.
+            ],
             lws: String::new(),
+            op_kinds: [
+                "And",
+                "Colon", "ColonEqual", "Comma", "Dot", "DoubleStar",
+                "Equal", "EqEqual", "Greater", "GreaterEqual",
+                "Is",
+                "Less", "LessEqual", "Lbrace", "Lpar", "Lsqb",
+                "Minus", "MinusEqual",
+                "Not", "NotEqual",
+                "Or",
+                "Percent", "Plus", "PlusEqual",
+                "Rarrow", "Rbrace", "Rpar", "Rsqb",
+                "Star",
+            ],
             paren_level: 0,
             state_stack: Vec::new(),
             square_brackets_stack: Vec::new(),
@@ -174,17 +192,18 @@ impl Annotator<'_> {
         let mut prev_token = &dummy_token;
         for (i, token) in self.input_tokens.into_iter().enumerate() {
             let (kind, value) = (token.kind, token.value);
-            if kind == "newline" {
+            if kind == "Newline" {
                 //@+<< pre-scan newline tokens >>
                 //@+node:ekr.20241004154345.2: *4* << pre-scan newline tokens >>
                 // "import" and "from x import" statements may span lines.
                 // "ws" tokens represent continued lines like this:   ws: " \\\n    "
+
                 if in_import && scan_stack.len() == 0 {
                     in_import = false;
                 }
                 //@-<< pre-scan newline tokens >>
             }
-            else if kind == "op" {
+            else if self.op_kinds.contains(&kind) {
                 //@+<< pre-scan op tokens >>
                 //@+node:ekr.20241004154345.3: *4* << pre-scan op tokens >>
                 // top_state: Optional[fScanState] = scan_stack[-1] if scan_stack else None
@@ -244,7 +263,7 @@ impl Annotator<'_> {
                 }
                 //@-<< pre-scan op tokens >>
             }
-            else if kind == "name" {
+            else if kind == "Name" {
                 //@+<< pre-scan name tokens >>
                 //@+node:ekr.20241004154345.4: *4* << pre-scan name tokens >>
                 let prev_is_yield = prev_token.kind == "name" && prev_token.value == "yield";
@@ -257,7 +276,7 @@ impl Annotator<'_> {
                 //@-<< pre-scan name tokens >>
             }
             // Remember the previous significant token.
-            if !self.insignificant_tokens.contains(&kind) { 
+            if !self.insignificant_tokens.contains(&kind) {
                 prev_token = token;
             }
         }
@@ -271,7 +290,7 @@ impl Annotator<'_> {
         }
     }
     //@+node:ekr.20241004154345.5: *4* Annotator.finish_arg
-    fn finish_arg(&self, end: usize, state: &ScanState) {
+    fn finish_arg(&mut self, end: usize, state: &ScanState) {
         //! Set context for all ":" when scanning from "(" to ")".
 
         // Sanity checks.
@@ -330,7 +349,7 @@ impl Annotator<'_> {
         }
     }
     //@+node:ekr.20241004154345.6: *4* Annotator.finish_slice
-    fn finish_slice(&self, end: usize, state: &ScanState) {
+    fn finish_slice(&mut self, end: usize, state: &ScanState) {
         //! Set context for all ":" when scanning from "[" to "]".
 
         // Sanity checks.
@@ -408,7 +427,7 @@ impl Annotator<'_> {
     //@+node:ekr.20241004154345.7: *4* Annotator.finish_dict
     // ***
     #[allow(unused_variables)]
-    fn finish_dict(&self, end: usize, state: &ScanState) {
+    fn finish_dict(&mut self, end: usize, state: &ScanState) {
         //! Set context for all ":" when scanning from "{" to "}"
         //! 
         //! Strictly speaking, setting this context is unnecessary because
@@ -437,33 +456,28 @@ impl Annotator<'_> {
         }
     }
     //@+node:ekr.20241004163018.1: *4* Annotator.set_context
-    fn set_context(&self, _i: usize, _context: &str) {  // *** temp.
+    fn set_context<'a>(&mut self, i: usize, context: & str) {  // *** temp.
         //! Set self.index_dict[i], but only if it does not already exist!
 
+        let trace = false;  // Do not delete the trace below.
+       
+        if !self.valid_contexts.contains(&context) {
+            println!("Unexpected context! {context:?}");
+        }
 
-        // *** Rewrite.
-
-        // let trace = false;  // Do not delete the trace below.
-        // let valid_contexts = [
-            // "annotation", "arg", "complex-slice", "simple-slice",
-            // "dict", "import", "initializer",
-        // ];
-        // if !valid_contexts.contain(context) {
-            // // self.oops(f"Unexpected context! {context!r}")
-            // println!("Unexpected context! {context:?}");
-        // }
-        // let token = self.input_tokens[i];
-        // if trace {  // Do not delete.
-            // let token_kind = token.kind;
-            // let token_val = token.show_val(12);
+        if trace {  // Do not delete.
+            let token = &self.input_tokens[i];
+            let token_kind = token.kind;
+            let token_value = token.value;
+            println!("{token_kind:20}: {token_value}");
             // let token_s = f!("<{token_kind}: {token_val}>");
             // let ignore_s = if token.context { "Ignore" } else { "      "};
             // println!("{i:3} {ignore_s} token: {token_s} context: {context}");
-        // }
-        // *** Rewrite
-        // if token.context.len() == 0 {  // **
-            // token.context.push(context);
-        // }
+        }
+        
+        if !self.index_dict.contains_key(&i) {
+            self.index_dict.insert(i, context.to_string());
+        }
     }
     //@-others
 }
