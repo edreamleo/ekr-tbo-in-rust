@@ -50,9 +50,9 @@ impl AnnotatedInputTok {
     }
 }
 //@+node:ekr.20241004110721.1: ** class Annotator
-struct Annotator {
+struct Annotator<'a> {
     // The present input token...
-    input_tokens: Vec<InputTok>,
+    input_tokens: Vec<InputTok<'a>>,
     insignificant_tokens: [String; 6],
     index: u32,  // The index within the tokens array of the token being scanned.
     lws: String,  // Leading whitespace. Required!
@@ -69,7 +69,7 @@ struct Annotator {
     verbatim: bool,  // True: don't beautify.
 }
 
-impl Annotator {
+impl Annotator<'_> {
     //@+others
     //@+node:ekr.20241004153742.1: *3* Annotator.new
     fn new(input_tokens: Vec<InputTok>) -> Annotator {
@@ -142,7 +142,7 @@ impl Annotator {
             if !self.insignificant_tokens.contains(&token.kind.to_string()) {
                 if token.kind == "op" {
                     // if ["*", "**"].contains(token.value) {
-                    if token.value == *"*" || token.value == *"**" {
+                    if token.value == "*" || token.value == "**" {
                         if self.is_unary_op_with_prev(&prev_token, &token) {
                             self.set_context(i, "arg");
                         }
@@ -182,10 +182,10 @@ impl Annotator {
         // Compute final context by scanning the tokens.
         let mut final_context = "simple-slice";
         let mut inter_colon_tokens = 0;
-        let mut prev = &token;
+        let mut prev: &InputTok = &token;
         for i in i1 + 1..end - 1 {
             let token = &self.input_tokens[i];
-            let (kind, value) = (&token.kind, &token.value);
+            let (kind, value) = (token.kind, token.value);
             if !self.insignificant_tokens.contains(&kind.to_string()) {
                 if kind == "op" {
                     if *value == *"." {
@@ -352,25 +352,15 @@ impl Annotator {
     //@-others
 }
 //@+node:ekr.20240929024648.120: ** class InputTok
-// Only Clone is valid for String.
 #[derive(Clone)]
-struct InputTok {
-    kind: String, value: String,
+struct InputTok<'a> {
+    kind: &'a str, value: &'a str,
 }
-impl InputTok {
-    fn new(kind: &str, value: &str) -> InputTok {
-        InputTok { kind: kind.to_string(), value: value.to_string() }
+impl <'a> InputTok<'_> {
+    fn new(kind: &'a str, value: &'a str) -> InputTok<'a> {
+        InputTok { kind: kind, value: value }
     }
 }
-
-// struct InputTok<'a> {
-    // kind: &'a str, value: &'a str,
-// }
-// impl InputTok {
-    // fn new(kind: &str, value: &str) -> InputTok {
-        // InputTok { kind: kind, value: value }
-    // }
-// }
 //@+node:ekr.20240929074037.1: ** class LeoBeautifier
 #[derive(Debug)]
 
@@ -1011,7 +1001,7 @@ impl Beautifier {
         }
     }
     //@+node:ekr.20240929074037.112: *3* LB::make_input_list
-    fn make_input_list(&mut self, contents: &str) -> Vec<InputTok> {
+    fn make_input_list<'a>(&mut self, contents: &'a str) -> Vec<InputTok<'a>> {
         //! Return an input_list from the tokens given by the RustPython lex.
         let mut n_tokens: u64 = 0;
         let mut n_ws_tokens: u64 = 0;
@@ -1228,7 +1218,7 @@ struct ParseState {
 }
 //@+node:ekr.20241004165555.1: ** class ScanState 
 #[derive(Clone)]
-struct ScanState {
+struct ScanState<'a> {
     // A class representing tbo.pre_scan's scanning state.
     // Valid (kind, value) pairs:
     // kind  Value
@@ -1238,21 +1228,22 @@ struct ScanState {
     // "import" Not used
     // "slice" list of colon indices
     // "dict" list of colon indices
-    kind: String,
-    token: InputTok,
+    // ***kind: String,
+    kind: &'a str,
+    token: &'a InputTok<'a>,
     value: Vec<usize>,  // Only used for some kinds of tokens.
 }
 
-impl ScanState {
-    fn new(kind: &str, token: InputTok) -> ScanState {
+impl <'a> ScanState<'_> {
+    fn new(kind: &'a str, token: &'a InputTok) -> ScanState<'a> {
         ScanState {
-            kind: kind.to_string(),
+            // kind: kind.to_string(),
+            kind: kind,
             token: token,
             value: Vec::new(),
         }
     }
 }
-
 
     // def __repr__(self) -> str:
         // return f"ScanState: i: {self.token.index:<4} kind: {self.kind} value: {self.value}"

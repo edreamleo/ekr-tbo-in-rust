@@ -439,7 +439,6 @@
 <v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.113"></v>
 </v>
-<v t="ekr.20241004165555.1"></v>
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 <v t="ekr.20241004153802.1"><vh>Annotator.pre_pass (buggy)</vh>
 <v t="ekr.20241004154345.2"><vh>&lt;&lt; pre-scan newline tokens &gt;&gt;</vh></v>
@@ -448,28 +447,7 @@
 </v>
 <v t="ekr.20241004110721.1"></v>
 <v t="ekr.20240929024648.120"></v>
-<v t="ekr.20241005192904.1"><vh>git diff HEAD </vh>
-<v t="ekr.20241005192904.2"><vh>diff: src/tbo.rs</vh>
-<v t="ekr.20241005192904.7"><vh>diff: Changed</vh>
-<v t="ekr.20241005192904.8"><vh>diff: Annotator.is_python_keyword (to do)</vh>
-<v t="ekr.20241005192904.9"><vh>Old:Annotator.is_python_keyword (to do)</vh></v>
-<v t="ekr.20241005091217.1"></v>
-</v>
-<v t="ekr.20241005192904.10"><vh>diff: Annotator.is_unary_op_with_prev (to do)</vh>
-<v t="ekr.20241005192904.11"><vh>Old:Annotator.is_unary_op_with_prev (to do)</vh></v>
-<v t="ekr.20241005092549.1"></v>
-</v>
-<v t="ekr.20241005192904.12"><vh>diff: class InputTok</vh>
-<v t="ekr.20241005192904.13"><vh>Old:class InputTok</vh></v>
-<v t="ekr.20240929024648.120"></v>
-</v>
-<v t="ekr.20241005192904.14"><vh>diff: LB::beautify_one_file</vh>
-<v t="ekr.20241005192904.15"><vh>Old:LB::beautify_one_file</vh></v>
-<v t="ekr.20240929074037.5"></v>
-</v>
-</v>
-</v>
-</v>
+<v t="ekr.20241004165555.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -1058,25 +1036,15 @@ This only 10% faster than the python code.
     return (tokens_n, ws_tokens_n);
 }
 </t>
-<t tx="ekr.20240929024648.120">// Only Clone is valid for String.
-#[derive(Clone)]
-struct InputTok {
-    kind: String, value: String,
+<t tx="ekr.20240929024648.120">#[derive(Clone)]
+struct InputTok&lt;'a&gt; {
+    kind: &amp;'a str, value: &amp;'a str,
 }
-impl InputTok {
-    fn new(kind: &amp;str, value: &amp;str) -&gt; InputTok {
-        InputTok { kind: kind.to_string(), value: value.to_string() }
+impl &lt;'a&gt; InputTok&lt;'_&gt; {
+    fn new(kind: &amp;'a str, value: &amp;'a str) -&gt; InputTok&lt;'a&gt; {
+        InputTok { kind: kind, value: value }
     }
 }
-
-// struct InputTok&lt;'a&gt; {
-    // kind: &amp;'a str, value: &amp;'a str,
-// }
-// impl InputTok {
-    // fn new(kind: &amp;str, value: &amp;str) -&gt; InputTok {
-        // InputTok { kind: kind, value: value }
-    // }
-// }
 </t>
 <t tx="ekr.20240929031635.1">fn scan_input_list(contents: String, tokens: Vec&lt;(Tok, TextRange)&gt;) -&gt; usize {
 
@@ -1220,7 +1188,7 @@ impl Beautifier {
     }
 }
 </t>
-<t tx="ekr.20240929074037.112">fn make_input_list(&amp;mut self, contents: &amp;str) -&gt; Vec&lt;InputTok&gt; {
+<t tx="ekr.20240929074037.112">fn make_input_list&lt;'a&gt;(&amp;mut self, contents: &amp;'a str) -&gt; Vec&lt;InputTok&lt;'a&gt;&gt; {
     //! Return an input_list from the tokens given by the RustPython lex.
     let mut n_tokens: u64 = 0;
     let mut n_ws_tokens: u64 = 0;
@@ -3376,9 +3344,9 @@ impl AnnotatedInputTok {
     }
 }
 </t>
-<t tx="ekr.20241004110721.1">struct Annotator {
+<t tx="ekr.20241004110721.1">struct Annotator&lt;'a&gt; {
     // The present input token...
-    input_tokens: Vec&lt;InputTok&gt;,
+    input_tokens: Vec&lt;InputTok&lt;'a&gt;&gt;,
     insignificant_tokens: [String; 6],
     index: u32,  // The index within the tokens array of the token being scanned.
     lws: String,  // Leading whitespace. Required!
@@ -3395,7 +3363,7 @@ impl AnnotatedInputTok {
     verbatim: bool,  // True: don't beautify.
 }
 
-impl Annotator {
+impl Annotator&lt;'_&gt; {
     @others
 }
 </t>
@@ -3604,7 +3572,7 @@ if !prev_is_yield &amp;&amp; (value == *"from" || value == *"import") {
         if !self.insignificant_tokens.contains(&amp;token.kind.to_string()) {
             if token.kind == "op" {
                 // if ["*", "**"].contains(token.value) {
-                if token.value == *"*" || token.value == *"**" {
+                if token.value == "*" || token.value == "**" {
                     if self.is_unary_op_with_prev(&amp;prev_token, &amp;token) {
                         self.set_context(i, "arg");
                     }
@@ -3644,10 +3612,10 @@ if !prev_is_yield &amp;&amp; (value == *"from" || value == *"import") {
     // Compute final context by scanning the tokens.
     let mut final_context = "simple-slice";
     let mut inter_colon_tokens = 0;
-    let mut prev = &amp;token;
+    let mut prev: &amp;InputTok = &amp;token;
     for i in i1 + 1..end - 1 {
         let token = &amp;self.input_tokens[i];
-        let (kind, value) = (&amp;token.kind, &amp;token.value);
+        let (kind, value) = (token.kind, token.value);
         if !self.insignificant_tokens.contains(&amp;kind.to_string()) {
             if kind == "op" {
                 if *value == *"." {
@@ -3757,7 +3725,7 @@ fn finish_dict(&amp;mut self, end: usize, state: ScanState) {
 }
 </t>
 <t tx="ekr.20241004165555.1">#[derive(Clone)]
-struct ScanState {
+struct ScanState&lt;'a&gt; {
     // A class representing tbo.pre_scan's scanning state.
     // Valid (kind, value) pairs:
     // kind  Value
@@ -3767,21 +3735,22 @@ struct ScanState {
     // "import" Not used
     // "slice" list of colon indices
     // "dict" list of colon indices
-    kind: String,
-    token: InputTok,
+    // ***kind: String,
+    kind: &amp;'a str,
+    token: &amp;'a InputTok&lt;'a&gt;,
     value: Vec&lt;usize&gt;,  // Only used for some kinds of tokens.
 }
 
-impl ScanState {
-    fn new(kind: &amp;str, token: InputTok) -&gt; ScanState {
+impl &lt;'a&gt; ScanState&lt;'_&gt; {
+    fn new(kind: &amp;'a str, token: &amp;'a InputTok) -&gt; ScanState&lt;'a&gt; {
         ScanState {
-            kind: kind.to_string(),
+            // kind: kind.to_string(),
+            kind: kind,
             token: token,
             value: Vec::new(),
         }
     }
 }
-
 
     // def __repr__(self) -&gt; str:
         // return f"ScanState: i: {self.token.index:&lt;4} kind: {self.kind} value: {self.value}"
@@ -3922,293 +3891,5 @@ fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;Inp
 <t tx="ekr.20241005185049.1">fn pre_scan(&amp;self) {
 
 }</t>
-<t tx="ekr.20241005192904.1">@ignore
-@nosearch
-HEAD=6c4d3b9</t>
-<t tx="ekr.20241005192904.10">@ignore
-@nosearch
-@language patch
---- HEAD
-+++ uncommitted
-@@ -1,3 +1,28 @@
-+// def is_unary_op_with_prev(self, prev: Optional[InputToken], token: InputToken) -&gt; bool:
-+    // """
-+    // Return True if token is a unary op in the context of prev, the previous
-+    // significant token.
-+    // """
-+    // if token.value == '~':  # pragma: no cover
-+        // return True
-+    // if prev is None:
-+        // return True  # pragma: no cover
-+    // assert token.value in '**-+', repr(token.value)
-+    // if prev.kind in ('number', 'string'):
-+        // return_val = False
-+    // elif prev.kind == 'op' and prev.value in ')]':
-+         // # An unnecessary test?
-+        // return_val = False  # pragma: no cover
-+    // elif prev.kind == 'op' and prev.value in '{([:,':
-+        // return_val = True
-+    // elif prev.kind != 'name':
-+        // # An unnecessary test?
-+        // return_val = True  # pragma: no cover
-+    // else:
-+        // # prev is a'name' token.
-+        // return self.is_python_keyword(token)
-+    // return return_val
-+
- fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;InputTok) -&gt; bool {  // *** Temp. _
-     return false;  // ***
- }
-@language python
-</t>
-<t tx="ekr.20241005192904.11">fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;InputTok) -&gt; bool {  // *** Temp. _
-    return false;  // ***
-}
-</t>
-<t tx="ekr.20241005192904.12">@ignore
-@nosearch
-@language patch
---- HEAD
-+++ uncommitted
-@@ -1,15 +1,19 @@
- // Only Clone is valid for String.
- #[derive(Clone)]
- struct InputTok {
--    kind: String,
--    value: String,
-+    kind: String, value: String,
-+}
-+impl InputTok {
-+    fn new(kind: &amp;str, value: &amp;str) -&gt; InputTok {
-+        InputTok { kind: kind.to_string(), value: value.to_string() }
-+    }
- }
- 
--impl InputTok {
--    fn new(kind: &amp;str, value: &amp;str) -&gt; InputTok {
--        InputTok {
--            kind: kind.to_string(),
--            value: value.to_string(),
--        }
--    }
--}
-+// struct InputTok&lt;'a&gt; {
-+    // kind: &amp;'a str, value: &amp;'a str,
-+// }
-+// impl InputTok {
-+    // fn new(kind: &amp;str, value: &amp;str) -&gt; InputTok {
-+        // InputTok { kind: kind, value: value }
-+    // }
-+// }
-@language python
-</t>
-<t tx="ekr.20241005192904.13">// Only Clone is valid for String.
-#[derive(Clone)]
-struct InputTok {
-    kind: String,
-    value: String,
-}
-
-impl InputTok {
-    fn new(kind: &amp;str, value: &amp;str) -&gt; InputTok {
-        InputTok {
-            kind: kind.to_string(),
-            value: value.to_string(),
-        }
-    }
-}
-</t>
-<t tx="ekr.20241005192904.14">@ignore
-@nosearch
-@language patch
---- HEAD
-+++ uncommitted
-@@ -13,7 +13,7 @@
-     self.stats.read_time += t1.elapsed().as_nanos();
-     // Create (an immutable!) list of input tokens.
-     let t2 = std::time::Instant::now();
--    let input_tokens = self.make_input_list(&amp;contents);  // : Vec&lt;InputTok&gt; = 
-+    let input_tokens = self.make_input_list(&amp;contents);
-     self.stats.make_tokens_time += t2.elapsed().as_nanos();
-     // Annotate tokens (the prepass).
-     let t3 = std::time::Instant::now();
-@language python
-</t>
-<t tx="ekr.20241005192904.15">fn beautify_one_file(&amp;mut self, file_name: &amp;str) {
-    self.stats.n_files += 1;
-    if true {
-        // Testing only: print the short file name.
-        let file_path = path::Path::new(file_name);
-        let os_str = file_path.file_name().unwrap(); // &amp;OsStr
-        let short_file_name = os_str.to_str().unwrap();
-        println!("{short_file_name}");
-    }
-    // Read the file into contents (a String).
-    let t1 = std::time::Instant::now();
-    let contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
-    self.stats.read_time += t1.elapsed().as_nanos();
-    // Create (an immutable!) list of input tokens.
-    let t2 = std::time::Instant::now();
-    let input_tokens = self.make_input_list(&amp;contents);  // : Vec&lt;InputTok&gt; = 
-    self.stats.make_tokens_time += t2.elapsed().as_nanos();
-    // Annotate tokens (the prepass).
-    let t3 = std::time::Instant::now();
-    let annotated_tokens = self.annotate_tokens(&amp;input_tokens);
-    self.stats.annotation_time += t3.elapsed().as_nanos();
-    // Beautify.
-    let t4 = std::time::Instant::now();
-    self.beautify(&amp;annotated_tokens);
-    self.stats.beautify_time += t4.elapsed().as_nanos();
-}
-</t>
-<t tx="ekr.20241005192904.2">@ignore
-@nosearch
-@language patch
---- HEAD
-+++ uncommitted
-@@ -265,10 +265,58 @@
-         }
-     }
-     //@+node:ekr.20241005091217.1: *3* Annotator.is_python_keyword (to do)
--    fn is_python_keyword(&amp;mut self, _token: InputTok) -&gt; bool {  // *** Temp.
-+    // def is_python_keyword(self, token: Optional[InputToken]) -&gt; bool:
-+        // """Return True if token is a 'name' token referring to a Python keyword."""
-+        // if not token or token.kind != 'name':
-+            // return False
-+        // return keyword.iskeyword(token.value) or keyword.issoftkeyword(token.value)
-+        
-+    // Keywords:
-+    // False      await      else       import     pass
-+    // None       break      except     in         raise
-+    // True       class      finally    is         return
-+    // and        continue   for        lambda     try
-+    // as         def        from       nonlocal   while
-+    // assert     del        global     not        with
-+    // async      elif       if         or         yield
-+
-+    // Soft keywords:
-+    // match, case, type and _
-+
-+    fn is_python_keyword(&amp;mut self, token: &amp;InputTok) -&gt; bool {  // *** Temp.
-+        //! Return True if token is a 'name' token referring to a Python keyword.
-+        if token.kind != "name" {
-+            return false;
-+        }
-+        // let word = &amp;token.value;  // &amp;String
-         return false;  // ***
-     }
-     //@+node:ekr.20241005092549.1: *3* Annotator.is_unary_op_with_prev (to do)
-+    // def is_unary_op_with_prev(self, prev: Optional[InputToken], token: InputToken) -&gt; bool:
-+        // """
-+        // Return True if token is a unary op in the context of prev, the previous
-+        // significant token.
-+        // """
-+        // if token.value == '~':  # pragma: no cover
-+            // return True
-+        // if prev is None:
-+            // return True  # pragma: no cover
-+        // assert token.value in '**-+', repr(token.value)
-+        // if prev.kind in ('number', 'string'):
-+            // return_val = False
-+        // elif prev.kind == 'op' and prev.value in ')]':
-+             // # An unnecessary test?
-+            // return_val = False  # pragma: no cover
-+        // elif prev.kind == 'op' and prev.value in '{([:,':
-+            // return_val = True
-+        // elif prev.kind != 'name':
-+            // # An unnecessary test?
-+            // return_val = True  # pragma: no cover
-+        // else:
-+            // # prev is a'name' token.
-+            // return self.is_python_keyword(token)
-+        // return return_val
-+
-     fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;InputTok) -&gt; bool {  // *** Temp. _
-         return false;  // ***
-     }
-@@ -307,18 +355,22 @@
- // Only Clone is valid for String.
- #[derive(Clone)]
- struct InputTok {
--    kind: String,
--    value: String,
--}
--
-+    kind: String, value: String,
-+}
- impl InputTok {
-     fn new(kind: &amp;str, value: &amp;str) -&gt; InputTok {
--        InputTok {
--            kind: kind.to_string(),
--            value: value.to_string(),
--        }
--    }
--}
-+        InputTok { kind: kind.to_string(), value: value.to_string() }
-+    }
-+}
-+
-+// struct InputTok&lt;'a&gt; {
-+    // kind: &amp;'a str, value: &amp;'a str,
-+// }
-+// impl InputTok {
-+    // fn new(kind: &amp;str, value: &amp;str) -&gt; InputTok {
-+        // InputTok { kind: kind, value: value }
-+    // }
-+// }
- //@+node:ekr.20241004091919.1: *3* InputTok::new
- //@+node:ekr.20240929074037.1: ** class LeoBeautifier
- #[derive(Debug)]
-@@ -483,7 +535,7 @@
-         self.stats.read_time += t1.elapsed().as_nanos();
-         // Create (an immutable!) list of input tokens.
-         let t2 = std::time::Instant::now();
--        let input_tokens = self.make_input_list(&amp;contents);  // : Vec&lt;InputTok&gt; = 
-+        let input_tokens = self.make_input_list(&amp;contents);
-         self.stats.make_tokens_time += t2.elapsed().as_nanos();
-         // Annotate tokens (the prepass).
-         let t3 = std::time::Instant::now();
-@language python
-</t>
-<t tx="ekr.20241005192904.7"></t>
-<t tx="ekr.20241005192904.8">@ignore
-@nosearch
-@language patch
---- HEAD
-+++ uncommitted
-@@ -1,3 +1,26 @@
--fn is_python_keyword(&amp;mut self, _token: InputTok) -&gt; bool {  // *** Temp.
-+// def is_python_keyword(self, token: Optional[InputToken]) -&gt; bool:
-+    // """Return True if token is a 'name' token referring to a Python keyword."""
-+    // if not token or token.kind != 'name':
-+        // return False
-+    // return keyword.iskeyword(token.value) or keyword.issoftkeyword(token.value)
-+    
-+// Keywords:
-+// False      await      else       import     pass
-+// None       break      except     in         raise
-+// True       class      finally    is         return
-+// and        continue   for        lambda     try
-+// as         def        from       nonlocal   while
-+// assert     del        global     not        with
-+// async      elif       if         or         yield
-+
-+// Soft keywords:
-+// match, case, type and _
-+
-+fn is_python_keyword(&amp;mut self, token: &amp;InputTok) -&gt; bool {  // *** Temp.
-+    //! Return True if token is a 'name' token referring to a Python keyword.
-+    if token.kind != "name" {
-+        return false;
-+    }
-+    // let word = &amp;token.value;  // &amp;String
-     return false;  // ***
- }
-@language python
-</t>
-<t tx="ekr.20241005192904.9">fn is_python_keyword(&amp;mut self, _token: InputTok) -&gt; bool {  // *** Temp.
-    return false;  // ***
-}
-</t>
 </tnodes>
 </leo_file>
