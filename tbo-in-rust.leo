@@ -290,11 +290,7 @@
 <v t="ekr.20241004095931.1"><vh>class AnnotatedInputTok</vh></v>
 <v t="ekr.20241004110721.1"><vh>class Annotator</vh>
 <v t="ekr.20241004153742.1"><vh>Annotator.new</vh></v>
-<v t="ekr.20241004153802.1"><vh>Annotator.pre_pass</vh>
-<v t="ekr.20241004154345.2"><vh>&lt;&lt; pre-scan newline tokens &gt;&gt;</vh></v>
-<v t="ekr.20241004154345.3"><vh>&lt;&lt; pre-scan op tokens &gt;&gt;</vh></v>
-<v t="ekr.20241004154345.4"><vh>&lt;&lt; pre-scan name tokens &gt;&gt;</vh></v>
-</v>
+<v t="ekr.20241005185049.1"><vh>Annotator.pre_scan (dummy)</vh></v>
 <v t="ekr.20241004154345.5"><vh>Annotator.finish_arg</vh></v>
 <v t="ekr.20241004154345.6"><vh>Annotator.finish_slice</vh></v>
 <v t="ekr.20241004154345.7"><vh>Annotator.finish_dict</vh></v>
@@ -444,12 +440,16 @@
 <v t="ekr.20241004073317.1"><vh>--- Recent</vh>
 <v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.113"></v>
+<v t="ekr.20241004153802.1"><vh>Annotator.pre_pass (buggy)</vh>
+<v t="ekr.20241004154345.2"><vh>&lt;&lt; pre-scan newline tokens &gt;&gt;</vh></v>
+<v t="ekr.20241004154345.3"><vh>&lt;&lt; pre-scan op tokens &gt;&gt;</vh></v>
+<v t="ekr.20241004154345.4"><vh>&lt;&lt; pre-scan name tokens &gt;&gt;</vh></v>
+</v>
 </v>
 <v t="ekr.20241004165555.1"></v>
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 <v t="ekr.20241004095735.1"></v>
 <v t="ekr.20241004110721.1"></v>
-<v t="ekr.20241004153802.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -1978,7 +1978,8 @@ fn returns_summarizable() -&gt; impl Summary {...}
 // We can call o.to_string method defined by the ToString trait on
 // any type that implements the Display trait. 
 </t>
-<t tx="ekr.20241001060848.1"></t>
+<t tx="ekr.20241001060848.1">When returning a reference from a function,
+the lifetime parameter for the return type needs to match the lifetime parameter for one of the parameters.</t>
 <t tx="ekr.20241001071914.1">fn test_loop(contents: &amp;str) {
     let mut n_tokens = 0;
     for token in lex(&amp;contents, Mode::Module)
@@ -3543,12 +3544,15 @@ if !prev_is_yield &amp;&amp; (value == *"from" || value == *"import") {
         return;
     }
     // assert state.kind == "arg", repr(state)
-    let mut token = state.token;
+    
+    // let token = state.token;
     // assert token.value == "(", repr(token)
-    let mut values = state.value;
+
+    let values = state.value;
     // assert isinstance(values, list), repr(values)
+
     // *** let mut i1 = token.index;
-    let mut i1 = 0;
+    let i1 = 0;  // *** add mut later.
 
     // assert i1 &lt; end, (i1, end)
     if values.len() == 0 {
@@ -3557,7 +3561,7 @@ if !prev_is_yield &amp;&amp; (value == *"from" || value == *"import") {
     // Compute the context for each *separate* "=" token.
     let mut equal_context = "initializer";
     for i in values {
-        let token = self.input_tokens[i];
+        let token = &amp;self.input_tokens[i];
         // assert token.kind == "op", repr(token)
         if token.value == "," {
             equal_context = "initializer";
@@ -3571,14 +3575,14 @@ if !prev_is_yield &amp;&amp; (value == *"from" || value == *"import") {
         }
     }
     // Set the context of all outer-level ":", "*", and "**" tokens.
-    let mut prev_token = InputTok::new("dummy", "");
+    let mut prev_token = &amp;InputTok::new("dummy", "");
     for i in i1..end {
-        token = self.input_tokens[i];
+        let token = &amp;self.input_tokens[i];
         if !self.insignificant_tokens.contains(&amp;token.kind.to_string()) {
             if token.kind == "op" {
                 // if ["*", "**"].contains(token.value) {
                 if token.value == *"*" || token.value == *"**" {
-                    if self.is_unary_op_with_prev(prev_token, token) {
+                    if self.is_unary_op_with_prev(&amp;prev_token, &amp;token) {
                         self.set_context(i, "arg");
                     }
                 }
@@ -3600,13 +3604,13 @@ if !prev_is_yield &amp;&amp; (value == *"from" || value == *"import") {
 
     // Sanity checks.
     // assert state.kind == "slice", repr(state)
-    let mut token = state.token;
+    let token = state.token;
     // assert token.value == "[", repr(token)
-    let mut colons = state.value;
+    let colons = state.value;
     // assert isinstance(colons, list), repr(colons)
     // *** let mut i1 = token.index;
     
-    let mut i1 = 0;
+    let i1 = 0;
     // assert i1 &lt; end, (i1, end)
 
     // Do nothing if there are no ":" tokens in the slice.
@@ -3617,10 +3621,10 @@ if !prev_is_yield &amp;&amp; (value == *"from" || value == *"import") {
     // Compute final context by scanning the tokens.
     let mut final_context = "simple-slice";
     let mut inter_colon_tokens = 0;
-    let mut prev = token;
+    let mut prev = &amp;token;
     for i in i1 + 1..end - 1 {
-        let token = self.input_tokens[i];
-        let (kind, value) = (token.kind, token.value);
+        let token = &amp;self.input_tokens[i];
+        let (kind, value) = (&amp;token.kind, &amp;token.value);
         if !self.insignificant_tokens.contains(&amp;kind.to_string()) {
             if kind == "op" {
                 if *value == *"." {
@@ -3634,7 +3638,7 @@ if !prev_is_yield &amp;&amp; (value == *"from" || value == *"import") {
                 }
                 else if *value == *"-" || *value == *"+" {
                     // Ignore unary "-" or "+" tokens.
-                    if !self.is_unary_op_with_prev(prev, token) {
+                    if !self.is_unary_op_with_prev(&amp;prev, &amp;token) {
                         inter_colon_tokens += 1;
                         if inter_colon_tokens &gt; 1 {
                             final_context = "complex-slice";
@@ -3661,7 +3665,7 @@ if !prev_is_yield &amp;&amp; (value == *"from" || value == *"import") {
                     break;
                 }
             }
-            prev = token;
+            prev = &amp;token;
         }
     }
     // Set the context of all outer-level ":" tokens.
@@ -3700,7 +3704,7 @@ fn finish_dict(&amp;mut self, end: usize, state: ScanState) {
     }
 }
 </t>
-<t tx="ekr.20241004163018.1">fn set_context(&amp;mut self, _i: usize, _context: &amp;str) {  // *** temp.
+<t tx="ekr.20241004163018.1">fn set_context(&amp;self, _i: usize, _context: &amp;str) {  // *** temp.
     //! Set self.input_tokens[i].context, but only if it does not already exist!
     //! See the docstring for pre_scan for details.
 
@@ -3840,9 +3844,12 @@ impl ScanState {
     return false;  // ***
 }
 </t>
-<t tx="ekr.20241005092549.1">fn is_unary_op_with_prev(&amp;mut self, _prev_token: InputTok, _token: InputTok) -&gt; bool {  // *** Temp.
+<t tx="ekr.20241005092549.1">fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;InputTok) -&gt; bool {  // *** Temp. _
     return false;  // ***
 }
 </t>
+<t tx="ekr.20241005185049.1">fn pre_scan(&amp;self) {
+
+}</t>
 </tnodes>
 </leo_file>
