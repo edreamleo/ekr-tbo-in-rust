@@ -265,10 +265,58 @@ impl Annotator {
         }
     }
     //@+node:ekr.20241005091217.1: *3* Annotator.is_python_keyword (to do)
-    fn is_python_keyword(&mut self, _token: InputTok) -> bool {  // *** Temp.
+    // def is_python_keyword(self, token: Optional[InputToken]) -> bool:
+        // """Return True if token is a 'name' token referring to a Python keyword."""
+        // if not token or token.kind != 'name':
+            // return False
+        // return keyword.iskeyword(token.value) or keyword.issoftkeyword(token.value)
+        
+    // Keywords:
+    // False      await      else       import     pass
+    // None       break      except     in         raise
+    // True       class      finally    is         return
+    // and        continue   for        lambda     try
+    // as         def        from       nonlocal   while
+    // assert     del        global     not        with
+    // async      elif       if         or         yield
+
+    // Soft keywords:
+    // match, case, type and _
+
+    fn is_python_keyword(&mut self, token: &InputTok) -> bool {  // *** Temp.
+        //! Return True if token is a 'name' token referring to a Python keyword.
+        if token.kind != "name" {
+            return false;
+        }
+        // let word = &token.value;  // &String
         return false;  // ***
     }
     //@+node:ekr.20241005092549.1: *3* Annotator.is_unary_op_with_prev (to do)
+    // def is_unary_op_with_prev(self, prev: Optional[InputToken], token: InputToken) -> bool:
+        // """
+        // Return True if token is a unary op in the context of prev, the previous
+        // significant token.
+        // """
+        // if token.value == '~':  # pragma: no cover
+            // return True
+        // if prev is None:
+            // return True  # pragma: no cover
+        // assert token.value in '**-+', repr(token.value)
+        // if prev.kind in ('number', 'string'):
+            // return_val = False
+        // elif prev.kind == 'op' and prev.value in ')]':
+             // # An unnecessary test?
+            // return_val = False  # pragma: no cover
+        // elif prev.kind == 'op' and prev.value in '{([:,':
+            // return_val = True
+        // elif prev.kind != 'name':
+            // # An unnecessary test?
+            // return_val = True  # pragma: no cover
+        // else:
+            // # prev is a'name' token.
+            // return self.is_python_keyword(token)
+        // return return_val
+
     fn is_unary_op_with_prev(&self, _prev_token: &InputTok, _token: &InputTok) -> bool {  // *** Temp. _
         return false;  // ***
     }
@@ -307,19 +355,22 @@ impl Annotator {
 // Only Clone is valid for String.
 #[derive(Clone)]
 struct InputTok {
-    kind: String,
-    value: String,
+    kind: String, value: String,
 }
-
 impl InputTok {
     fn new(kind: &str, value: &str) -> InputTok {
-        InputTok {
-            kind: kind.to_string(),
-            value: value.to_string(),
-        }
+        InputTok { kind: kind.to_string(), value: value.to_string() }
     }
 }
-//@+node:ekr.20241004091919.1: *3* InputTok::new
+
+// struct InputTok<'a> {
+    // kind: &'a str, value: &'a str,
+// }
+// impl InputTok {
+    // fn new(kind: &str, value: &str) -> InputTok {
+        // InputTok { kind: kind, value: value }
+    // }
+// }
 //@+node:ekr.20240929074037.1: ** class LeoBeautifier
 #[derive(Debug)]
 
@@ -483,7 +534,7 @@ impl Beautifier {
         self.stats.read_time += t1.elapsed().as_nanos();
         // Create (an immutable!) list of input tokens.
         let t2 = std::time::Instant::now();
-        let input_tokens = self.make_input_list(&contents);  // : Vec<InputTok> = 
+        let input_tokens = self.make_input_list(&contents);
         self.stats.make_tokens_time += t2.elapsed().as_nanos();
         // Annotate tokens (the prepass).
         let t3 = std::time::Instant::now();

@@ -424,9 +424,7 @@
 <v t="ekr.20240929074037.116"><vh>LB::show_help</vh></v>
 <v t="ekr.20241002163554.1"><vh>LB::string_to_static_str</vh></v>
 </v>
-<v t="ekr.20240929024648.120"><vh>class InputTok</vh>
-<v t="ekr.20241004091919.1"><vh>InputTok::new</vh></v>
-</v>
+<v t="ekr.20240929024648.120"><vh>class InputTok</vh></v>
 <v t="ekr.20241004112826.1"><vh>class ParseState</vh>
 <v t="ekr.20241004113118.1"><vh>&lt;&lt; docstring: ParseState &gt;&gt;</vh></v>
 </v>
@@ -440,16 +438,38 @@
 <v t="ekr.20241004073317.1"><vh>--- Recent</vh>
 <v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.113"></v>
+</v>
+<v t="ekr.20241004165555.1"></v>
+<v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 <v t="ekr.20241004153802.1"><vh>Annotator.pre_pass (buggy)</vh>
 <v t="ekr.20241004154345.2"><vh>&lt;&lt; pre-scan newline tokens &gt;&gt;</vh></v>
 <v t="ekr.20241004154345.3"><vh>&lt;&lt; pre-scan op tokens &gt;&gt;</vh></v>
 <v t="ekr.20241004154345.4"><vh>&lt;&lt; pre-scan name tokens &gt;&gt;</vh></v>
 </v>
-</v>
-<v t="ekr.20241004165555.1"></v>
-<v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
-<v t="ekr.20241004095735.1"></v>
 <v t="ekr.20241004110721.1"></v>
+<v t="ekr.20240929024648.120"></v>
+<v t="ekr.20241005192904.1"><vh>git diff HEAD </vh>
+<v t="ekr.20241005192904.2"><vh>diff: src/tbo.rs</vh>
+<v t="ekr.20241005192904.7"><vh>diff: Changed</vh>
+<v t="ekr.20241005192904.8"><vh>diff: Annotator.is_python_keyword (to do)</vh>
+<v t="ekr.20241005192904.9"><vh>Old:Annotator.is_python_keyword (to do)</vh></v>
+<v t="ekr.20241005091217.1"></v>
+</v>
+<v t="ekr.20241005192904.10"><vh>diff: Annotator.is_unary_op_with_prev (to do)</vh>
+<v t="ekr.20241005192904.11"><vh>Old:Annotator.is_unary_op_with_prev (to do)</vh></v>
+<v t="ekr.20241005092549.1"></v>
+</v>
+<v t="ekr.20241005192904.12"><vh>diff: class InputTok</vh>
+<v t="ekr.20241005192904.13"><vh>Old:class InputTok</vh></v>
+<v t="ekr.20240929024648.120"></v>
+</v>
+<v t="ekr.20241005192904.14"><vh>diff: LB::beautify_one_file</vh>
+<v t="ekr.20241005192904.15"><vh>Old:LB::beautify_one_file</vh></v>
+<v t="ekr.20240929074037.5"></v>
+</v>
+</v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -1041,18 +1061,22 @@ This only 10% faster than the python code.
 <t tx="ekr.20240929024648.120">// Only Clone is valid for String.
 #[derive(Clone)]
 struct InputTok {
-    kind: String,
-    value: String,
+    kind: String, value: String,
 }
-
 impl InputTok {
     fn new(kind: &amp;str, value: &amp;str) -&gt; InputTok {
-        InputTok {
-            kind: kind.to_string(),
-            value: value.to_string(),
-        }
+        InputTok { kind: kind.to_string(), value: value.to_string() }
     }
 }
+
+// struct InputTok&lt;'a&gt; {
+    // kind: &amp;'a str, value: &amp;'a str,
+// }
+// impl InputTok {
+    // fn new(kind: &amp;str, value: &amp;str) -&gt; InputTok {
+        // InputTok { kind: kind, value: value }
+    // }
+// }
 </t>
 <t tx="ekr.20240929031635.1">fn scan_input_list(contents: String, tokens: Vec&lt;(Tok, TextRange)&gt;) -&gt; usize {
 
@@ -1495,7 +1519,7 @@ fn add_input_token(&amp;mut self, kind: &amp;str, value: &amp;str) {
     self.stats.read_time += t1.elapsed().as_nanos();
     // Create (an immutable!) list of input tokens.
     let t2 = std::time::Instant::now();
-    let input_tokens = self.make_input_list(&amp;contents);  // : Vec&lt;InputTok&gt; = 
+    let input_tokens = self.make_input_list(&amp;contents);
     self.stats.make_tokens_time += t2.elapsed().as_nanos();
     // Annotate tokens (the prepass).
     let t3 = std::time::Instant::now();
@@ -3307,7 +3331,6 @@ impl Beautifier {
 </t>
 <t tx="ekr.20241004073317.1"></t>
 <t tx="ekr.20241004084640.1">@nosearch</t>
-<t tx="ekr.20241004091919.1"></t>
 <t tx="ekr.20241004093044.1">impl fmt::Debug for InputTok {
     fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
         let kind_s = format!("{:?}", self.kind);
@@ -3456,7 +3479,7 @@ The present states:
             &lt;&lt; pre-scan name tokens &gt;&gt;
         }
         // Remember the previous significant token.
-        if !self.insignificant_tokens.contains(&amp;kind.to_string()) {
+        if !self.insignificant_tokens.contains(&amp;kind.to_string()) {  // *** lifetime problem
             prev_token = token.clone();
         }
     }
@@ -3840,16 +3863,352 @@ impl ScanState {
         val = g.truncate(repr(self.value), truncate_n)
     return val
 </t>
-<t tx="ekr.20241005091217.1">fn is_python_keyword(&amp;mut self, _token: InputTok) -&gt; bool {  // *** Temp.
+<t tx="ekr.20241005091217.1">// def is_python_keyword(self, token: Optional[InputToken]) -&gt; bool:
+    // """Return True if token is a 'name' token referring to a Python keyword."""
+    // if not token or token.kind != 'name':
+        // return False
+    // return keyword.iskeyword(token.value) or keyword.issoftkeyword(token.value)
+    
+// Keywords:
+// False      await      else       import     pass
+// None       break      except     in         raise
+// True       class      finally    is         return
+// and        continue   for        lambda     try
+// as         def        from       nonlocal   while
+// assert     del        global     not        with
+// async      elif       if         or         yield
+
+// Soft keywords:
+// match, case, type and _
+
+fn is_python_keyword(&amp;mut self, token: &amp;InputTok) -&gt; bool {  // *** Temp.
+    //! Return True if token is a 'name' token referring to a Python keyword.
+    if token.kind != "name" {
+        return false;
+    }
+    // let word = &amp;token.value;  // &amp;String
     return false;  // ***
 }
 </t>
-<t tx="ekr.20241005092549.1">fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;InputTok) -&gt; bool {  // *** Temp. _
+<t tx="ekr.20241005092549.1">// def is_unary_op_with_prev(self, prev: Optional[InputToken], token: InputToken) -&gt; bool:
+    // """
+    // Return True if token is a unary op in the context of prev, the previous
+    // significant token.
+    // """
+    // if token.value == '~':  # pragma: no cover
+        // return True
+    // if prev is None:
+        // return True  # pragma: no cover
+    // assert token.value in '**-+', repr(token.value)
+    // if prev.kind in ('number', 'string'):
+        // return_val = False
+    // elif prev.kind == 'op' and prev.value in ')]':
+         // # An unnecessary test?
+        // return_val = False  # pragma: no cover
+    // elif prev.kind == 'op' and prev.value in '{([:,':
+        // return_val = True
+    // elif prev.kind != 'name':
+        // # An unnecessary test?
+        // return_val = True  # pragma: no cover
+    // else:
+        // # prev is a'name' token.
+        // return self.is_python_keyword(token)
+    // return return_val
+
+fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;InputTok) -&gt; bool {  // *** Temp. _
     return false;  // ***
 }
 </t>
 <t tx="ekr.20241005185049.1">fn pre_scan(&amp;self) {
 
 }</t>
+<t tx="ekr.20241005192904.1">@ignore
+@nosearch
+HEAD=6c4d3b9</t>
+<t tx="ekr.20241005192904.10">@ignore
+@nosearch
+@language patch
+--- HEAD
++++ uncommitted
+@@ -1,3 +1,28 @@
++// def is_unary_op_with_prev(self, prev: Optional[InputToken], token: InputToken) -&gt; bool:
++    // """
++    // Return True if token is a unary op in the context of prev, the previous
++    // significant token.
++    // """
++    // if token.value == '~':  # pragma: no cover
++        // return True
++    // if prev is None:
++        // return True  # pragma: no cover
++    // assert token.value in '**-+', repr(token.value)
++    // if prev.kind in ('number', 'string'):
++        // return_val = False
++    // elif prev.kind == 'op' and prev.value in ')]':
++         // # An unnecessary test?
++        // return_val = False  # pragma: no cover
++    // elif prev.kind == 'op' and prev.value in '{([:,':
++        // return_val = True
++    // elif prev.kind != 'name':
++        // # An unnecessary test?
++        // return_val = True  # pragma: no cover
++    // else:
++        // # prev is a'name' token.
++        // return self.is_python_keyword(token)
++    // return return_val
++
+ fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;InputTok) -&gt; bool {  // *** Temp. _
+     return false;  // ***
+ }
+@language python
+</t>
+<t tx="ekr.20241005192904.11">fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;InputTok) -&gt; bool {  // *** Temp. _
+    return false;  // ***
+}
+</t>
+<t tx="ekr.20241005192904.12">@ignore
+@nosearch
+@language patch
+--- HEAD
++++ uncommitted
+@@ -1,15 +1,19 @@
+ // Only Clone is valid for String.
+ #[derive(Clone)]
+ struct InputTok {
+-    kind: String,
+-    value: String,
++    kind: String, value: String,
++}
++impl InputTok {
++    fn new(kind: &amp;str, value: &amp;str) -&gt; InputTok {
++        InputTok { kind: kind.to_string(), value: value.to_string() }
++    }
+ }
+ 
+-impl InputTok {
+-    fn new(kind: &amp;str, value: &amp;str) -&gt; InputTok {
+-        InputTok {
+-            kind: kind.to_string(),
+-            value: value.to_string(),
+-        }
+-    }
+-}
++// struct InputTok&lt;'a&gt; {
++    // kind: &amp;'a str, value: &amp;'a str,
++// }
++// impl InputTok {
++    // fn new(kind: &amp;str, value: &amp;str) -&gt; InputTok {
++        // InputTok { kind: kind, value: value }
++    // }
++// }
+@language python
+</t>
+<t tx="ekr.20241005192904.13">// Only Clone is valid for String.
+#[derive(Clone)]
+struct InputTok {
+    kind: String,
+    value: String,
+}
+
+impl InputTok {
+    fn new(kind: &amp;str, value: &amp;str) -&gt; InputTok {
+        InputTok {
+            kind: kind.to_string(),
+            value: value.to_string(),
+        }
+    }
+}
+</t>
+<t tx="ekr.20241005192904.14">@ignore
+@nosearch
+@language patch
+--- HEAD
++++ uncommitted
+@@ -13,7 +13,7 @@
+     self.stats.read_time += t1.elapsed().as_nanos();
+     // Create (an immutable!) list of input tokens.
+     let t2 = std::time::Instant::now();
+-    let input_tokens = self.make_input_list(&amp;contents);  // : Vec&lt;InputTok&gt; = 
++    let input_tokens = self.make_input_list(&amp;contents);
+     self.stats.make_tokens_time += t2.elapsed().as_nanos();
+     // Annotate tokens (the prepass).
+     let t3 = std::time::Instant::now();
+@language python
+</t>
+<t tx="ekr.20241005192904.15">fn beautify_one_file(&amp;mut self, file_name: &amp;str) {
+    self.stats.n_files += 1;
+    if true {
+        // Testing only: print the short file name.
+        let file_path = path::Path::new(file_name);
+        let os_str = file_path.file_name().unwrap(); // &amp;OsStr
+        let short_file_name = os_str.to_str().unwrap();
+        println!("{short_file_name}");
+    }
+    // Read the file into contents (a String).
+    let t1 = std::time::Instant::now();
+    let contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
+    self.stats.read_time += t1.elapsed().as_nanos();
+    // Create (an immutable!) list of input tokens.
+    let t2 = std::time::Instant::now();
+    let input_tokens = self.make_input_list(&amp;contents);  // : Vec&lt;InputTok&gt; = 
+    self.stats.make_tokens_time += t2.elapsed().as_nanos();
+    // Annotate tokens (the prepass).
+    let t3 = std::time::Instant::now();
+    let annotated_tokens = self.annotate_tokens(&amp;input_tokens);
+    self.stats.annotation_time += t3.elapsed().as_nanos();
+    // Beautify.
+    let t4 = std::time::Instant::now();
+    self.beautify(&amp;annotated_tokens);
+    self.stats.beautify_time += t4.elapsed().as_nanos();
+}
+</t>
+<t tx="ekr.20241005192904.2">@ignore
+@nosearch
+@language patch
+--- HEAD
++++ uncommitted
+@@ -265,10 +265,58 @@
+         }
+     }
+     //@+node:ekr.20241005091217.1: *3* Annotator.is_python_keyword (to do)
+-    fn is_python_keyword(&amp;mut self, _token: InputTok) -&gt; bool {  // *** Temp.
++    // def is_python_keyword(self, token: Optional[InputToken]) -&gt; bool:
++        // """Return True if token is a 'name' token referring to a Python keyword."""
++        // if not token or token.kind != 'name':
++            // return False
++        // return keyword.iskeyword(token.value) or keyword.issoftkeyword(token.value)
++        
++    // Keywords:
++    // False      await      else       import     pass
++    // None       break      except     in         raise
++    // True       class      finally    is         return
++    // and        continue   for        lambda     try
++    // as         def        from       nonlocal   while
++    // assert     del        global     not        with
++    // async      elif       if         or         yield
++
++    // Soft keywords:
++    // match, case, type and _
++
++    fn is_python_keyword(&amp;mut self, token: &amp;InputTok) -&gt; bool {  // *** Temp.
++        //! Return True if token is a 'name' token referring to a Python keyword.
++        if token.kind != "name" {
++            return false;
++        }
++        // let word = &amp;token.value;  // &amp;String
+         return false;  // ***
+     }
+     //@+node:ekr.20241005092549.1: *3* Annotator.is_unary_op_with_prev (to do)
++    // def is_unary_op_with_prev(self, prev: Optional[InputToken], token: InputToken) -&gt; bool:
++        // """
++        // Return True if token is a unary op in the context of prev, the previous
++        // significant token.
++        // """
++        // if token.value == '~':  # pragma: no cover
++            // return True
++        // if prev is None:
++            // return True  # pragma: no cover
++        // assert token.value in '**-+', repr(token.value)
++        // if prev.kind in ('number', 'string'):
++            // return_val = False
++        // elif prev.kind == 'op' and prev.value in ')]':
++             // # An unnecessary test?
++            // return_val = False  # pragma: no cover
++        // elif prev.kind == 'op' and prev.value in '{([:,':
++            // return_val = True
++        // elif prev.kind != 'name':
++            // # An unnecessary test?
++            // return_val = True  # pragma: no cover
++        // else:
++            // # prev is a'name' token.
++            // return self.is_python_keyword(token)
++        // return return_val
++
+     fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;InputTok) -&gt; bool {  // *** Temp. _
+         return false;  // ***
+     }
+@@ -307,18 +355,22 @@
+ // Only Clone is valid for String.
+ #[derive(Clone)]
+ struct InputTok {
+-    kind: String,
+-    value: String,
+-}
+-
++    kind: String, value: String,
++}
+ impl InputTok {
+     fn new(kind: &amp;str, value: &amp;str) -&gt; InputTok {
+-        InputTok {
+-            kind: kind.to_string(),
+-            value: value.to_string(),
+-        }
+-    }
+-}
++        InputTok { kind: kind.to_string(), value: value.to_string() }
++    }
++}
++
++// struct InputTok&lt;'a&gt; {
++    // kind: &amp;'a str, value: &amp;'a str,
++// }
++// impl InputTok {
++    // fn new(kind: &amp;str, value: &amp;str) -&gt; InputTok {
++        // InputTok { kind: kind, value: value }
++    // }
++// }
+ //@+node:ekr.20241004091919.1: *3* InputTok::new
+ //@+node:ekr.20240929074037.1: ** class LeoBeautifier
+ #[derive(Debug)]
+@@ -483,7 +535,7 @@
+         self.stats.read_time += t1.elapsed().as_nanos();
+         // Create (an immutable!) list of input tokens.
+         let t2 = std::time::Instant::now();
+-        let input_tokens = self.make_input_list(&amp;contents);  // : Vec&lt;InputTok&gt; = 
++        let input_tokens = self.make_input_list(&amp;contents);
+         self.stats.make_tokens_time += t2.elapsed().as_nanos();
+         // Annotate tokens (the prepass).
+         let t3 = std::time::Instant::now();
+@language python
+</t>
+<t tx="ekr.20241005192904.7"></t>
+<t tx="ekr.20241005192904.8">@ignore
+@nosearch
+@language patch
+--- HEAD
++++ uncommitted
+@@ -1,3 +1,26 @@
+-fn is_python_keyword(&amp;mut self, _token: InputTok) -&gt; bool {  // *** Temp.
++// def is_python_keyword(self, token: Optional[InputToken]) -&gt; bool:
++    // """Return True if token is a 'name' token referring to a Python keyword."""
++    // if not token or token.kind != 'name':
++        // return False
++    // return keyword.iskeyword(token.value) or keyword.issoftkeyword(token.value)
++    
++// Keywords:
++// False      await      else       import     pass
++// None       break      except     in         raise
++// True       class      finally    is         return
++// and        continue   for        lambda     try
++// as         def        from       nonlocal   while
++// assert     del        global     not        with
++// async      elif       if         or         yield
++
++// Soft keywords:
++// match, case, type and _
++
++fn is_python_keyword(&amp;mut self, token: &amp;InputTok) -&gt; bool {  // *** Temp.
++    //! Return True if token is a 'name' token referring to a Python keyword.
++    if token.kind != "name" {
++        return false;
++    }
++    // let word = &amp;token.value;  // &amp;String
+     return false;  // ***
+ }
+@language python
+</t>
+<t tx="ekr.20241005192904.9">fn is_python_keyword(&amp;mut self, _token: InputTok) -&gt; bool {  // *** Temp.
+    return false;  // ***
+}
+</t>
 </tnodes>
 </leo_file>
