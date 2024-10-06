@@ -290,17 +290,17 @@
 <v t="ekr.20241004095931.1"><vh>class AnnotatedInputTok</vh></v>
 <v t="ekr.20241004110721.1"><vh>class Annotator</vh>
 <v t="ekr.20241004153742.1"><vh>Annotator.new</vh></v>
-<v t="ekr.20241004153802.1"><vh>Annotator.pre_scan</vh>
+<v t="ekr.20241005091217.1"><vh>Annotator.is_python_keyword (to do)</vh></v>
+<v t="ekr.20241005092549.1"><vh>Annotator.is_unary_op_with_prev (to do)</vh></v>
+<v t="ekr.20241004153802.1"><vh>Annotator.pre_scan &amp; helpers</vh>
 <v t="ekr.20241004154345.2"><vh>&lt;&lt; pre-scan newline tokens &gt;&gt;</vh></v>
 <v t="ekr.20241004154345.3"><vh>&lt;&lt; pre-scan op tokens &gt;&gt;</vh></v>
 <v t="ekr.20241004154345.4"><vh>&lt;&lt; pre-scan name tokens &gt;&gt;</vh></v>
-</v>
 <v t="ekr.20241004154345.5"><vh>Annotator.finish_arg</vh></v>
 <v t="ekr.20241004154345.6"><vh>Annotator.finish_slice</vh></v>
 <v t="ekr.20241004154345.7"><vh>Annotator.finish_dict</vh></v>
-<v t="ekr.20241005091217.1"><vh>Annotator.is_python_keyword (to do)</vh></v>
-<v t="ekr.20241005092549.1"><vh>Annotator.is_unary_op_with_prev (to do)</vh></v>
 <v t="ekr.20241004163018.1"><vh>Annotator.set_context</vh></v>
+</v>
 </v>
 <v t="ekr.20240929024648.120"><vh>class InputTok</vh></v>
 <v t="ekr.20240929074037.1"><vh>class LeoBeautifier</vh>
@@ -445,9 +445,9 @@
 </v>
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 <v t="ekr.20241006034023.1"><vh>*** Finish LB.annotate_tokens!</vh></v>
+<v t="ekr.20241004095735.1"></v>
 <v t="ekr.20241004110721.1"></v>
 <v t="ekr.20241004153802.1"></v>
-<v t="ekr.20241004095735.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -852,10 +852,11 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 @wrap
 @nosearch
 
+- Use &amp;str instead of String in AnnotatedInputTok.
+
 - Finish LB.annotate_tokens
 - Finish LB:beautify.
 - Can't patch InputTok with context.
-- (tricky?) Use &amp;str instead of String in AnnotatedInputTok.
 
 Post: Use pointers, not objects.
 
@@ -3333,7 +3334,7 @@ impl Beautifier {
     
     // *** Not yet: Instantiate the Annotator and call Annotator.pre_pass.
     // let annotator = Annotator::new(input_list);
-    annotator.pre_pass(
+    // annotator.pre_scan(input_list);
 
     let mut result = Vec::new();
     for token in input_list {

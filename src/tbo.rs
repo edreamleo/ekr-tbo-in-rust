@@ -91,7 +91,63 @@ impl Annotator<'_> {
             verbatim: false, 
         }
     }
-    //@+node:ekr.20241004153802.1: *3* Annotator.pre_scan
+    //@+node:ekr.20241005091217.1: *3* Annotator.is_python_keyword (to do)
+    // def is_python_keyword(self, token: Optional[InputToken]) -> bool:
+        // """Return True if token is a 'name' token referring to a Python keyword."""
+        // if not token or token.kind != 'name':
+            // return False
+        // return keyword.iskeyword(token.value) or keyword.issoftkeyword(token.value)
+        
+    // Keywords:
+    // False      await      else       import     pass
+    // None       break      except     in         raise
+    // True       class      finally    is         return
+    // and        continue   for        lambda     try
+    // as         def        from       nonlocal   while
+    // assert     del        global     not        with
+    // async      elif       if         or         yield
+
+    // Soft keywords:
+    // match, case, type and _
+
+    fn is_python_keyword(&self, token: &InputTok) -> bool {  // *** Temp.
+        //! Return True if token is a 'name' token referring to a Python keyword.
+        if token.kind != "name" {
+            return false;
+        }
+        // let word = &token.value;  // &String
+        return false;  // ***
+    }
+    //@+node:ekr.20241005092549.1: *3* Annotator.is_unary_op_with_prev (to do)
+    // def is_unary_op_with_prev(self, prev: Optional[InputToken], token: InputToken) -> bool:
+        // """
+        // Return True if token is a unary op in the context of prev, the previous
+        // significant token.
+        // """
+        // if token.value == '~':  # pragma: no cover
+            // return True
+        // if prev is None:
+            // return True  # pragma: no cover
+        // assert token.value in '**-+', repr(token.value)
+        // if prev.kind in ('number', 'string'):
+            // return_val = False
+        // elif prev.kind == 'op' and prev.value in ')]':
+             // # An unnecessary test?
+            // return_val = False  # pragma: no cover
+        // elif prev.kind == 'op' and prev.value in '{([:,':
+            // return_val = True
+        // elif prev.kind != 'name':
+            // # An unnecessary test?
+            // return_val = True  # pragma: no cover
+        // else:
+            // # prev is a'name' token.
+            // return self.is_python_keyword(token)
+        // return return_val
+
+    fn is_unary_op_with_prev(&self, _prev_token: &InputTok, _token: &InputTok) -> bool {  // *** Temp. _
+        return false;  // ***
+    }
+    //@+node:ekr.20241004153802.1: *3* Annotator.pre_scan & helpers
     fn pre_scan(&mut self) {
         //! Scan the entire file in one iterative pass, adding context to a few
         //! kinds of tokens as follows:
@@ -208,7 +264,7 @@ impl Annotator<'_> {
             println!("pre_scan: non-empty scan_stack");
         }
     }
-    //@+node:ekr.20241004154345.5: *3* Annotator.finish_arg
+    //@+node:ekr.20241004154345.5: *4* Annotator.finish_arg
     fn finish_arg(&self, end: usize, state: &ScanState) {
         //! Set context for all ":" when scanning from "(" to ")".
 
@@ -267,7 +323,7 @@ impl Annotator<'_> {
             }
         }
     }
-    //@+node:ekr.20241004154345.6: *3* Annotator.finish_slice
+    //@+node:ekr.20241004154345.6: *4* Annotator.finish_slice
     fn finish_slice(&self, end: usize, state: &ScanState) {
         //! Set context for all ":" when scanning from "[" to "]".
 
@@ -343,7 +399,7 @@ impl Annotator<'_> {
             self.set_context(*i, final_context);
         }    
     }
-    //@+node:ekr.20241004154345.7: *3* Annotator.finish_dict
+    //@+node:ekr.20241004154345.7: *4* Annotator.finish_dict
     // ***
     #[allow(unused_variables)]
     fn finish_dict(&self, end: usize, state: &ScanState) {
@@ -374,63 +430,7 @@ impl Annotator<'_> {
             self.set_context(*i, "dict");
         }
     }
-    //@+node:ekr.20241005091217.1: *3* Annotator.is_python_keyword (to do)
-    // def is_python_keyword(self, token: Optional[InputToken]) -> bool:
-        // """Return True if token is a 'name' token referring to a Python keyword."""
-        // if not token or token.kind != 'name':
-            // return False
-        // return keyword.iskeyword(token.value) or keyword.issoftkeyword(token.value)
-        
-    // Keywords:
-    // False      await      else       import     pass
-    // None       break      except     in         raise
-    // True       class      finally    is         return
-    // and        continue   for        lambda     try
-    // as         def        from       nonlocal   while
-    // assert     del        global     not        with
-    // async      elif       if         or         yield
-
-    // Soft keywords:
-    // match, case, type and _
-
-    fn is_python_keyword(&self, token: &InputTok) -> bool {  // *** Temp.
-        //! Return True if token is a 'name' token referring to a Python keyword.
-        if token.kind != "name" {
-            return false;
-        }
-        // let word = &token.value;  // &String
-        return false;  // ***
-    }
-    //@+node:ekr.20241005092549.1: *3* Annotator.is_unary_op_with_prev (to do)
-    // def is_unary_op_with_prev(self, prev: Optional[InputToken], token: InputToken) -> bool:
-        // """
-        // Return True if token is a unary op in the context of prev, the previous
-        // significant token.
-        // """
-        // if token.value == '~':  # pragma: no cover
-            // return True
-        // if prev is None:
-            // return True  # pragma: no cover
-        // assert token.value in '**-+', repr(token.value)
-        // if prev.kind in ('number', 'string'):
-            // return_val = False
-        // elif prev.kind == 'op' and prev.value in ')]':
-             // # An unnecessary test?
-            // return_val = False  # pragma: no cover
-        // elif prev.kind == 'op' and prev.value in '{([:,':
-            // return_val = True
-        // elif prev.kind != 'name':
-            // # An unnecessary test?
-            // return_val = True  # pragma: no cover
-        // else:
-            // # prev is a'name' token.
-            // return self.is_python_keyword(token)
-        // return return_val
-
-    fn is_unary_op_with_prev(&self, _prev_token: &InputTok, _token: &InputTok) -> bool {  // *** Temp. _
-        return false;  // ***
-    }
-    //@+node:ekr.20241004163018.1: *3* Annotator.set_context
+    //@+node:ekr.20241004163018.1: *4* Annotator.set_context
     fn set_context(&self, _i: usize, _context: &str) {  // *** temp.
         //! Set self.input_tokens[i].context, but only if it does not already exist!
         //! See the docstring for pre_scan for details.
@@ -519,7 +519,7 @@ impl Beautifier {
         
         // *** Not yet: Instantiate the Annotator and call Annotator.pre_pass.
         // let annotator = Annotator::new(input_list);
-        annotator.pre_pass(
+        // annotator.pre_scan(input_list);
 
         let mut result = Vec::new();
         for token in input_list {
