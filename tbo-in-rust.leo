@@ -447,7 +447,6 @@
 <v t="ekr.20241006034023.1"><vh>*** Finish LB.annotate_tokens!</vh></v>
 <v t="ekr.20241004095735.1"></v>
 <v t="ekr.20241004110721.1"></v>
-<v t="ekr.20241004153802.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -853,6 +852,7 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 @nosearch
 
 - Use &amp;str instead of String in AnnotatedInputTok.
+- Use &amp;str in insignificant_tokens.
 
 - Finish LB.annotate_tokens
 - Finish LB:beautify.
@@ -3332,11 +3332,13 @@ impl Beautifier {
 <t tx="ekr.20241004095735.1">fn annotate_tokens(&amp;mut self, input_list: &amp;Vec&lt;InputTok&gt;) -&gt; Vec::&lt;AnnotatedInputTok&gt; {
     //! Do the prepass, returning tokens annotated with context.
     
-    // *** Not yet: Instantiate the Annotator and call Annotator.pre_pass.
-    // let annotator = Annotator::new(input_list);
-    // annotator.pre_scan(input_list);
-
     let mut result = Vec::new();
+    let mut annotator = Annotator::new(input_list);
+    annotator.pre_scan();
+
+    // for annotated_token in annotated_tokens {
+        // result.push(result.push(annotated_token));
+    // }
     for token in input_list {
         let context = Vec::new();
         let annotated_tok = AnnotatedInputTok::new(context, &amp;token.kind, &amp;token.value);
@@ -3364,7 +3366,7 @@ impl AnnotatedInputTok {
 </t>
 <t tx="ekr.20241004110721.1">struct Annotator&lt;'a&gt; {
     // The present input token...
-    input_tokens: Vec&lt;InputTok&lt;'a&gt;&gt;,
+    input_tokens: &amp;'a Vec&lt;InputTok&lt;'a&gt;&gt;,
     insignificant_tokens: [String; 6],
     index: u32,  // The index within the tokens array of the token being scanned.
     lws: String,  // Leading whitespace. Required!
@@ -3412,7 +3414,7 @@ The present states:
                     twice if state.value == self.level.
 
 </t>
-<t tx="ekr.20241004153742.1">fn new(input_tokens: Vec&lt;InputTok&gt;) -&gt; Annotator {
+<t tx="ekr.20241004153742.1">fn new&lt;'a&gt;(input_tokens: &amp;'a Vec&lt;InputTok&gt;) -&gt; Annotator&lt;'a&gt; {
     Annotator {
         curly_brackets_level: 0,
         decorator_seen: false,
@@ -3454,7 +3456,8 @@ The present states:
     scan_stack.push(dummy_state);
     let mut prev_token = InputTok::new("dummy", "");
     let mut i = 0;
-    for token in &amp;self.input_tokens {
+    // for token in &amp;self.input_tokens {
+    for token in self.input_tokens {
         let (kind, value) = (token.kind, token.value);
         if kind == "newline" {
             &lt;&lt; pre-scan newline tokens &gt;&gt;
