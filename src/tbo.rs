@@ -14,6 +14,7 @@ use rustpython_parser::{lexer::lex, Mode, Tok}; // text_size::TextRange
 use std::env;
 use std::fmt;
 use std::fs;
+use std::collections::HashMap;
 use std::path;
 
 //@+others
@@ -54,6 +55,7 @@ struct Annotator<'a> {
     input_tokens: &'a Vec<InputTok<'a>>,
     insignificant_tokens: [&'a str; 7],
     index: u32,  // The index within the tokens array of the token being scanned.
+    index_dict: HashMap<u32, Vec<&'a str>>,
     lws: String,  // Leading whitespace. Required!
     // For whitespace.
     curly_brackets_level: u32,  // Number of unmatched '{' tokens.
@@ -79,6 +81,7 @@ impl Annotator<'_> {
             in_doc_part: false,
             indent_level: 0,
             index: 0,
+            index_dict: HashMap::new(),
             input_tokens: input_tokens,
             insignificant_tokens: ["dummy", "comment", "dedent", "indent", "newline", "nl", "ws"],
             lws: String::new(),
