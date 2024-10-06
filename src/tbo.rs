@@ -164,9 +164,8 @@ impl Annotator<'_> {
         let dummy_state = ScanState::new("dummy", &dummy_token);
         let mut scan_stack: Vec<ScanState> = Vec::new();
         scan_stack.push(dummy_state);
-        let mut prev_token = InputTok::new("dummy", "");
+        let mut prev_token = &dummy_token;
         let mut i = 0;
-        // for token in &self.input_tokens {
         for token in self.input_tokens {
             let (kind, value) = (token.kind, token.value);
             if kind == "newline" {
@@ -253,7 +252,7 @@ impl Annotator<'_> {
             }
             // Remember the previous significant token.
             if !self.insignificant_tokens.contains(&kind) { 
-                prev_token = token.clone();
+                prev_token = token;
             }
             i += 1;
         }
