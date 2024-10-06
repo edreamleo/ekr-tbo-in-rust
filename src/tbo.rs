@@ -34,18 +34,18 @@ pub struct TestTok {
 }
 //@+node:ekr.20241004095931.1: ** class AnnotatedInputTok
 #[derive(Clone, Debug)]
-struct AnnotatedInputTok {
-    context: Vec::<String>,
-    kind: String,
-    value: String,
+struct AnnotatedInputTok<'a> {
+    context: String,
+    kind: &'a str,
+    value: &'a str,
 }
 
-impl AnnotatedInputTok {
-    fn new(context: Vec<String>, kind: &str, value: &str) -> AnnotatedInputTok {
+impl <'a> AnnotatedInputTok<'_> {
+    fn new(context: String, kind: &'a str, value: &'a str) -> AnnotatedInputTok<'a> {
         AnnotatedInputTok {
             context: context,
-            kind: kind.to_string(),
-            value: value.to_string(),
+            kind: kind,
+            value: value,
         }
     }
 }
@@ -171,8 +171,8 @@ impl Annotator<'_> {
     }
     //@+node:ekr.20241004153802.1: *3* Annotator.pre_scan & helpers
     fn pre_scan(&mut self) {
-        //! Scan the entire file in one iterative pass, adding context to a few
-        //! kinds of tokens as follows:
+        //! Scan the entire file in one iterative pass, adding context (in index_dict)
+        //! to a few kinds of tokens as follows:
         //!
         //! Token   Possible Contexts (or None)
         //! =====   ===========================
@@ -186,7 +186,7 @@ impl Annotator<'_> {
         let mut in_import = false;
         // Avoid Option complications by creating a dummy token and scan state.
         let dummy_token = InputTok::new("dummy", "");
-        let dummy_state = ScanState::new("dummy", &dummy_token);
+        let dummy_state = ScanState::new("dummy-scan-state", &dummy_token);
         let mut scan_stack: Vec<ScanState> = Vec::new();
         scan_stack.push(dummy_state);
         let mut prev_token = &dummy_token;
@@ -281,7 +281,7 @@ impl Annotator<'_> {
             }
         }
         // Sanity check.
-        if scan_stack.len() > 1 || scan_stack[0].kind != "dummy" {
+        if scan_stack.len() > 1 || scan_stack[0].kind != "dummy-scan-state" {
             println!("");
             println!("pre_scan: non-empty scan_stack");
             for scan_state in scan_stack {
@@ -456,25 +456,18 @@ impl Annotator<'_> {
         }
     }
     //@+node:ekr.20241004163018.1: *4* Annotator.set_context
-    fn set_context<'a>(&mut self, i: usize, context: & str) {  // *** temp.
+    fn set_context(&mut self, i: usize, context: &str) {
         //! Set self.index_dict[i], but only if it does not already exist!
 
-        let trace = false;  // Do not delete the trace below.
-       
         if !self.valid_contexts.contains(&context) {
             println!("Unexpected context! {context:?}");
         }
-
-        if trace {  // Do not delete.
+        if false {  // Debugging.
             let token = &self.input_tokens[i];
             let token_kind = token.kind;
             let token_value = token.value;
             println!("{token_kind:20}: {token_value}");
-            // let token_s = f!("<{token_kind}: {token_val}>");
-            // let ignore_s = if token.context { "Ignore" } else { "      "};
-            // println!("{i:3} {ignore_s} token: {token_s} context: {context}");
         }
-        
         if !self.index_dict.contains_key(&i) {
             self.index_dict.insert(i, context.to_string());
         }
@@ -534,26 +527,32 @@ impl Beautifier {
         }
     }
     //@+node:ekr.20241004095735.1: *3* LB::annotate_tokens (**finish)
-    fn annotate_tokens(&mut self, input_list: &Vec<InputTok>) -> Vec::<AnnotatedInputTok> {
+    fn annotate_tokens<'a>(&mut self, input_tokens: &'a Vec<InputTok<'a>>) -> Vec::<AnnotatedInputTok<'a>> {
         //! Do the prepass, returning tokens annotated with context.
         
         let mut result = Vec::new();
-        let mut annotator = Annotator::new(input_list);
+        let mut annotator = Annotator::new(input_tokens);
         
-        // To do: return a list of (i, context) pairs.
+        // set self.index_dict
         annotator.pre_scan();
-
-        // *** To do: create the annotated tokens.
-        // for annotated_token in annotated_tokens {
-            // result.push(result.push(annotated_token));
-        // }
         
-        // *** temp.
-        for token in input_list {
-            let context = Vec::new();
-            let annotated_tok = AnnotatedInputTok::new(context, &token.kind, &token.value);
-            result.push(annotated_tok)
+        // Create the annotated tokens using self.index_dict.
+        for (i, token) in input_tokens.into_iter().enumerate() {
+            let context = String::new();
+            // let context = match annotator.index_dict.get(&i) {
+                // Some(String) => String,
+                // None => "",
+            // };
+            let annotated_token = AnnotatedInputTok::new(context, &token.kind, &token.value);
+            result.push(annotated_token);
         }
+
+        // *** temp.
+            // for token in input_list {
+                // let context = Vec::new();
+                // let annotated_tok = AnnotatedInputTok::new(context, &token.kind, &token.value);
+                // result.push(annotated_tok)
+            // }
         return result;
     }
     //@+node:ekr.20240929074037.113: *3* LB::beautify
@@ -562,8 +561,8 @@ impl Beautifier {
         for input_token in annotated_list {
             //@+<< LB: beautify: dispatch on input_token.kind >>
             //@+node:ekr.20241002062655.1: *4* << LB: beautify: dispatch on input_token.kind >>
-            let kind = input_token.kind.as_str();
-            let value = input_token.kind.as_str();
+            let kind = input_token.kind;  // ***.as_str();
+            let value = input_token.kind;  // ***.as_str();
             match kind {
                 // Some of these could be replaced by inline code.
                 "And" => self.do_And(),

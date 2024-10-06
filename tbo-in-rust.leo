@@ -445,9 +445,11 @@
 </v>
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 <v t="ekr.20241004110721.1"></v>
+<v t="ekr.20240929024648.120"></v>
+<v t="ekr.20241004095931.1"></v>
 <v t="ekr.20241004153802.1"></v>
-<v t="ekr.20241004095735.1"></v>
 <v t="ekr.20241004163018.1"></v>
+<v t="ekr.20241004095735.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -851,6 +853,8 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
 @nosearch
+
+*** AnnotatedInputTok.context can be a String: no need for Vec.
 
 - Finish LB.annotate_tokens
 - Finish LB:beautify.
@@ -2185,8 +2189,8 @@ self.output_list.push("value".to_string());  // Converts str to String
     // let kind_s = &amp;input_token.kind;
     // let kind = kind_s.as_str();
     </t>
-<t tx="ekr.20241002062655.1">let kind = input_token.kind.as_str();
-let value = input_token.kind.as_str();
+<t tx="ekr.20241002062655.1">let kind = input_token.kind;  // ***.as_str();
+let value = input_token.kind;  // ***.as_str();
 match kind {
     // Some of these could be replaced by inline code.
     "And" =&gt; self.do_And(),
@@ -3327,42 +3331,48 @@ impl Beautifier {
         }
     }
 }</t>
-<t tx="ekr.20241004095735.1">fn annotate_tokens(&amp;mut self, input_list: &amp;Vec&lt;InputTok&gt;) -&gt; Vec::&lt;AnnotatedInputTok&gt; {
+<t tx="ekr.20241004095735.1">fn annotate_tokens&lt;'a&gt;(&amp;mut self, input_tokens: &amp;'a Vec&lt;InputTok&lt;'a&gt;&gt;) -&gt; Vec::&lt;AnnotatedInputTok&lt;'a&gt;&gt; {
     //! Do the prepass, returning tokens annotated with context.
     
     let mut result = Vec::new();
-    let mut annotator = Annotator::new(input_list);
+    let mut annotator = Annotator::new(input_tokens);
     
-    // To do: return a list of (i, context) pairs.
+    // set self.index_dict
     annotator.pre_scan();
-
-    // *** To do: create the annotated tokens.
-    // for annotated_token in annotated_tokens {
-        // result.push(result.push(annotated_token));
-    // }
     
-    // *** temp.
-    for token in input_list {
-        let context = Vec::new();
-        let annotated_tok = AnnotatedInputTok::new(context, &amp;token.kind, &amp;token.value);
-        result.push(annotated_tok)
+    // Create the annotated tokens using self.index_dict.
+    for (i, token) in input_tokens.into_iter().enumerate() {
+        let context = String::new();
+        // let context = match annotator.index_dict.get(&amp;i) {
+            // Some(String) =&gt; String,
+            // None =&gt; "",
+        // };
+        let annotated_token = AnnotatedInputTok::new(context, &amp;token.kind, &amp;token.value);
+        result.push(annotated_token);
     }
+
+    // *** temp.
+        // for token in input_list {
+            // let context = Vec::new();
+            // let annotated_tok = AnnotatedInputTok::new(context, &amp;token.kind, &amp;token.value);
+            // result.push(annotated_tok)
+        // }
     return result;
 }
 </t>
 <t tx="ekr.20241004095931.1">#[derive(Clone, Debug)]
-struct AnnotatedInputTok {
-    context: Vec::&lt;String&gt;,
-    kind: String,
-    value: String,
+struct AnnotatedInputTok&lt;'a&gt; {
+    context: String,
+    kind: &amp;'a str,
+    value: &amp;'a str,
 }
 
-impl AnnotatedInputTok {
-    fn new(context: Vec&lt;String&gt;, kind: &amp;str, value: &amp;str) -&gt; AnnotatedInputTok {
+impl &lt;'a&gt; AnnotatedInputTok&lt;'_&gt; {
+    fn new(context: String, kind: &amp;'a str, value: &amp;'a str) -&gt; AnnotatedInputTok&lt;'a&gt; {
         AnnotatedInputTok {
             context: context,
-            kind: kind.to_string(),
-            value: value.to_string(),
+            kind: kind,
+            value: value,
         }
     }
 }
@@ -3460,8 +3470,8 @@ The present states:
 }
 </t>
 <t tx="ekr.20241004153802.1">fn pre_scan(&amp;mut self) {
-    //! Scan the entire file in one iterative pass, adding context to a few
-    //! kinds of tokens as follows:
+    //! Scan the entire file in one iterative pass, adding context (in index_dict)
+    //! to a few kinds of tokens as follows:
     //!
     //! Token   Possible Contexts (or None)
     //! =====   ===========================
@@ -3475,7 +3485,7 @@ The present states:
     let mut in_import = false;
     // Avoid Option complications by creating a dummy token and scan state.
     let dummy_token = InputTok::new("dummy", "");
-    let dummy_state = ScanState::new("dummy", &amp;dummy_token);
+    let dummy_state = ScanState::new("dummy-scan-state", &amp;dummy_token);
     let mut scan_stack: Vec&lt;ScanState&gt; = Vec::new();
     scan_stack.push(dummy_state);
     let mut prev_token = &amp;dummy_token;
@@ -3496,7 +3506,7 @@ The present states:
         }
     }
     // Sanity check.
-    if scan_stack.len() &gt; 1 || scan_stack[0].kind != "dummy" {
+    if scan_stack.len() &gt; 1 || scan_stack[0].kind != "dummy-scan-state" {
         println!("");
         println!("pre_scan: non-empty scan_stack");
         for scan_state in scan_stack {
@@ -3742,25 +3752,18 @@ fn finish_dict(&amp;mut self, end: usize, state: &amp;ScanState) {
     }
 }
 </t>
-<t tx="ekr.20241004163018.1">fn set_context&lt;'a&gt;(&amp;mut self, i: usize, context: &amp; str) {  // *** temp.
+<t tx="ekr.20241004163018.1">fn set_context(&amp;mut self, i: usize, context: &amp;str) {
     //! Set self.index_dict[i], but only if it does not already exist!
 
-    let trace = false;  // Do not delete the trace below.
-   
     if !self.valid_contexts.contains(&amp;context) {
         println!("Unexpected context! {context:?}");
     }
-
-    if trace {  // Do not delete.
+    if false {  // Debugging.
         let token = &amp;self.input_tokens[i];
         let token_kind = token.kind;
         let token_value = token.value;
         println!("{token_kind:20}: {token_value}");
-        // let token_s = f!("&lt;{token_kind}: {token_val}&gt;");
-        // let ignore_s = if token.context { "Ignore" } else { "      "};
-        // println!("{i:3} {ignore_s} token: {token_s} context: {context}");
     }
-    
     if !self.index_dict.contains_key(&amp;i) {
         self.index_dict.insert(i, context.to_string());
     }
