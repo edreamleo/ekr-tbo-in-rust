@@ -114,9 +114,8 @@ impl Annotator<'_> {
         scan_stack.push(dummy_state);
         let mut prev_token = InputTok::new("dummy", "");
         let mut i = 0;
-        // for (i, &ref token) in self.input_tokens.iter().enumerate() {
         for token in &self.input_tokens {
-            let (kind, value) = (token.kind, token.value);  // ***
+            let (kind, value) = (token.kind, token.value);
             if kind == "newline" {
                 //@+<< pre-scan newline tokens >>
                 //@+node:ekr.20241004154345.2: *4* << pre-scan newline tokens >>
@@ -164,7 +163,7 @@ impl Annotator<'_> {
                     scan_stack.push(ScanState::new(state_kind, &token));
                 }
                 else if value == ")" {
-                    // *** assert(["(", "arg"].contains(top_state.kind));
+                    assert!(["arg", "("].contains(&top_state.kind));
                     if top_state.kind == "arg" {
                         self.finish_arg(i, top_state);
                     }
@@ -172,16 +171,15 @@ impl Annotator<'_> {
                 }
                 // Handle interior tokens in "arg" and "slice" states.
                 if top_state.kind != "dummy" {
-                    if (top_state.kind == "dict" || top_state.kind =="slice") && value == ":" {
+                    if value == ":" && ["dict", "slice"].contains(&top_state.kind) {
                         top_state.indices.push(i);
                     }
-                    if false {  // *** top_state.kind == "arg" && ["**", "*", "=", ":", ","].contains(value) {
+                    else if top_state.kind == "arg" && ["**", "*", "=", ":", ","].contains(&value) {
                         top_state.indices.push(i);
                     }
                 }
                 // Handle "." and "(" tokens inside "import" and "from" statements.
-                // if in_import && ["(", "."].contains(value) {
-                if in_import && (value == "," || value == ".") {
+                if in_import && ["(", "."].contains(&value) {
                     self.set_context(i, "import");
                 }
                 //@-<< pre-scan op tokens >>
@@ -199,7 +197,7 @@ impl Annotator<'_> {
                 //@-<< pre-scan name tokens >>
             }
             // Remember the previous significant token.
-            if !self.insignificant_tokens.contains(&kind.to_string()) {  // *** lifetime problem
+            if !self.insignificant_tokens.contains(&kind.to_string()) { 
                 prev_token = token.clone();
             }
             i += 1;
