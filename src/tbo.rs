@@ -67,6 +67,7 @@ struct Annotator<'a> {
     in_arg_list: u32,  // > 0 if in an arg list of a def.
     in_doc_part: bool,
     state_stack: Vec<ParseState>,  // Stack of ParseState objects.
+    valid_contexts: [&'a str; 7],
     verbatim: bool,  // True: don't beautify.
 }
 
@@ -88,6 +89,9 @@ impl Annotator<'_> {
             paren_level: 0,
             state_stack: Vec::new(),
             square_brackets_stack: Vec::new(),
+            valid_contexts: [
+                "annotation", "arg", "complex-slice", "dict",
+                "import", "initializer", "simple-slice"],
             verbatim: false, 
         }
     }
@@ -434,8 +438,8 @@ impl Annotator<'_> {
     }
     //@+node:ekr.20241004163018.1: *4* Annotator.set_context
     fn set_context(&self, _i: usize, _context: &str) {  // *** temp.
-        //! Set self.input_tokens[i].context, but only if it does not already exist!
-        //! See the docstring for pre_scan for details.
+        //! Set self.index_dict[i], but only if it does not already exist!
+
 
         // *** Rewrite.
 
