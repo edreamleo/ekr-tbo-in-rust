@@ -281,8 +281,6 @@
 <v t="ekr.20240927154016.1"><vh>Notes</vh>
 <v t="ekr.20240929084852.1"><vh>Ownership and mutation</vh></v>
 <v t="ekr.20241001055017.1"><vh>Traits</vh></v>
-<v t="ekr.20241001060848.1"><vh>Lifetimes (to do)</vh></v>
-<v t="ekr.20241002054443.1"><vh>Errors in LB:beautify</vh></v>
 <v t="ekr.20240928185643.1"><vh>Stats</vh></v>
 </v>
 <v t="ekr.20240927154323.1"><vh>** To do</vh></v>
@@ -306,7 +304,7 @@
 <v t="ekr.20240929074037.1"><vh>class LeoBeautifier</vh>
 <v t="ekr.20240929074037.114"><vh> LB::new</vh></v>
 <v t="ekr.20240929074037.2"><vh>LB::add_output_string</vh></v>
-<v t="ekr.20241004095735.1"><vh>LB::annotate_tokens (**finish)</vh></v>
+<v t="ekr.20241004095735.1"><vh>LB::annotate_tokens</vh></v>
 <v t="ekr.20240929074037.113"><vh>LB::beautify</vh>
 <v t="ekr.20241002062655.1"><vh>&lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;</vh></v>
 </v>
@@ -448,8 +446,8 @@
 <v t="ekr.20240929024648.120"></v>
 <v t="ekr.20241004095931.1"></v>
 <v t="ekr.20241004153802.1"></v>
-<v t="ekr.20241004163018.1"></v>
 <v t="ekr.20241004095735.1"></v>
+<v t="ekr.20241004163018.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -854,15 +852,12 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 @wrap
 @nosearch
 
-*** AnnotatedInputTok.context can be a String: no need for Vec.
-
-- Finish LB.annotate_tokens
-- Finish LB:beautify.
-- Can't patch InputTok with context.
-
 Post: Use pointers, not objects.
-
 - Pointers keep borrow checker happy, provided lifetimes are given.
+
+- Annotator.set_context never sets context!
+  so LB.annotate_tokens never finds context!
+- Finish LB:beautify.
 </t>
 <t tx="ekr.20240928073118.1">@language python
 g.cls()
@@ -888,20 +883,30 @@ make_tokens:  29.45 ms
       
 Rust, with nanosecond resolution.
 
- leoFrame.py
+=== Empty make_tokens loop.
 
 leoFrame.py
 
      files: 1, tokens: 14619, ws tokens: 5156
        read:    0.5 ms
-make_tokens:   14.2 ms  Full code, without slices.
-make_tokens:   11.4 ms Full code, with slices
 make_tokens:   10.7 ms  Empty loop
    beautify:    7.3 ms
+      write:    0.0 ms
+      total:   18.5 ms
+
+=== Latest:
+
+leoFrame.py
+
+     files: 1, tokens: 14619, ws tokens: 5156
+       read:    0.55 ms
+make_tokens:   11.01 ms
+   annotate:    6.85 ms
+   beautify:    4.07 ms
       write:    0.00 ms
-      total:   22.08 ms
+      total:   22.50 ms
       
-This only 10% faster than the python code.
+Only about 10% faster than the Python beautifier.
 </t>
 <t tx="ekr.20240929024648.113">fn make_input_list(
     contents: &amp;str,
@@ -1986,8 +1991,6 @@ fn returns_summarizable() -&gt; impl Summary {...}
 // We can call o.to_string method defined by the ToString trait on
 // any type that implements the Display trait. 
 </t>
-<t tx="ekr.20241001060848.1">When returning a reference from a function,
-the lifetime parameter for the return type needs to match the lifetime parameter for one of the parameters.</t>
 <t tx="ekr.20241001071914.1">fn test_loop(contents: &amp;str) {
     let mut n_tokens = 0;
     for token in lex(&amp;contents, Mode::Module)
@@ -2165,30 +2168,6 @@ print('abc')
         }
         return result;
 </t>
-<t tx="ekr.20241002054443.1">@language rust
-
-// The clone in LB:beautify appears to be necessary.
-
-// All these FAIL in LB::beautify
- 
-self.add_output_string(&amp;"Test", &amp;"Value");  // mutable borrow occurs here.
-self.output_list.push(&amp;input_token.value); //  expected `String`, found `&amp;String`
-self.output_list.push("Value");  // expected `String`, found `&amp;str`
-self.output_list.push(&amp;"Value");  // expected `String`, found `&amp;&amp;str`
-
-// Works.
-self.output_list.push(input_token.value.to_string());  // Converts str to String
-self.output_list.push("value".to_string());  // Converts str to String
-
-// Dispatch
-
-// let kind = &amp;input_token.kind.to_string();  // expected `&amp;String`, found `&amp;str`
-// let kind = &amp;input_token.kind; // expected `&amp;String`, found `&amp;str`
-
-// immutable borrow occurs here
-    // let kind_s = &amp;input_token.kind;
-    // let kind = kind_s.as_str();
-    </t>
 <t tx="ekr.20241002062655.1">let kind = input_token.kind;  // ***.as_str();
 let value = input_token.kind;  // ***.as_str();
 match kind {
@@ -3342,21 +3321,17 @@ impl Beautifier {
     
     // Create the annotated tokens using self.index_dict.
     for (i, token) in input_tokens.into_iter().enumerate() {
-        let context = String::new();
-        // let context = match annotator.index_dict.get(&amp;i) {
-            // Some(String) =&gt; String,
-            // None =&gt; "",
-        // };
-        let annotated_token = AnnotatedInputTok::new(context, &amp;token.kind, &amp;token.value);
+        let context = match annotator.index_dict.get(&amp;i) {
+            Some(x) =&gt; x,
+            None =&gt; &amp;"".to_string(),
+        };
+        let context_string = context.to_string();
+        if !context_string.is_empty() {
+            println!("{i} {context_string}");
+        }
+        let annotated_token = AnnotatedInputTok::new(context_string, &amp;token.kind, &amp;token.value);
         result.push(annotated_token);
     }
-
-    // *** temp.
-        // for token in input_list {
-            // let context = Vec::new();
-            // let annotated_tok = AnnotatedInputTok::new(context, &amp;token.kind, &amp;token.value);
-            // result.push(annotated_tok)
-        // }
     return result;
 }
 </t>
@@ -3495,10 +3470,20 @@ The present states:
             &lt;&lt; pre-scan newline tokens &gt;&gt;
         }
         else if self.op_kinds.contains(&amp;kind) {
+            // println!("  OP: {value:?}");  // ***
             &lt;&lt; pre-scan op tokens &gt;&gt;
         }
         else if kind == "Name" {
+            // println!("Name: {value:?}");  // ***
             &lt;&lt; pre-scan name tokens &gt;&gt;
+        }
+        else if ["Class", "Def"].contains(&amp;kind) {
+            // println!("{kind}");
+        }
+        else if kind == "ws" {  // ***
+        }
+        else {
+            // println!("Other: {kind:?}");
         }
         // Remember the previous significant token.
         if !self.insignificant_tokens.contains(&amp;kind) {
@@ -3525,6 +3510,11 @@ if in_import &amp;&amp; scan_stack.len() == 0 {
 <t tx="ekr.20241004154345.3">// top_state: Optional[fScanState] = scan_stack[-1] if scan_stack else None
 // The scan_stack always contains at least a dummy state.
 let top_state = &amp;mut scan_stack[scan_stack.len() - 1].clone();
+
+if false {  // ***
+    let top_state_kind = top_state.kind;
+    println!("&lt;pre-scan op tokens: top_state: {top_state_kind:20} {value:?}");
+}
 
 // Handle "[" and "]".
 if value == "[" {
@@ -3564,7 +3554,7 @@ else if value == ")" {
 }
 
 // Handle interior tokens in "arg" and "slice" states.
-if top_state.kind != "dummy" {
+if top_state.kind != "dummy-scan-state" {
     if value == ":" &amp;&amp; ["dict", "slice"].contains(&amp;top_state.kind) {
         top_state.indices.push(i);
     }
@@ -3578,8 +3568,12 @@ if in_import &amp;&amp; ["(", "."].contains(&amp;value) {
     self.set_context(i, "import");
 }
 </t>
-<t tx="ekr.20241004154345.4">let prev_is_yield = prev_token.kind == "name" &amp;&amp; prev_token.value == "yield";
-// if ["from", "import"].contains(value) &amp;&amp; !prev_is_yield {
+<t tx="ekr.20241004154345.4">// *** WRONG: From and Import are separate tokens.
+
+let prev_is_yield = prev_token.kind == "name" &amp;&amp; prev_token.value == "yield";
+
+// *** WRONG: if ["from", "import"].contains(value) &amp;&amp; !prev_is_yield {
+
 if !prev_is_yield &amp;&amp; (value == "from" || value == "import") {
     // "import" and "from x import" statements should be at the outer level.
     assert!(scan_stack.len() == 1 &amp;&amp; scan_stack[0].kind == "dummy");
@@ -3588,6 +3582,8 @@ if !prev_is_yield &amp;&amp; (value == "from" || value == "import") {
 </t>
 <t tx="ekr.20241004154345.5">fn finish_arg(&amp;mut self, end: usize, state: &amp;ScanState) {
     //! Set context for all ":" when scanning from "(" to ")".
+    
+    println!("finish_arg: {end} {state:?}");
 
     // Sanity checks.
     if state.kind == "dummy" {
@@ -3608,6 +3604,7 @@ if !prev_is_yield &amp;&amp; (value == "from" || value == "import") {
     let mut equal_context = "initializer";
     for i in indices {
         let token = &amp;self.input_tokens[*i];
+        println!("finish_arg: {i} {token:?}");
         assert!(token.kind == "op");
         if token.value == "," {
             equal_context = "initializer";
@@ -3758,13 +3755,14 @@ fn finish_dict(&amp;mut self, end: usize, state: &amp;ScanState) {
     if !self.valid_contexts.contains(&amp;context) {
         println!("Unexpected context! {context:?}");
     }
-    if false {  // Debugging.
+    if true {  // Debugging.  Never gets called!
         let token = &amp;self.input_tokens[i];
         let token_kind = token.kind;
         let token_value = token.value;
-        println!("{token_kind:20}: {token_value}");
+        println!("{token_kind:20}: {context:20} {token_value}");
     }
     if !self.index_dict.contains_key(&amp;i) {
+        println!("{i} {context:?}");
         self.index_dict.insert(i, context.to_string());
     }
 }

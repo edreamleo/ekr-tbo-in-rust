@@ -204,7 +204,7 @@ impl Annotator<'_> {
                 //@-<< pre-scan newline tokens >>
             }
             else if self.op_kinds.contains(&kind) {
-                println!("  OP: {value:?}");  // ***
+                // println!("  OP: {value:?}");  // ***
                 //@+<< pre-scan op tokens >>
                 //@+node:ekr.20241004154345.3: *4* << pre-scan op tokens >>
                 // top_state: Optional[fScanState] = scan_stack[-1] if scan_stack else None
@@ -484,7 +484,7 @@ impl Annotator<'_> {
         if !self.valid_contexts.contains(&context) {
             println!("Unexpected context! {context:?}");
         }
-        if true {  // Debugging.
+        if true {  // Debugging.  Never gets called!
             let token = &self.input_tokens[i];
             let token_kind = token.kind;
             let token_value = token.value;
@@ -549,7 +549,7 @@ impl Beautifier {
             self.output_list.push(value.to_string())
         }
     }
-    //@+node:ekr.20241004095735.1: *3* LB::annotate_tokens (**finish)
+    //@+node:ekr.20241004095735.1: *3* LB::annotate_tokens
     fn annotate_tokens<'a>(&mut self, input_tokens: &'a Vec<InputTok<'a>>) -> Vec::<AnnotatedInputTok<'a>> {
         //! Do the prepass, returning tokens annotated with context.
         
@@ -561,26 +561,17 @@ impl Beautifier {
         
         // Create the annotated tokens using self.index_dict.
         for (i, token) in input_tokens.into_iter().enumerate() {
-            // *** let context = annotator.index_dict.get(&i);
             let context = match annotator.index_dict.get(&i) {
                 Some(x) => x,
                 None => &"".to_string(),
             };
             let context_string = context.to_string();
-            // println!("{context_string:?}");
             if !context_string.is_empty() {
                 println!("{i} {context_string}");
             }
             let annotated_token = AnnotatedInputTok::new(context_string, &token.kind, &token.value);
             result.push(annotated_token);
         }
-
-        // *** temp.
-            // for token in input_list {
-                // let context = Vec::new();
-                // let annotated_tok = AnnotatedInputTok::new(context, &token.kind, &token.value);
-                // result.push(annotated_tok)
-            // }
         return result;
     }
     //@+node:ekr.20240929074037.113: *3* LB::beautify
