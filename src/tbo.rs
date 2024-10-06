@@ -142,6 +142,7 @@ impl Annotator<'_> {
                     self.finish_slice(i, top_state);
                     scan_stack.pop();
                 }
+
                 // Handle "{" and "}".
                 if value == "{" {
                     scan_stack.push(ScanState::new("dict", &token));
@@ -151,16 +152,15 @@ impl Annotator<'_> {
                     self.finish_dict(i, top_state);
                     scan_stack.pop();
                 }
+
                 // Handle "(" and ")"
                 else if value == "(" {
-                    let state_kind: &str;
                     if self.is_python_keyword(&prev_token) || prev_token.kind != "name" {
-                        state_kind = "(";
+                        scan_stack.push(ScanState::new("(", &token));
                     }
                     else {
-                        state_kind = "arg";
+                        scan_stack.push(ScanState::new("arg", &token));
                     }
-                    scan_stack.push(ScanState::new(state_kind, &token));
                 }
                 else if value == ")" {
                     assert!(["arg", "("].contains(&top_state.kind));
@@ -169,6 +169,7 @@ impl Annotator<'_> {
                     }
                     scan_stack.pop();
                 }
+
                 // Handle interior tokens in "arg" and "slice" states.
                 if top_state.kind != "dummy" {
                     if value == ":" && ["dict", "slice"].contains(&top_state.kind) {
@@ -178,6 +179,7 @@ impl Annotator<'_> {
                         top_state.indices.push(i);
                     }
                 }
+
                 // Handle "." and "(" tokens inside "import" and "from" statements.
                 if in_import && ["(", "."].contains(&value) {
                     self.set_context(i, "import");
