@@ -165,8 +165,7 @@ impl Annotator<'_> {
         let mut scan_stack: Vec<ScanState> = Vec::new();
         scan_stack.push(dummy_state);
         let mut prev_token = &dummy_token;
-        let mut i = 0;
-        for token in self.input_tokens {
+        for (i, token) in self.input_tokens.into_iter().enumerate() {
             let (kind, value) = (token.kind, token.value);
             if kind == "newline" {
                 //@+<< pre-scan newline tokens >>
@@ -254,7 +253,6 @@ impl Annotator<'_> {
             if !self.insignificant_tokens.contains(&kind) { 
                 prev_token = token;
             }
-            i += 1;
         }
         // Sanity check.
         if scan_stack.len() > 1 || scan_stack[0].kind != "dummy" {
@@ -1439,7 +1437,7 @@ impl Stats {
         println!("     files: {n_files}, tokens: {n_tokens}, ws tokens: {n_ws_tokens}");
         println!("       read: {read_time:>7} ms");
         println!("make_tokens: {make_tokens_time:>7} ms");
-        println!(" annotation: {annotation_time:>7} ms");
+        println!("   annotate: {annotation_time:>7} ms");
         println!("   beautify: {beautify_time:>7} ms");
         println!("      write: {write_time:>7} ms");
         println!("      total: {total_time:>7} ms");

@@ -446,6 +446,7 @@
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 <v t="ekr.20241004095735.1"></v>
 <v t="ekr.20241004110721.1"></v>
+<v t="ekr.20241004153802.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -849,8 +850,6 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 <t tx="ekr.20240927154323.1">@language rest
 @wrap
 @nosearch
-
-- Use &amp;str in insignificant_tokens.
 
 - Finish LB.annotate_tokens
 - Finish LB:beautify.
@@ -1775,7 +1774,7 @@ impl Stats {
     println!("     files: {n_files}, tokens: {n_tokens}, ws tokens: {n_ws_tokens}");
     println!("       read: {read_time:&gt;7} ms");
     println!("make_tokens: {make_tokens_time:&gt;7} ms");
-    println!(" annotation: {annotation_time:&gt;7} ms");
+    println!("   annotate: {annotation_time:&gt;7} ms");
     println!("   beautify: {beautify_time:&gt;7} ms");
     println!("      write: {write_time:&gt;7} ms");
     println!("      total: {total_time:&gt;7} ms");
@@ -3455,8 +3454,7 @@ The present states:
     let mut scan_stack: Vec&lt;ScanState&gt; = Vec::new();
     scan_stack.push(dummy_state);
     let mut prev_token = &amp;dummy_token;
-    let mut i = 0;
-    for token in self.input_tokens {
+    for (i, token) in self.input_tokens.into_iter().enumerate() {
         let (kind, value) = (token.kind, token.value);
         if kind == "newline" {
             &lt;&lt; pre-scan newline tokens &gt;&gt;
@@ -3471,7 +3469,6 @@ The present states:
         if !self.insignificant_tokens.contains(&amp;kind) { 
             prev_token = token;
         }
-        i += 1;
     }
     // Sanity check.
     if scan_stack.len() &gt; 1 || scan_stack[0].kind != "dummy" {
