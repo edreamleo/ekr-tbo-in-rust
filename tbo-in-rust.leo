@@ -302,6 +302,7 @@
 <v t="ekr.20241005092549.1"><vh>Annotator.is_unary_op_with_prev (to do)</vh></v>
 <v t="ekr.20241004163018.1"><vh>Annotator.set_context</vh></v>
 </v>
+<v t="ekr.20240929024648.120"><vh>class InputTok</vh></v>
 <v t="ekr.20240929074037.1"><vh>class LeoBeautifier</vh>
 <v t="ekr.20240929074037.114"><vh> LB::new</vh></v>
 <v t="ekr.20240929074037.2"><vh>LB::add_output_string</vh></v>
@@ -428,36 +429,23 @@
 <v t="ekr.20240929074037.116"><vh>LB::show_help</vh></v>
 <v t="ekr.20241002163554.1"><vh>LB::string_to_static_str</vh></v>
 </v>
-<v t="ekr.20240929024648.120"><vh>class InputTok</vh></v>
 <v t="ekr.20241004112826.1"><vh>class ParseState</vh>
 <v t="ekr.20241004113118.1"><vh>&lt;&lt; docstring: ParseState &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20241004165555.1"><vh>class ScanState </vh></v>
 <v t="ekr.20240929074547.1"><vh>class Stats</vh>
 <v t="ekr.20241001100954.1"><vh> Stats::new</vh></v>
 <v t="ekr.20240929080242.1"><vh>Stats::fmt_ns</vh></v>
 <v t="ekr.20240929075236.1"><vh>Stats::report</vh></v>
 </v>
-<v t="ekr.20241004165555.1"><vh>class ScanState </vh></v>
 </v>
 <v t="ekr.20241004073317.1"><vh>--- Recent</vh>
 <v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.113"></v>
 </v>
+<v t="ekr.20241006031501.1"><vh>*** Finish LB:beautify </vh></v>
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
-<v t="ekr.20240929024648.120"></v>
-<v t="ekr.20241004165555.1"></v>
-<v t="ekr.20241004110721.1"></v>
-<v t="ekr.20241004153802.1"></v>
-<v t="ekr.20241006030406.1"><vh>git diff HEAD </vh>
-<v t="ekr.20241006030406.2"><vh>diff: src/tbo.rs</vh>
-<v t="ekr.20241006030406.7"><vh>diff: Changed</vh>
-<v t="ekr.20241006030406.10"><vh>diff: &lt;&lt; pre-scan op tokens &gt;&gt;</vh>
-<v t="ekr.20241006030406.11"><vh>Old:&lt;&lt; pre-scan op tokens &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20241004154345.3"></v>
+<v t="ekr.20240929074037.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -862,11 +850,10 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 @wrap
 @nosearch
 
-- Add the real pre_pass.
-
-- Add get_time function.
-
-- Can't patch InputTok with context.</t>
+- Finish LB:beautify.
+- Can't patch InputTok with context.
+? Add get_time function?
+</t>
 <t tx="ekr.20240928073118.1">@language python
 g.cls()
 import os
@@ -3900,157 +3887,6 @@ fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;Inp
     return false;  // ***
 }
 </t>
-<t tx="ekr.20241006030406.1">@ignore
-@nosearch
-HEAD=47d4f94</t>
-<t tx="ekr.20241006030406.10">@ignore
-@nosearch
-@language patch
---- HEAD
-+++ uncommitted
-@@ -32,9 +32,11 @@
-     scan_stack.push(ScanState::new(state_kind, &amp;token));
- }
- else if value == ")" {
--    // *** assert(["(", "arg"].contains(top_state.kind));
-     if top_state.kind == "arg" {
-         self.finish_arg(i, top_state);
-+    }
-+    else {
-+        assert!(top_state.kind == "(");
-     }
-     scan_stack.pop();
- }
-@@ -43,12 +45,12 @@
-     if (top_state.kind == "dict" || top_state.kind =="slice") &amp;&amp; value == ":" {
-         top_state.indices.push(i);
-     }
--    if false {  // *** top_state.kind == "arg" &amp;&amp; ["**", "*", "=", ":", ","].contains(value) {
-+    if top_state.kind == "arg" &amp;&amp; ["**", "*", "=", ":", ","].contains(&amp;value) {
-         top_state.indices.push(i);
-     }
- }
- // Handle "." and "(" tokens inside "import" and "from" statements.
--// if in_import &amp;&amp; ["(", "."].contains(value) {
--if in_import &amp;&amp; (value == "," || value == ".") {
-+if in_import &amp;&amp; ["(", "."].contains(&amp;value) {
-+// if in_import &amp;&amp; (value == "," || value == ".") {
-     self.set_context(i, "import");
- }
-@language python
-</t>
-<t tx="ekr.20241006030406.11">// top_state: Optional[fScanState] = scan_stack[-1] if scan_stack else None
-// The scan_stack always contains at least a dummy state.
-let top_state = &amp;mut scan_stack[scan_stack.len() - 1].clone();
-
-// Handle "[" and "]".
-if value == "[" {
-    scan_stack.push(ScanState::new("slice", &amp;token));
-}
-else if  value == "]" {
-    assert!(top_state.kind == "slice");
-    self.finish_slice(i, top_state);
-    scan_stack.pop();
-}
-// Handle "{" and "}".
-if value == "{" {
-    scan_stack.push(ScanState::new("dict", &amp;token));
-}
-else if value == "}" {
-    assert!(top_state.kind == "dict");
-    self.finish_dict(i, top_state);
-    scan_stack.pop();
-}
-// Handle "(" and ")"
-else if value == "(" {
-    let state_kind: &amp;str;
-    if self.is_python_keyword(&amp;prev_token) || prev_token.kind != "name" {
-        state_kind = "(";
-    }
-    else {
-        state_kind = "arg";
-    }
-    scan_stack.push(ScanState::new(state_kind, &amp;token));
-}
-else if value == ")" {
-    // *** assert(["(", "arg"].contains(top_state.kind));
-    if top_state.kind == "arg" {
-        self.finish_arg(i, top_state);
-    }
-    scan_stack.pop();
-}
-// Handle interior tokens in "arg" and "slice" states.
-if top_state.kind != "dummy" {
-    if (top_state.kind == "dict" || top_state.kind =="slice") &amp;&amp; value == ":" {
-        top_state.indices.push(i);
-    }
-    if false {  // *** top_state.kind == "arg" &amp;&amp; ["**", "*", "=", ":", ","].contains(value) {
-        top_state.indices.push(i);
-    }
-}
-// Handle "." and "(" tokens inside "import" and "from" statements.
-// if in_import &amp;&amp; ["(", "."].contains(value) {
-if in_import &amp;&amp; (value == "," || value == ".") {
-    self.set_context(i, "import");
-}
-</t>
-<t tx="ekr.20241006030406.2">@ignore
-@nosearch
-@language patch
---- HEAD
-+++ uncommitted
-@@ -114,9 +114,8 @@
-         scan_stack.push(dummy_state);
-         let mut prev_token = InputTok::new("dummy", "");
-         let mut i = 0;
--        // for (i, &amp;ref token) in self.input_tokens.iter().enumerate() {
-         for token in &amp;self.input_tokens {
--            let (kind, value) = (token.kind, token.value);  // ***
-+            let (kind, value) = (token.kind, token.value);
-             if kind == "newline" {
-                 //@+&lt;&lt; pre-scan newline tokens &gt;&gt;
-                 //@+node:ekr.20241004154345.2: *4* &lt;&lt; pre-scan newline tokens &gt;&gt;
-@@ -164,9 +163,11 @@
-                     scan_stack.push(ScanState::new(state_kind, &amp;token));
-                 }
-                 else if value == ")" {
--                    // *** assert(["(", "arg"].contains(top_state.kind));
-                     if top_state.kind == "arg" {
-                         self.finish_arg(i, top_state);
-+                    }
-+                    else {
-+                        assert!(top_state.kind == "(");
-                     }
-                     scan_stack.pop();
-                 }
-@@ -175,13 +176,13 @@
-                     if (top_state.kind == "dict" || top_state.kind =="slice") &amp;&amp; value == ":" {
-                         top_state.indices.push(i);
-                     }
--                    if false {  // *** top_state.kind == "arg" &amp;&amp; ["**", "*", "=", ":", ","].contains(value) {
-+                    if top_state.kind == "arg" &amp;&amp; ["**", "*", "=", ":", ","].contains(&amp;value) {
-                         top_state.indices.push(i);
-                     }
-                 }
-                 // Handle "." and "(" tokens inside "import" and "from" statements.
--                // if in_import &amp;&amp; ["(", "."].contains(value) {
--                if in_import &amp;&amp; (value == "," || value == ".") {
-+                if in_import &amp;&amp; ["(", "."].contains(&amp;value) {
-+                // if in_import &amp;&amp; (value == "," || value == ".") {
-                     self.set_context(i, "import");
-                 }
-                 //@-&lt;&lt; pre-scan op tokens &gt;&gt;
-@@ -199,7 +200,7 @@
-                 //@-&lt;&lt; pre-scan name tokens &gt;&gt;
-             }
-             // Remember the previous significant token.
--            if !self.insignificant_tokens.contains(&amp;kind.to_string()) {  // *** lifetime problem
-+            if !self.insignificant_tokens.contains(&amp;kind.to_string()) { 
-                 prev_token = token.clone();
-             }
-             i += 1;
-@language python
-</t>
-<t tx="ekr.20241006030406.7"></t>
+<t tx="ekr.20241006031501.1"></t>
 </tnodes>
 </leo_file>
