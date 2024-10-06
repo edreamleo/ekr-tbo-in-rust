@@ -290,7 +290,7 @@
 <v t="ekr.20241004095931.1"><vh>class AnnotatedInputTok</vh></v>
 <v t="ekr.20241004110721.1"><vh>class Annotator</vh>
 <v t="ekr.20241004153742.1"><vh>Annotator.new</vh></v>
-<v t="ekr.20241004153802.1"><vh>Annotator.pre_pass</vh>
+<v t="ekr.20241004153802.1"><vh>Annotator.pre_scan</vh>
 <v t="ekr.20241004154345.2"><vh>&lt;&lt; pre-scan newline tokens &gt;&gt;</vh></v>
 <v t="ekr.20241004154345.3"><vh>&lt;&lt; pre-scan op tokens &gt;&gt;</vh></v>
 <v t="ekr.20241004154345.4"><vh>&lt;&lt; pre-scan name tokens &gt;&gt;</vh></v>
@@ -306,7 +306,7 @@
 <v t="ekr.20240929074037.1"><vh>class LeoBeautifier</vh>
 <v t="ekr.20240929074037.114"><vh> LB::new</vh></v>
 <v t="ekr.20240929074037.2"><vh>LB::add_output_string</vh></v>
-<v t="ekr.20241004095735.1"><vh>LB::annotate_tokens (** finish)</vh></v>
+<v t="ekr.20241004095735.1"><vh>LB::annotate_tokens (**finish)</vh></v>
 <v t="ekr.20240929074037.113"><vh>LB::beautify</vh>
 <v t="ekr.20241002062655.1"><vh>&lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;</vh></v>
 </v>
@@ -439,13 +439,15 @@
 <v t="ekr.20240929075236.1"><vh>Stats::report</vh></v>
 </v>
 </v>
-<v t="ekr.20241004073317.1"><vh>--- Recent</vh>
+<v t="ekr.20241004073317.1"><vh>--- outer leveel</vh>
 <v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.113"></v>
 </v>
-<v t="ekr.20241006031501.1"><vh>*** Finish LB:beautify </vh></v>
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
-<v t="ekr.20240929074037.1"></v>
+<v t="ekr.20241006034023.1"><vh>*** Finish LB.annotate_tokens!</vh></v>
+<v t="ekr.20241004110721.1"></v>
+<v t="ekr.20241004153802.1"></v>
+<v t="ekr.20241004095735.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -850,9 +852,14 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 @wrap
 @nosearch
 
+- Finish LB.annotate_tokens
 - Finish LB:beautify.
 - Can't patch InputTok with context.
-? Add get_time function?
+- (tricky?) Use &amp;str instead of String in AnnotatedInputTok.
+
+Post: Use pointers, not objects.
+
+- Pointers keep borrow checker happy, provided lifetimes are given.
 </t>
 <t tx="ekr.20240928073118.1">@language python
 g.cls()
@@ -3323,6 +3330,11 @@ impl Beautifier {
 }</t>
 <t tx="ekr.20241004095735.1">fn annotate_tokens(&amp;mut self, input_list: &amp;Vec&lt;InputTok&gt;) -&gt; Vec::&lt;AnnotatedInputTok&gt; {
     //! Do the prepass, returning tokens annotated with context.
+    
+    // *** Not yet: Instantiate the Annotator and call Annotator.pre_pass.
+    // let annotator = Annotator::new(input_list);
+    annotator.pre_pass(
+
     let mut result = Vec::new();
     for token in input_list {
         let context = Vec::new();
@@ -3332,8 +3344,7 @@ impl Beautifier {
     return result;
 }
 </t>
-<t tx="ekr.20241004095931.1">// Only Clone is valid for String.
-#[derive(Clone)]
+<t tx="ekr.20241004095931.1">#[derive(Clone, Debug)]
 struct AnnotatedInputTok {
     context: Vec::&lt;String&gt;,
     kind: String,
@@ -3887,6 +3898,12 @@ fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;Inp
     return false;  // ***
 }
 </t>
-<t tx="ekr.20241006031501.1"></t>
+<t tx="ekr.20241006034023.1">@language rest
+@wrap
+
+Old: input_tokens: Vec&lt;InputTok&lt;'a&gt;&gt;,
+New: input_tokens: &amp;Vec&lt;InputTok&lt;'a&gt;&gt;,  *** need lifetime?
+- Instantiate Annotator.
+- Call Annotator.pre_scan.</t>
 </tnodes>
 </leo_file>

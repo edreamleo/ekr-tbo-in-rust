@@ -32,8 +32,7 @@ pub struct TestTok {
     value: i32,
 }
 //@+node:ekr.20241004095931.1: ** class AnnotatedInputTok
-// Only Clone is valid for String.
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 struct AnnotatedInputTok {
     context: Vec::<String>,
     kind: String,
@@ -92,7 +91,7 @@ impl Annotator<'_> {
             verbatim: false, 
         }
     }
-    //@+node:ekr.20241004153802.1: *3* Annotator.pre_pass
+    //@+node:ekr.20241004153802.1: *3* Annotator.pre_scan
     fn pre_scan(&mut self) {
         //! Scan the entire file in one iterative pass, adding context to a few
         //! kinds of tokens as follows:
@@ -514,9 +513,14 @@ impl Beautifier {
             self.output_list.push(value.to_string())
         }
     }
-    //@+node:ekr.20241004095735.1: *3* LB::annotate_tokens (** finish)
+    //@+node:ekr.20241004095735.1: *3* LB::annotate_tokens (**finish)
     fn annotate_tokens(&mut self, input_list: &Vec<InputTok>) -> Vec::<AnnotatedInputTok> {
         //! Do the prepass, returning tokens annotated with context.
+        
+        // *** Not yet: Instantiate the Annotator and call Annotator.pre_pass.
+        // let annotator = Annotator::new(input_list);
+        annotator.pre_pass(
+
         let mut result = Vec::new();
         for token in input_list {
             let context = Vec::new();
