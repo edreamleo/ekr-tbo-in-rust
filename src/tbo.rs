@@ -204,11 +204,17 @@ impl Annotator<'_> {
                 //@-<< pre-scan newline tokens >>
             }
             else if self.op_kinds.contains(&kind) {
+                println!("  OP: {value:?}");  // ***
                 //@+<< pre-scan op tokens >>
                 //@+node:ekr.20241004154345.3: *4* << pre-scan op tokens >>
                 // top_state: Optional[fScanState] = scan_stack[-1] if scan_stack else None
                 // The scan_stack always contains at least a dummy state.
                 let top_state = &mut scan_stack[scan_stack.len() - 1].clone();
+
+                if false {  // ***
+                    let top_state_kind = top_state.kind;
+                    println!("<pre-scan op tokens: top_state: {top_state_kind:20} {value:?}");
+                }
 
                 // Handle "[" and "]".
                 if value == "[" {
@@ -248,7 +254,7 @@ impl Annotator<'_> {
                 }
 
                 // Handle interior tokens in "arg" and "slice" states.
-                if top_state.kind != "dummy" {
+                if top_state.kind != "dummy-scan-state" {
                     if value == ":" && ["dict", "slice"].contains(&top_state.kind) {
                         top_state.indices.push(i);
                     }
@@ -264,16 +270,29 @@ impl Annotator<'_> {
                 //@-<< pre-scan op tokens >>
             }
             else if kind == "Name" {
+                // println!("Name: {value:?}");  // ***
                 //@+<< pre-scan name tokens >>
                 //@+node:ekr.20241004154345.4: *4* << pre-scan name tokens >>
+                // *** WRONG: From and Import are separate tokens.
+
                 let prev_is_yield = prev_token.kind == "name" && prev_token.value == "yield";
-                // if ["from", "import"].contains(value) && !prev_is_yield {
+
+                // *** WRONG: if ["from", "import"].contains(value) && !prev_is_yield {
+
                 if !prev_is_yield && (value == "from" || value == "import") {
                     // "import" and "from x import" statements should be at the outer level.
                     assert!(scan_stack.len() == 1 && scan_stack[0].kind == "dummy");
                     in_import = true;
                 }
                 //@-<< pre-scan name tokens >>
+            }
+            else if ["Class", "Def"].contains(&kind) {
+                // println!("{kind}");
+            }
+            else if kind == "ws" {  // ***
+            }
+            else {
+                // println!("Other: {kind:?}");
             }
             // Remember the previous significant token.
             if !self.insignificant_tokens.contains(&kind) {
@@ -292,6 +311,8 @@ impl Annotator<'_> {
     //@+node:ekr.20241004154345.5: *4* Annotator.finish_arg
     fn finish_arg(&mut self, end: usize, state: &ScanState) {
         //! Set context for all ":" when scanning from "(" to ")".
+        
+        println!("finish_arg: {end} {state:?}");
 
         // Sanity checks.
         if state.kind == "dummy" {
@@ -312,6 +333,7 @@ impl Annotator<'_> {
         let mut equal_context = "initializer";
         for i in indices {
             let token = &self.input_tokens[*i];
+            println!("finish_arg: {i} {token:?}");
             assert!(token.kind == "op");
             if token.value == "," {
                 equal_context = "initializer";
@@ -462,13 +484,14 @@ impl Annotator<'_> {
         if !self.valid_contexts.contains(&context) {
             println!("Unexpected context! {context:?}");
         }
-        if false {  // Debugging.
+        if true {  // Debugging.
             let token = &self.input_tokens[i];
             let token_kind = token.kind;
             let token_value = token.value;
-            println!("{token_kind:20}: {token_value}");
+            println!("{token_kind:20}: {context:20} {token_value}");
         }
         if !self.index_dict.contains_key(&i) {
+            println!("{i} {context:?}");
             self.index_dict.insert(i, context.to_string());
         }
     }
@@ -538,12 +561,17 @@ impl Beautifier {
         
         // Create the annotated tokens using self.index_dict.
         for (i, token) in input_tokens.into_iter().enumerate() {
-            let context = String::new();
-            // let context = match annotator.index_dict.get(&i) {
-                // Some(String) => String,
-                // None => "",
-            // };
-            let annotated_token = AnnotatedInputTok::new(context, &token.kind, &token.value);
+            // *** let context = annotator.index_dict.get(&i);
+            let context = match annotator.index_dict.get(&i) {
+                Some(x) => x,
+                None => &"".to_string(),
+            };
+            let context_string = context.to_string();
+            // println!("{context_string:?}");
+            if !context_string.is_empty() {
+                println!("{i} {context_string}");
+            }
+            let annotated_token = AnnotatedInputTok::new(context_string, &token.kind, &token.value);
             result.push(annotated_token);
         }
 
