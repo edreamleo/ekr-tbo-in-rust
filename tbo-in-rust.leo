@@ -444,9 +444,15 @@
 <v t="ekr.20240929074037.113"></v>
 </v>
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
-<v t="ekr.20241006034023.1"><vh>*** Finish LB.annotate_tokens!</vh></v>
 <v t="ekr.20241004095735.1"></v>
 <v t="ekr.20241004110721.1"></v>
+<v t="ekr.20241006071239.1"><vh>Found 5:insignificant_tokens</vh>
+<v t="ekr.20241004154345.5"></v>
+<v t="ekr.20241004154345.6"></v>
+<v t="ekr.20241004153742.1"></v>
+<v t="ekr.20241004153802.1"></v>
+<v t="ekr.20241004110721.1"></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -851,7 +857,6 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 @wrap
 @nosearch
 
-- Use &amp;str instead of String in AnnotatedInputTok.
 - Use &amp;str in insignificant_tokens.
 
 - Finish LB.annotate_tokens
@@ -3367,7 +3372,7 @@ impl AnnotatedInputTok {
 <t tx="ekr.20241004110721.1">struct Annotator&lt;'a&gt; {
     // The present input token...
     input_tokens: &amp;'a Vec&lt;InputTok&lt;'a&gt;&gt;,
-    insignificant_tokens: [String; 6],
+    insignificant_tokens: [&amp;'a str; 7],
     index: u32,  // The index within the tokens array of the token being scanned.
     lws: String,  // Leading whitespace. Required!
     // For whitespace.
@@ -3423,10 +3428,7 @@ The present states:
         indent_level: 0,
         index: 0,
         input_tokens: input_tokens,
-        insignificant_tokens: [
-            "comment".to_string(), "dedent".to_string(), "indent".to_string(),
-            "newline".to_string(), "nl".to_string(), "ws".to_string(),
-        ],
+        insignificant_tokens: ["dummy", "comment", "dedent", "indent", "newline", "nl", "ws"],
         lws: String::new(),
         paren_level: 0,
         state_stack: Vec::new(),
@@ -3469,7 +3471,7 @@ The present states:
             &lt;&lt; pre-scan name tokens &gt;&gt;
         }
         // Remember the previous significant token.
-        if !self.insignificant_tokens.contains(&amp;kind.to_string()) { 
+        if !self.insignificant_tokens.contains(&amp;kind) { 
             prev_token = token.clone();
         }
         i += 1;
@@ -3588,7 +3590,7 @@ if !prev_is_yield &amp;&amp; (value == "from" || value == "import") {
     let mut prev_token = &amp;InputTok::new("dummy", "");
     for i in i1..end {
         let token = &amp;self.input_tokens[i];
-        if !self.insignificant_tokens.contains(&amp;token.kind.to_string()) {
+        if !self.insignificant_tokens.contains(&amp;token.kind) {
             if token.kind == "op" {
                 // if ["*", "**"].contains(token.value) {
                 if token.value == "*" || token.value == "**" {
@@ -3636,7 +3638,7 @@ if !prev_is_yield &amp;&amp; (value == "from" || value == "import") {
     for i in i1 + 1..end - 1 {
         let token = &amp;self.input_tokens[i];
         let (kind, value) = (token.kind, token.value);
-        if !self.insignificant_tokens.contains(&amp;kind.to_string()) {
+        if !self.insignificant_tokens.contains(&amp;kind) {
             if kind == "op" {
                 if *value == *"." {
                     // Ignore "." tokens and any preceding "name" token.
@@ -3902,12 +3904,10 @@ fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;Inp
     return false;  // ***
 }
 </t>
-<t tx="ekr.20241006034023.1">@language rest
-@wrap
+<t tx="ekr.20241006071239.1">@nosearch
 
-Old: input_tokens: Vec&lt;InputTok&lt;'a&gt;&gt;,
-New: input_tokens: &amp;Vec&lt;InputTok&lt;'a&gt;&gt;,  *** need lifetime?
-- Instantiate Annotator.
-- Call Annotator.pre_scan.</t>
+# Word, Head, Body
+
+# found 5 nodes</t>
 </tnodes>
 </leo_file>

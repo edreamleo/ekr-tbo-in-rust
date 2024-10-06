@@ -52,7 +52,7 @@ impl AnnotatedInputTok {
 struct Annotator<'a> {
     // The present input token...
     input_tokens: &'a Vec<InputTok<'a>>,
-    insignificant_tokens: [String; 6],
+    insignificant_tokens: [&'a str; 7],
     index: u32,  // The index within the tokens array of the token being scanned.
     lws: String,  // Leading whitespace. Required!
     // For whitespace.
@@ -80,10 +80,7 @@ impl Annotator<'_> {
             indent_level: 0,
             index: 0,
             input_tokens: input_tokens,
-            insignificant_tokens: [
-                "comment".to_string(), "dedent".to_string(), "indent".to_string(),
-                "newline".to_string(), "nl".to_string(), "ws".to_string(),
-            ],
+            insignificant_tokens: ["dummy", "comment", "dedent", "indent", "newline", "nl", "ws"],
             lws: String::new(),
             paren_level: 0,
             state_stack: Vec::new(),
@@ -255,7 +252,7 @@ impl Annotator<'_> {
                 //@-<< pre-scan name tokens >>
             }
             // Remember the previous significant token.
-            if !self.insignificant_tokens.contains(&kind.to_string()) { 
+            if !self.insignificant_tokens.contains(&kind) { 
                 prev_token = token.clone();
             }
             i += 1;
@@ -304,7 +301,7 @@ impl Annotator<'_> {
         let mut prev_token = &InputTok::new("dummy", "");
         for i in i1..end {
             let token = &self.input_tokens[i];
-            if !self.insignificant_tokens.contains(&token.kind.to_string()) {
+            if !self.insignificant_tokens.contains(&token.kind) {
                 if token.kind == "op" {
                     // if ["*", "**"].contains(token.value) {
                     if token.value == "*" || token.value == "**" {
@@ -352,7 +349,7 @@ impl Annotator<'_> {
         for i in i1 + 1..end - 1 {
             let token = &self.input_tokens[i];
             let (kind, value) = (token.kind, token.value);
-            if !self.insignificant_tokens.contains(&kind.to_string()) {
+            if !self.insignificant_tokens.contains(&kind) {
                 if kind == "op" {
                     if *value == *"." {
                         // Ignore "." tokens and any preceding "name" token.
