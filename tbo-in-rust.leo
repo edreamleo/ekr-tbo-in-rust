@@ -1038,11 +1038,16 @@ This only 10% faster than the python code.
 </t>
 <t tx="ekr.20240929024648.120">#[derive(Clone)]
 struct InputTok&lt;'a&gt; {
-    kind: &amp;'a str, value: &amp;'a str,
+    kind: &amp;'a str,
+    value: &amp;'a str,
 }
+
 impl &lt;'a&gt; InputTok&lt;'_&gt; {
     fn new(kind: &amp;'a str, value: &amp;'a str) -&gt; InputTok&lt;'a&gt; {
-        InputTok { kind: kind, value: value }
+        InputTok {
+            kind: kind,
+            value: value,
+        }
     }
 }
 </t>
@@ -3744,7 +3749,6 @@ struct ScanState&lt;'a&gt; {
 impl &lt;'a&gt; ScanState&lt;'_&gt; {
     fn new(kind: &amp;'a str, token: &amp;'a InputTok) -&gt; ScanState&lt;'a&gt; {
         ScanState {
-            // kind: kind.to_string(),
             kind: kind,
             token: token,
             value: Vec::new(),

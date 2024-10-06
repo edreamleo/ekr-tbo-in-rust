@@ -354,11 +354,16 @@ impl Annotator<'_> {
 //@+node:ekr.20240929024648.120: ** class InputTok
 #[derive(Clone)]
 struct InputTok<'a> {
-    kind: &'a str, value: &'a str,
+    kind: &'a str,
+    value: &'a str,
 }
+
 impl <'a> InputTok<'_> {
     fn new(kind: &'a str, value: &'a str) -> InputTok<'a> {
-        InputTok { kind: kind, value: value }
+        InputTok {
+            kind: kind,
+            value: value,
+        }
     }
 }
 //@+node:ekr.20240929074037.1: ** class LeoBeautifier
@@ -1237,7 +1242,6 @@ struct ScanState<'a> {
 impl <'a> ScanState<'_> {
     fn new(kind: &'a str, token: &'a InputTok) -> ScanState<'a> {
         ScanState {
-            // kind: kind.to_string(),
             kind: kind,
             token: token,
             value: Vec::new(),
