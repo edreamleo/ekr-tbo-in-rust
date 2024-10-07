@@ -168,13 +168,17 @@ impl Annotator<'_> {
     // Soft keywords:
     // match, case, type and _
 
-    fn is_python_keyword(&self, token: &InputTok) -> bool {  // *** Temp.
-        //! Return True if token is a 'name' token referring to a Python keyword.
-        if token.kind != "name" {
-            return false;
-        }
-        // let word = &token.value;  // &String
-        return false;  // ***
+    fn is_python_keyword(&self, _token: &Option<InputTok>) -> bool {  // *** Temp.
+
+        return false;
+
+        // *** Not ready yet.
+            // //! Return True if token is a 'name' token referring to a Python keyword.
+            // if token.kind != "name" {
+                // return false;
+            // }
+            // // let word = &token.value;  // &String
+            // return false;  // ***
     }
     //@+node:ekr.20241005092549.1: *3* Annotator.is_unary_op_with_prev (to do)
     // def is_unary_op_with_prev(self, prev: Optional[InputToken], token: InputToken) -> bool:
@@ -202,7 +206,7 @@ impl Annotator<'_> {
             // return self.is_python_keyword(token)
         // return return_val
 
-    fn is_unary_op_with_prev(&self, _prev_token: &InputTok, _token: &InputTok) -> bool {  // *** Temp. _
+    fn is_unary_op_with_prev(&self, _prev_token: &Option<InputTok>, _token: &InputTok) -> bool {  // ***
         return false;  // ***
     }
     //@+node:ekr.20241004153802.1: *3* Annotator.pre_scan & helpers
@@ -220,12 +224,8 @@ impl Annotator<'_> {
 
         // The main loop.
         let mut in_import = false;
-        // Avoid Option complications by creating a dummy token and scan state.
-        // *** let dummy_token = InputTok::new("dummy", "");
-        // *** let dummy_state = ScanState::new("dummy-scan-state", &dummy_token);
         let mut scan_stack: Vec<ScanState> = Vec::new();
-        // *** scan_stack.push(dummy_state);
-        let mut prev_token: Option<InputTok> = None;  // *** &dummy_token;
+        let mut optional_prev_token: Option<&InputTok> = None;
         for (i, token) in self.input_tokens.into_iter().enumerate() {
             let (kind, value) = (token.kind, token.value);
             if false {  // *** Testing only
@@ -277,11 +277,13 @@ impl Annotator<'_> {
 
                 // Handle "(" and ")"
                 else if value == "(" {
-                    if self.is_python_keyword(&prev_token) || prev_token.kind != "name" {
-                        scan_stack.push(ScanState::new("(", &token));
-                    }
-                    else {
-                        scan_stack.push(ScanState::new("arg", &token));
+                    if optional_prev_token.is_some() {
+                        if self.is_python_keyword(&optional_prev_token) || optional_prev_token.unwrap().kind != "name" {
+                            scan_stack.push(ScanState::new("(", &token));
+                        }
+                        else {
+                            scan_stack.push(ScanState::new("arg", &token));
+                        }
                     }
                 }
                 else if value == ")" {
@@ -315,20 +317,23 @@ impl Annotator<'_> {
                 //@+<< pre-scan name tokens >>
                 //@+node:ekr.20241004154345.4: *4* << pre-scan name tokens >>
                 // *** Python
-                // prev_is_yield = prev_token and prev_token.kind == 'name' and prev_token.value == 'yield'
-                // if value in ('from', 'import') and not prev_is_yield:
-                    // # 'import' and 'from x import' statements should be at the outer level.
-                    // assert not scan_stack, scan_stack
-                    // in_import = True
+                    // *** WRONG: in Rust, "From" and "Import" are separate tokens.
 
+                    // prev_is_yield = prev_token and prev_token.kind == 'name' and prev_token.value == 'yield'
+                    // if value in ('from', 'import') and not prev_is_yield:
+                        // # 'import' and 'from x import' statements should be at the outer level.
+                        // assert not scan_stack, scan_stack
+                        // in_import = True
+                        
 
-
-                // *** WRONG: From and Import are separate tokens.
-
-
-
-                let prev_is_yield = prev_token.kind == "name" && prev_token.value == "yield";
-
+                let mut prev_is_yield: bool = false;
+                if optional_prev_token.is_some() {
+                    let prev_token = optional_prev_token.unwrap();
+                    prev_is_yield = prev_token.kind == "name" && prev_token.value == "yield";
+                }
+                // else {
+                    // prev_is_yield = false;
+                // }
 
                 if !prev_is_yield && (value == "from" || value == "import") {
                     // "import" and "from x import" statements should be at the outer level.
@@ -348,7 +353,7 @@ impl Annotator<'_> {
             }
             // Remember the previous significant token.
             if !self.insignificant_tokens.contains(&kind) {
-                prev_token = token;
+                optional_prev_token = Some(token);
             }
         }
         // Sanity check.
@@ -417,22 +422,19 @@ impl Annotator<'_> {
         if !optional_state.is_some() {
             return
         }
-        let state = Some(state);
+        let state = Some(optional_state);
         assert!(state.kind == "arg");
         assert!(state.token.value == "(");
         if state.indices.len() == 0 {
             return;
         }
-        
-        // *** InputTok.index does not exist.
-        // *** Use i in the loop below.
-            // let mut i1 = indices[0];
-            // assert!(i1 < end);
+        let mut i1 = state.indices[0];
+        assert!(i1 < end);
 
         // Compute the context for each *separate* "=" token.
         let mut equal_context = "initializer";
         for i in state.indices {
-            let token = &self.input_tokens[i];
+            let token: &InputTok = &self.input_tokens[i];
             println!("finish_arg: {i} {token:?}");
             assert!(token.kind == "op");
             if token.value == "," {
@@ -447,19 +449,14 @@ impl Annotator<'_> {
             }
         }
         // Set the context of all outer-level ":", "*", and "**" tokens.
-        let mut prev_token: Option<InputTok> = None;  // *** prev_token = &InputTok::new("dummy", "");
-        // for i in i1..end {
-        //     let token = &self.input_tokens[i];
-        
-        // ***** InputTok MUST have index ivar!!1
-        
-        for (i, token) in self.input_tokens.into_iter().enumerate() {
-            
+        let mut optional_prev_token: Option<InputTok> = None;
+        // *** for (i, token) in self.input_tokens.into_iter().enumerate() {
+        for i in i1..end {
+            let token = &self.input_tokens[i];
             if !self.insignificant_tokens.contains(&token.kind) {
                 if token.kind == "op" {
-                    // if ["*", "**"].contains(token.value) {
-                    if token.value == "*" || token.value == "**" {
-                        if self.is_unary_op_with_prev(&prev_token, &token) {
+                    if ["*", "**"].contains(token.value) {
+                        if self.is_unary_op_with_prev(&optional_prev_token, &token) {
                             self.set_context(i, "arg");
                         }
                     }
@@ -471,7 +468,7 @@ impl Annotator<'_> {
                         self.set_context(i, "annotation")
                     }
                 }
-                prev_token = token;
+                optional_prev_token = Some(token);
             }
         }
     }
@@ -499,7 +496,7 @@ impl Annotator<'_> {
         // Compute final context by scanning the tokens.
         let mut final_context = "simple-slice";
         let mut inter_colon_tokens = 0;
-        let mut prev: &InputTok = &token;
+        let mut optional_prev_token = Some(token);  // An Option.
         for i in i1 + 1..end - 1 {
             let token = &self.input_tokens[i];
             let (kind, value) = (token.kind, token.value);
@@ -507,7 +504,7 @@ impl Annotator<'_> {
                 if kind == "op" {
                     if *value == *"." {
                         // Ignore "." tokens and any preceding "name" token.
-                        if prev.kind == "name" {
+                        if optional_prev_token.unwind().kind == "name" {
                             inter_colon_tokens -= 1;
                         }
                     }
@@ -516,7 +513,7 @@ impl Annotator<'_> {
                     }
                     else if *value == *"-" || *value == *"+" {
                         // Ignore unary "-" or "+" tokens.
-                        if !self.is_unary_op_with_prev(&prev, &token) {
+                        if !self.is_unary_op_with_prev(optional_prev_token, &token) {
                             inter_colon_tokens += 1;
                             if inter_colon_tokens > 1 {
                                 final_context = "complex-slice";
@@ -543,7 +540,7 @@ impl Annotator<'_> {
                         break;
                     }
                 }
-                prev = &token;
+                optional_prev_token = Some(token);
             }
         }
         // Set the context of all outer-level ":" tokens.
