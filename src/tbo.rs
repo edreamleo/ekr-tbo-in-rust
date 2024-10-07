@@ -5,14 +5,13 @@
 // From https://docs.rs/rustpython-parser/0.3.1/rustpython_parser/lexer/index.html
 
 // Must be first.
-#![allow(dead_code)]
+// #![allow(dead_code)]
 // #![allow(unused_imports)]
 // #![allow(unused_variables)]
 
 extern crate rustpython_parser;
 use rustpython_parser::{lexer::lex, Mode, Tok}; // text_size::TextRange
 use std::env;
-use std::fmt;
 use std::fs;
 use std::collections::HashMap;
 use std::path;
@@ -20,17 +19,7 @@ use std::path;
 //@+others
 //@+node:ekr.20241003093554.1: **  pub fn entry
 pub fn entry() {
-    if false {
-        test();
-    } else {
-        main();
-    }
-}
-//@+node:ekr.20241003094145.1: **  struct TestTok
-#[derive(Clone, Debug)]
-#[allow(dead_code)]
-pub struct TestTok {
-    value: i32,
+    main();
 }
 //@+node:ekr.20241004095931.1: ** class AnnotatedInputTok
 #[derive(Clone, Debug)]
@@ -50,6 +39,7 @@ impl <'a> AnnotatedInputTok<'_> {
     }
 }
 //@+node:ekr.20241004110721.1: ** class Annotator
+#[allow(dead_code)]
 struct Annotator<'a> {
     // Classes of tokens
     insignificant_tokens: [&'a str; 7],
@@ -127,6 +117,7 @@ impl Annotator<'_> {
                 Some(x) => x,
                 None => "",
             };
+            println!("AnnotatedInputTok.new!");
             let annotated_token = AnnotatedInputTok::new(&context, &token.kind, &token.value);
             result.push(annotated_token);
         }
@@ -713,12 +704,6 @@ impl Beautifier {
         // Create (an immutable!) list of input tokens.
         let t2 = std::time::Instant::now();
         let input_tokens = self.make_input_list(&contents);
-        if false {
-            println!("input tokens...");
-            for token in &input_tokens {
-                println!("{token:?}");
-            }
-        }
         self.stats.make_tokens_time += t2.elapsed().as_nanos();
         // Annotate tokens (the prepass).
         let t3 = std::time::Instant::now();
@@ -1384,6 +1369,8 @@ impl Beautifier {
     //@-others
 }
 //@+node:ekr.20241004112826.1: ** class ParseState
+// *** testing only.
+#[allow(dead_code)]
 struct ParseState {
     //@+<< docstring: ParseState >>
     //@+node:ekr.20241004113118.1: *3* << docstring: ParseState >>
@@ -1439,6 +1426,8 @@ impl <'a> ScanState<'_> {
     }
 }
 //@+node:ekr.20240929074547.1: ** class Stats
+// Allow unused write_time
+#[allow(dead_code)]
 #[derive(Debug)]
 pub struct Stats {
     // Cumulative statistics for all files.
@@ -1454,8 +1443,8 @@ pub struct Stats {
     write_time: u128,
 }
 
-// #[allow(dead_code)]
-// #[allow(non_snake_case)]
+// Calling Stats.report is optional.
+#[allow(dead_code)]
 impl Stats {
     //@+others
     //@+node:ekr.20241001100954.1: *3*  Stats::new
@@ -1537,72 +1526,6 @@ pub fn main() {
         x.show_args();
         x.beautify_all_files();
     }
-}
-//@+node:ekr.20241001093308.1: ** fn test & helpers
-fn test() {
-    test_vec();
-    test_struct();
-}
-//@+node:ekr.20241003094218.2: *3* fn test_struct
-fn test_struct() {
-    //! Test code for Vec.
-    let mut v: Vec<TestTok> = Vec::new();
-    push_struct(&mut v, 1);
-    push_struct(&mut v, 2);
-    for i in [3, 4, 6] {
-        push_struct(&mut v, i);
-    }
-    let mut i = 7;
-    while i < 10 {
-        push_struct(&mut v, i);
-        i += 1
-    }
-    println!("");
-    for z in &v {
-        // or just v.
-        println!("{z:?}");
-    }
-    let tok = &v[0]; // v[0] fails.
-    println!("\ntok: {tok:?}");
-
-    // A data race happens when these three behaviors occur:
-
-    // - Two or more pointers access the same data at the same time.
-    // - At least one of the pointers is being used to write to the data.
-    // - There’s no mechanism being used to synchronize access to the data.
-
-    // So This fails
-    // {
-    // let tok = v[0];
-    // println!("{tok:?}");
-    // }
-}
-
-fn push_struct(v: &mut Vec<TestTok>, val: i32) {
-    let mut tok = TestTok { value: 0 };
-    tok.value = val; // To test mutability.
-    v.push(tok);
-}
-//@+node:ekr.20241003094218.1: *3* fn test_vec & push_vec
-fn test_vec() {
-    //! Test code for Vec.
-    let mut v: Vec<i32> = Vec::new();
-    push_vec(&mut v, 1);
-    push_vec(&mut v, 2);
-    for i in [3, 4, 6] {
-        push_vec(&mut v, i);
-    }
-    let mut i = 7;
-    while i < 10 {
-        push_vec(&mut v, i);
-        i += 1
-    }
-    println!("");
-    println!("v: {v:?}");
-}
-
-fn push_vec(v: &mut Vec<i32>, val: i32) {
-    v.push(val);
 }
 //@-others
 
