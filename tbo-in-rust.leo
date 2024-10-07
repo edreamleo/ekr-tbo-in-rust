@@ -268,7 +268,6 @@
 <v t="ekr.20240928185643.1"><vh>Stats</vh></v>
 </v>
 <v t="ekr.20241007005233.1"></v>
-<v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 <v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20241001104914.1"><vh>--- classes</vh>
 <v t="ekr.20241004095931.1"><vh>class AnnotatedInputTok</vh></v>
@@ -292,7 +291,7 @@
 <v t="ekr.20240929074037.114"><vh> LB.new</vh></v>
 <v t="ekr.20240929074037.2"><vh>LB.add_output_string</vh></v>
 <v t="ekr.20240929074037.113"><vh>LB.beautify</vh>
-<v t="ekr.20241002062655.1"><vh>&lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;</vh></v>
+<v t="ekr.20241002062655.1"><vh>&lt;&lt; LB: beautify: dispatch on annotated_token.kind &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20240929074037.4"><vh>LB.beautify_all_files</vh></v>
 <v t="ekr.20240929074037.5"><vh>LB.beautify_one_file</vh></v>
@@ -428,10 +427,7 @@
 <v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.113"></v>
 </v>
-<v t="ekr.20240929074037.5"></v>
-<v t="ekr.20241004153802.1"></v>
-<v t="ekr.20241004095735.1"></v>
-<v t="ekr.20241004110721.1"></v>
+<v t="ekr.20240929074037.113"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -841,6 +837,7 @@ Post: Use pointers, not objects.
 
 - Annotator.set_context never sets context!
   so LB.annotate_tokens never finds context!
+
 - Finish LB:beautify.
 </t>
 <t tx="ekr.20240928073118.1">@language python
@@ -1041,12 +1038,40 @@ impl Beautifier {
     return result;
 }
 </t>
-<t tx="ekr.20240929074037.113">fn beautify(&amp;mut self, annotated_list: &amp;Vec&lt;AnnotatedInputTok&gt;) -&gt; String {
-    //! Beautify the input_tokens, creating the output String.
-    for input_token in annotated_list {
-        &lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;
+<t tx="ekr.20240929074037.113">fn beautify(&amp;mut self, annotated_tokens: &amp;Vec&lt;AnnotatedInputTok&gt;) -&gt; String {
+    //! Beautify the annotated, creating the output String.
+
+    // Init ivars first.
+    // self.input_token = None;  // ???
+    // self.pending_lws = "";  // ???
+    // self.pending_ws = "";  // ???
+    // self.prev_output_kind = None;    // ???
+    // self.prev_output_value = None;  // ???
+
+    // // Init state.
+    // self.gen_token("file-start", "");
+    // self.push_state("file-start");
+
+    // // The main loop:
+    // prev_line_number: i32 = 0;
+    // for (self.index, self.input_token) in enumerate(input_tokens):
+        // // Set global for visitors.
+        // if prev_line_number != self.input_token.line_number {
+            // prev_line_number = self.input_token.line_number;
+        // }
+        // // Call the proper visitor.
+        // if self.verbatim {
+            // self.do_verbatim();
+        // } else {
+            // // Use match ???
+            // func = getattr(self, f"do_{self.input_token.kind}", self.no_visitor)
+            // func()
+        // }
+        
+    for annotated_token in annotated_tokens {
+        &lt;&lt; LB: beautify: dispatch on annotated_token.kind &gt;&gt;
     }
-    // return ''.join(self.output_list);
+
     let mut result = String::new();
     for output_token in &amp;self.output_list {
         result.push_str(output_token);
@@ -1748,54 +1773,8 @@ fn returns_summarizable() -&gt; impl Summary {...}
 }
 </t>
 <t tx="ekr.20241001104914.1"></t>
-<t tx="ekr.20241001213229.1">@language rust
-
-    // def no_visitor(self) -&gt; String:  # pragma: no cover
-    //    self.oops(f"Unknown kind: {self.input_token.kind!r}")
-
-    &lt;&lt; LB::beautify: init ivars &gt;&gt;
-
-    try:
-        // Pre-scan the token list, setting context.s
-        self.pre_scan();
-
-        // Init ivars first.
-        self.input_token = None;  // ???
-        self.pending_lws = "";  // ???
-        self.pending_ws = "";  // ???
-        self.prev_output_kind = None;    // ???
-        self.prev_output_value = None;  // ???
-
-        // Init state.
-        self.gen_token("file-start", "");
-        self.push_state("file-start");
-
-        // The main loop:
-        prev_line_number: i32 = 0;
-        for (self.index, self.input_token) in enumerate(input_tokens):
-            // Set global for visitors.
-            if prev_line_number != self.input_token.line_number {
-                prev_line_number = self.input_token.line_number;
-            }
-            // Call the proper visitor.
-            if self.verbatim {
-                self.do_verbatim();
-            } else {
-                // Use match ???
-                func = getattr(self, f"do_{self.input_token.kind}", self.no_visitor)
-                func()
-            }
-
-        // Return the result. ???
-        // result = ''.join(self.output_list);
-        let mut result = String::new();
-        for s in self.output_list {
-            result.push_str(s);
-        }
-        return result;
-</t>
-<t tx="ekr.20241002062655.1">let kind = input_token.kind;  // ***.as_str();
-let value = input_token.kind;  // ***.as_str();
+<t tx="ekr.20241002062655.1">let kind = annotated_token.kind;
+let value = annotated_token.kind;
 match kind {
     // Some of these could be replaced by inline code.
     "And" =&gt; self.do_And(),
@@ -2034,29 +2013,20 @@ pub fn main() {
 }
 </t>
 <t tx="ekr.20241004073317.1"></t>
-<t tx="ekr.20241004095735.1">// fn annotate_tokens&lt;'a&gt;(&amp;mut self, input_tokens: &amp;'a Vec&lt;InputTok&lt;'a&gt;&gt;) -&gt; Vec::&lt;AnnotatedInputTok&lt;'a&gt;&gt; {
-// fn annotate&lt;'a&gt;(&amp;mut self) -&gt; Vec::&lt;AnnotatedInputTok&lt;'a&gt;&gt; {
-
-fn annotate(&amp;mut self) -&gt; Vec::&lt;AnnotatedInputTok&gt; {
-
+<t tx="ekr.20241004095735.1">fn annotate(&amp;mut self) -&gt; Vec::&lt;AnnotatedInputTok&gt; {
     //! Do the prepass, returning tokens annotated with context.
-    
     let mut result = Vec::new();
-    
+
     // Create self.index_dict.
     self.pre_scan();
-    
+
     // Create the annotated tokens using self.index_dict.
     for (i, token) in self.input_tokens.into_iter().enumerate() {
         let context = match self.index_dict.get(&amp;i) {
             Some(x) =&gt; x,
-            None =&gt; &amp;"".to_string(),
+            None =&gt; "",
         };
-        let context_string = context.to_string();
-        if !context_string.is_empty() {
-            println!("{i} {context_string}");
-        }
-        let annotated_token = AnnotatedInputTok::new(context_string, &amp;token.kind, &amp;token.value);
+        let annotated_token = AnnotatedInputTok::new(&amp;context, &amp;token.kind, &amp;token.value);
         result.push(annotated_token);
     }
     return result;
@@ -2070,9 +2040,9 @@ struct AnnotatedInputTok&lt;'a&gt; {
 }
 
 impl &lt;'a&gt; AnnotatedInputTok&lt;'_&gt; {
-    fn new(context: String, kind: &amp;'a str, value: &amp;'a str) -&gt; AnnotatedInputTok&lt;'a&gt; {
+    fn new(context: &amp;'a str, kind: &amp;'a str, value: &amp;'a str) -&gt; AnnotatedInputTok&lt;'a&gt; {
         AnnotatedInputTok {
-            context: context,
+            context: context.to_string(),
             kind: kind,
             value: value,
         }
