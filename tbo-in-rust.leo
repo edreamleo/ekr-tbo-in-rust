@@ -274,12 +274,14 @@
 <v t="ekr.20241001055017.1"><vh>Traits</vh></v>
 <v t="ekr.20240928185643.1"><vh>Stats</vh></v>
 </v>
-<v t="ekr.20241007005233.1"></v>
 <v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20241001104914.1"><vh>--- classes</vh>
 <v t="ekr.20241004095931.1"><vh>class AnnotatedInputTok</vh></v>
 <v t="ekr.20241004110721.1"><vh>class Annotator</vh>
-<v t="ekr.20241004153742.1"><vh>Annotator.new</vh></v>
+<v t="ekr.20241004153742.1"><vh>Annotator.new</vh>
+<v t="ekr.20241007085705.1"><vh>&lt;&lt; define Annotator::op_kinds &gt;&gt;</vh></v>
+<v t="ekr.20241007085552.1"><vh>&lt;&lt; define Annotator::insignificant_tokens &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20241004095735.1"><vh>Annotator.annotate</vh></v>
 <v t="ekr.20241005091217.1"><vh>Annotator.is_python_keyword (to do)</vh></v>
 <v t="ekr.20241005092549.1"><vh>Annotator.is_unary_op_with_prev (to do)</vh></v>
@@ -436,8 +438,12 @@
 </v>
 <v t="ekr.20241004095931.1"></v>
 <v t="ekr.20241004110721.1"></v>
+<v t="ekr.20241004112826.1"></v>
 <v t="ekr.20241004095735.1"></v>
+<v t="ekr.20241004163018.1"></v>
 <v t="ekr.20241004153802.1"></v>
+<v t="ekr.20241007085705.1"></v>
+<v t="ekr.20241007005233.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -845,8 +851,7 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 Post: Use pointers, not objects.
 - Pointers keep borrow checker happy, provided lifetimes are given.
 
-- Annotator.set_context never sets context!
-  so LB.annotate_tokens never finds context!
+? Fix logic bugs?
 
 - Finish LB:beautify.
 </t>
@@ -899,7 +904,7 @@ make_tokens:   11.01 ms
       
 Only about 10% faster than the Python beautifier.
 </t>
-<t tx="ekr.20240929024648.120">#[derive(Clone, Debug)]
+<t tx="ekr.20240929024648.120">#[derive(Debug)]
 struct InputTok&lt;'a&gt; {
     kind: &amp;'a str,
     value: &amp;'a str,
@@ -915,7 +920,6 @@ impl &lt;'a&gt; InputTok&lt;'_&gt; {
 }
 </t>
 <t tx="ekr.20240929074037.1">#[derive(Debug)]
-
 pub struct Beautifier {
     // Set in LB:beautify_one_file...
     args: Vec&lt;String&gt;,
@@ -1079,7 +1083,7 @@ impl Beautifier {
         // }
         
     for annotated_token in annotated_tokens {
-        println!("beautify: {annotated_token:?}");
+        // println!("beautify: {annotated_token:?}");
         &lt;&lt; LB: beautify: dispatch on annotated_token.kind &gt;&gt;
     }
 
@@ -2101,11 +2105,11 @@ fn push_struct(v: &amp;mut Vec&lt;TestTok&gt;, val: i32) {
 
     // Create the annotated tokens using self.index_dict.
     {
-        let n = self.input_tokens.len();
-        let d = &amp;self.index_dict;
+        let input_tokens_len = self.input_tokens.len();
+        let dict_len = &amp;self.index_dict.len();
         println!("");
-        println!("annotate: self.input_tokens.len(): {n}");
-        println!("annotate: self.index_dict: {d:?}");
+        println!("annotate: self.input_tokens.len(): {input_tokens_len}");
+        println!("annotate: self.index_dict: {dict_len}");
         println!("");
     }
     for (i, token) in self.input_tokens.into_iter().enumerate() {
@@ -2115,17 +2119,20 @@ fn push_struct(v: &amp;mut Vec&lt;TestTok&gt;, val: i32) {
             None =&gt; "",
         };
         // *** println!("annotate: context: {context:?}");
-        // *** let annotated_token = AnnotatedInputTok::new(&amp;context, &amp;token.kind, &amp;token.value);
-        let annotated_token = AnnotatedInputTok {
-            // context: context.to_string(), kind: &amp;token.kind, value: &amp;token.value
-            context: context, kind: &amp;token.kind, value: &amp;token.value
-        };
+        let annotated_token = AnnotatedInputTok::new(&amp;context, &amp;token.kind, &amp;token.value);
+        // ***
+        // let annotated_token = AnnotatedInputTok {
+            // // context: context.to_string(), kind: &amp;token.kind, value: &amp;token.value
+            // context: context, kind: &amp;token.kind, value: &amp;token.value
+        // };
         result.push(annotated_token);
     }
     return result;
 }
 </t>
-<t tx="ekr.20241004095931.1">#[derive(Debug)]
+<t tx="ekr.20241004095931.1">// *** Strange.
+#[allow(dead_code)]
+#[derive(Debug)]
 struct AnnotatedInputTok&lt;'a&gt; {
     // context: String,
     context: &amp;'a str,
@@ -2133,15 +2140,15 @@ struct AnnotatedInputTok&lt;'a&gt; {
     value: &amp;'a str,
 }
 
-// impl &lt;'a&gt; AnnotatedInputTok&lt;'_&gt; {
-    // fn new(context: &amp;'a str, kind: &amp;'a str, value: &amp;'a str) -&gt; AnnotatedInputTok&lt;'a&gt; {
-        // AnnotatedInputTok {
-            // context: context.to_string(),
-            // kind: kind,
-            // value: value,
-        // }
-    // }
-// }
+impl &lt;'a&gt; AnnotatedInputTok&lt;'_&gt; {
+    fn new(context: &amp;'a str, kind: &amp;'a str, value: &amp;'a str) -&gt; AnnotatedInputTok&lt;'a&gt; {
+        AnnotatedInputTok {
+            context: context,
+            kind: kind,
+            value: value,
+        }
+    }
+}
 </t>
 <t tx="ekr.20241004110721.1">#[allow(dead_code)]
 struct Annotator&lt;'a&gt; {
@@ -2163,7 +2170,7 @@ struct Annotator&lt;'a&gt; {
     in_arg_list: u32,  // &gt; 0 if in an arg list of a def.
     in_doc_part: bool,
     state_stack: Vec&lt;ParseState&gt;,  // Stack of ParseState objects.
-    valid_contexts: [&amp;'a str; 7],
+    valid_contexts: [&amp;'a str; 8],  // *** will be 7 w/o the "test" context.
     verbatim: bool,  // True: don't beautify.
 }
 
@@ -2171,8 +2178,8 @@ impl Annotator&lt;'_&gt; {
     @others
 }
 </t>
-<t tx="ekr.20241004112826.1">// *** testing only.
-#[allow(dead_code)]
+<t tx="ekr.20241004112826.1">#[allow(dead_code)]
+#[derive(Debug)]
 struct ParseState {
     &lt;&lt; docstring: ParseState &gt;&gt;
     kind: String,
@@ -2211,27 +2218,17 @@ The present states:
         index_dict: HashMap::new(),
         input_tokens: input_tokens,
         insignificant_tokens: [
-            "dummy", "ws",  // pseudo-tokens.
-            "Comment", "Dedent", "Indent", "Newline", "Nl",  // Real tokens.
+            &lt;&lt; define Annotator::insignificant_tokens &gt;&gt;
         ],
         lws: String::new(),
         op_kinds: [
-            "And",
-            "Colon", "ColonEqual", "Comma", "Dot", "DoubleStar",
-            "Equal", "EqEqual", "Greater", "GreaterEqual",
-            "Is",
-            "Less", "LessEqual", "Lbrace", "Lpar", "Lsqb",
-            "Minus", "MinusEqual",
-            "Not", "NotEqual",
-            "Or",
-            "Percent", "Plus", "PlusEqual",
-            "Rarrow", "Rbrace", "Rpar", "Rsqb",
-            "Star",
+            &lt;&lt; define Annotator::op_kinds &gt;&gt;
         ],
         paren_level: 0,
         state_stack: Vec::new(),
         square_brackets_stack: Vec::new(),
         valid_contexts: [
+            "test",  // *** testing only.
             "annotation", "arg", "complex-slice", "dict",
             "import", "initializer", "simple-slice"],
         verbatim: false, 
@@ -2260,12 +2257,15 @@ The present states:
     let mut prev_token = &amp;dummy_token;
     for (i, token) in self.input_tokens.into_iter().enumerate() {
         let (kind, value) = (token.kind, token.value);
+        if false {  // *** Testing only
+            self.set_context(i, "test");
+        }
         // println!("pre_scan: {kind:&gt;20} {value:?}");
         if kind == "Newline" {
             &lt;&lt; pre-scan newline tokens &gt;&gt;
         }
         else if self.op_kinds.contains(&amp;kind) {
-            // println!("  OP: {value:?}");  // ***
+            // *** println!("   OP: kind: {kind:&gt;12} value: {value:?}");  // ***
             &lt;&lt; pre-scan op tokens &gt;&gt;
         }
         else if kind == "Name" {
@@ -2274,6 +2274,7 @@ The present states:
         }
         else if ["Class", "Def"].contains(&amp;kind) {
             // println!("{kind}");
+            self.set_context(i, "test");
         }
         else if kind == "ws" {  // ***
         }
@@ -2306,10 +2307,8 @@ if in_import &amp;&amp; scan_stack.len() == 0 {
 // The scan_stack always contains at least a dummy state.
 let top_state = &amp;mut scan_stack[scan_stack.len() - 1].clone();
 
-if true {  // ***
-    let top_state_kind = top_state.kind;
-    // top_state: {top_state_kind:20}
-    println!("pre_scan &lt;op tokens&gt;: kind: {kind:&gt;10} value: {value:?}");
+if false {  // ***
+    println!("   OP: kind: {kind:&gt;12} value: {value:?}");
 }
 
 // Handle "[" and "]".
@@ -2334,7 +2333,6 @@ else if value == "}" {
 
 // Handle "(" and ")"
 else if value == "(" {
-    println!("OPEN PAREN");
     if self.is_python_keyword(&amp;prev_token) || prev_token.kind != "name" {
         scan_stack.push(ScanState::new("(", &amp;token));
     }
@@ -2351,11 +2349,13 @@ else if value == ")" {
 }
 
 // Handle interior tokens in "arg" and "slice" states.
-if top_state.kind != "dummy-scan-state" {
+if true { // *** top_state.kind != "dummy-scan-state" {
     if value == ":" &amp;&amp; ["dict", "slice"].contains(&amp;top_state.kind) {
         top_state.indices.push(i);
     }
-    else if top_state.kind == "arg" &amp;&amp; ["**", "*", "=", ":", ","].contains(&amp;value) {
+    //  *** else if top_state.kind == "arg" &amp;&amp; ["**", "*", "=", ":", ","].contains(&amp;value) {
+    else if ["**", "*", "=", ":", ","].contains(&amp;value) {
+        println!("FOUND: kind: {kind:&gt;12} value: {value:?}");
         top_state.indices.push(i);
     }
 }
@@ -2447,15 +2447,15 @@ if !prev_is_yield &amp;&amp; (value == "from" || value == "import") {
     
     let token = state.token;
     assert!(token.value == "[");
-    
-    let colons = &amp;state.indices;
+
+    let indices = &amp;state.indices;
     
     // *** let mut i1 = token.index;
     let i1 = 0;
     // assert i1 &lt; end, (i1, end)
 
     // Do nothing if there are no ":" tokens in the slice.
-    if colons.len() == 0 {
+    if indices.len() == 0 {
         return;
     }
 
@@ -2510,7 +2510,7 @@ if !prev_is_yield &amp;&amp; (value == "from" || value == "import") {
         }
     }
     // Set the context of all outer-level ":" tokens.
-    for i in colons {
+    for i in indices {
         self.set_context(*i, final_context);
     }    
 }
@@ -2552,14 +2552,14 @@ fn finish_dict(&amp;mut self, end: usize, state: &amp;ScanState) {
     if !self.valid_contexts.contains(&amp;context) {
         println!("Unexpected context! {context:?}");
     }
-    if true {  // Debugging.  Never gets called!
+    if false {  // Debugging.
         let token = &amp;self.input_tokens[i];
         let token_kind = token.kind;
         let token_value = token.value;
-        println!("{token_kind:20}: {context:20} {token_value}");
+        println!("set_context: {token_kind:20}: {context:20} {token_value}");
     }
     if !self.index_dict.contains_key(&amp;i) {
-        println!("{i} {context:?}");
+        // println!("set_context: {i} {context:?}");
         self.index_dict.insert(i, context.to_string());
     }
 }
@@ -2648,6 +2648,18 @@ fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;Inp
 }
 </t>
 <t tx="ekr.20241007005233.1">@language python
+
+"""
+    test1.py: a test file to test context generation.
+    
+    Token   Possible Contexts (or None)
+    =====   ===========================
+    ":"     "annotation", "dict", "complex-slice", "simple-slice"
+    "="     "annotation", "initializer"
+    "*"     "arg"
+    "**"    "arg"
+    "."     "import"
+"""
 
 class TestClass:
 
@@ -5073,5 +5085,20 @@ if value in ('from', 'import') and not prev_is_yield:
         token.context = context
 </t>
 <t tx="ekr.20241007063926.1"></t>
+<t tx="ekr.20241007085552.1">"dummy", "ws",  // pseudo-tokens.
+"Comment", "Dedent", "Indent", "Newline", "Nl",  // Real tokens.
+</t>
+<t tx="ekr.20241007085705.1">"And",
+"Colon", "ColonEqual", "Comma", "Dot", "DoubleStar",
+"Equal", "EqEqual", "Greater", "GreaterEqual",
+"Is",
+"Less", "LessEqual", "Lbrace", "Lpar", "Lsqb",
+"Minus", "MinusEqual",
+"Not", "NotEqual",
+"Or",
+"Percent", "Plus", "PlusEqual",
+"Rarrow", "Rbrace", "Rpar", "Rsqb",
+"Star",
+</t>
 </tnodes>
 </leo_file>

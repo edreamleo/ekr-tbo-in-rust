@@ -22,6 +22,8 @@ pub fn entry() {
     main();
 }
 //@+node:ekr.20241004095931.1: ** class AnnotatedInputTok
+// *** Strange.
+#[allow(dead_code)]
 #[derive(Debug)]
 struct AnnotatedInputTok<'a> {
     // context: String,
@@ -30,15 +32,15 @@ struct AnnotatedInputTok<'a> {
     value: &'a str,
 }
 
-// impl <'a> AnnotatedInputTok<'_> {
-    // fn new(context: &'a str, kind: &'a str, value: &'a str) -> AnnotatedInputTok<'a> {
-        // AnnotatedInputTok {
-            // context: context.to_string(),
-            // kind: kind,
-            // value: value,
-        // }
-    // }
-// }
+impl <'a> AnnotatedInputTok<'_> {
+    fn new(context: &'a str, kind: &'a str, value: &'a str) -> AnnotatedInputTok<'a> {
+        AnnotatedInputTok {
+            context: context,
+            kind: kind,
+            value: value,
+        }
+    }
+}
 //@+node:ekr.20241004110721.1: ** class Annotator
 #[allow(dead_code)]
 struct Annotator<'a> {
@@ -60,7 +62,7 @@ struct Annotator<'a> {
     in_arg_list: u32,  // > 0 if in an arg list of a def.
     in_doc_part: bool,
     state_stack: Vec<ParseState>,  // Stack of ParseState objects.
-    valid_contexts: [&'a str; 7],
+    valid_contexts: [&'a str; 8],  // *** will be 7 w/o the "test" context.
     verbatim: bool,  // True: don't beautify.
 }
 
@@ -78,11 +80,16 @@ impl Annotator<'_> {
             index_dict: HashMap::new(),
             input_tokens: input_tokens,
             insignificant_tokens: [
+                //@+<< define Annotator::insignificant_tokens >>
+                //@+node:ekr.20241007085552.1: *4* << define Annotator::insignificant_tokens >>
                 "dummy", "ws",  // pseudo-tokens.
                 "Comment", "Dedent", "Indent", "Newline", "Nl",  // Real tokens.
+                //@-<< define Annotator::insignificant_tokens >>
             ],
             lws: String::new(),
             op_kinds: [
+                //@+<< define Annotator::op_kinds >>
+                //@+node:ekr.20241007085705.1: *4* << define Annotator::op_kinds >>
                 "And",
                 "Colon", "ColonEqual", "Comma", "Dot", "DoubleStar",
                 "Equal", "EqEqual", "Greater", "GreaterEqual",
@@ -94,11 +101,13 @@ impl Annotator<'_> {
                 "Percent", "Plus", "PlusEqual",
                 "Rarrow", "Rbrace", "Rpar", "Rsqb",
                 "Star",
+                //@-<< define Annotator::op_kinds >>
             ],
             paren_level: 0,
             state_stack: Vec::new(),
             square_brackets_stack: Vec::new(),
             valid_contexts: [
+                "test",  // *** testing only.
                 "annotation", "arg", "complex-slice", "dict",
                 "import", "initializer", "simple-slice"],
             verbatim: false, 
@@ -114,11 +123,11 @@ impl Annotator<'_> {
 
         // Create the annotated tokens using self.index_dict.
         {
-            let n = self.input_tokens.len();
-            let d = &self.index_dict;
+            let input_tokens_len = self.input_tokens.len();
+            let dict_len = &self.index_dict.len();
             println!("");
-            println!("annotate: self.input_tokens.len(): {n}");
-            println!("annotate: self.index_dict: {d:?}");
+            println!("annotate: self.input_tokens.len(): {input_tokens_len}");
+            println!("annotate: self.index_dict: {dict_len}");
             println!("");
         }
         for (i, token) in self.input_tokens.into_iter().enumerate() {
@@ -128,11 +137,12 @@ impl Annotator<'_> {
                 None => "",
             };
             // *** println!("annotate: context: {context:?}");
-            // *** let annotated_token = AnnotatedInputTok::new(&context, &token.kind, &token.value);
-            let annotated_token = AnnotatedInputTok {
-                // context: context.to_string(), kind: &token.kind, value: &token.value
-                context: context, kind: &token.kind, value: &token.value
-            };
+            let annotated_token = AnnotatedInputTok::new(&context, &token.kind, &token.value);
+            // ***
+            // let annotated_token = AnnotatedInputTok {
+                // // context: context.to_string(), kind: &token.kind, value: &token.value
+                // context: context, kind: &token.kind, value: &token.value
+            // };
             result.push(annotated_token);
         }
         return result;
@@ -216,6 +226,9 @@ impl Annotator<'_> {
         let mut prev_token = &dummy_token;
         for (i, token) in self.input_tokens.into_iter().enumerate() {
             let (kind, value) = (token.kind, token.value);
+            if false {  // *** Testing only
+                self.set_context(i, "test");
+            }
             // println!("pre_scan: {kind:>20} {value:?}");
             if kind == "Newline" {
                 //@+<< pre-scan newline tokens >>
@@ -229,17 +242,15 @@ impl Annotator<'_> {
                 //@-<< pre-scan newline tokens >>
             }
             else if self.op_kinds.contains(&kind) {
-                // println!("  OP: {value:?}");  // ***
+                // *** println!("   OP: kind: {kind:>12} value: {value:?}");  // ***
                 //@+<< pre-scan op tokens >>
                 //@+node:ekr.20241004154345.3: *4* << pre-scan op tokens >>
                 // top_state: Optional[fScanState] = scan_stack[-1] if scan_stack else None
                 // The scan_stack always contains at least a dummy state.
                 let top_state = &mut scan_stack[scan_stack.len() - 1].clone();
 
-                if true {  // ***
-                    let top_state_kind = top_state.kind;
-                    // top_state: {top_state_kind:20}
-                    println!("pre_scan <op tokens>: kind: {kind:>10} value: {value:?}");
+                if false {  // ***
+                    println!("   OP: kind: {kind:>12} value: {value:?}");
                 }
 
                 // Handle "[" and "]".
@@ -264,7 +275,6 @@ impl Annotator<'_> {
 
                 // Handle "(" and ")"
                 else if value == "(" {
-                    println!("OPEN PAREN");
                     if self.is_python_keyword(&prev_token) || prev_token.kind != "name" {
                         scan_stack.push(ScanState::new("(", &token));
                     }
@@ -281,11 +291,13 @@ impl Annotator<'_> {
                 }
 
                 // Handle interior tokens in "arg" and "slice" states.
-                if top_state.kind != "dummy-scan-state" {
+                if true { // *** top_state.kind != "dummy-scan-state" {
                     if value == ":" && ["dict", "slice"].contains(&top_state.kind) {
                         top_state.indices.push(i);
                     }
-                    else if top_state.kind == "arg" && ["**", "*", "=", ":", ","].contains(&value) {
+                    //  *** else if top_state.kind == "arg" && ["**", "*", "=", ":", ","].contains(&value) {
+                    else if ["**", "*", "=", ":", ","].contains(&value) {
+                        println!("FOUND: kind: {kind:>12} value: {value:?}");
                         top_state.indices.push(i);
                     }
                 }
@@ -315,6 +327,7 @@ impl Annotator<'_> {
             }
             else if ["Class", "Def"].contains(&kind) {
                 // println!("{kind}");
+                self.set_context(i, "test");
             }
             else if kind == "ws" {  // ***
             }
@@ -406,15 +419,15 @@ impl Annotator<'_> {
         
         let token = state.token;
         assert!(token.value == "[");
-        
-        let colons = &state.indices;
+
+        let indices = &state.indices;
         
         // *** let mut i1 = token.index;
         let i1 = 0;
         // assert i1 < end, (i1, end)
 
         // Do nothing if there are no ":" tokens in the slice.
-        if colons.len() == 0 {
+        if indices.len() == 0 {
             return;
         }
 
@@ -469,7 +482,7 @@ impl Annotator<'_> {
             }
         }
         // Set the context of all outer-level ":" tokens.
-        for i in colons {
+        for i in indices {
             self.set_context(*i, final_context);
         }    
     }
@@ -511,21 +524,21 @@ impl Annotator<'_> {
         if !self.valid_contexts.contains(&context) {
             println!("Unexpected context! {context:?}");
         }
-        if true {  // Debugging.  Never gets called!
+        if false {  // Debugging.
             let token = &self.input_tokens[i];
             let token_kind = token.kind;
             let token_value = token.value;
-            println!("{token_kind:20}: {context:20} {token_value}");
+            println!("set_context: {token_kind:20}: {context:20} {token_value}");
         }
         if !self.index_dict.contains_key(&i) {
-            println!("{i} {context:?}");
+            // println!("set_context: {i} {context:?}");
             self.index_dict.insert(i, context.to_string());
         }
     }
     //@-others
 }
 //@+node:ekr.20240929024648.120: ** class InputTok
-#[derive(Clone, Debug)]
+#[derive(Debug)]
 struct InputTok<'a> {
     kind: &'a str,
     value: &'a str,
@@ -541,7 +554,6 @@ impl <'a> InputTok<'_> {
 }
 //@+node:ekr.20240929074037.1: ** class LeoBeautifier
 #[derive(Debug)]
-
 pub struct Beautifier {
     // Set in LB:beautify_one_file...
     args: Vec<String>,
@@ -608,7 +620,7 @@ impl Beautifier {
             // }
             
         for annotated_token in annotated_tokens {
-            println!("beautify: {annotated_token:?}");
+            // println!("beautify: {annotated_token:?}");
             //@+<< LB: beautify: dispatch on annotated_token.kind >>
             //@+node:ekr.20241002062655.1: *4* << LB: beautify: dispatch on annotated_token.kind >>
             let kind = annotated_token.kind;
@@ -1386,8 +1398,8 @@ impl Beautifier {
     //@-others
 }
 //@+node:ekr.20241004112826.1: ** class ParseState
-// *** testing only.
 #[allow(dead_code)]
+#[derive(Debug)]
 struct ParseState {
     //@+<< docstring: ParseState >>
     //@+node:ekr.20241004113118.1: *3* << docstring: ParseState >>
