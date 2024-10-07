@@ -41,9 +41,9 @@ struct AnnotatedInputTok<'a> {
 }
 
 impl <'a> AnnotatedInputTok<'_> {
-    fn new(context: String, kind: &'a str, value: &'a str) -> AnnotatedInputTok<'a> {
+    fn new(context: &'a str, kind: &'a str, value: &'a str) -> AnnotatedInputTok<'a> {
         AnnotatedInputTok {
-            context: context,
+            context: context.to_string(),
             kind: kind,
             value: value,
         }
@@ -114,29 +114,20 @@ impl Annotator<'_> {
         }
     }
     //@+node:ekr.20241004095735.1: *3* Annotator.annotate
-    // fn annotate_tokens<'a>(&mut self, input_tokens: &'a Vec<InputTok<'a>>) -> Vec::<AnnotatedInputTok<'a>> {
-    // fn annotate<'a>(&mut self) -> Vec::<AnnotatedInputTok<'a>> {
-
     fn annotate(&mut self) -> Vec::<AnnotatedInputTok> {
-
         //! Do the prepass, returning tokens annotated with context.
-        
         let mut result = Vec::new();
-        
+
         // Create self.index_dict.
         self.pre_scan();
-        
+
         // Create the annotated tokens using self.index_dict.
         for (i, token) in self.input_tokens.into_iter().enumerate() {
             let context = match self.index_dict.get(&i) {
                 Some(x) => x,
-                None => &"".to_string(),
+                None => "",
             };
-            let context_string = context.to_string();
-            if !context_string.is_empty() {
-                println!("{i} {context_string}");
-            }
-            let annotated_token = AnnotatedInputTok::new(context_string, &token.kind, &token.value);
+            let annotated_token = AnnotatedInputTok::new(&context, &token.kind, &token.value);
             result.push(annotated_token);
         }
         return result;
