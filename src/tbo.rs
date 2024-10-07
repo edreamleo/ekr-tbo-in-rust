@@ -192,6 +192,7 @@ impl Annotator<'_> {
         let mut prev_token = &dummy_token;
         for (i, token) in self.input_tokens.into_iter().enumerate() {
             let (kind, value) = (token.kind, token.value);
+            println!("{kind:>20} {value:?}");
             if kind == "Newline" {
                 //@+<< pre-scan newline tokens >>
                 //@+node:ekr.20241004154345.2: *4* << pre-scan newline tokens >>
@@ -690,6 +691,12 @@ impl Beautifier {
         // Create (an immutable!) list of input tokens.
         let t2 = std::time::Instant::now();
         let input_tokens = self.make_input_list(&contents);
+        if false {
+            println!("input tokens...");
+            for token in &input_tokens {
+                println!("{token:?}");
+            }
+        }
         self.stats.make_tokens_time += t2.elapsed().as_nanos();
         // Annotate tokens (the prepass).
         let t3 = std::time::Instant::now();
@@ -1484,6 +1491,7 @@ impl Stats {
     //@-others
 }
 //@+node:ekr.20241003093722.1: ** fn main
+//@@language rust
 pub fn main() {
     // Main line of beautifier.
     let mut x = Beautifier::new();
@@ -1491,12 +1499,13 @@ pub fn main() {
         // testing.
         println!("");
         for file_path in [
-            "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py",
+            "C:\\Repos\\ekr-tbo-in-rust\\test\\test1.py",
+            // "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py",
             // "C:\\Repos\\leo-editor\\leo\\core\\leoApp.py"
         ] {
             x.beautify_one_file(&file_path);
         }
-        x.stats.report();
+        // x.stats.report();
     } else {
         if x.enabled("--help") || x.enabled("-h") {
             x.show_help();

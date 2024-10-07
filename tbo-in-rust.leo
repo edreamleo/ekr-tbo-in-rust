@@ -108,181 +108,166 @@
 </v>
 <v t="ekr.20240927154009.1"><vh>Files</vh>
 <v t="ekr.20240927151245.1"><vh>@edit Cargo.toml</vh></v>
+<v t="ekr.20241007005233.1"><vh>@clean test/test1.py</vh></v>
 <v t="ekr.20240927151332.1"><vh>@file src/main.rs</vh></v>
 <v t="ekr.20240928161210.1"><vh>@file src/tbo.rs</vh></v>
+<v t="ekr.20241007005513.1"><vh>COPY: tests from test_leoTokens.py</vh>
+<v t="ekr.20241007005513.17"><vh>class TestTokens (BaseTest)</vh>
+<v t="ekr.20241007005513.18"><vh>TT.show_example_dump</vh></v>
+<v t="ekr.20241007005513.19"><vh>TT.test_bs_nl_tokens</vh></v>
+<v t="ekr.20241007005513.20"><vh>TT.test_continuation_1</vh></v>
+<v t="ekr.20241007005513.21"><vh>TT.test_continuation_2</vh></v>
+<v t="ekr.20241007005513.22"><vh>TT.test_continuation_3</vh></v>
+<v t="ekr.20241007005513.23"><vh>TT.test_string_concatenation_1</vh></v>
+<v t="ekr.20241007005513.24"><vh>TT.test_string_concatenation_2</vh></v>
+<v t="ekr.20241007005513.25"><vh>TT.test_string_concatenation_3</vh></v>
 </v>
-<v t="ekr.20241001073040.1"><vh>--- Not used</vh>
-<v t="ekr.20241005031511.1"><vh>COPY (Python) class InputToken</vh>
-<v t="ekr.20241005031511.2"><vh>itoken.brief_dump</vh></v>
-<v t="ekr.20241005031511.3"><vh>itoken.dump</vh></v>
-<v t="ekr.20241005031511.4"><vh>itoken.dump_header</vh></v>
-<v t="ekr.20241005031511.5"><vh>itoken.error_dump</vh></v>
-<v t="ekr.20241005031511.6"><vh>itoken.show_val</vh></v>
+<v t="ekr.20241007005513.26"><vh>class TestTokenBasedOrange (BaseTest)</vh>
+<v t="ekr.20241007005513.29"><vh>TestTBO.test_annotations</vh></v>
+<v t="ekr.20241007005513.30"><vh>TestTBO.test_at_doc_part</vh></v>
+<v t="ekr.20241007005513.31"><vh>TestTBO.test_backslash_newline</vh></v>
+<v t="ekr.20241007005513.32"><vh>TestTBO.test_blank_lines_after_function</vh></v>
+<v t="ekr.20241007005513.33"><vh>TestTBO.test_blank_lines_after_function_2</vh></v>
+<v t="ekr.20241007005513.34"><vh>TestTBO.test_blank_lines_after_function_3</vh></v>
+<v t="ekr.20241007005513.35"><vh>TestTBO.test_comment_indented</vh></v>
+<v t="ekr.20241007005513.36"><vh>TestTBO.test_comment_space_after_delim</vh></v>
+<v t="ekr.20241007005513.37"><vh>TestTBO.test_decorators</vh></v>
+<v t="ekr.20241007005513.38"><vh>TestTBO.test_dont_delete_blank_lines</vh></v>
+<v t="ekr.20241007005513.39"><vh>TestTBO.test_leo_sentinels</vh></v>
+<v t="ekr.20241007005513.40"><vh>TestTBO.test_leo_sentinels_2</vh></v>
+<v t="ekr.20241007005513.41"><vh>TestTBO.test_lines_before_class</vh></v>
+<v t="ekr.20241007005513.42"><vh>TestTBO.test_multi_line_imports</vh></v>
+<v t="ekr.20241007005513.43"><vh>TestTBO.test_multi_line_pet_peeves</vh></v>
+<v t="ekr.20241007005513.44"><vh>TestTBO.test_multi_line_statement</vh></v>
+<v t="ekr.20241007005513.45"><vh>TestTBO.test_one_line_pet_peeves</vh></v>
+<v t="ekr.20241007005513.46"><vh>TestTBO.test_percent_op</vh></v>
+<v t="ekr.20241007005513.47"><vh>TestTBO.test_relative_imports</vh></v>
+<v t="ekr.20241007005513.48"><vh>TestTBO.test_slice</vh></v>
+<v t="ekr.20241007005513.49"><vh>TestTBO.test_star_star_operator</vh></v>
+<v t="ekr.20241007005513.50"><vh>TestTBO.test_unary_ops</vh></v>
+<v t="ekr.20241007005513.51"><vh>TestTBO.test_verbatim</vh></v>
+<v t="ekr.20241007005513.52"><vh>TestTBO.test_verbatim_with_pragma</vh></v>
+<v t="ekr.20241007005513.53"><vh>TestTBO.verbatim2</vh></v>
 </v>
-<v t="ekr.20241003062509.1"><vh>--- old Rust code</vh>
-<v t="ekr.20241003055233.1"><vh>beautify_one_file: 'static</vh></v>
-<v t="ekr.20241001093308.2"><vh>fn tokenize</vh>
-<v t="ekr.20241001093308.3"><vh>&lt;&lt; tokenize: define contents &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20240929032636.1"><vh>function: entry &amp; helpers</vh>
-<v t="ekr.20240930100625.1"><vh>&lt;&lt; 1: read &gt;&gt;</vh></v>
-<v t="ekr.20240930100707.1"><vh>&lt;&lt; 2: make input_list &gt;&gt;</vh></v>
-<v t="ekr.20240930100553.1"><vh>&lt;&lt; 3: print stats &gt;&gt;</vh></v>
-<v t="ekr.20240929033044.1"><vh>function: add_input_token</vh></v>
-<v t="ekr.20240929032710.1"><vh>function: fmt_ms</vh></v>
-<v t="ekr.20240929024648.113"><vh>function: make_input_list (works)</vh></v>
-<v t="ekr.20240930084648.1"><vh>function: read</vh></v>
+<v t="ekr.20241007011856.1"><vh>COPY: leoTokens.py</vh>
+<v t="ekr.20241007011856.4"><vh>top-level functions (leoTokens.py)</vh>
+<v t="ekr.20241007011856.5"><vh>function: dump_contents</vh></v>
+<v t="ekr.20241007011856.6"><vh>function: dump_lines</vh></v>
+<v t="ekr.20241007011856.7"><vh>function: dump_results</vh></v>
+<v t="ekr.20241007011856.8"><vh>function: dump_tokens</vh></v>
+<v t="ekr.20241007011856.9"><vh>function: input_tokens_to_string</vh></v>
+<v t="ekr.20241007011856.10"><vh>function: beautify_file (leoTokens.py) (new)</vh></v>
+<v t="ekr.20241007011856.11"><vh>function: main (leoTokens.py)</vh></v>
+<v t="ekr.20241007011856.12"><vh>function: orange_command (leoTokens.py)</vh></v>
+<v t="ekr.20241007011856.13"><vh>function: scan_args (leoTokens.py)</vh></v>
 </v>
-<v t="ekr.20240930085546.1"><vh>function: lex_contents</vh></v>
-<v t="ekr.20240929031635.1"><vh>function: scan_input_list</vh></v>
-<v t="ekr.20241001071914.1"><vh>function: test_loop</vh></v>
-<v t="ekr.20241003063446.121"><vh>LB::string_to_static_str</vh></v>
-<v t="ekr.20241002164044.1"><vh>make_input_list: Calculate class name w/o match</vh></v>
-<v t="ekr.20240929074941.1"><vh>Stats::update_times</vh></v>
+<v t="ekr.20241007011856.14"><vh>Classes</vh>
+<v t="ekr.20241007011856.15"><vh>class InternalBeautifierError(Exception)</vh></v>
+<v t="ekr.20241007011856.16"><vh>class InputToken</vh>
+<v t="ekr.20241007011856.17"><vh>itoken.brief_dump</vh></v>
+<v t="ekr.20241007011856.18"><vh>itoken.dump</vh></v>
+<v t="ekr.20241007011856.19"><vh>itoken.dump_header</vh></v>
+<v t="ekr.20241007011856.20"><vh>itoken.error_dump</vh></v>
+<v t="ekr.20241007011856.21"><vh>itoken.show_val</vh></v>
 </v>
-<v t="ekr.20241003084853.1"><vh>--- new code: doesn't work</vh>
-<v t="ekr.20241003064504.1"><vh>functions to be added</vh>
-<v t="ekr.20241003063446.114"><vh>fn: enabled</vh></v>
-<v t="ekr.20241003063446.115"><vh>fn: get_args</vh></v>
-<v t="ekr.20241003063446.118"><vh>fn: show_args</vh></v>
-<v t="ekr.20241003063446.119"><vh>fn: show_help</vh></v>
-<v t="ekr.20241003063446.120"><vh>fn: show_output_list</vh></v>
+<v t="ekr.20241007011856.22"><vh>class Tokenizer</vh>
+<v t="ekr.20241007011856.23"><vh>Tokenizer.add_token</vh></v>
+<v t="ekr.20241007011856.24"><vh>Tokenizer.check_results</vh></v>
+<v t="ekr.20241007011856.25"><vh>Tokenizer.check_round_trip</vh></v>
+<v t="ekr.20241007011856.26"><vh>Tokenizer.create_input_tokens</vh></v>
+<v t="ekr.20241007011856.27"><vh>Tokenizer.do_token (the gem)</vh></v>
+<v t="ekr.20241007011856.28"><vh>Tokenizer.make_input_tokens (entry)</vh></v>
+<v t="ekr.20241007011856.29"><vh>Tokenizer.tokens_to_string</vh></v>
 </v>
-<v t="ekr.20241003084902.1"><vh>COPY: pub fn entry </vh></v>
-<v t="ekr.20241003064425.1"><vh>Beautifier struct</vh></v>
-<v t="ekr.20241003063446.6"><vh>&lt;&lt; fn: beautify: init vars &gt;&gt; (to do)</vh></v>
-<v t="ekr.20241003063446.1"><vh>LeoBeautifier functions</vh>
-<v t="ekr.20241003063446.3"><vh>fn: add_input_token</vh></v>
-<v t="ekr.20241003063446.4"><vh>fn: add_output_string</vh></v>
-<v t="ekr.20241003063446.5"><vh>fn: beautify</vh>
-<v t="ekr.20241003063446.7"><vh>&lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;</vh></v>
+<v t="ekr.20241007011856.30"><vh>class ParseState</vh></v>
+<v t="ekr.20241007011856.31"><vh>class ScanState</vh></v>
+<v t="ekr.20241007011856.32"><vh>class TokenBasedOrange</vh>
+<v t="ekr.20241007011856.33"><vh>&lt;&lt; TokenBasedOrange: docstring &gt;&gt;</vh></v>
+<v t="ekr.20241007011856.34"><vh>&lt;&lt; TokenBasedOrange: __slots__ &gt;&gt;</vh></v>
+<v t="ekr.20241007011856.35"><vh>&lt;&lt; TokenBasedOrange: python-related constants &gt;&gt;</vh></v>
+<v t="ekr.20241007011856.36"><vh>tbo.ctor</vh></v>
+<v t="ekr.20241007011856.37"><vh>tbo: Checking &amp; dumping</vh>
+<v t="ekr.20241007011856.38"><vh>tbo.dump_token_range</vh></v>
+<v t="ekr.20241007011856.39"><vh>tbo.internal_error_message</vh></v>
+<v t="ekr.20241007011856.40"><vh>tbo.user_error_message</vh></v>
+<v t="ekr.20241007011856.41"><vh>tbo.oops</vh></v>
 </v>
-<v t="ekr.20241003063446.8"><vh>fn: beautify_all_files</vh></v>
-<v t="ekr.20241003063446.9"><vh>fn: beautify_one_file</vh></v>
-<v t="ekr.20241003063446.116"><vh>fn: make_input_list</vh>
-<v t="ekr.20241003063446.117"><vh>&lt;&lt; Calculate class_name using match token &gt;&gt;</vh></v>
+<v t="ekr.20241007011856.42"><vh>tbo: Entries &amp; helpers</vh>
+<v t="ekr.20241007011856.43"><vh>tbo.beautify (main token loop)</vh>
+<v t="ekr.20241007011856.44"><vh>&lt;&lt; tbo.beautify: init ivars &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20241003063446.10"><vh>fn: do_*</vh>
-<v t="ekr.20241003063446.11"><vh>tbo.do_ws</vh></v>
-<v t="ekr.20241003063446.12"><vh>LB:Handlers with values</vh>
-<v t="ekr.20241003063446.13"><vh>fn: do_Comment</vh></v>
-<v t="ekr.20241003063446.14"><vh>fn: do_Complex</vh></v>
-<v t="ekr.20241003063446.15"><vh>fn: do_Float</vh></v>
-<v t="ekr.20241003063446.16"><vh>fn: do_Int</vh></v>
-<v t="ekr.20241003063446.17"><vh>fn: do_Name</vh></v>
-<v t="ekr.20241003063446.18"><vh>fn: do_String</vh></v>
+<v t="ekr.20241007011856.45"><vh>tbo.beautify_file (entry) (stats &amp; diffs)</vh></v>
+<v t="ekr.20241007011856.46"><vh>tbo.init_tokens_from_file</vh></v>
+<v t="ekr.20241007011856.47"><vh>tbo.regularize_newlines</vh></v>
+<v t="ekr.20241007011856.48"><vh>tbo.write_file</vh></v>
+<v t="ekr.20241007011856.49"><vh>tbo.show_diffs</vh></v>
 </v>
-<v t="ekr.20241003063446.19"><vh>LB:Handlers using lws</vh>
-<v t="ekr.20241003063446.20"><vh>fn: do_Dedent</vh></v>
-<v t="ekr.20241003063446.21"><vh>fn: do_Indent</vh></v>
-<v t="ekr.20241003063446.22"><vh>fn: do_Newline</vh></v>
-<v t="ekr.20241003063446.23"><vh>fn: do_NonLogicalNewline</vh></v>
+<v t="ekr.20241007011856.50"><vh>tbo: Visitors &amp; generators</vh>
+<v t="ekr.20241007011856.51"><vh>tbo.do_comment</vh>
+<v t="ekr.20241007011856.52"><vh>&lt;&lt; do_comment: update comment-related state &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20241003063446.24"><vh>LB:Handlers w/o values</vh>
-<v t="ekr.20241003063446.25"><vh>fn: do_Amper</vh></v>
-<v t="ekr.20241003063446.26"><vh>fn: do_AmperEqual</vh></v>
-<v t="ekr.20241003063446.27"><vh>fn: do_And</vh></v>
-<v t="ekr.20241003063446.28"><vh>fn: do_As</vh></v>
-<v t="ekr.20241003063446.29"><vh>fn: do_Assert</vh></v>
-<v t="ekr.20241003063446.30"><vh>fn: do_Async</vh></v>
-<v t="ekr.20241003063446.31"><vh>fn: do_At</vh></v>
-<v t="ekr.20241003063446.32"><vh>fn: do_AtEqual</vh></v>
-<v t="ekr.20241003063446.33"><vh>fn: do_Await</vh></v>
-<v t="ekr.20241003063446.34"><vh>fn: do_Break</vh></v>
-<v t="ekr.20241003063446.35"><vh>fn: do_Case</vh></v>
-<v t="ekr.20241003063446.36"><vh>fn: do_CircumFlex</vh></v>
-<v t="ekr.20241003063446.37"><vh>fn: do_CircumflexEqual</vh></v>
-<v t="ekr.20241003063446.38"><vh>fn: do_Class</vh></v>
-<v t="ekr.20241003063446.39"><vh>fn: do_Colon</vh></v>
-<v t="ekr.20241003063446.40"><vh>fn: do_ColonEqual</vh></v>
-<v t="ekr.20241003063446.41"><vh>fn: do_Comma</vh></v>
-<v t="ekr.20241003063446.42"><vh>fn: do_Continue</vh></v>
-<v t="ekr.20241003063446.43"><vh>fn: do_Def</vh></v>
-<v t="ekr.20241003063446.44"><vh>fn: do_Del</vh></v>
-<v t="ekr.20241003063446.45"><vh>fn: do_Dot</vh></v>
-<v t="ekr.20241003063446.46"><vh>fn: do_DoubleSlash</vh></v>
-<v t="ekr.20241003063446.47"><vh>fn: do_DoubleSlashEqual</vh></v>
-<v t="ekr.20241003063446.48"><vh>fn: do_DoubleStar</vh></v>
-<v t="ekr.20241003063446.49"><vh>fn: do_DoubleStarEqual</vh></v>
-<v t="ekr.20241003063446.50"><vh>fn: do_Elif</vh></v>
-<v t="ekr.20241003063446.51"><vh>fn: do_Ellipsis</vh></v>
-<v t="ekr.20241003063446.52"><vh>fn: do_Else</vh></v>
-<v t="ekr.20241003063446.53"><vh>fn: do_EndOfFile</vh></v>
-<v t="ekr.20241003063446.54"><vh>fn: do_EqEqual</vh></v>
-<v t="ekr.20241003063446.55"><vh>fn: do_Equal</vh></v>
-<v t="ekr.20241003063446.56"><vh>fn: do_Except</vh></v>
-<v t="ekr.20241003063446.57"><vh>fn: do_False</vh></v>
-<v t="ekr.20241003063446.58"><vh>fn: do_Finally</vh></v>
-<v t="ekr.20241003063446.59"><vh>fn: do_For</vh></v>
-<v t="ekr.20241003063446.60"><vh>fn: do_From</vh></v>
-<v t="ekr.20241003063446.61"><vh>fn: do_Global</vh></v>
-<v t="ekr.20241003063446.62"><vh>fn: do_Greater</vh></v>
-<v t="ekr.20241003063446.63"><vh>fn: do_GreaterEqual</vh></v>
-<v t="ekr.20241003063446.64"><vh>fn: do_If</vh></v>
-<v t="ekr.20241003063446.65"><vh>fn: do_Import</vh></v>
-<v t="ekr.20241003063446.66"><vh>fn: do_In</vh></v>
-<v t="ekr.20241003063446.67"><vh>fn: do_Is</vh></v>
-<v t="ekr.20241003063446.68"><vh>fn: do_Lambda</vh></v>
-<v t="ekr.20241003063446.69"><vh>fn: do_Lbrace</vh></v>
-<v t="ekr.20241003063446.70"><vh>fn: do_LeftShift</vh></v>
-<v t="ekr.20241003063446.71"><vh>fn: do_LeftShiftEqual</vh></v>
-<v t="ekr.20241003063446.72"><vh>fn: do_Less</vh></v>
-<v t="ekr.20241003063446.73"><vh>fn: do_LessEqual</vh></v>
-<v t="ekr.20241003063446.74"><vh>fn: do_Lpar</vh></v>
-<v t="ekr.20241003063446.75"><vh>fn: do_Lsqb</vh></v>
-<v t="ekr.20241003063446.76"><vh>fn: do_Match</vh></v>
-<v t="ekr.20241003063446.77"><vh>fn: do_Minus</vh></v>
-<v t="ekr.20241003063446.78"><vh>fn: do_MinusEqual</vh></v>
-<v t="ekr.20241003063446.79"><vh>fn: do_None</vh></v>
-<v t="ekr.20241003063446.80"><vh>fn: do_Nonlocal</vh></v>
-<v t="ekr.20241003063446.81"><vh>fn: do_Not</vh></v>
-<v t="ekr.20241003063446.82"><vh>fn: do_NotEqual</vh></v>
-<v t="ekr.20241003063446.83"><vh>fn: do_Or</vh></v>
-<v t="ekr.20241003063446.84"><vh>fn: do_Pass</vh></v>
-<v t="ekr.20241003063446.85"><vh>fn: do_Percent</vh></v>
-<v t="ekr.20241003063446.86"><vh>fn: do_PercentEqual</vh></v>
-<v t="ekr.20241003063446.87"><vh>fn: do_Plus</vh></v>
-<v t="ekr.20241003063446.88"><vh>fn: do_PlusEqual</vh></v>
-<v t="ekr.20241003063446.89"><vh>fn: do_Raise</vh></v>
-<v t="ekr.20241003063446.90"><vh>fn: do_Rarrow</vh></v>
-<v t="ekr.20241003063446.91"><vh>fn: do_Rbrace</vh></v>
-<v t="ekr.20241003063446.92"><vh>fn: do_Return</vh></v>
-<v t="ekr.20241003063446.93"><vh>fn: do_RightShift</vh></v>
-<v t="ekr.20241003063446.94"><vh>fn: do_RightShiftEqual</vh></v>
-<v t="ekr.20241003063446.95"><vh>fn: do_Rpar</vh></v>
-<v t="ekr.20241003063446.96"><vh>fn: do_Rsqb</vh></v>
-<v t="ekr.20241003063446.97"><vh>fn: do_Semi</vh></v>
-<v t="ekr.20241003063446.98"><vh>fn: do_Slash</vh></v>
-<v t="ekr.20241003063446.99"><vh>fn: do_SlashEqual</vh></v>
-<v t="ekr.20241003063446.100"><vh>fn: do_Star</vh></v>
-<v t="ekr.20241003063446.101"><vh>fn: do_StarEqual</vh></v>
-<v t="ekr.20241003063446.102"><vh>fn: do_StartExpression</vh></v>
-<v t="ekr.20241003063446.103"><vh>fn: do_StartInteractive</vh></v>
-<v t="ekr.20241003063446.104"><vh>fn: do_StarModule</vh></v>
-<v t="ekr.20241003063446.105"><vh>fn: do_Tilde</vh></v>
-<v t="ekr.20241003063446.106"><vh>fn: do_True</vh></v>
-<v t="ekr.20241003063446.107"><vh>fn: do_Try</vh></v>
-<v t="ekr.20241003063446.108"><vh>fn: do_Type</vh></v>
-<v t="ekr.20241003063446.109"><vh>fn: do_Vbar</vh></v>
-<v t="ekr.20241003063446.110"><vh>fn: do_VbarEqual</vh></v>
-<v t="ekr.20241003063446.111"><vh>fn: do_While</vh></v>
-<v t="ekr.20241003063446.112"><vh>fn: do_With</vh></v>
-<v t="ekr.20241003063446.113"><vh>fn: do_Yield</vh></v>
+<v t="ekr.20241007011856.53"><vh>tbo.do_dedent</vh></v>
+<v t="ekr.20241007011856.54"><vh>tbo.do_encoding</vh></v>
+<v t="ekr.20241007011856.55"><vh>tbo.do_endmarker</vh></v>
+<v t="ekr.20241007011856.56"><vh>tbo.do_indent</vh></v>
+<v t="ekr.20241007011856.57"><vh>tbo.do_name &amp; generators</vh>
+<v t="ekr.20241007011856.58"><vh>tbo.do_name</vh></v>
+<v t="ekr.20241007011856.59"><vh>tbo.gen_word</vh></v>
+<v t="ekr.20241007011856.60"><vh>tbo.gen_word_op</vh></v>
+</v>
+<v t="ekr.20241007011856.61"><vh>tbo.do_newline, do_nl &amp; generators</vh>
+<v t="ekr.20241007011856.62"><vh>tbo.do_newline</vh></v>
+<v t="ekr.20241007011856.63"><vh>tbo.do_nl</vh></v>
+</v>
+<v t="ekr.20241007011856.64"><vh>tbo.do_number</vh></v>
+<v t="ekr.20241007011856.65"><vh>tbo.do_op &amp; generators</vh>
+<v t="ekr.20241007011856.66"><vh>tbo.do_op</vh></v>
+<v t="ekr.20241007011856.67"><vh>tbo.gen_colon &amp; helper</vh></v>
+<v t="ekr.20241007011856.68"><vh>tbo.gen_dot_op &amp; _next</vh>
+<v t="ekr.20241007011856.69"><vh>tbo._next</vh></v>
+</v>
+<v t="ekr.20241007011856.70"><vh>tbo.gen_equal_op</vh></v>
+<v t="ekr.20241007011856.71"><vh>tbo.gen_lt</vh></v>
+<v t="ekr.20241007011856.72"><vh>tbo.gen_possible_unary_op &amp; helper</vh>
+<v t="ekr.20241007011856.73"><vh>tbo.is_unary_op &amp; _prev</vh>
+<v t="ekr.20241007011856.74"><vh>tbo._prev</vh></v>
+</v>
+</v>
+<v t="ekr.20241007011856.75"><vh>tbo.gen_rt</vh></v>
+<v t="ekr.20241007011856.76"><vh>tbo.gen_star_op</vh></v>
+<v t="ekr.20241007011856.77"><vh>tbo.gen_star_star_op</vh></v>
+<v t="ekr.20241007011856.78"><vh>tbo.push_state</vh></v>
+</v>
+<v t="ekr.20241007011856.79"><vh>tbo.do_string</vh></v>
+<v t="ekr.20241007011856.80"><vh>tbo.do_verbatim</vh></v>
+<v t="ekr.20241007011856.81"><vh>tbo.do_ws</vh></v>
+<v t="ekr.20241007011856.82"><vh>tbo.gen_blank</vh></v>
+<v t="ekr.20241007011856.83"><vh>tbo.gen_token</vh></v>
+</v>
+<v t="ekr.20241007011856.84"><vh>tbo: Scanning</vh>
+<v t="ekr.20241007011856.85"><vh>tbo.pre_scan &amp; helpers</vh>
+<v t="ekr.20241007011856.86"><vh>&lt;&lt; pre-scan 'newline' tokens &gt;&gt;</vh></v>
+<v t="ekr.20241007011856.87"><vh>&lt;&lt; pre-scan 'op' tokens &gt;&gt;</vh></v>
+<v t="ekr.20241007011856.88"><vh>&lt;&lt; pre-scan 'name' tokens &gt;&gt;</vh></v>
+<v t="ekr.20241007011856.89"><vh>tbo.finish_arg</vh></v>
+<v t="ekr.20241007011856.90"><vh>tbo.finish_slice</vh></v>
+<v t="ekr.20241007011856.91"><vh>tbo.finish_dict</vh></v>
+</v>
+<v t="ekr.20241007011856.92"><vh>tbo.is_unary_op_with_prev</vh></v>
+<v t="ekr.20241007011856.93"><vh>tbo.is_python_keyword</vh></v>
+<v t="ekr.20241007011856.94"><vh>tbo.set_context</vh></v>
 </v>
 </v>
 </v>
 </v>
-<v t="ekr.20241004084640.1"><vh>--- unused LB methods</vh>
-<v t="ekr.20240929074037.3"><vh>LB::add_input_token (no longer used)</vh></v>
-<v t="ekr.20240929074037.117"><vh>LB::show_output_list (no longer used)</vh></v>
-</v>
-<v t="ekr.20241004093044.1"><vh>--- unused fmt::Debug for InputTok</vh></v>
 </v>
 <v t="ekr.20240927154016.1"><vh>Notes</vh>
 <v t="ekr.20240929084852.1"><vh>Ownership and mutation</vh></v>
 <v t="ekr.20241001055017.1"><vh>Traits</vh></v>
 <v t="ekr.20240928185643.1"><vh>Stats</vh></v>
 </v>
+<v t="ekr.20241007005233.1"></v>
 <v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20241001104914.1"><vh>--- classes</vh>
 <v t="ekr.20241004095931.1"><vh>class AnnotatedInputTok</vh></v>
@@ -438,16 +423,14 @@
 </v>
 </v>
 <v t="ekr.20241004073317.1"><vh>--- outer leveel</vh>
+<v t="ekr.20241003093722.1"><vh>fn main</vh></v>
 <v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.113"></v>
 </v>
 <v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
-<v t="ekr.20241004110721.1"></v>
-<v t="ekr.20240929024648.120"></v>
-<v t="ekr.20241004095931.1"></v>
 <v t="ekr.20241004153802.1"></v>
 <v t="ekr.20241004095735.1"></v>
-<v t="ekr.20241004163018.1"></v>
+<v t="ekr.20240929074037.5"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -908,150 +891,6 @@ make_tokens:   11.01 ms
       
 Only about 10% faster than the Python beautifier.
 </t>
-<t tx="ekr.20240929024648.113">fn make_input_list(
-    contents: &amp;str,
-    input_list: &amp;mut Vec&lt;InputTok&gt;,
-) -&gt; (usize, usize) {
-    // Add InputToks to the input_list for every token given by the RustPython lex.
-    // The gem: Generate "ws" pseudo-tokens for all whitespace.
-    let mut tokens_n: usize = 0;
-    let mut ws_tokens_n: usize = 0;
-    let mut prev_start: usize = 0;
-    for token_tuple in lex(&amp;contents, Mode::Module)
-        .map(|tok| tok.expect("Failed to lex"))
-        .collect::&lt;Vec&lt;_&gt;&gt;()
-    {
-        use Tok::*;
-        tokens_n += 1;
-        let (token, range) = token_tuple;
-        let tok_value = &amp;contents[range];
-        let start_i: usize = usize::from(range.start());
-        let end_i: usize = usize::from(range.end());
-        
-        // The gem: create a whitespace pseudo-tokens.
-        if start_i &gt; prev_start {
-            let ws = &amp;contents[prev_start..start_i];
-            add_input_token(input_list, "ws", ws);
-            ws_tokens_n += 1
-        }
-        prev_start = end_i;
-
-        // Variants names are necessary, but otherwise not used.
-        #[allow(unused_variables)]
-        
-        let class_name = match token {
-            // Tokens with values...
-            // Use tok_value for *all* values.
-            Comment(value) =&gt; "Comment",  // No idea why parens are needed here.
-            Complex { real, imag } =&gt; "Complex",
-            Float { value } =&gt; "Float",
-            Int { value } =&gt; "Int",
-            Name { name } =&gt; "Name",
-            Tok::String { value, kind, triple_quoted } =&gt; "String",
-            
-            // Common tokens...
-            Class =&gt; "Class",
-            Dedent =&gt; "Dedent",
-            Def =&gt; "Def",
-            Indent =&gt; "Indent",
-            Newline =&gt; "Newline",
-            NonLogicalNewline =&gt; "NonLogicalNewline",
-
-            // All other tokens...
-            Amper =&gt; "Amper",
-            AmperEqual =&gt; "AmperEqual",
-            And =&gt; "And",
-            As =&gt; "As",
-            Assert =&gt; "Assert",
-            Async =&gt; "Async",
-            At =&gt; "At",
-            AtEqual =&gt; "AtEqual",
-            Await =&gt; "Await",
-            Break =&gt; "Break",
-            Case =&gt; "Case",
-            CircumFlex =&gt; "CircumFlex",
-            CircumflexEqual =&gt; "CircumflexEqual",
-            Colon =&gt; "Colon",
-            ColonEqual =&gt; "ColonEqual",
-            Comma =&gt; "Comma",
-            Continue =&gt; "Continue",
-            Del =&gt; "Del",
-            Dot =&gt; "Dot",
-            DoubleSlash =&gt; "DoubleSlash",
-            DoubleSlashEqual =&gt; "DoubleSlashEqual",
-            DoubleStar =&gt; "DoubleStar",
-            DoubleStarEqual =&gt; "DoubleStarEqual",
-            Elif =&gt; "Elif",
-            Ellipsis =&gt; "Ellipsis",
-            Else =&gt; "Else",
-            EndOfFile =&gt; "EndOfFile",
-            EqEqual =&gt; "EqEqual",
-            Equal =&gt; "Equal",
-            Except =&gt; "Except",
-            False =&gt; "False",
-            Finally =&gt; "Finally",
-            For =&gt; "For",
-            From =&gt; "From",
-            Global =&gt; "Global",
-            Greater =&gt; "Greater",
-            GreaterEqual =&gt; "GreaterEqual",
-            If =&gt; "If",
-            Import =&gt; "Import",
-            In =&gt; "In",
-            Is =&gt; "Is",
-            Lambda =&gt; "Lambda",
-            Lbrace =&gt; "Lbrace",
-            LeftShift =&gt; "LeftShift",
-            LeftShiftEqual =&gt; "LeftShiftEqual",
-            Less =&gt; "Less",
-            LessEqual =&gt; "LessEqual",
-            Lpar =&gt; "Lpar",
-            Lsqb =&gt; "Lsqb",
-            Match =&gt; "Match",
-            Minus =&gt; "Minus",
-            MinusEqual =&gt; "MinusEqual",
-            None =&gt; "None",
-            Nonlocal =&gt; "Nonlocal",
-            Not =&gt; "Not",
-            NotEqual =&gt; "NotEqual",
-            Or =&gt; "Or",
-            Pass =&gt; "Pass",
-            Percent =&gt; "Percent",
-            PercentEqual =&gt; "PercentEqual",
-            Plus =&gt; "Plus",
-            PlusEqual =&gt; "PlusEqual",
-            Raise =&gt; "Raise",
-            Rarrow =&gt; "Rarrow",
-            Rbrace =&gt; "Rbrace",
-            Return =&gt; "Return",
-            RightShift =&gt; "RightShift",
-            RightShiftEqual =&gt; "RightShiftEqual",
-            Rpar =&gt; "Rpar",
-            Rsqb =&gt; "Rsqb",
-            Semi =&gt; "Semi",
-            Slash =&gt; "Slash",
-            SlashEqual =&gt; "SlashEqual",
-            Star =&gt; "Star",
-            StarEqual =&gt; "StarEqual",
-            StartExpression =&gt; "StartExpression",
-            StartInteractive =&gt; "StartInteractive",
-            StartModule =&gt; "StartModule",
-            Tilde =&gt; "Tilde",
-            True =&gt; "True",
-            Try =&gt; "Try",
-            Type =&gt; "Type",
-            Vbar =&gt; "Vbar",
-            VbarEqual =&gt; "VbarEqual",
-            While =&gt; "While",
-            With =&gt; "With",
-            Yield =&gt; "Yield",
-        };
-        // add_input_token(&amp;mut input_list, class_name, tok_value);
-        add_input_token(input_list, class_name, tok_value);
-    }
-    return (tokens_n, ws_tokens_n);
-}
-</t>
 <t tx="ekr.20240929024648.120">#[derive(Clone, Debug)]
 struct InputTok&lt;'a&gt; {
     kind: &amp;'a str,
@@ -1065,50 +904,6 @@ impl &lt;'a&gt; InputTok&lt;'_&gt; {
             value: value,
         }
     }
-}
-</t>
-<t tx="ekr.20240929031635.1">fn scan_input_list(contents: String, tokens: Vec&lt;(Tok, TextRange)&gt;) -&gt; usize {
-
-    let mut count: usize = 0;
-    for (token, range) in tokens {
-        // Range is a TextRange.
-        count += 1;
-        // To do: Find gaps in the ranges.
-        let start_i = usize::from(range.start());
-        let end_i = usize::from(range.end());
-        if false {
-            if count &lt; 20 {
-                println!("{start_i:&gt;3}..{end_i:3} token: {token:?}");
-            }
-        }
-    }
-    return count;
-}
-</t>
-<t tx="ekr.20240929032636.1">pub fn entry() {
-    // leoFrame.py is a typical size
-    let file_path = "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py";
-    let short_file_name = "leoFrame.py";
-    &lt;&lt; 1: read &gt;&gt;
-    &lt;&lt; 2: Make input_list &gt;&gt;
-    &lt;&lt; 3: print stats &gt;&gt;
-}
-</t>
-<t tx="ekr.20240929032710.1">fn fmt_ms(t: u128) -&gt; String {
-    //! Convert microseconds to fractional milliseconds.
-    let ms = t / 1000;
-    let micro = (t % 1000) / 10;
-    return f!("{ms}.{micro:02}");  // Two-digits for fraction.
-}
-
-</t>
-<t tx="ekr.20240929033044.1">fn add_input_token (input_list: &amp;mut Vec&lt;InputTok&gt;, kind: &amp;str, value: &amp;str) {
-    //! Add one token to the output list.
-    let new_tok = InputTok {
-        kind: kind.to_string(),
-        value: value.to_string()
-    };
-    input_list.push(new_tok);
 }
 </t>
 <t tx="ekr.20240929074037.1">#[derive(Debug)]
@@ -1305,15 +1100,6 @@ impl Beautifier {
     );
 }
 </t>
-<t tx="ekr.20240929074037.117">fn show_output_list(&amp;self) {
-    println!("\nOutput list...");
-    for (i, arg) in self.output_list.iter().enumerate() {
-        if i &gt; 0 {
-            print!("{:?}", arg);
-        }
-    }
-}
-</t>
 <t tx="ekr.20240929074037.12">fn do_Int(&amp;mut self, tok_value: &amp;str) {
     self.add_output_string("Int", tok_value);
 }
@@ -1394,15 +1180,6 @@ fn add_output_string(&amp;mut self, kind: &amp;str, value: &amp;str) {
 </t>
 <t tx="ekr.20240929074037.29">fn do_Await(&amp;mut self) {
     self.add_output_string("Await", "await");
-}
-</t>
-<t tx="ekr.20240929074037.3">// #[allow(dead_code)]
-fn add_input_token(&amp;mut self, kind: &amp;str, value: &amp;str) {
-    //! Add one token to the output list.
-    self.input_list.push(InputTok {
-        kind: kind.to_string(),
-        value: value.to_string(),
-    });
 }
 </t>
 <t tx="ekr.20240929074037.30">fn do_Break(&amp;mut self) {
@@ -1509,6 +1286,12 @@ fn add_input_token(&amp;mut self, kind: &amp;str, value: &amp;str) {
     // Create (an immutable!) list of input tokens.
     let t2 = std::time::Instant::now();
     let input_tokens = self.make_input_list(&amp;contents);
+    if false {
+        println!("input tokens...");
+        for token in &amp;input_tokens {
+            println!("{token:?}");
+        }
+    }
     self.stats.make_tokens_time += t2.elapsed().as_nanos();
     // Annotate tokens (the prepass).
     let t3 = std::time::Instant::now();
@@ -1749,20 +1532,6 @@ impl Stats {
     @others
 }
 </t>
-<t tx="ekr.20240929074941.1">fn update_times(
-    &amp;mut self,
-    beautify: u128,
-    make_tokens: u128,
-    read_time: u128,
-    write_time: u128,
-) {
-    // Update cumulative timing stats.
-    self.beautify_time += beautify;
-    self.make_tokens_time += make_tokens;
-    self.read_time += read_time;
-    self.write_time += write_time;
-}
-</t>
 <t tx="ekr.20240929075236.1">fn report(&amp;mut self) {
     // Cumulative counts.
     let n_files = self.n_files;
@@ -1890,38 +1659,6 @@ if c.changed:
 command = 'git push'
 subprocess.Popen(command, shell=True).communicate()
 </t>
-<t tx="ekr.20240930084648.1">fn read(file_path: &amp;str) -&gt; String {
-    let error_s = f!("Can not read {file_path}");
-    return fs::read_to_string(file_path).expect(&amp;error_s);
-}
-</t>
-<t tx="ekr.20240930085546.1">fn lex_contents(contents: &amp;str) -&gt; Vec&lt;(Tok, TextRange)&gt; {
-    return lex(&amp;contents, Mode::Module)
-        .map(|tok| tok.expect("Failed to lex"))
-        .collect::&lt;Vec&lt;_&gt;&gt;();
-}
-</t>
-<t tx="ekr.20240930100553.1">// Compute cumulative stats.
-let total_time = fmt_ms(t1.elapsed().as_micros());
-let tokens_n = input_list.len();
-println!("");
-println!("tbo: {short_file_name}");
-println!("{n_tokens} lex tokens, {ws_tokens_n} ws_tokens, len(input_list): {tokens_n}");
-println!("");
-println!("       read: {read_time:&gt;5} ms");
-// println!("        lex: {lex_time:&gt;5} ms");
-println!("make_tokens: {loop_time:&gt;5} ms");
-println!("      total: {total_time:&gt;5} ms");
-</t>
-<t tx="ekr.20240930100625.1">let t1 = Instant::now();
-let contents = read(&amp;file_path);
-let read_time = fmt_ms(t1.elapsed().as_micros());
-</t>
-<t tx="ekr.20240930100707.1">let t4 = Instant::now();
-let mut input_list: Vec&lt;InputTok&gt; = Vec::new();
-let (n_tokens, ws_tokens_n) = make_input_list(&amp;contents, &amp;mut input_list); ////, tokens);
-let loop_time = fmt_ms(t4.elapsed().as_micros());
-</t>
 <t tx="ekr.20240930101156.1">@language python
 import os
 import subprocess
@@ -1990,119 +1727,6 @@ fn returns_summarizable() -&gt; impl Summary {...}
 
 // We can call o.to_string method defined by the ToString trait on
 // any type that implements the Display trait. 
-</t>
-<t tx="ekr.20241001071914.1">fn test_loop(contents: &amp;str) {
-    let mut n_tokens = 0;
-    for token in lex(&amp;contents, Mode::Module)
-        .map(|tok| tok.expect("Failed to lex"))
-        .collect::&lt;Vec&lt;_&gt;&gt;()
-    {
-        if n_tokens &lt; 10 {
-            println!("token: {token:?}")
-        }
-        n_tokens += 1;
-    }
-    println!("tokens: {n_tokens}")
-}
-</t>
-<t tx="ekr.20241001073040.1">@nosearch</t>
-<t tx="ekr.20241001093308.2">fn tokenize() {
-    &lt;&lt; tokenize: define contents &gt;&gt;
-    println!("fn tokenize");
-    println!("\nSource:\n{contents}");
-
-    for debug in [true, false].iter() {
-
-        println!("{}", if *debug {"Tokens..."} else {"\nBeautified:"});
-
-        let results = lex(contents, Mode::Module);  // An iterator yielding Option(Tok).
-        let mut count = 0;
-        let mut lws = String::new();
-        for (i, result) in results.enumerate() {
-            use Tok::*;
-            let token = result.ok().unwrap();
-            let (ref tok_class, tok_range) = token;
-            let tok_value = &amp;contents[tok_range];
-
-            if *debug {
-                let s = format!("{tok_class}");
-                print!("\nToken: {s:20} {:?}", tok_value);
-            }
-            else {
-                // Comment(value), Name(name)
-                #[allow(unused_variables)]
-                match tok_class {
-                    Comment(value) =&gt; {
-                        // print!("{value} ");  // Wrong!
-                        print!("{tok_value}");
-                    },
-                    Dedent =&gt; {
-                        lws.pop();
-                        lws.pop();
-                        print!("{lws}");
-                    },
-                    Def =&gt; {
-                        print!("{tok_value} ");
-                    },
-                    Indent =&gt; {
-                        lws.push_str("    ");
-                        print!("{lws}");
-                    },
-                    Name {name} =&gt; {
-                        print!("{tok_value} ");
-                    },
-                    Newline =&gt; {
-                        print!("{tok_value}");
-                        print!("{lws}");
-                        if false {  // old
-                            println!("");
-                            print!("{lws}");
-                        }
-                    },
-                    NonLogicalNewline =&gt; {
-                        println!("");
-                        print!("{lws}");
-                    },
-                    Return =&gt; {
-                        print!("{tok_value} ");
-                    },
-                    Tok::String {value, kind, triple_quoted} =&gt; {
-                        // correct.
-                        print!("{tok_value}");
-                        if false {  // incorrect.
-                            let quote = if *triple_quoted {"'''"} else {"'"};
-                            print!("{:?}:{quote}{value}{quote}", kind);
-                        }
-                    },
-                    _ =&gt; {
-                        print!("{tok_value}");
-                        if false {
-                            // to_string quotes values!
-                            let s = tok_class.to_string().replace("'", "");
-                            print!("{s}");
-                        }
-                    },
-                }
-            }
-            count = i
-        }
-        if *debug {
-            println!("\n{count} tokens")
-        }
-    }
-}
-</t>
-<t tx="ekr.20241001093308.3">let contents = r#"
-def test():
-# Comment 1.
-print('abc')
-# Comment 2.
-"#;
-
-// print("xyz")
-// print(rf'pdb')
-// print(fr'pdb2')
-// return bool(i &amp; 1)
 </t>
 <t tx="ekr.20241001100954.1">pub fn new() -&gt; Stats {
     let x = Stats {
@@ -2382,934 +2006,32 @@ let class_name = match token {
 }
 
 </t>
-<t tx="ekr.20241002164044.1">
-    // Calculating the class name directly is slower.
-
-    // Furthermore, ':?' lists any fields that the token has.
-    let temp_class_name = f!("{token:?}");
-
-    // println!("{temp_class_name}");
-    let class_name: &amp;'static str = self.string_to_static_str(temp_class_name);
-    self.add_input_token(class_name, tok_value);
-</t>
-<t tx="ekr.20241003055233.1">    // Don't use static lifetime!  It won't work with multiple files.
-    let temp_contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
-    // https://stackoverflow.com/questions/23975391/how-to-convert-a-string-into-a-static-str
-    let contents: &amp;'static str = self.string_to_static_str(temp_contents);
-    let read_time = t1.elapsed().as_nanos();</t>
-<t tx="ekr.20241003062509.1">@nosearch</t>
-<t tx="ekr.20241003063446.1"></t>
-<t tx="ekr.20241003063446.10"></t>
-<t tx="ekr.20241003063446.100">fn do_Star(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Star", "*");
-}
-</t>
-<t tx="ekr.20241003063446.101">fn do_StarEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "StarEqual", "*=");
-}
-</t>
-<t tx="ekr.20241003063446.102">fn do_StartExpression(output_list: Vec&lt;String&gt;) {
-    // add_output_string(output_list, "StartExpression", "");
-}
-</t>
-<t tx="ekr.20241003063446.103">fn do_StartInteractive(output_list: Vec&lt;String&gt;) {
-    // add_output_string(output_list, "StartModule", "");
-}
-</t>
-<t tx="ekr.20241003063446.104">fn do_StartModule(output_list: Vec&lt;String&gt;) {
-    // add_output_string(output_list, "StartModule", "");
-    println!("do_StartModule");
-}
-</t>
-<t tx="ekr.20241003063446.105">fn do_Tilde(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Tilde", "~");
-}
-</t>
-<t tx="ekr.20241003063446.106">fn do_True(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "True", "True");
-}
-</t>
-<t tx="ekr.20241003063446.107">fn do_Try(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Try", "try");
-}
-</t>
-<t tx="ekr.20241003063446.108">fn do_Type(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Type", "type");
-}
-</t>
-<t tx="ekr.20241003063446.109">fn do_Vbar(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Vbar", "|");
-}
-</t>
-<t tx="ekr.20241003063446.11">// *** Temporary
-#[allow(unused_variables)]
-fn do_ws(output_list: Vec&lt;String&gt;, kind: &amp;str, value: &amp;str) {
-    //! Handle the "ws" pseudo-token.
-    //! Put the whitespace only if if ends with backslash-newline.
-
-    // To do.
-
-    // let last_token = self.input_tokens[self.index - 1];
-    // let is_newline = kind in ("nl", "newline");
-    // if is_newline {
-    // self.pending_lws = val;
-    // self.pending_ws = "";
-    // }
-    // else if "\\\n" in val {
-    // self.pending_lws = "";
-    // self.pending_ws = val;
-    // }
-    // else {
-    // self.pending_ws = val
-    // }
-}
-</t>
-<t tx="ekr.20241003063446.110">fn do_VbarEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "VbarEqual", "|=");
-}
-</t>
-<t tx="ekr.20241003063446.111">fn do_While(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "While", "while");
-}
-</t>
-<t tx="ekr.20241003063446.112">fn do_With(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "With", "with");
-}
-</t>
-<t tx="ekr.20241003063446.113">fn do_Yield(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Yield", "yield");
-}
-</t>
-<t tx="ekr.20241003063446.114">fn enabled(&amp;self, arg: &amp;str) -&gt; bool {
-    //! Beautifier::enabled: return true if the given command-line argument is enabled.
-    //! Example:  x.enabled("--report");
-    return self.args.contains(&amp;arg.to_string());
-}
-</t>
-<t tx="ekr.20241003063446.115">fn get_args(&amp;mut self) {
-    //! Beautifier::get_args: Set the args and files_list ivars.
-    let args: Vec&lt;String&gt; = env::args().collect();
-    let valid_args = vec![
-        "--all",
-        "--beautified",
-        "--diff",
-        "-h",
-        "--help",
-        "--report",
-        "--write",
-    ];
-    for (i, arg) in args.iter().enumerate() {
-        if i &gt; 0 {
-            if valid_args.contains(&amp;arg.as_str()) {
-                self.args.push(arg.to_string())
-            } else if arg.as_str().starts_with("--") || arg.as_str().starts_with("--") {
-                println!("Ignoring invalid arg: {arg}");
-            } else {
-                println!("File: {arg}");
-                self.files_list.push(arg.to_string());
-            }
-        }
-    }
-}
-</t>
-<t tx="ekr.20241003063446.116">fn make_input_list(contents: &amp;str, stats: &amp;Stats) -&gt; Vec&lt;InputTok&gt; {
-    // Add InputToks to the input_list for every token given by the RustPython lex.
-    let mut n_tokens: u64 = 0;
-    let mut n_ws_tokens: u64 = 0;
-    let mut prev_start: usize = 0;
-    let mut input_list: Vec&lt;InputTok&gt; = Vec::new();
-
-    for token_tuple in lex(&amp;contents, Mode::Module)
-        .map(|tok| tok.expect("Failed to lex"))
-        .collect::&lt;Vec&lt;_&gt;&gt;()
-    {
-        use Tok::*;
-        n_tokens += 1;
-        let (token, range) = token_tuple;
-        let tok_value = &amp;contents[range];
-
-        // The gem: create a whitespace pseudo-tokens.
-        // This code adds maybe about 1 ms when beautifying leoFrame.py.
-        // With the gem: 14.1 - 14.5 ms. Without: 13.1 - 13.7 ms.
-        let start_i = usize::from(range.start());
-        let end_i = usize::from(range.end());
-        if start_i &gt; prev_start {
-            let ws = &amp;contents[prev_start..start_i];
-            add_input_token(&amp;mut input_list, "ws", ws);
-            n_ws_tokens += 1
-        }
-        prev_start = end_i;
-
-        &lt;&lt; Calculate class_name using match token &gt;&gt;
-        add_input_token(&amp;mut input_list, class_name, tok_value);
-    }
-    // Update counts.
-    stats.n_tokens += n_tokens;
-    stats.n_ws_tokens += n_ws_tokens;
-    return input_list;
-}
-</t>
-<t tx="ekr.20241003063446.117">// Variant names are necessary, but otherwise not used.
-#[allow(unused_variables)]
-let class_name = match token {
-    // Tokens with values...
-    Comment(value) =&gt; "Comment",
-    Complex { real, imag } =&gt; "Complex",
-    Float { value } =&gt; "Float",
-    Int { value } =&gt; "Int",
-    Name { name } =&gt; "Name",
-    Tok::String {
-        value,
-        kind,
-        triple_quoted,
-    } =&gt; "String",
-
-    // Common tokens...
-    Class =&gt; "Class",
-    Dedent =&gt; "Dedent",
-    Def =&gt; "Def",
-    Indent =&gt; "Indent",
-    Newline =&gt; "Newline",
-    NonLogicalNewline =&gt; "NonLogicalNewline",
-
-    // All other tokens...
-    Amper =&gt; "Amper",
-    AmperEqual =&gt; "AmperEqual",
-    And =&gt; "And",
-    As =&gt; "As",
-    Assert =&gt; "Assert",
-    Async =&gt; "Async",
-    At =&gt; "At",
-    AtEqual =&gt; "AtEqual",
-    Await =&gt; "Await",
-    Break =&gt; "Break",
-    Case =&gt; "Case",
-    CircumFlex =&gt; "CircumFlex",
-    CircumflexEqual =&gt; "CircumflexEqual",
-    Colon =&gt; "Colon",
-    ColonEqual =&gt; "ColonEqual",
-    Comma =&gt; "Comma",
-    Continue =&gt; "Continue",
-    Del =&gt; "Del",
-    Dot =&gt; "Dot",
-    DoubleSlash =&gt; "DoubleSlash",
-    DoubleSlashEqual =&gt; "DoubleSlashEqual",
-    DoubleStar =&gt; "DoubleStar",
-    DoubleStarEqual =&gt; "DoubleStarEqual",
-    Elif =&gt; "Elif",
-    Ellipsis =&gt; "Ellipsis",
-    Else =&gt; "Else",
-    EndOfFile =&gt; "EndOfFile",
-    EqEqual =&gt; "EqEqual",
-    Equal =&gt; "Equal",
-    Except =&gt; "Except",
-    False =&gt; "False",
-    Finally =&gt; "Finally",
-    For =&gt; "For",
-    From =&gt; "From",
-    Global =&gt; "Global",
-    Greater =&gt; "Greater",
-    GreaterEqual =&gt; "GreaterEqual",
-    If =&gt; "If",
-    Import =&gt; "Import",
-    In =&gt; "In",
-    Is =&gt; "Is",
-    Lambda =&gt; "Lambda",
-    Lbrace =&gt; "Lbrace",
-    LeftShift =&gt; "LeftShift",
-    LeftShiftEqual =&gt; "LeftShiftEqual",
-    Less =&gt; "Less",
-    LessEqual =&gt; "LessEqual",
-    Lpar =&gt; "Lpar",
-    Lsqb =&gt; "Lsqb",
-    Match =&gt; "Match",
-    Minus =&gt; "Minus",
-    MinusEqual =&gt; "MinusEqual",
-    None =&gt; "None",
-    Nonlocal =&gt; "Nonlocal",
-    Not =&gt; "Not",
-    NotEqual =&gt; "NotEqual",
-    Or =&gt; "Or",
-    Pass =&gt; "Pass",
-    Percent =&gt; "Percent",
-    PercentEqual =&gt; "PercentEqual",
-    Plus =&gt; "Plus",
-    PlusEqual =&gt; "PlusEqual",
-    Raise =&gt; "Raise",
-    Rarrow =&gt; "Rarrow",
-    Rbrace =&gt; "Rbrace",
-    Return =&gt; "Return",
-    RightShift =&gt; "RightShift",
-    RightShiftEqual =&gt; "RightShiftEqual",
-    Rpar =&gt; "Rpar",
-    Rsqb =&gt; "Rsqb",
-    Semi =&gt; "Semi",
-    Slash =&gt; "Slash",
-    SlashEqual =&gt; "SlashEqual",
-    Star =&gt; "Star",
-    StarEqual =&gt; "StarEqual",
-    StartExpression =&gt; "StartExpression",
-    StartInteractive =&gt; "StartInteractive",
-    StartModule =&gt; "StartModule",
-    Tilde =&gt; "Tilde",
-    True =&gt; "True",
-    Try =&gt; "Try",
-    Type =&gt; "Type",
-    Vbar =&gt; "Vbar",
-    VbarEqual =&gt; "VbarEqual",
-    While =&gt; "While",
-    With =&gt; "With",
-    Yield =&gt; "Yield",
-};
-</t>
-<t tx="ekr.20241003063446.118">fn show_args(&amp;self) {
-    println!("Command-line arguments...");
-    for (i, arg) in self.args.iter().enumerate() {
-        if i &gt; 0 {
-            println!("  {arg}");
-        }
-    }
-    for file_arg in self.files_list.iter() {
-        println!("  {file_arg}");
-    }
-}
-</t>
-<t tx="ekr.20241003063446.119">fn show_help(&amp;self) {
-    //! Beautifier::show_help: print the help messages.
-    println!(
-        "{}",
-        textwrap::dedent(
-            "
-        Beautify or diff files.
-
-        -h --help:      Print this help message and exit.
-        --all:          Beautify all files, even unchanged files.
-        --beautified:   Report beautified files individually, even if not written.
-        --diff:         Show diffs instead of changing files.
-        --report:       Print summary report.
-        --write:        Write beautifed files (dry-run mode otherwise).
-    "
-        )
-    );
-}
-</t>
-<t tx="ekr.20241003063446.12"></t>
-<t tx="ekr.20241003063446.120">fn show_output_list(&amp;self) {
-    println!("\nOutput list...");
-    for (i, arg) in self.output_list.iter().enumerate() {
-        if i &gt; 0 {
-            print!("{:?}", arg);
-        }
-    }
-}
-</t>
-<t tx="ekr.20241003063446.121">fn string_to_static_str(&amp;self, s: String) -&gt; &amp;'static str {
-    Box::leak(s.into_boxed_str())
-}
-
-</t>
-<t tx="ekr.20241003063446.13">fn do_Comment(output_list: Vec&lt;String&gt;, tok_value: &amp;str) {
-    // print!("{tok_value}");  // Correct.
-    // print!("{value} ");  // Wrong!
-    add_output_string(output_list, "Comment", tok_value);
-}
-</t>
-<t tx="ekr.20241003063446.14">fn do_Complex(output_list: Vec&lt;String&gt;, tok_value: &amp;str) {
-    add_output_string(output_list, "Complex", tok_value);
-}
-</t>
-<t tx="ekr.20241003063446.15">fn do_Float(output_list: Vec&lt;String&gt;, tok_value: &amp;str) {
-    add_output_string(output_list, "Float", tok_value);
-}
-</t>
-<t tx="ekr.20241003063446.16">fn do_Int(output_list: Vec&lt;String&gt;, tok_value: &amp;str) {
-    add_output_string(output_list, "Int", tok_value);
-}
-</t>
-<t tx="ekr.20241003063446.17">fn do_Name(output_list: Vec&lt;String&gt;, tok_value: &amp;str) {
-    add_output_string(output_list, "Name", tok_value);
-}
-</t>
-<t tx="ekr.20241003063446.18">fn do_String(output_list: Vec&lt;String&gt;, tok_value: &amp;str) {
-    // correct.
-    // print!("{tok_value}");
-
-    // incorrect.
-    // let quote = if *triple_quoted {"'''"} else {"'"};
-    // print!("{:?}:{quote}{value}{quote}", kind);
-
-    add_output_string(output_list, "String", tok_value);
-}
-</t>
-<t tx="ekr.20241003063446.19"></t>
-<t tx="ekr.20241003063446.20">fn do_Dedent(output_list: Vec&lt;String&gt;, tok_value: &amp;str) {
-    add_output_string(output_list, "Dedent", tok_value);
-}
-</t>
-<t tx="ekr.20241003063446.21">fn do_Indent(output_list: Vec&lt;String&gt;, tok_value: &amp;str) {
-    add_output_string(output_list, "Indent", tok_value);
-}
-</t>
-<t tx="ekr.20241003063446.22">fn do_Newline(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Indent", "\n");
-}
-</t>
-<t tx="ekr.20241003063446.23">fn do_NonLogicalNewline(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Indent", "\n");
-}
-</t>
-<t tx="ekr.20241003063446.24"></t>
-<t tx="ekr.20241003063446.25">fn do_Amper(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Amper", "&amp;");
-}
-</t>
-<t tx="ekr.20241003063446.26">fn do_AmperEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "AmperEqual", "&amp;=");
-}
-</t>
-<t tx="ekr.20241003063446.27">fn do_And(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "And", "and");
-}
-</t>
-<t tx="ekr.20241003063446.28">fn do_As(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "As", "as");
-}
-</t>
-<t tx="ekr.20241003063446.29">fn do_Assert(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Assert", "assert");
-}
-</t>
-<t tx="ekr.20241003063446.3">// #[allow(dead_code)]
-fn add_input_token(input_list: &amp;mut Vec&lt;InputTok&gt;, kind: &amp;str, value: &amp;str) {
-    //! Add one token to the output list.
-    input_list.push(InputTok {
-        kind: kind.to_string(),
-        value: value.to_string(),
-    });
-}
-</t>
-<t tx="ekr.20241003063446.30">fn do_Async(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Async", "async");
-}
-</t>
-<t tx="ekr.20241003063446.31">fn do_At(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "At", "@");
-}
-</t>
-<t tx="ekr.20241003063446.32">fn do_AtEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "AtEqual", "@=");
-}
-</t>
-<t tx="ekr.20241003063446.33">fn do_Await(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Await", "await");
-}
-</t>
-<t tx="ekr.20241003063446.34">fn do_Break(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Break", "break");
-}
-</t>
-<t tx="ekr.20241003063446.35">fn do_Case(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Case", "case");
-}
-</t>
-<t tx="ekr.20241003063446.36">fn do_CircumFlex(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "CircumFlex", "^");
-}
-</t>
-<t tx="ekr.20241003063446.37">fn do_CircumflexEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "CircumflexEqual", "^=");
-}
-</t>
-<t tx="ekr.20241003063446.38">fn do_Class(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Class", "class");
-}
-</t>
-<t tx="ekr.20241003063446.39">fn do_Colon(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Colon", ":");
-}
-</t>
-<t tx="ekr.20241003063446.4">#[allow(unused_variables)]
-fn add_output_string(mut output_list: Vec&lt;String&gt;, kind: &amp;str, value: &amp;str) {
-    //! Add value to the output list.
-    //! kind is for debugging.
-    if !value.is_empty() {
-        output_list.push(value.to_string())
-    }
-}
-</t>
-<t tx="ekr.20241003063446.40">fn do_ColonEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "ColonEqual", ":=");
-}
-</t>
-<t tx="ekr.20241003063446.41">fn do_Comma(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Comma", ",");
-}
-</t>
-<t tx="ekr.20241003063446.42">fn do_Continue(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Continue", "continue");
-}
-</t>
-<t tx="ekr.20241003063446.43">fn do_Def(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Def", "def");
-}
-</t>
-<t tx="ekr.20241003063446.44">fn do_Del(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Del", "del");
-}
-</t>
-<t tx="ekr.20241003063446.45">fn do_Dot(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Dot", ".");
-}
-</t>
-<t tx="ekr.20241003063446.46">fn do_DoubleSlash(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "DoubleSlash", "//");
-}
-</t>
-<t tx="ekr.20241003063446.47">fn do_DoubleSlashEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "DoubleSlashEqual", "//=");
-}
-</t>
-<t tx="ekr.20241003063446.48">fn do_DoubleStar(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "DoubleStar", "**");
-}
-</t>
-<t tx="ekr.20241003063446.49">fn do_DoubleStarEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "DoubleStarEqual", "**=");
-}
-</t>
-<t tx="ekr.20241003063446.5">fn beautify(input_list: &amp;Vec&lt;InputTok&gt;) -&gt; String {
-    //! Beautify the input_tokens, creating the output_list.
-    // &lt; &lt; fn: beautify: init vars &gt;&gt;
-    let output_list: Vec&lt;String&gt; = Vec::new();
-    if true {
-        for input_token in input_list {
-            &lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;
-        }
-    }
-    // return ''.join(self.output_list);
-    let mut result = String::new();
-    for s in output_list {
-        result.push_str(&amp;s);
-    }
-    return result;
-}
-</t>
-<t tx="ekr.20241003063446.50">fn do_Elif(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Elif", "elif");
-}
-</t>
-<t tx="ekr.20241003063446.51">fn do_Ellipsis(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Ellipsis", "...");
-}
-</t>
-<t tx="ekr.20241003063446.52">fn do_Else(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Else", "else");
-}
-</t>
-<t tx="ekr.20241003063446.53">fn do_EndOfFile(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "EndOfFile", "EOF");
-}
-</t>
-<t tx="ekr.20241003063446.54">fn do_EqEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "EqEqual", "==");
-}
-</t>
-<t tx="ekr.20241003063446.55">fn do_Equal(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Equal", "=");
-}
-</t>
-<t tx="ekr.20241003063446.56">fn do_Except(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Except", "except");
-}
-</t>
-<t tx="ekr.20241003063446.57">fn do_False(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "False", "False");
-}
-</t>
-<t tx="ekr.20241003063446.58">fn do_Finally(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Finally", "finally");
-}
-</t>
-<t tx="ekr.20241003063446.59">fn do_For(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "For", "for");
-}
-</t>
-<t tx="ekr.20241003063446.6">// Debugging vars...
-line_number = 0; // was None?
-
-// State vars for whitespace.
-curly_brackets_level = 0; // Number of unmatched '{' tokens.
-paren_level = 0; // Number of unmatched '(' tokens.
-square_brackets_stack = Vec::new(); // A stack of bools, for gen_word().
-indent_level = 0; // Set only by do_indent and do_dedent.
-
-// Parse state.
-decorator_seen = false; // Set by do_name for do_op.
-in_arg_list = 0; // &gt; 0 if in an arg list of a def.
-in_doc_part = false;
-
-// To do.
-// state_stack = Vec::new();  // list[ParseState] = []  # Stack of ParseState objects.
-
-// Leo-related state.
-verbatim = false; // True: don't beautify.
-
-// Ivars describing the present input token...
-index = 0; // The index within the tokens array of the token being scanned.
-lws = String::new(); // Leading whitespace. Required!
-</t>
-<t tx="ekr.20241003063446.60">fn do_From(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "From", "from");
-}
-</t>
-<t tx="ekr.20241003063446.61">fn do_Global(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Global", "global");
-}
-</t>
-<t tx="ekr.20241003063446.62">fn do_Greater(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Greater", "&gt;");
-}
-</t>
-<t tx="ekr.20241003063446.63">fn do_GreaterEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "GreaterEqual", "&gt;-");
-}
-</t>
-<t tx="ekr.20241003063446.64">fn do_If(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "If", "if");
-}
-</t>
-<t tx="ekr.20241003063446.65">fn do_Import(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Import", "import");
-}
-</t>
-<t tx="ekr.20241003063446.66">fn do_In(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "In", "in");
-}
-</t>
-<t tx="ekr.20241003063446.67">fn do_Is(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Is", "is");
-}
-</t>
-<t tx="ekr.20241003063446.68">fn do_Lambda(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Lambda", "lambda");
-}
-</t>
-<t tx="ekr.20241003063446.69">fn do_Lbrace(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Lbrace", "[");
-}
-</t>
-<t tx="ekr.20241003063446.7">let kind = input_token.kind.as_str();
-let value = input_token.kind.as_str();
-match kind {
-    // Some of these could be replaced by inline code.
-    "And" =&gt; do_And(output_list),
-    "As" =&gt; do_As(output_list),
-    "Assert" =&gt; do_Assert(output_list),
-    "At" =&gt; do_At(output_list),
-    "Break" =&gt; do_Break(output_list),
-    "Class" =&gt; do_Class(output_list),
-    "Colon" =&gt; do_Colon(output_list),
-    "ColonEqual" =&gt; do_ColonEqual(output_list),
-    "Comma" =&gt; do_Comma(output_list),
-    "Comment" =&gt; do_Comment(output_list, value),
-    "Continue" =&gt; do_Continue(output_list),
-    "Dedent" =&gt; do_Dedent(output_list, value),
-    "Def" =&gt; do_Def(output_list),
-    "Del" =&gt; do_Del(output_list),
-    "Dot" =&gt; do_Dot(output_list),
-    "DoubleStar" =&gt; do_DoubleStar(output_list),
-    "Elif" =&gt; do_Elif(output_list),
-    "Else" =&gt; do_Else(output_list),
-    "Equal" =&gt; do_Equal(output_list),
-    "EqEqual" =&gt; do_EqEqual(output_list),
-    "Except" =&gt; do_Except(output_list),
-    "Greater" =&gt; do_Greater(output_list),
-    "GreaterEqual" =&gt; do_GreaterEqual(output_list),
-    "False" =&gt; do_False(output_list),
-    "Finally" =&gt; do_Finally(output_list),
-    "Float" =&gt; do_Float(output_list, value),
-    "For" =&gt; do_For(output_list),
-    "From" =&gt; do_From(output_list),
-    "If" =&gt; do_If(output_list),
-    "In" =&gt; do_In(output_list),
-    "Import" =&gt; do_Import(output_list),
-    "Indent" =&gt; do_Indent(output_list, value),
-    "Int" =&gt; do_Int(output_list, value),
-    "Is" =&gt; do_Is(output_list),
-    "Less" =&gt; do_Less(output_list),
-    "LessEqual" =&gt; do_LessEqual(output_list),
-    "Lbrace" =&gt; do_Lbrace(output_list),
-    "Lpar" =&gt; do_Lpar(output_list),
-    "Lsqb" =&gt; do_Lsqb(output_list),
-    "Minus" =&gt; do_Minus(output_list),
-    "MinusEqual" =&gt; do_MinusEqual(output_list),
-    "Name" =&gt; do_Name(output_list, value),
-    "Newline" =&gt; do_Newline(output_list),
-    "None" =&gt; do_None(output_list),
-    "NonLogicalNewline" =&gt; do_NonLogicalNewline(output_list),
-    "Not" =&gt; do_Not(output_list),
-    "NotEqual" =&gt; do_NotEqual(output_list),
-    "Or" =&gt; do_Or(output_list),
-    "Pass" =&gt; do_Pass(output_list),
-    "Percent" =&gt; do_Percent(output_list),
-    "Plus" =&gt; do_Plus(output_list),
-    "PlusEqual" =&gt; do_PlusEqual(output_list),
-    "Raise" =&gt; do_Raise(output_list),
-    "Rarrow" =&gt; do_Rarrow(output_list),
-    "Rbrace" =&gt; do_Rbrace(output_list),
-    "Return" =&gt; do_Return(output_list),
-    "Rpar" =&gt; do_Rpar(output_list),
-    "Rsqb" =&gt; do_Rsqb(output_list),
-    "Star" =&gt; do_Star(output_list),
-    "String" =&gt; do_String(output_list, value),
-    "True" =&gt; do_True(output_list),
-    "Try" =&gt; do_Try(output_list),
-    "While" =&gt; do_While(output_list),
-    "With" =&gt; do_With(output_list),
-    "ws" =&gt; do_ws(output_list, kind, value),
-    _ =&gt; println!("No visitor for: {kind}"),
-}
-</t>
-<t tx="ekr.20241003063446.70">fn do_LeftShift(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "LeftShift", "&lt;&lt;");
-}
-</t>
-<t tx="ekr.20241003063446.71">fn do_LeftShiftEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "LeftShiftEqual", "&lt;&lt;=");
-}
-</t>
-<t tx="ekr.20241003063446.72">fn do_Less(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Less", "&lt;");
-}
-</t>
-<t tx="ekr.20241003063446.73">fn do_LessEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "LessEqual", "&lt;=");
-}
-</t>
-<t tx="ekr.20241003063446.74">fn do_Lpar(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Lpar", "(");
-}
-</t>
-<t tx="ekr.20241003063446.75">fn do_Lsqb(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Lsqb", "[");
-}
-</t>
-<t tx="ekr.20241003063446.76">fn do_Match(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Match", "match");
-}
-</t>
-<t tx="ekr.20241003063446.77">fn do_Minus(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Minus", "-");
-}
-</t>
-<t tx="ekr.20241003063446.78">fn do_MinusEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "MinusEqual", "-=");
-}
-</t>
-<t tx="ekr.20241003063446.79">fn do_None(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "None", "None");
-}
-</t>
-<t tx="ekr.20241003063446.8">pub fn beautify_all_files(files_list: Vec&lt;String&gt;, stats: &amp;Stats) {
-    // for file_name in self.files_list.clone() {
-    for file_name in files_list {
-        beautify_one_file(&amp;file_name, &amp;stats);
-    }
-}
-
-</t>
-<t tx="ekr.20241003063446.80">fn do_Nonlocal(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Nonlocal", "nonlocal");
-}
-</t>
-<t tx="ekr.20241003063446.81">fn do_Not(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Not", "not");
-}
-</t>
-<t tx="ekr.20241003063446.82">fn do_NotEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "NotEqual", "!=");
-}
-</t>
-<t tx="ekr.20241003063446.83">fn do_Or(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Or", "or");
-}
-</t>
-<t tx="ekr.20241003063446.84">fn do_Pass(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Pass", "pass");
-}
-</t>
-<t tx="ekr.20241003063446.85">fn do_Percent(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Percent", "%");
-}
-</t>
-<t tx="ekr.20241003063446.86">fn do_PercentEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "PercentEqual", "%=");
-}
-</t>
-<t tx="ekr.20241003063446.87">fn do_Plus(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Plus", "+");
-}
-</t>
-<t tx="ekr.20241003063446.88">fn do_PlusEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "PlusEqual", "+=");
-}
-</t>
-<t tx="ekr.20241003063446.89">fn do_Raise(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Raise", "raise");
-}
-</t>
-<t tx="ekr.20241003063446.9">fn beautify_one_file(file_name: &amp;str, stats: &amp;Stats) {
-    stats.n_files += 1;
-    if true {
-        // Testing only: print the short file name.
-        let file_path = path::Path::new(file_name);
-        let os_str = file_path.file_name().unwrap(); // &amp;OsStr
-        let short_file_name = os_str.to_str().unwrap();
-        println!("{short_file_name}");
-    }
-    // Read the file into contents (a String).
-    let t1 = std::time::Instant::now();
-    let contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
-    stats.read_time += t1.elapsed().as_nanos();
-    // Make the list of input tokens.
-    let t2 = std::time::Instant::now();
-    let input_list: Vec&lt;InputTok&gt; = make_input_list(&amp;contents, &amp;stats);
-    stats.make_tokens_time += t2.elapsed().as_nanos();
-    // Beautify.
-    let t3 = std::time::Instant::now();
-    let results: String = beautify(&amp;input_list);
-    let n =results.len();
-    println!("len(results): {n}");
-    stats.beautify_time += t3.elapsed().as_nanos();
-}
-</t>
-<t tx="ekr.20241003063446.90">fn do_Rarrow(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Rarrow", "-&gt;");
-}
-</t>
-<t tx="ekr.20241003063446.91">fn do_Rbrace(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Rbrace", "]");
-}
-</t>
-<t tx="ekr.20241003063446.92">fn do_Return(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Return", "return");
-}
-</t>
-<t tx="ekr.20241003063446.93">fn do_RightShift(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "RightShift", "&gt;&gt;");
-}
-</t>
-<t tx="ekr.20241003063446.94">fn do_RightShiftEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "RightShiftEqual", "&gt;&gt;=");
-}
-</t>
-<t tx="ekr.20241003063446.95">fn do_Rpar(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Rpar", ")");
-}
-</t>
-<t tx="ekr.20241003063446.96">fn do_Rsqb(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Rsqb", "]");
-}
-</t>
-<t tx="ekr.20241003063446.97">fn do_Semi(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Semi", ";");
-}
-</t>
-<t tx="ekr.20241003063446.98">fn do_Slash(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "Slash", "/");
-}
-</t>
-<t tx="ekr.20241003063446.99">fn do_SlashEqual(output_list: Vec&lt;String&gt;) {
-    add_output_string(output_list, "SlashEqual", "/=");
-}
-</t>
-<t tx="ekr.20241003064425.1">#[derive(Debug)]
-pub struct Beautifier {
-    // Set in LB:beautify_one_file...
-    args: Vec&lt;String&gt;,
-    files_list: Vec&lt;String&gt;,
-    input_list: Vec&lt;InputTok&gt;,
-    output_list: Vec&lt;String&gt;,
-    stats: Stats,
-    // Set in LB:beautify...
-    // Debugging
-    line_number: i32, // Use -1 instead of None?
-    // State vars for whitespace.
-    curly_brackets_level: i32,
-    indent_level: i32,
-    paren_level: i32,
-    square_brackets_stack: Vec&lt;bool&gt;,
-    // Parse state.
-    decorator_seen: bool, // Set by do_name for do_op.
-    in_arg_list: i32,     // &gt; 0 if in an arg list of a def.
-    in_doc_part: bool,
-    // To do
-    // state_stack = Vec&lt;ParseState&gt;,  // list[ParseState] = []  # Stack of ParseState objects.
-    // Leo-related state.
-    verbatim: bool,
-    // Ivars describing the present input token.
-    index: u32,
-    lws: String,
-}
-
-///// Temporary.
-#[allow(dead_code)]
-#[allow(non_snake_case)]
-impl Beautifier {
-    @others
-}
-</t>
-<t tx="ekr.20241003064504.1"></t>
-<t tx="ekr.20241003084853.1">@nosearch</t>
-<t tx="ekr.20241003084902.1">pub fn entry() {
+<t tx="ekr.20241003093722.1">@language rust
+pub fn main() {
     // Main line of beautifier.
-    //** let mut x = Beautifier::new();
-   
-    // testing.
-    println!("");
-    let mut stats = Stats {
-        n_files: 0, n_tokens: 0, n_ws_tokens: 0,
-        beautify_time: 0, make_tokens_time: 0, read_time: 0, write_time: 0,
-    };
-
-    for file_path in [
-        "C:\\Repos\\leo-editor\\leo\\core\\leoAst.py",
-        // "C:\\Repos\\leo-editor\\leo\\core\\leoTokens.py",
-        // "C:\\Repos\\leo-editor\\leo\\core\\leoApp.py"
-    ] {
-        beautify_one_file(&amp;file_path, &amp;stats);
+    let mut x = Beautifier::new();
+    if true {
+        // testing.
+        println!("");
+        for file_path in [
+            "C:\\Repos\\ekr-tbo-in-rust\\test\\test1.py",
+            // "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py",
+            // "C:\\Repos\\leo-editor\\leo\\core\\leoApp.py"
+        ] {
+            x.beautify_one_file(&amp;file_path);
+        }
+        // x.stats.report();
+    } else {
+        if x.enabled("--help") || x.enabled("-h") {
+            x.show_help();
+            return;
+        }
+        x.show_args();
+        x.beautify_all_files();
     }
-    stats.report();
-        
-    //*** Not yet.
-        // } else {
-            // if x.enabled("--help") || x.enabled("-h") {
-                // x.show_help();
-                // return;
-            // }
-            // x.show_args();
-            // x.beautify_all_files();
-        // }
 }
 </t>
 <t tx="ekr.20241004073317.1"></t>
-<t tx="ekr.20241004084640.1">@nosearch</t>
-<t tx="ekr.20241004093044.1">impl fmt::Debug for InputTok {
-    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
-        let kind_s = format!("{:?}", self.kind);
-        let mut value = self.value.to_string();
-        if true {
-            return write!(f, "{value} ");
-        } else {
-            // Debug format.
-            value.truncate(60);
-            // repr format is not useful.
-            // let value_s = format!("{:?}", value);
-            let value_s = format!("{}", value);
-            return write!(f, "InputTok: {kind_s:&gt;10}: {value_s}");
-        }
-    }
-}</t>
 <t tx="ekr.20241004095735.1">fn annotate_tokens&lt;'a&gt;(&amp;mut self, input_tokens: &amp;'a Vec&lt;InputTok&lt;'a&gt;&gt;) -&gt; Vec::&lt;AnnotatedInputTok&lt;'a&gt;&gt; {
     //! Do the prepass, returning tokens annotated with context.
     
@@ -3466,6 +2188,7 @@ The present states:
     let mut prev_token = &amp;dummy_token;
     for (i, token) in self.input_tokens.into_iter().enumerate() {
         let (kind, value) = (token.kind, token.value);
+        println!("{kind:&gt;20} {value:?}");
         if kind == "Newline" {
             &lt;&lt; pre-scan newline tokens &gt;&gt;
         }
@@ -3794,80 +2517,6 @@ impl &lt;'a&gt; ScanState&lt;'_&gt; {
     }
 }
 </t>
-<t tx="ekr.20241005031511.1">class InputToken:  # leoTokens.py.
-    """A class representing a TBO input token."""
-
-    __slots__ = (
-        'context',
-        'index',
-        'kind',
-        'line',
-        'line_number',
-        'value',
-    )
-
-    def __init__(
-        self, kind: str, value: str, index: int, line: str, line_number: int,
-    ) -&gt; None:
-        self.context: Optional[str] = None
-        self.index = index
-        self.kind = kind
-        self.line = line  # The entire line containing the token.
-        self.line_number = line_number
-        self.value = value
-
-    def __repr__(self) -&gt; str:  # pragma: no cover
-        s = f"{self.index:&lt;5} {self.kind:&gt;8}"
-        return f"Token {s}: {self.show_val(20):22}"
-
-    def __str__(self) -&gt; str:  # pragma: no cover
-        s = f"{self.index:&lt;5} {self.kind:&gt;8}"
-        return f"Token {s}: {self.show_val(20):22}"
-
-    def to_string(self) -&gt; str:
-        """Return the contribution of the token to the source file."""
-        return self.value if isinstance(self.value, str) else ''
-
-    @others
-</t>
-<t tx="ekr.20241005031511.2">def brief_dump(self) -&gt; str:  # pragma: no cover
-    """Dump a token."""
-    token_s = f"{self.kind:&gt;10} : {self.show_val(10):12}"
-    return f"&lt;line: {self.line_number} index: {self.index:3} {token_s}&gt;"
-
-</t>
-<t tx="ekr.20241005031511.3">def dump(self) -&gt; str:  # pragma: no cover
-    """Dump a token and related links."""
-    return (
-        f"{self.line_number:4} "
-        f"{self.index:&gt;5} {self.kind:&gt;15} "
-        f"{self.show_val(100)}"
-    )
-</t>
-<t tx="ekr.20241005031511.4">def dump_header(self) -&gt; None:  # pragma: no cover
-    """Print the header for token.dump"""
-    print(
-        f"\n"
-        f"         node    {'':10} token {'':10}   token\n"
-        f"line index class {'':10} index {'':10} kind value\n"
-        f"==== ===== ===== {'':10} ===== {'':10} ==== =====\n")
-</t>
-<t tx="ekr.20241005031511.5">def error_dump(self) -&gt; str:  # pragma: no cover
-    """Dump a token for error message."""
-    return f"index: {self.index:&lt;3} {self.kind:&gt;12} {self.show_val(20):&lt;20}"
-</t>
-<t tx="ekr.20241005031511.6">def show_val(self, truncate_n: int = 8) -&gt; str:  # pragma: no cover
-    """Return the token.value field."""
-    if self.kind in ('dedent', 'indent', 'newline', 'ws'):
-        # val = str(len(self.value))
-        val = repr(self.value)
-    elif self.kind == 'string' or self.kind.startswith('fstring'):
-        # repr would be confusing.
-        val = g.truncate(self.value, truncate_n)
-    else:
-        val = g.truncate(repr(self.value), truncate_n)
-    return val
-</t>
 <t tx="ekr.20241005091217.1">// def is_python_keyword(self, token: Optional[InputToken]) -&gt; bool:
     // """Return True if token is a 'name' token referring to a Python keyword."""
     // if not token or token.kind != 'name':
@@ -3923,6 +2572,2431 @@ fn is_python_keyword(&amp;self, token: &amp;InputTok) -&gt; bool {  // *** Temp.
 fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;InputTok) -&gt; bool {  // *** Temp. _
     return false;  // ***
 }
+</t>
+<t tx="ekr.20241007005233.1">@language python
+
+class TestClass:
+
+    def test_ops(self, arg1, *args, **kwargs):
+        a = 2
+        print(a)
+</t>
+<t tx="ekr.20241007005513.1">@language python
+@nosearch
+</t>
+<t tx="ekr.20241007005513.17">class TestTokens(BaseTest):
+    """Unit tests for tokenizing."""
+
+    @others
+</t>
+<t tx="ekr.20241007005513.18">def show_example_dump(self):  # pragma: no cover
+
+    # Will only be run when enabled explicitly.
+
+    contents = """
+print('line 1')
+print('line 2')
+print('line 3')
+"""
+    contents, tokens = self.make_data(contents)
+    dump_contents(contents)
+    dump_tokens(tokens)
+</t>
+<t tx="ekr.20241007005513.19">def test_bs_nl_tokens(self):
+    # Test https://bugs.python.org/issue38663.
+
+    contents = """
+print \
+    ('abc')
+"""
+    self.check_roundtrip(contents)
+</t>
+<t tx="ekr.20241007005513.20">def test_continuation_1(self):
+
+    contents = """
+a = (3,4,
+    5,6)
+y = [3, 4,
+    5]
+z = {'a': 5,
+    'b':15, 'c':True}
+x = len(y) + 5 - a[
+    3] - a[2] + len(z) - z[
+    'b']
+"""
+    self.check_roundtrip(contents)
+</t>
+<t tx="ekr.20241007005513.21">def test_continuation_2(self):
+    # Backslash means line continuation, except for comments
+    contents = (
+        'x=1+\\\n    2'
+        '# This is a comment\\\n    # This also'
+    )
+    self.check_roundtrip(contents)
+</t>
+<t tx="ekr.20241007005513.22">def test_continuation_3(self):
+
+    contents = """
+# Comment \\\n
+x = 0
+"""
+    self.check_roundtrip(contents)
+</t>
+<t tx="ekr.20241007005513.23">def test_string_concatentation_1(self):
+    # Two *plain* string literals on the same line
+    self.check_roundtrip("""'abc' 'xyz'""")
+</t>
+<t tx="ekr.20241007005513.24">def test_string_concatentation_2(self):
+    # f-string followed by plain string on the same line
+    self.check_roundtrip("""f'abc' 'xyz'""")
+</t>
+<t tx="ekr.20241007005513.25">def test_string_concatentation_3(self):
+    # plain string followed by f-string on the same line
+    self.check_roundtrip("""'abc' f'xyz'""")
+</t>
+<t tx="ekr.20241007005513.26">class TestTokenBasedOrange(BaseTest):
+    """
+    Tests for the TokenBasedOrange class.
+
+    Note: TokenBasedOrange never inserts or deletes lines.
+    """
+    @others
+</t>
+<t tx="ekr.20241007005513.29">def test_annotations(self):  # Required for full coverage.
+
+    table = (
+        # Case 0.
+        """s: str = None\n""",
+        # Case 1.
+        ("""
+            def annotated_f(s: str = None, x=None) -&gt; None:
+                pass
+        """),
+        # Case 2.
+        ("""
+            def f1():
+                self.rulesetName : str = ''
+        """),
+    )
+    for i, contents in enumerate(table):
+        contents, tokens = self.make_data(contents)
+        expected = self.blacken(contents).rstrip() + '\n'
+        results = self.beautify(contents, tokens)
+        if results != expected:  # pragma: no cover
+            g.printObj(contents, tag='Contents')
+            g.printObj(expected, tag='Expected (blackened)')
+            g.printObj(results, tag='Results')
+        self.assertEqual(results, expected)
+
+</t>
+<t tx="ekr.20241007005513.30">def test_at_doc_part(self):
+
+    contents = """
+@ Line 1
+Line 2
+@c
+
+print('hi')
+"""
+    contents, tokens = self.make_data(contents)
+    expected = contents.rstrip() + '\n'
+    results = self.beautify(contents, tokens)
+    self.assertEqual(results, expected)
+</t>
+<t tx="ekr.20241007005513.31">def test_backslash_newline(self):
+    """
+    This test is necessarily different from black, because orange doesn't
+    delete semicolon tokens.
+    """
+    contents = r"""
+print(a);\
+print(b)
+print(c); \
+print(d)
+"""
+    contents, tokens = self.make_data(contents)
+    expected = contents.rstrip() + '\n'
+    # expected = self.blacken(contents).rstrip() + '\n'
+    results = self.beautify(contents, tokens)
+    # g.printObj(tokens, tag='Tokens')
+    # g.printObj(results, tag='Results')
+    self.assertEqual(results, expected)
+</t>
+<t tx="ekr.20241007005513.32">def test_blank_lines_after_function(self):
+
+    contents = """
+# Comment line 1.
+# Comment line 2.
+
+def spam():
+    pass
+    # Properly indented comment.
+
+# Comment line3.
+# Comment line4.
+a = 2
+"""
+    contents, tokens = self.make_data(contents)
+    expected = contents
+    results = self.beautify(contents, tokens)
+    if results != expected:
+        g.printObj(results, tag='Results')
+        g.printObj(expected, tag='Expected')
+    self.assertEqual(results, expected)
+</t>
+<t tx="ekr.20241007005513.33">def test_blank_lines_after_function_2(self):
+
+    contents = """
+# Leading comment line 1.
+# Leading comment lines 2.
+
+def spam():
+    pass
+
+# Trailing comment line.
+a = 2
+"""
+    contents, tokens = self.make_data(contents)
+    expected = contents
+    results = self.beautify(contents, tokens)
+    self.assertEqual(results, expected)
+</t>
+<t tx="ekr.20241007005513.34">def test_blank_lines_after_function_3(self):
+
+    # From leoAtFile.py.
+    contents = """
+def writeAsisNode(self, p):
+    print('1')
+
+    def put(s):
+        print('2')
+
+    # Trailing comment 1.
+    # Trailing comment 2.
+    print('3')
+"""
+
+    contents, tokens = self.make_data(contents)
+    expected = contents
+    results = self.beautify(contents, tokens)
+    if results != expected:
+        g.printObj(tokens, tag='Tokens')
+        g.printObj(results, tag='Results')
+        g.printObj(expected, tag='Expected')
+    self.assertEqual(results, expected)
+</t>
+<t tx="ekr.20241007005513.35">def test_comment_indented(self):
+
+    table = (
+        """
+        if 1:
+            pass
+                # An indented comment.
+        """,
+
+        """
+        table = (
+            # Regular comment.
+        )
+        """
+    )
+    fails = 0
+    for contents in table:
+        contents, tokens = self.make_data(contents)
+        expected = contents
+        results = self.beautify(contents, tokens)
+        if results != expected:  # pragma: no cover
+            fails += 1
+            print(f"Fail: {fails}")
+            g.printObj(results, tag='Results')
+            g.printObj(expected, tag='Expected')
+    assert not fails, fails
+</t>
+<t tx="ekr.20241007005513.36">def test_comment_space_after_delim(self):
+
+    table = (
+        # Test 1.
+        (
+            """#No space after delim.\n""",
+            """# No space after delim.\n""",
+        ),
+        # Test 2.  Don't change bang lines.
+        (
+            """#! /usr/bin/env python\n""",
+            """#! /usr/bin/env python\n""",
+        ),
+        # Test 3.  Don't change ### comments.
+        (
+            """### To do.\n""",
+            """### To do.\n""",
+        ),
+    )
+    fails = 0
+    for contents, expected in table:
+        contents, tokens = self.make_data(contents)
+        results = self.beautify(contents, tokens)
+        message = (
+            f"\n"
+            f"  contents: {contents!r}\n"
+            f"  expected: {expected!r}\n"
+            f"       got: {results!r}")
+        if results != expected:  # pragma: no cover
+            fails += 1
+            print(f"Fail: {fails}\n{message}")
+    assert not fails, fails
+</t>
+<t tx="ekr.20241007005513.37">def test_decorators(self):
+
+    table = (
+    # Case 0.
+    """
+@my_decorator(1)
+def func():
+    pass
+""",
+    # Case 1.
+    """
+if 1:
+    @my_decorator
+    def func():
+        pass
+""",
+    # Case 2.
+    '''
+@g.commander_command('promote')
+def promote(self, event=None, undoFlag=True):
+    """Make all children of the selected nodes siblings of the selected node."""
+''',
+    )
+    for i, contents in enumerate(table):
+        contents, tokens = self.make_data(contents)
+        expected = contents
+        results = self.beautify(contents, tokens)
+        if results != expected:
+            g.trace('Fail:', i)  # pragma: no cover
+            g.printObj(contents, tag='Contents')
+            g.printObj(results, tag='Results')
+        self.assertEqual(results, expected)
+</t>
+<t tx="ekr.20241007005513.38">def test_dont_delete_blank_lines(self):
+
+    contents = """
+class Test:
+
+    def test_func():
+
+        pass
+
+    a = 2
+"""
+    contents, tokens = self.make_data(contents)
+    expected = contents.rstrip() + '\n'
+    results = self.beautify(contents, tokens)
+    self.assertEqual(results, expected)
+</t>
+<t tx="ekr.20241007005513.39">def test_leo_sentinels_1(self):
+
+    # Careful: don't put a sentinel into the file directly.
+    # That would corrupt leoAst.py.
+    sentinel = '#@+node:ekr.20200105143308.54: ** test'
+    contents = f"""
+{sentinel}
+def spam():
+    pass
+"""
+    contents, tokens = self.make_data(contents)
+    expected = contents.rstrip() + '\n'
+    results = self.beautify(contents, tokens)
+    self.assertEqual(results, expected)
+</t>
+<t tx="ekr.20241007005513.40">def test_leo_sentinels_2(self):
+
+    # Careful: don't put a sentinel into the file directly.
+    # That would corrupt leoAst.py.
+    sentinel = '#@+node:ekr.20200105143308.54: ** test'
+    contents = f"""
+{sentinel}
+class TestClass:
+    pass
+"""
+    contents, tokens = self.make_data(contents)
+    expected = contents.rstrip() + '\n'
+    results = self.beautify(contents, tokens)
+    self.assertEqual(results, expected)
+</t>
+<t tx="ekr.20241007005513.41">def test_lines_before_class(self):
+
+    contents = """
+a = 2
+class aClass:
+    pass
+"""
+    contents, tokens = self.make_data(contents)
+    expected = contents
+    results = self.beautify(contents, tokens)
+    self.assertEqual(results, expected)
+</t>
+<t tx="ekr.20241007005513.42">def test_multi_line_imports(self):
+
+    # The space between 'import' and '(' is correct.
+    contents = """
+        from .module1 import (
+            w1,
+            w2,
+        )
+        from .module1 import \\
+            w
+        from .module1 import (
+            w1,
+            w2,
+        )
+        import leo.core.leoGlobals \\
+            as g
+    """
+    contents, tokens = self.make_data(contents)
+    expected = contents.strip() + '\n'
+    results = self.beautify(contents, tokens)
+    if results != expected:
+        g.printObj(tokens, tag='Tokens')
+        g.printObj(results, tag='Results')
+        g.printObj(expected, tag='Expected')
+    self.assertEqual(results, expected)
+</t>
+<t tx="ekr.20241007005513.43">def test_multi_line_pet_peeves(self):
+
+    contents = """
+        if x == 4: pass
+        if x == 4 : pass
+        print (x, y); x, y = y, x
+        print (x , y) ; x , y = y , x
+        if(1):
+            pass
+        elif(2):
+            pass
+        while(3):
+            pass
+    """
+    # At present Orange doesn't split lines...
+    expected = self.prep(
+        """
+            if x == 4: pass
+            if x == 4: pass
+            print(x, y); x, y = y, x
+            print(x, y); x, y = y, x
+            if (1):
+                pass
+            elif (2):
+                pass
+            while (3):
+                pass
+        """)
+    contents, tokens = self.make_data(contents)
+    results = self.beautify(contents, tokens)
+    self.assertEqual(results, expected)
+</t>
+<t tx="ekr.20241007005513.44">def test_multi_line_statements(self):
+
+    contents = """
+        if 1:  # Simulate indent.
+            def orange_command(
+                s: str,
+            ) -&gt; None:
+                pass
+        if 1:  # The trailing ]) causes the problem.
+            return ''.join(
+                ['%s%s' % (sep, self.dump_ast(z, level + 1)) for z in node])
+    """
+
+    expected = self.prep(
+        """
+        if 1:  # Simulate indent.
+            def orange_command(
+                s: str,
+            ) -&gt; None:
+                pass
+        if 1:  # The trailing ]) causes the problem.
+            return ''.join(
+                ['%s%s' % (sep, self.dump_ast(z, level + 1)) for z in node])
+        """)
+    contents, tokens = self.make_data(contents)
+    results = self.beautify(contents, tokens)
+    if results != expected:
+        g.printObj(results, tag='Results')
+        g.printObj(expected, tag='Expected')
+    self.assertEqual(results, expected)
+</t>
+<t tx="ekr.20241007005513.45">def test_one_line_pet_peeves(self):
+
+    # One-line pet peeves, except those involving slices and unary ops.
+
+    # See https://peps.python.org/pep-0008/#pet-peeves
+    # See https://peps.python.org/pep-0008/#other-recommendations
+
+    tag = 'test_one_line_pet_peeves'
+
+    # Except where noted, all entries are expected values...
+    table = (
+        ### Duplicate entry to fail first.
+        """f(a[1 + 2])""",
+    
+        # Assignments...
+        """a = b * c""",
+        """a = b + c""",
+        """a = b - c""",
+        # * and **, inside and outside function calls.
+        """f(*args)""",
+        """f(**kwargs)""",
+        """f(*args, **kwargs)""",
+        """f(a, *args)""",
+        """f(a=2, *args)""",
+        # Calls...
+        """f(-1)""",
+        """f(-1 &lt; 2)""",
+        """f(1)""",
+        """f(2 * 3)""",
+        """f(2 + name)""",
+        """f(a)""",
+        """f(a.b)""",
+        """f(a=2 + 3, b=4 - 5, c= 6 * 7, d=8 / 9, e=10 // 11)""",
+        """f(a[1 + 2])""",
+        """f({key: 1})""",
+        """t = (0,)""",
+        """x, y = y, x""",
+        # Dicts...
+        """d = {key: 1}""",
+        """d['key'] = a[i]""",
+        # Trailing comments: expect two spaces.
+        """whatever # comment""",
+        """whatever  # comment""",
+        """whatever   # comment""",
+        # Word ops...
+        """v1 = v2 and v3 if v3 not in v4 or v5 in v6 else v7""",
+        """print(v7 for v8 in v9)""",
+        # Returns...
+        """return -1""",
+    )
+    for i, contents in enumerate(table):
+        description = f"{tag} part {i}"
+        contents, tokens = self.make_data(contents, description=description)
+        expected = self.blacken(contents)
+        results = self.beautify(contents, tokens, filename=description)
+        if results != expected:  # pragma: no cover
+            print('')
+            print(
+                f"TestTokenBasedOrange.{tag}: FAIL\n"
+                f"  contents: {contents.rstrip()}\n"
+                f"     black: {expected.rstrip()}\n"
+                f"    orange: {results.rstrip() if results else 'None'}")
+        self.assertEqual(results, expected, msg=description)
+</t>
+<t tx="ekr.20241007005513.46">def test_percent_op(self):
+
+    # leo/plugins/writers/basewriter.py, line 38
+    contents = """at.os('%s@+node:%s%s' % (delim, s, delim2))"""
+    contents, tokens = self.make_data(contents)
+    expected = self.blacken(contents).rstrip() + '\n'
+    results = self.beautify(contents, tokens)
+    self.assertEqual(results, expected)
+</t>
+<t tx="ekr.20241007005513.47">def test_relative_imports(self):
+
+    # #2533.
+    contents = """
+        from .module1 import w
+        from . module2 import x
+        from ..module1 import y
+        from .. module2 import z
+        from . import a
+        from.import b
+        from .. import c
+        from..import d
+        from leo.core import leoExternalFiles
+        import leo.core.leoGlobals as g
+    """
+    expected = self.prep(
+    """
+        from .module1 import w
+        from .module2 import x
+        from ..module1 import y
+        from ..module2 import z
+        from . import a
+        from . import b
+        from .. import c
+        from .. import d
+        from leo.core import leoExternalFiles
+        import leo.core.leoGlobals as g
+    """)
+    contents, tokens = self.make_data(contents)
+    results = self.beautify(contents, tokens)
+    if results != expected:  # pragma: no cover
+        # g.printObj(tokens, tag='Tokens')
+        g.printObj(results, tag='Results')
+        g.printObj(expected, tag='Expected')
+    self.assertEqual(expected, results)
+</t>
+<t tx="ekr.20241007005513.48">def test_slice(self):
+
+    # Test one-line pet peeves involving slices.
+
+    # See https://peps.python.org/pep-0008/#pet-peeves
+    # See https://peps.python.org/pep-0008/#other-recommendations
+
+    tag = 'test_slice'
+
+    # Except where noted, all entries are expected values....
+    table = (
+
+        # Differences between leoAst.py and leoTokens.py.
+        # tbo.cmd changes several files, including these.
+        # In all cases, the differences make leoTokens.py *more*
+        # compatible with Black than leoAst.py!
+
+            # From leoAst.py.
+            """val = val[:i] + '# ' + val[i + 1 :]\n""",
+            # From leoApp.py.
+            """
+                for name in rf.getRecentFiles()[:n]:
+                    pass
+            """,
+            # From leoUndo.py.
+            """s.extend(body_lines[-trailing:])\n""",
+            # From leoTokens.py.
+            # The expected value of the two last lines is the last line.
+            """
+                if line1.startswith(tag) and line1.endswith(tag2):
+                    e = line1[n1 : -n2].strip()
+                    e = line1[n1:-n2].strip()
+            """,
+
+        # Legacy tests...
+            """a[:-1]""",
+            """a[: 1 if True else 2 :]""",
+            """a[1 : 1 + 2]""",
+            """a[lower:]""",
+            """a[lower::]""",
+            """a[:upper]""",
+            """a[:upper:]""",
+            """a[::step]""",
+            """a[lower:upper:]""",
+            """a[lower:upper:step]""",
+            """a[lower + offset : upper + offset]""",
+            """a[: upper_fn(x) :]""",
+            """a[: upper_fn(x) : step_fn(x)]""",
+            """a[:: step_fn(x)]""",
+            """a[: upper_fn(x) :]""",
+            """a[: upper_fn(x) : 2 + 1]""",
+            """a[:]""",
+            """a[::]""",
+            """a[1:]""",
+            """a[1::]""",
+            """a[:2]""",
+            """a[:2:]""",
+            """a[::3]""",
+            """a[1:2]""",
+            """a[1:2:]""",
+            """a[:2:3]""",
+            """a[1:2:3]""",
+    )
+
+    for i, contents in enumerate(table):
+        description = f"{tag} part {i}"
+        contents, tokens = self.make_data(contents, description=description)
+        expected = self.blacken(contents)
+        results = self.beautify(contents, tokens, filename=description)
+        if results != expected:  # pragma: no cover
+            print('')
+            print('TestTokenBasedOrange')
+            # g.printObj(contents, tag='Contents')
+            g.printObj(expected, tag='Expected (Black)')
+            g.printObj(results, tag='Results')
+        self.assertEqual(expected, results)
+</t>
+<t tx="ekr.20241007005513.49">def test_star_star_operator(self):
+
+    # Don't rely on black for this test.
+    contents = """a = b ** c"""
+    contents, tokens = self.make_data(contents)
+    expected = contents
+    results = self.beautify(contents, tokens)
+    self.assertEqual(results, expected)
+</t>
+<t tx="ekr.20241007005513.50">def test_unary_ops(self):
+
+    # One-line pet peeves involving unary ops but *not* slices.
+
+    # See https://peps.python.org/pep-0008/#pet-peeves
+    # See https://peps.python.org/pep-0008/#other-recommendations
+
+    tag = 'test_unary_op'
+
+    # All entries are expected values....
+    table = (
+        # Calls...
+        """f(-1)""",
+        """f(-1 &lt; 2)""",
+        # Dicts...
+        """d = {key: -3}""",
+        """d['key'] = a[-i]""",
+        # Unary minus...
+        """v = -1 if a &lt; b else -2""",
+        # ~
+        """a = ~b""",
+        """c = a[:~e:]""",
+        # """d = a[f() - 1 :]""",
+        # """e = a[2 - 1 :]""",
+        # """e = a[b[2] - 1 :]""",
+    )
+    for i, contents in enumerate(table):
+        description = f"{tag} part {i}"
+        contents, tokens = self.make_data(contents, description=description)
+        expected = self.blacken(contents)
+        results = self.beautify(contents, tokens, filename=description)
+        if results != expected:  # pragma: no cover
+            print('')
+            print(
+                f"TestTokenBasedOrange.{tag}:\n"
+                f"  contents: {contents.rstrip()}\n"
+                f"     black: {expected.rstrip()}\n"
+                f"    orange: {results.rstrip() if results else 'None'}")
+        self.assertEqual(results, expected, msg=description)
+</t>
+<t tx="ekr.20241007005513.51">def test_verbatim(self):
+
+    contents = """
+@nobeautify
+
+def addOptionsToParser(self, parser, trace_m):
+
+    add = parser.add_option
+
+    def add_bool(option, help, dest=None):
+        add(option, action='store_true', dest=dest, help=help)
+
+    add_bool('--diff',          'use Leo as an external git diff')
+    # add_bool('--dock',          'use a Qt dock')
+    add_bool('--fullscreen',    'start fullscreen')
+    add_bool('--init-docks',    'put docks in default positions')
+    # Multiple bool values.
+    add('-v', '--version', action='store_true',
+        help='print version number and exit')
+
+# From leoAtFile.py
+noDirective     =  1 # not an at-directive.
+allDirective    =  2 # at-all (4.2)
+docDirective    =  3 # @doc.
+
+@beautify
+"""
+    contents, tokens = self.make_data(contents)
+    expected = contents
+    results = self.beautify(contents, tokens)
+    self.assertEqual(results, expected, msg=contents)
+</t>
+<t tx="ekr.20241007005513.52">def test_verbatim_with_pragma(self):
+
+    contents = """
+# pragma: no beautify
+
+def addOptionsToParser(self, parser, trace_m):
+
+    add = parser.add_option
+
+    def add_bool(option, help, dest=None):
+        add(option, action='store_true', dest=dest, help=help)
+
+    add_bool('--diff',          'use Leo as an external git diff')
+    # add_bool('--dock',          'use a Qt dock')
+    add_bool('--fullscreen',    'start fullscreen')
+    add_other('--window-size',  'initial window size (height x width)', m='SIZE')
+    add_other('--window-spot',  'initial window position (top x left)', m='SPOT')
+    # Multiple bool values.
+    add('-v', '--version', action='store_true',
+        help='print version number and exit')
+
+# pragma: beautify
+"""
+    contents, tokens = self.make_data(contents)
+    expected = contents
+    results = self.beautify(contents, tokens)
+    self.assertEqual(results, expected, msg=contents)
+</t>
+<t tx="ekr.20241007005513.53">def test_verbatim2(self):
+
+    # We *do* want this test to contain verbatim sentinels.
+    contents = """
+@beautify
+@nobeautify
+@ Starts doc part
+More doc part.
+The @c ends the doc part.
+@c
+    """
+    contents, tokens = self.make_data(contents)
+    expected = contents
+    results = self.beautify(contents, tokens)
+    # g.printObj(results, tag='Results')
+    # g.printObj(expected, tag='Expected')
+    self.assertEqual(results, expected, msg=contents)
+</t>
+<t tx="ekr.20241007011856.1">@language python
+@nosearch
+</t>
+<t tx="ekr.20241007011856.10">def beautify_file(filename: str) -&gt; bool:
+    """
+    Beautify the given file, writing it if has changed.
+    """
+    settings: dict[str, Any] = {
+        'all': False,  # Don't beautify all files.
+        'beautified': True,  # Report changed files.
+        'diff': False,  # Don't show diffs.
+        'report': True,  # Report changed files.
+        'write': True,  # Write changed files.
+    }
+    tbo = TokenBasedOrange(settings)
+    return tbo.beautify_file(filename)
+</t>
+<t tx="ekr.20241007011856.11">def main() -&gt; None:  # pragma: no cover
+    """Run commands specified by sys.argv."""
+    args, settings_dict, arg_files = scan_args()
+    cwd = os.getcwd()
+
+    # Calculate requested files.
+    requested_files: list[str] = []
+    for path in arg_files:
+        if path.endswith('.py'):
+            requested_files.append(os.path.join(cwd, path))
+        else:
+            root_dir = os.path.join(cwd, path)
+            requested_files.extend(
+                glob.glob(f'{root_dir}**{os.sep}*.py', recursive=True)
+            )
+    if not requested_files:
+        # print(f"No files in {arg_files!r}")
+        return
+
+    # Calculate the actual list of files.
+    modified_files = g.getModifiedFiles(cwd)
+
+    def is_dirty(path: str) -&gt; bool:
+        return os.path.abspath(path) in modified_files
+
+    # Compute the files to be checked.
+    if args.all:
+        # Handle all requested files.
+        to_be_checked_files = requested_files
+    else:
+        # Handle only modified files.
+        to_be_checked_files = [z for z in requested_files if is_dirty(z)]
+
+    # Compute the dirty files among the to-be-checked files.
+    dirty_files = [z for z in to_be_checked_files if is_dirty(z)]
+
+    # Do the command.
+    if to_be_checked_files:
+        orange_command(arg_files, requested_files, dirty_files, to_be_checked_files, settings_dict)
+</t>
+<t tx="ekr.20241007011856.12">def orange_command(
+    arg_files: list[str],
+    requested_files: list[str],
+    dirty_files: list[str],
+    to_be_checked_files: list[str],
+    settings: Optional[Settings] = None,
+) -&gt; None:  # pragma: no cover
+    """The outer level of the 'tbo/orange' command."""
+    t1 = time.process_time()
+    # n_tokens = 0
+    n_beautified = 0
+    if settings is None:
+        settings = {}
+    for filename in to_be_checked_files:
+        if os.path.exists(filename):
+            tbo = TokenBasedOrange(settings)
+            beautified = tbo.beautify_file(filename)
+            if beautified:
+                n_beautified += 1
+            # n_tokens += len(tbo.input_tokens)
+        else:
+            print(f"file not found: {filename}")
+    # Report the results.
+    t2 = time.process_time()
+    if n_beautified or settings.get('report'):
+        print(
+            f"tbo: {t2-t1:4.2f} sec. "
+            f"dirty: {len(dirty_files):&lt;3} "
+            f"checked: {len(to_be_checked_files):&lt;3} "
+            f"beautified: {n_beautified:&lt;3} in {','.join(arg_files)}"
+        )
+</t>
+<t tx="ekr.20241007011856.13">def scan_args() -&gt; tuple[Any, dict[str, Any], list[str]]:  # pragma: no cover
+    description = textwrap.dedent(
+    """Beautify or diff files""")
+    parser = argparse.ArgumentParser(
+        description=description,
+        formatter_class=argparse.RawTextHelpFormatter,
+    )
+    parser.add_argument('PATHS', nargs='*', help='directory or list of files')
+    add2 = parser.add_argument
+
+    # Arguments.
+    add2('-a', '--all', dest='all', action='store_true',
+        help='Beautify all files, even unchanged files')
+    add2('-b', '--beautified', dest='beautified', action='store_true',
+        help='Report beautified files individually, even if not written')
+    add2('-d', '--diff', dest='diff', action='store_true',
+        help='show diffs instead of changing files')
+    add2('-r', '--report', dest='report', action='store_true',
+        help='show summary report')
+    add2('-w', '--write', dest='write', action='store_true',
+        help='write beautifed files (dry-run mode otherwise)')
+
+    # Create the return values, using EKR's prefs as the defaults.
+    parser.set_defaults(
+        all=False, beautified=False, diff=False, report=False, write=False,
+        tab_width=4,
+    )
+    args: Any = parser.parse_args()
+    files = args.PATHS
+
+    # Create the settings dict, ensuring proper values.
+    settings_dict: dict[str, Any] = {
+        'all': bool(args.all),
+        'beautified': bool(args.beautified),
+        'diff': bool(args.diff),
+        'report': bool(args.report),
+        'write': bool(args.write)
+    }
+    return args, settings_dict, files
+</t>
+<t tx="ekr.20241007011856.14"></t>
+<t tx="ekr.20241007011856.15">class InternalBeautifierError(Exception):
+    """
+    An internal error in the beautifier.
+
+    Errors in the user's source code may raise standard Python errors
+    such as IndentationError or SyntaxError.
+    """
+</t>
+<t tx="ekr.20241007011856.16">class InputToken:  # leoTokens.py.
+    """A class representing a TBO input token."""
+
+    __slots__ = (
+        'context',
+        'index',
+        'kind',
+        'line',
+        'line_number',
+        'value',
+    )
+
+    def __init__(
+        self, kind: str, value: str, index: int, line: str, line_number: int,
+    ) -&gt; None:
+        self.context: Optional[str] = None
+        self.index = index
+        self.kind = kind
+        self.line = line  # The entire line containing the token.
+        self.line_number = line_number
+        self.value = value
+
+    def __repr__(self) -&gt; str:  # pragma: no cover
+        s = f"{self.index:&lt;5} {self.kind:&gt;8}"
+        return f"Token {s}: {self.show_val(20):22}"
+
+    def __str__(self) -&gt; str:  # pragma: no cover
+        s = f"{self.index:&lt;5} {self.kind:&gt;8}"
+        return f"Token {s}: {self.show_val(20):22}"
+
+    def to_string(self) -&gt; str:
+        """Return the contribution of the token to the source file."""
+        return self.value if isinstance(self.value, str) else ''
+
+    @others
+</t>
+<t tx="ekr.20241007011856.17">def brief_dump(self) -&gt; str:  # pragma: no cover
+    """Dump a token."""
+    token_s = f"{self.kind:&gt;10} : {self.show_val(10):12}"
+    return f"&lt;line: {self.line_number} index: {self.index:3} {token_s}&gt;"
+
+</t>
+<t tx="ekr.20241007011856.18">def dump(self) -&gt; str:  # pragma: no cover
+    """Dump a token and related links."""
+    return (
+        f"{self.line_number:4} "
+        f"{self.index:&gt;5} {self.kind:&gt;15} "
+        f"{self.show_val(100)}"
+    )
+</t>
+<t tx="ekr.20241007011856.19">def dump_header(self) -&gt; None:  # pragma: no cover
+    """Print the header for token.dump"""
+    print(
+        f"\n"
+        f"         node    {'':10} token {'':10}   token\n"
+        f"line index class {'':10} index {'':10} kind value\n"
+        f"==== ===== ===== {'':10} ===== {'':10} ==== =====\n")
+</t>
+<t tx="ekr.20241007011856.20">def error_dump(self) -&gt; str:  # pragma: no cover
+    """Dump a token for error message."""
+    return f"index: {self.index:&lt;3} {self.kind:&gt;12} {self.show_val(20):&lt;20}"
+</t>
+<t tx="ekr.20241007011856.21">def show_val(self, truncate_n: int = 8) -&gt; str:  # pragma: no cover
+    """Return the token.value field."""
+    if self.kind in ('dedent', 'indent', 'newline', 'ws'):
+        # val = str(len(self.value))
+        val = repr(self.value)
+    elif self.kind == 'string' or self.kind.startswith('fstring'):
+        # repr would be confusing.
+        val = g.truncate(self.value, truncate_n)
+    else:
+        val = g.truncate(repr(self.value), truncate_n)
+    return val
+</t>
+<t tx="ekr.20241007011856.22">class Tokenizer:
+    """
+    Use Python's tokenizer module to create InputTokens
+    See: https://docs.python.org/3/library/tokenize.html
+    """
+
+    __slots__ = (
+        'contents',
+        'fstring_line',
+        'fstring_line_number',
+        'fstring_values',
+        'lines',
+        'offsets',
+        'prev_offset',
+        'token_index',
+        'token_list',
+    )
+
+    def __init__(self) -&gt; None:
+        self.contents: str = ''
+        self.offsets: list[int] = [0]  # Index of start of each line.
+        self.prev_offset = -1
+        self.token_index = 0
+        self.token_list: list[InputToken] = []
+        # Describing the scanned f-string...
+        self.fstring_line: Optional[str] = None
+        self.fstring_line_number: Optional[int] = None
+        self.fstring_values: Optional[list[str]] = None
+
+    @others
+</t>
+<t tx="ekr.20241007011856.23">def add_token(self, kind: str, line: str, line_number: int, value: str,) -&gt; None:
+    """
+    Add an InputToken to the token list.
+
+    Convert fstrings to simple strings.
+    """
+    if self.fstring_values is None:
+        if kind == 'fstring_start':
+            self.fstring_line = line
+            self.fstring_line_number = line_number
+            self.fstring_values = [value]
+            return
+    else:
+        # Accumulating an f-string.
+        self.fstring_values.append(value)
+        if kind != 'fstring_end':
+            return
+        # Create a single 'string' token from the saved values.
+        kind = 'string'
+        value = ''.join(self.fstring_values)
+        # Use the line and line number of the 'string-start' token.
+        line = self.fstring_line or ''
+        line_number = self.fstring_line_number or 0
+        # Clear the saved values.
+        self.fstring_line = None
+        self.fstring_line_number = None
+        self.fstring_values = None
+
+    tok = InputToken(kind, value, self.token_index, line, line_number)
+    self.token_index += 1
+    self.token_list.append(tok)
+</t>
+<t tx="ekr.20241007011856.24">def check_results(self, contents: str) -&gt; None:
+
+    # Split the results into lines.
+    result = ''.join([z.to_string() for z in self.token_list])
+    result_lines = g.splitLines(result)
+    # Check.
+    ok = result == contents and result_lines == self.lines
+    assert ok, (
+        f"\n"
+        f"      result: {result!r}\n"
+        f"    contents: {contents!r}\n"
+        f"result_lines: {result_lines}\n"
+        f"       lines: {self.lines}"
+    )
+</t>
+<t tx="ekr.20241007011856.25">def check_round_trip(self, contents: str, tokens: list[InputToken]) -&gt; bool:
+    result = self.tokens_to_string(tokens)
+    ok = result == contents
+    if not ok:  # pragma: no cover
+        print('\nRound-trip check FAILS')
+        print('Contents...\n')
+        print(contents)
+        print('\nResult...\n')
+        print(result)
+    return ok
+</t>
+<t tx="ekr.20241007011856.26">def create_input_tokens(
+    self,
+    contents: str,
+    five_tuples: Generator,
+) -&gt; list[InputToken]:
+    """
+    InputTokenizer.create_input_tokens.
+
+    Return list of InputToken's from tokens, a list of 5-tuples.
+    """
+    # Remember the contents for debugging.
+    self.contents = contents
+
+    # Create the physical lines.
+    self.lines = contents.splitlines(True)
+
+    # Create the list of character offsets of the start of each physical line.
+    last_offset = 0
+    for line in self.lines:
+        last_offset += len(line)
+        self.offsets.append(last_offset)
+
+    # Create self.token_list.
+    for five_tuple in five_tuples:
+        self.do_token(contents, five_tuple)
+
+    # Print the token list when tracing.
+    self.check_results(contents)
+    return self.token_list
+</t>
+<t tx="ekr.20241007011856.27">def do_token(self, contents: str, five_tuple: tuple) -&gt; None:
+    """
+    Handle the given token, optionally including between-token whitespace.
+
+    https://docs.python.org/3/library/tokenize.html
+    https://docs.python.org/3/library/token.html
+
+    five_tuple is a named tuple with these fields:
+    - type:     The token type;
+    - string:   The token string.
+    - start:    (srow: int, scol: int) The row (line_number!) and column
+                where the token begins in the source.
+    - end:      (erow: int, ecol: int)) The row (line_number!) and column
+                where the token ends in the source;
+    - line:     The *physical line on which the token was found.
+    """
+    import token as token_module
+
+    # Unpack..
+    tok_type, val, start, end, line = five_tuple
+    s_row, s_col = start  # row/col offsets of start of token.
+    e_row, e_col = end  # row/col offsets of end of token.
+    line_number = s_row
+    kind = token_module.tok_name[tok_type].lower()
+    # Calculate the token's start/end offsets: character offsets into contents.
+    s_offset = self.offsets[max(0, s_row - 1)] + s_col
+    e_offset = self.offsets[max(0, e_row - 1)] + e_col
+    # tok_s is corresponding string in the line.
+    tok_s = contents[s_offset:e_offset]
+    # Add any preceding between-token whitespace.
+    ws = contents[self.prev_offset:s_offset]
+    if ws:
+        # Create the 'ws' pseudo-token.
+        self.add_token('ws', line, line_number, ws)
+    # Always add token, even if it contributes no text!
+    self.add_token(kind, line, line_number, tok_s)
+    # Update the ending offset.
+    self.prev_offset = e_offset
+</t>
+<t tx="ekr.20241007011856.28">def make_input_tokens(self, contents: str) -&gt; list[InputToken]:
+    """
+    Return a list  of InputToken objects using tokenize.tokenize.
+
+    Perform consistency checks and handle all exceptions.
+    """
+    try:
+        five_tuples = tokenize.tokenize(
+            io.BytesIO(contents.encode('utf-8')).readline)
+    except Exception as e:  # pragma: no cover
+        print(f"make_input_tokens: exception {e!r}")
+        return []
+    tokens = self.create_input_tokens(contents, five_tuples)
+    if 1:
+        # True: 2.9 sec. False: 2.8 sec.
+        assert self.check_round_trip(contents, tokens)
+    return tokens
+</t>
+<t tx="ekr.20241007011856.29">def tokens_to_string(self, tokens: list[InputToken]) -&gt; str:
+    """Return the string represented by the list of tokens."""
+    if tokens is None:  # pragma: no cover
+        # This indicates an internal error.
+        print('')
+        print('===== No tokens ===== ')
+        print('')
+        return ''
+    return ''.join([z.to_string() for z in tokens])
+</t>
+<t tx="ekr.20241007011856.30">class ParseState:
+    """
+    A class representing items in the parse state stack.
+
+    The present states:
+
+    'file-start': Ensures the stack stack is never empty.
+
+    'decorator': The last '@' was a decorator.
+
+        do_op():    push_state('decorator')
+        do_name():  pops the stack if state.kind == 'decorator'.
+
+    'indent': The indentation level for 'class' and 'def' names.
+
+        do_name():      push_state('indent', self.level)
+        do_dendent():   pops the stack once or
+                        twice if state.value == self.level.
+    """
+
+    __slots__ = ('kind', 'value')
+
+    def __init__(self, kind: str, value: Union[int, str, None]) -&gt; None:
+        self.kind = kind
+        self.value = value
+
+    def __repr__(self) -&gt; str:
+        return f"State: {self.kind} {self.value!r}"  # pragma: no cover
+
+    def __str__(self) -&gt; str:
+        return f"State: {self.kind} {self.value!r}"  # pragma: no cover
+</t>
+<t tx="ekr.20241007011856.31">class ScanState:  # leoTokens.py.
+    """
+    A class representing tbo.pre_scan's scanning state.
+
+    Valid (kind, value) pairs:
+
+       kind  Value
+       ====  =====
+      'args' None
+      'from' None
+    'import' None
+     'slice' list of colon indices
+      'dict' list of colon indices
+
+    """
+
+    __slots__ = ('kind', 'token', 'value')
+
+    def __init__(self, kind: str, token: InputToken) -&gt; None:
+        self.kind = kind
+        self.token = token
+        self.value: list[int] = []  # Not always used.
+
+    def __repr__(self) -&gt; str:  # pragma: no cover
+        return f"ScanState: i: {self.token.index:&lt;4} kind: {self.kind} value: {self.value}"
+
+    def __str__(self) -&gt; str:  # pragma: no cover
+        return f"ScanState: i: {self.token.index:&lt;4} kind: {self.kind} value: {self.value}"
+</t>
+<t tx="ekr.20241007011856.32">class TokenBasedOrange:  # Orange is the new Black.
+
+    &lt;&lt; TokenBasedOrange: docstring &gt;&gt;
+    &lt;&lt; TokenBasedOrange: __slots__ &gt;&gt;
+    &lt;&lt; TokenBasedOrange: python-related constants &gt;&gt;
+
+    @others
+</t>
+<t tx="ekr.20241007011856.33">@language rest
+@wrap
+
+"""
+Leo's token-based beautifier, three times faster than the beautifier in leoAst.py.
+
+**Design**
+
+The *pre_scan* method is the heart of the algorithm. It sets context
+for the `:`, `=`, `**` and `.` tokens *without* using the parse tree.
+*pre_scan* calls three *finishers*.
+
+Each finisher uses a list of *relevant earlier tokens* to set the
+context for one kind of (input) token. Finishers look behind (in the
+stream of input tokens) with essentially no cost.
+
+After the pre-scan, *tbo.beautify* (the main loop) calls *visitors*
+for each separate type of *input* token.
+
+Visitors call *code generators* to generate strings in the output
+list, using *lazy evaluation* to generate whitespace.
+"""
+</t>
+<t tx="ekr.20241007011856.34">__slots__ = [
+    # Command-line arguments.
+    'all', 'beautified', 'diff', 'report', 'write',
+
+    # Global data.
+    'contents', 'filename', 'input_tokens', 'output_list', 'tab_width',
+    'insignificant_tokens',  # New.
+
+    # Token-related data for visitors.
+    'index', 'input_token', 'line_number',
+    'pending_lws', 'pending_ws', 'prev_output_kind', 'prev_output_value',  # New.
+
+    # Parsing state for visitors.
+    'decorator_seen', 'in_arg_list', 'in_doc_part', 'state_stack', 'verbatim',
+
+    # Whitespace state. Don't even *think* about changing these!
+    'curly_brackets_level', 'indent_level', 'lws', 'paren_level', 'square_brackets_stack',
+
+    # Regular expressions.
+    'at_others_pat', 'beautify_pat', 'comment_pat', 'end_doc_pat',
+    'nobeautify_pat', 'node_pat', 'start_doc_pat',
+]
+</t>
+<t tx="ekr.20241007011856.35">insignificant_kinds = (
+    'comment', 'dedent', 'encoding', 'endmarker', 'indent', 'newline', 'nl', 'ws',
+)
+
+# 'name' tokens that may appear in expressions.
+operator_keywords = (
+    'await',  # Debatable.
+    'and', 'in', 'not', 'not in', 'or',  # Operators.
+    'True', 'False', 'None',  # Values.
+)
+</t>
+<t tx="ekr.20241007011856.36">def __init__(self, settings: Optional[Settings] = None):
+    """Ctor for Orange class."""
+
+    # Set default settings.
+    if settings is None:
+        settings = {}
+
+    # Hard-code 4-space tabs.
+    self.tab_width = 4
+
+    # Define tokens even for empty files.
+    self.input_token: InputToken = None
+    self.input_tokens: list[InputToken] = []
+    self.lws: str = ""  # Set only by Indent/Dedent tokens.
+    self.pending_lws: str = ""
+    self.pending_ws: str = ""
+
+    # Set by gen_token and all do_* methods that bypass gen_token.
+    self.prev_output_kind: str = None
+    self.prev_output_value: str = None
+
+    # Set ivars from the settings dict *without* using setattr.
+    self.all = settings.get('all', False)
+    self.beautified = settings.get('beautified', False)
+    self.diff = settings.get('diff', False)
+    self.report = settings.get('report', False)
+    self.write = settings.get('write', False)
+
+    # The list of tokens that tbo._next/_prev skip.
+    self.insignificant_tokens = (
+        'comment', 'dedent', 'indent', 'newline', 'nl', 'ws',
+    )
+
+    # General patterns.
+    self.beautify_pat = re.compile(
+        r'#\s*pragma:\s*beautify\b|#\s*@@beautify|#\s*@\+node|#\s*@[+-]others|#\s*@[+-]&lt;&lt;')
+    self.comment_pat = re.compile(r'^(\s*)#[^@!# \n]')
+    self.nobeautify_pat = re.compile(r'\s*#\s*pragma:\s*no\s*beautify\b|#\s*@@nobeautify')
+
+    # Patterns from FastAtRead class, specialized for python delims.
+    self.node_pat = re.compile(r'^(\s*)#@\+node:([^:]+): \*(\d+)?(\*?) (.*)$')  # @node
+    self.start_doc_pat = re.compile(r'^\s*#@\+(at|doc)?(\s.*?)?$')  # @doc or @
+    self.at_others_pat = re.compile(r'^(\s*)#@(\+|-)others\b(.*)$')  # @others
+
+    # Doc parts end with @c or a node sentinel. Specialized for python.
+    self.end_doc_pat = re.compile(r"^\s*#@(@(c(ode)?)|([+]node\b.*))$")
+</t>
+<t tx="ekr.20241007011856.37"></t>
+<t tx="ekr.20241007011856.38">def dump_token_range(self, i1: int, i2: int, tag: Optional[str] = None) -&gt; None:  # pragma: no cover
+    """Dump the given range of input tokens."""
+    if tag:
+        print(tag)
+    for token in self.input_tokens[i1 : i2 + 1]:
+        print(token.dump())
+</t>
+<t tx="ekr.20241007011856.39">def internal_error_message(self, message: str) -&gt; str:  # pragma: no cover
+    """Print a message about an error in the beautifier itself."""
+    # Compute lines_s.
+    line_number = self.input_token.line_number
+    lines = g.splitLines(self.contents)
+    n1 = max(0, line_number - 5)
+    n2 = min(line_number + 5, len(lines))
+    prev_lines = ['\n']
+    for i in range(n1, n2):
+        marker_s = '***' if i + 1 == line_number else '   '
+        prev_lines.append(f"Line {i+1:5}:{marker_s}{lines[i]!r}\n")
+    context_s = ''.join(prev_lines) + '\n'
+
+    # Return the full error message.
+    return (
+        # '\n\n'
+        'Error in token-based beautifier!\n'
+        f"{message.strip()}\n"
+        '\n'
+        f"At token {self.index}, line: {line_number} file: {self.filename}\n"
+        f"{context_s}"
+        "Please report this message to Leo's developers"
+    )
+</t>
+<t tx="ekr.20241007011856.4"></t>
+<t tx="ekr.20241007011856.40">def user_error_message(self, message: str) -&gt; str:  # pragma: no cover
+    """Print a message about a user error."""
+    # Compute lines_s.
+    line_number = self.input_token.line_number
+    lines = g.splitLines(self.contents)
+    n1 = max(0, line_number - 5)
+    n2 = min(line_number + 5, len(lines))
+    prev_lines = ['\n']
+    for i in range(n1, n2):
+        marker_s = '***' if i + 1 == line_number else '   '
+        prev_lines.append(f"Line {i+1:5}:{marker_s}{lines[i]!r}\n")
+    context_s = ''.join(prev_lines) + '\n'
+
+    # Return the full error message.
+    return (
+        f"{message.strip()}\n"
+        '\n'
+        f"At token {self.index}, line: {line_number} file: {self.filename}\n"
+        f"{context_s}"
+    )
+</t>
+<t tx="ekr.20241007011856.41">def oops(self, message: str) -&gt; None:  # pragma: no cover
+    """Raise InternalBeautifierError."""
+    raise InternalBeautifierError(self.internal_error_message(message))
+</t>
+<t tx="ekr.20241007011856.42"></t>
+<t tx="ekr.20241007011856.43">def no_visitor(self) -&gt; None:  # pragma: no cover
+    self.oops(f"Unknown kind: {self.input_token.kind!r}")
+
+def beautify(self,
+    contents: str, filename: str, input_tokens: list[InputToken],
+) -&gt; str:
+    """
+    The main line. Create output tokens and return the result as a string.
+
+    beautify_file and beautify_file_def call this method.
+    """
+    &lt;&lt; tbo.beautify: init ivars &gt;&gt;
+
+    try:
+        # Pre-scan the token list, setting context.s
+        self.pre_scan()
+
+        # Init ivars first.
+        self.input_token = None
+        self.pending_lws = ''
+        self.pending_ws = ''
+        self.prev_output_kind = None
+        self.prev_output_value = None
+
+        # Init state.
+        self.gen_token('file-start', '')
+        self.push_state('file-start')
+
+        # The main loop:
+        prev_line_number: int = 0
+        for self.index, self.input_token in enumerate(input_tokens):
+            # Set global for visitors.
+            if prev_line_number != self.input_token.line_number:
+                prev_line_number = self.input_token.line_number
+            # Call the proper visitor.
+            if self.verbatim:
+                self.do_verbatim()
+            else:
+                func = getattr(self, f"do_{self.input_token.kind}", self.no_visitor)
+                func()
+
+        # Return the result.
+        result = ''.join(self.output_list)
+        return result
+
+    # Make no change if there is any error.
+    except InternalBeautifierError as e:  # pragma: no cover
+        # oops calls self.internal_error_message to creates e.
+        print(repr(e))
+    except AssertionError as e:  # pragma: no cover
+        print(self.internal_error_message(repr(e)))
+    return contents
+</t>
+<t tx="ekr.20241007011856.44"># Debugging vars...
+self.contents = contents
+self.filename = filename
+self.line_number: Optional[int] = None
+
+# The input and output lists...
+self.output_list: list[str] = []
+self.input_tokens = input_tokens  # The list of input tokens.
+
+# State vars for whitespace.
+self.curly_brackets_level = 0  # Number of unmatched '{' tokens.
+self.paren_level = 0  # Number of unmatched '(' tokens.
+self.square_brackets_stack: list[bool] = []  # A stack of bools, for self.gen_word().
+self.indent_level = 0  # Set only by do_indent and do_dedent.
+
+# Parse state.
+self.decorator_seen = False  # Set by do_name for do_op.
+self.in_arg_list = 0  # &gt; 0 if in an arg list of a def.
+self.in_doc_part = False
+self.state_stack: list[ParseState] = []  # Stack of ParseState objects.
+
+# Leo-related state.
+self.verbatim = False  # True: don't beautify.
+
+# Ivars describing the present input token...
+self.index = 0  # The index within the tokens array of the token being scanned.
+self.lws = ''  # Leading whitespace. Required!
+</t>
+<t tx="ekr.20241007011856.45">def beautify_file(self, filename: str) -&gt; bool:  # pragma: no cover
+    """
+    TokenBasedOrange: Beautify the the given external file.
+
+    Return True if the file was beautified.
+    """
+    if 0:
+        print(
+            f"all: {int(self.all)} "
+            f"beautified: {int(self.beautified)} "
+            f"diff: {int(self.diff)} "
+            f"report: {int(self.report)} "
+            f"write: {int(self.write)} "
+            f"{g.shortFileName(filename)}"
+        )
+    self.filename = filename
+    contents, tokens = self.init_tokens_from_file(filename)
+    if not (contents and tokens):
+        return False  # Not an error.
+    if not isinstance(tokens[0], InputToken):
+        self.oops(f"Not an InputToken: {tokens[0]!r}")
+
+    # Beautify the contents, returning the original contents on any error.
+    results = self.beautify(contents, filename, tokens)
+
+    # Ignore changes only to newlines.
+    if self.regularize_newlines(contents) == self.regularize_newlines(results):
+        return False
+
+    # Print reports.
+    if self.beautified:  # --beautified.
+        print(f"tbo: beautified: {g.shortFileName(filename)}")
+    if self.diff:  # --diff.
+        print(f"Diffs: {filename}")
+        self.show_diffs(contents, results)
+
+    # Write the (changed) file .
+    if self.write:  # --write.
+        self.write_file(filename, results)
+    return True
+</t>
+<t tx="ekr.20241007011856.46">def init_tokens_from_file(self, filename: str) -&gt; tuple[
+    str, list[InputToken]
+]:  # pragma: no cover
+    """
+    Create the list of tokens for the given file.
+    Return (contents, encoding, tokens).
+    """
+    self.indent_level = 0
+    self.filename = filename
+    t1 = time.perf_counter_ns()
+    contents = g.readFile(filename)
+    t2 = time.perf_counter_ns()
+    if not contents:
+        self.input_tokens = []
+        return '', []
+    t3 = time.perf_counter_ns()
+    self.input_tokens = input_tokens = Tokenizer().make_input_tokens(contents)
+    t4 = time.perf_counter_ns()
+    if 1:
+        print(f"       read: {(t2-t1)/1000000:6.2f} ms")  # μ
+        print(f"make_tokens: {(t4-t3)/1000000:6.2f} ms")
+        print(f"      total: {(t4-t1)/1000000:6.2f} ms")
+    return contents, input_tokens
+</t>
+<t tx="ekr.20241007011856.47">def regularize_newlines(self, s: str) -&gt; str:
+    """Regularize newlines within s."""
+    return s.replace('\r\n', '\n').replace('\r', '\n')
+</t>
+<t tx="ekr.20241007011856.48">def write_file(self, filename: str, s: str) -&gt; None:  # pragma: no cover
+    """
+    Write the string s to the file whose name is given.
+
+    Handle all exceptions.
+
+    Before calling this function, the caller should ensure
+    that the file actually has been changed.
+    """
+    try:
+        s2 = g.toEncodedString(s)  # May raise exception.
+        with open(filename, 'wb') as f:
+            f.write(s2)
+    except Exception as e:  # pragma: no cover
+        print(f"Error {e!r}: {filename!r}")
+</t>
+<t tx="ekr.20241007011856.49">def show_diffs(self, s1: str, s2: str) -&gt; None:  # pragma: no cover
+    """Print diffs between strings s1 and s2."""
+    filename = self.filename
+    lines = list(difflib.unified_diff(
+        g.splitLines(s1),
+        g.splitLines(s2),
+        fromfile=f"Old {filename}",
+        tofile=f"New {filename}",
+    ))
+    print('')
+    print(f"Diffs for {filename}")
+    for line in lines:
+        print(line)
+</t>
+<t tx="ekr.20241007011856.5">def dump_contents(contents: str, tag: str = 'Contents') -&gt; None:  # pragma: no cover
+    print('')
+    print(f"{tag}...\n")
+    for i, z in enumerate(g.splitLines(contents)):
+        print(f"{i+1:&lt;3} ", z.rstrip())
+    print('')
+</t>
+<t tx="ekr.20241007011856.50"># Visitors (tbo.do_* methods) handle input tokens.
+# Generators (tbo.gen_* methods) create zero or more output tokens.
+</t>
+<t tx="ekr.20241007011856.51">def do_comment(self) -&gt; None:
+    """Handle a comment token."""
+    val = self.input_token.value
+    &lt;&lt; do_comment: update comment-related state &gt;&gt;
+
+    # Generate the comment.
+    self.pending_lws = ''
+    self.pending_ws = ''
+    entire_line = self.input_token.line.lstrip().startswith('#')
+
+    if entire_line:
+        # The comment includes all ws.
+        # #1496: No further munging needed.
+        val = self.input_token.line.rstrip()
+        # #3056: Insure one space after '#' in non-sentinel comments.
+        #        Do not change bang lines or '##' comments.
+        if m := self.comment_pat.match(val):
+            i = len(m.group(1))
+            val = val[:i] + '# ' + val[i + 1 :]
+    else:
+        # Exactly two spaces before trailing comments.
+        val = '  ' + val.rstrip()
+    self.gen_token('comment', val)
+</t>
+<t tx="ekr.20241007011856.52"># Leo-specific code...
+if self.node_pat.match(val):
+    # Clear per-node state.
+    self.in_doc_part = False
+    self.verbatim = False
+    self.decorator_seen = False
+    # Do *not* clear other state, which may persist across @others.
+        # self.curly_brackets_level = 0
+        # self.in_arg_list = 0
+        # self.indent_level = 0
+        # self.lws = ''
+        # self.paren_level = 0
+        # self.square_brackets_stack = []
+        # self.state_stack = []
+else:
+    # Keep track of verbatim mode.
+    if self.beautify_pat.match(val):
+        self.verbatim = False
+    elif self.nobeautify_pat.match(val):
+        self.verbatim = True
+    # Keep trace of @doc parts, to honor the convention for splitting lines.
+    if self.start_doc_pat.match(val):
+        self.in_doc_part = True
+    if self.end_doc_pat.match(val):
+        self.in_doc_part = False
+</t>
+<t tx="ekr.20241007011856.53">def do_dedent(self) -&gt; None:
+    """Handle dedent token."""
+    # Note: other methods use self.indent_level.
+    self.indent_level -= 1
+    self.lws = self.indent_level * self.tab_width * ' '
+    self.pending_lws = self.lws
+    self.pending_ws = ''
+    self.prev_output_kind = 'dedent'
+</t>
+<t tx="ekr.20241007011856.54">def do_encoding(self) -&gt; None:
+    """Handle the encoding token."""
+</t>
+<t tx="ekr.20241007011856.55">def do_endmarker(self) -&gt; None:
+    """Handle an endmarker token."""
+
+    # Ensure exactly one newline at the end of file.
+    if self.prev_output_kind not in (
+        'indent', 'dedent', 'line-indent', 'newline',
+    ):
+        self.output_list.append('\n')
+    self.pending_lws = ''  # Defensive.
+    self.pending_ws = ''  # Defensive.
+</t>
+<t tx="ekr.20241007011856.56">consider_message = 'consider using python/Tools/scripts/reindent.py'
+
+def do_indent(self) -&gt; None:
+    """Handle indent token."""
+
+    # Only warn about indentation errors.
+    if '\t' in self.input_token.value:  # pragma: no cover
+        print(f"Found tab character in {self.filename}")
+        print(self.consider_message)
+    elif (len(self.input_token.value) % self.tab_width) != 0:  # pragma: no cover
+        print(f"Indentation error in {self.filename}")
+        print(self.consider_message)
+
+    # Handle the token!
+    new_indent = self.input_token.value
+    old_indent = self.indent_level * self.tab_width * ' '
+    if new_indent &gt; old_indent:
+        self.indent_level += 1
+    elif new_indent &lt; old_indent:  # pragma: no cover (defensive)
+        print(f"\n===== do_indent: can not happen {new_indent!r}, {old_indent!r}")
+
+    self.lws = new_indent
+    self.pending_lws = self.lws
+    self.pending_ws = ''
+    self.prev_output_kind = 'indent'
+</t>
+<t tx="ekr.20241007011856.57"></t>
+<t tx="ekr.20241007011856.58">def do_name(self) -&gt; None:
+    """Handle a name token."""
+    name = self.input_token.value
+    if name in self.operator_keywords:
+        self.gen_word_op(name)
+    else:
+        self.gen_word(name)
+</t>
+<t tx="ekr.20241007011856.59">def gen_word(self, s: str) -&gt; None:
+    """Add a word request to the code list."""
+    assert s == self.input_token.value
+    assert s and isinstance(s, str), repr(s)
+    self.gen_blank()
+    self.gen_token('word', s)
+    self.gen_blank()
+</t>
+<t tx="ekr.20241007011856.6">def dump_lines(tokens: list[InputToken], tag: str = 'lines') -&gt; None:  # pragma: no cover
+    print('')
+    print(f"{tag}...\n")
+    for z in tokens:
+        if z.line.strip():
+            print(z.line.rstrip())
+        else:
+            print(repr(z.line))
+    print('')
+</t>
+<t tx="ekr.20241007011856.60">def gen_word_op(self, s: str) -&gt; None:
+    """Add a word-op request to the code list."""
+    assert s == self.input_token.value
+    assert s and isinstance(s, str), repr(s)
+    self.gen_blank()
+    self.gen_token('word-op', s)
+    self.gen_blank()
+</t>
+<t tx="ekr.20241007011856.61"></t>
+<t tx="ekr.20241007011856.62">def do_newline(self) -&gt; None:
+    """
+    do_newline: Handle a regular newline.
+
+    From https://docs.python.org/3/library/token.html
+
+    NEWLINE tokens end *logical* lines of Python code.
+    """
+
+    self.output_list.append('\n')
+    self.pending_lws = ''  # Set only by 'dedent', 'indent' or 'ws' tokens.
+    self.pending_ws = ''
+    self.prev_output_kind = 'newline'
+    self.prev_output_value = '\n'
+</t>
+<t tx="ekr.20241007011856.63">def do_nl(self) -&gt; None:
+    """
+    do_nl: Handle a continuation line.
+
+    From https://docs.python.org/3/library/token.html
+
+    NL tokens end *physical* lines. They appear when when a logical line of
+    code spans multiple physical lines.
+    """
+    return self.do_newline()
+</t>
+<t tx="ekr.20241007011856.64">def do_number(self) -&gt; None:
+    """Handle a number token."""
+    self.gen_blank()
+    self.gen_token('number', self.input_token.value)
+</t>
+<t tx="ekr.20241007011856.65"></t>
+<t tx="ekr.20241007011856.66">def do_op(self) -&gt; None:
+    """Handle an op token."""
+    val = self.input_token.value
+
+    if val == '.':
+        self.gen_dot_op()
+    elif val == '@':
+        self.gen_token('op-no-blanks', val)
+        self.push_state('decorator')
+    elif val == ':':
+        # Treat slices differently.
+        self.gen_colon()
+    elif val in ',;':
+        # Pep 8: Avoid extraneous whitespace immediately before
+        # comma, semicolon, or colon.
+        self.pending_ws = ''
+        self.gen_token('op', val)
+        self.gen_blank()
+    elif val in '([{':
+        # Pep 8: Avoid extraneous whitespace immediately inside
+        # parentheses, brackets or braces.
+        self.gen_lt()
+    elif val in ')]}':
+        # Ditto.
+        self.gen_rt()
+    elif val == '=':
+        self.gen_equal_op()
+    elif val in '~+-':
+        self.gen_possible_unary_op()
+    elif val == '*':
+        self.gen_star_op()
+    elif val == '**':
+        self.gen_star_star_op()
+    else:
+        # Pep 8: always surround binary operators with a single space.
+        # '==','+=','-=','*=','**=','/=','//=','%=','!=','&lt;=','&gt;=','&lt;','&gt;',
+        # '^','~','*','**','&amp;','|','/','//',
+        # Pep 8: If operators with different priorities are used, consider
+        # adding whitespace around the operators with the lowest priorities.
+        self.gen_blank()
+        self.gen_token('op', val)
+        self.gen_blank()
+</t>
+<t tx="ekr.20241007011856.67">def gen_colon(self) -&gt; None:
+    """Handle a colon."""
+    val = self.input_token.value
+    context = self.input_token.context
+
+    self.pending_ws = ''
+    if context == 'complex-slice':
+        if self.prev_output_value not in '[:':
+            self.gen_blank()
+        self.gen_token('op', val)
+        self.gen_blank()
+    elif context == 'simple-slice':
+        self.gen_token('op-no-blanks', val)
+    elif context == 'dict':
+        self.gen_token('op', val)
+        self.gen_blank()
+    else:
+        self.gen_token('op', val)
+        self.gen_blank()
+</t>
+<t tx="ekr.20241007011856.68">def gen_dot_op(self) -&gt; None:
+    """Handle the '.' input token."""
+    context = self.input_token.context
+
+    # Get the previous significant **input** token.
+    # This is the only call to next(i) anywhere!
+    next_i = self._next(self.index)
+    next = 'None' if next_i is None else self.input_tokens[next_i]
+    import_is_next = next and next.kind == 'name' and next.value == 'import'
+
+    if context == 'import':
+        if (
+            self.prev_output_kind == 'word'
+            and self.prev_output_value in ('from', 'import')
+        ):
+            self.gen_blank()
+            op = 'op' if import_is_next else 'op-no-blanks'
+            self.gen_token(op, '.')
+        elif import_is_next:
+            self.gen_token('op', '.')
+            self.gen_blank()
+        else:
+            self.pending_ws = ''
+            self.gen_token('op-no-blanks', '.')
+    else:
+        self.pending_ws = ''
+        self.gen_token('op-no-blanks', '.')
+</t>
+<t tx="ekr.20241007011856.69">def _next(self, i: int) -&gt; Optional[int]:
+    """
+    Return the next *significant* input token.
+
+    Ignore insignificant tokens: whitespace, indentation, comments, etc.
+
+    The **Global Token Ratio** is tbo.n_scanned_tokens / len(tbo.tokens),
+    where tbo.n_scanned_tokens is the total number of calls calls to
+    tbo.next or tbo.prev.
+
+    For Leo's sources, this ratio ranges between 0.48 and 1.51!
+
+    The orange_command function warns if this ratio is greater than 2.5.
+    Previous versions of this code suffered much higher ratios.
+    """
+    i += 1
+    while i &lt; len(self.input_tokens):
+        token = self.input_tokens[i]
+        if token.kind not in self.insignificant_tokens:
+            # g.trace(f"token: {token!r}")
+            return i
+        i += 1
+    return None  # pragma: no cover
+</t>
+<t tx="ekr.20241007011856.7">def dump_results(results: list[str], tag: str = 'Results') -&gt; None:  # pragma: no cover
+    print('')
+    print(f"{tag}...\n")
+    print(''.join(results))
+    print('')
+</t>
+<t tx="ekr.20241007011856.70">def gen_equal_op(self) -&gt; None:
+
+    val = self.input_token.value
+    context = self.input_token.context
+
+    if context == 'initializer':
+        # Pep 8: Don't use spaces around the = sign when used to indicate
+        #        a keyword argument or a default parameter value.
+        #        However, when combining an argument annotation with a default value,
+        #        *do* use spaces around the = sign.
+        self.pending_ws = ''
+        self.gen_token('op-no-blanks', val)
+    else:
+        self.gen_blank()
+        self.gen_token('op', val)
+        self.gen_blank()
+</t>
+<t tx="ekr.20241007011856.71">def gen_lt(self) -&gt; None:
+    """Generate code for a left paren or curly/square bracket."""
+    val = self.input_token.value
+    assert val in '([{', repr(val)
+
+    # Update state vars.
+    if val == '(':
+        self.paren_level += 1
+    elif val == '[':
+        self.square_brackets_stack.append(False)
+    else:
+        self.curly_brackets_level += 1
+
+    # Generate or suppress the leading blank.
+    # Update self.in_arg_list if necessary.
+    if self.input_token.context == 'import':
+        self.gen_blank()
+    elif self.prev_output_kind in ('op', 'word-op'):
+        self.gen_blank()
+    elif self.prev_output_kind == 'word':
+        # Only suppress blanks before '(' or '[' for non-keywords.
+        if val == '{' or self.prev_output_value in (
+            'if', 'else', 'elif', 'return', 'for', 'while',
+        ):
+            self.gen_blank()
+        elif val == '(':
+            self.in_arg_list += 1
+            self.pending_ws = ''
+        else:
+            self.pending_ws = ''
+    elif self.prev_output_kind != 'line-indent':
+        self.pending_ws = ''
+
+    # Output the token!
+    self.gen_token('op-no-blanks', val)
+</t>
+<t tx="ekr.20241007011856.72">def gen_possible_unary_op(self) -&gt; None:
+    """Add a unary or binary op to the token list."""
+    val = self.input_token.value
+    if self.is_unary_op(self.index, val):
+        prev = self.input_token
+        if prev.kind == 'lt':
+            self.gen_token('op-no-blanks', val)
+        else:
+            self.gen_blank()
+            self.gen_token('op-no-blanks', val)
+    else:
+        self.gen_blank()
+        self.gen_token('op', val)
+        self.gen_blank()
+
+</t>
+<t tx="ekr.20241007011856.73">def is_unary_op(self, i: int, val: str) -&gt; bool:
+
+    if val == '~':
+        return True
+    if val not in '+-':  # pragma: no cover
+        return False
+
+    # Get the previous significant **input** token.
+    # This is the only call to _prev(i) anywhere!
+    prev_i = self._prev(i)
+    prev_token = None if prev_i is None else self.input_tokens[prev_i]
+    kind = prev_token.kind if prev_token else ''
+    value = prev_token.value if prev_token else ''
+
+    if kind in ('number', 'string'):
+        return_val = False
+    elif kind == 'op' and value in ')]':
+        return_val = False
+    elif kind == 'op' and value in '{([:':
+        return_val = True
+    elif kind != 'name':
+        return_val = True
+    else:
+        # The hard case: prev_token is a 'name' token.
+        # Any Python keyword indicates a unary operator.
+        return_val = keyword.iskeyword(value) or keyword.issoftkeyword(value)
+    return return_val
+</t>
+<t tx="ekr.20241007011856.74">def _prev(self, i: int) -&gt; Optional[int]:
+    """
+    Return the previous *significant* input token.
+
+    Ignore insignificant tokens: whitespace, indentation, comments, etc.
+    """
+    i -= 1
+    while i &gt;= 0:
+        token = self.input_tokens[i]
+        if token.kind not in self.insignificant_tokens:
+            return i
+        i -= 1
+    return None  # pragma: no cover
+</t>
+<t tx="ekr.20241007011856.75">def gen_rt(self) -&gt; None:
+    """Generate code for a right paren or curly/square bracket."""
+    val = self.input_token.value
+    assert val in ')]}', repr(val)
+
+    # Update state vars.
+    if val == ')':
+        self.paren_level -= 1
+        self.in_arg_list = max(0, self.in_arg_list - 1)
+    elif val == ']':
+        self.square_brackets_stack.pop()
+    else:
+        self.curly_brackets_level -= 1
+
+    if self.prev_output_kind != 'line-indent':
+        self.pending_ws = ''
+    self.gen_token('rt', val)
+</t>
+<t tx="ekr.20241007011856.76">def gen_star_op(self) -&gt; None:
+    """Put a '*' op, with special cases for *args."""
+    val = self.input_token.value
+    context = self.input_token.context
+
+    if context == 'arg':
+        self.gen_blank()
+        self.gen_token('op-no-blanks', val)
+    else:
+        self.gen_blank()
+        self.gen_token('op', val)
+        self.gen_blank()
+</t>
+<t tx="ekr.20241007011856.77">def gen_star_star_op(self) -&gt; None:
+    """Put a ** operator, with a special case for **kwargs."""
+    val = self.input_token.value
+    context = self.input_token.context
+
+    if context == 'arg':
+        self.gen_blank()
+        self.gen_token('op-no-blanks', val)
+    else:
+        self.gen_blank()
+        self.gen_token('op', val)
+        self.gen_blank()
+</t>
+<t tx="ekr.20241007011856.78">def push_state(self, kind: str, value: Union[int, str, None] = None) -&gt; None:
+    """Append a state to the state stack."""
+    state = ParseState(kind, value)
+    self.state_stack.append(state)
+</t>
+<t tx="ekr.20241007011856.79">def do_string(self) -&gt; None:
+    """
+    Handle a 'string' token.
+
+    The Tokenizer converts all f-string tokens to a single 'string' token.
+    """
+    # Careful: continued strings may contain '\r'
+    val = self.regularize_newlines(self.input_token.value)
+    self.gen_token('string', val)
+    self.gen_blank()
+</t>
+<t tx="ekr.20241007011856.8">def dump_tokens(tokens: list[InputToken], tag: str = 'Tokens') -&gt; None:  # pragma: no cover
+    print('')
+    print(f"{tag}...\n")
+    if not tokens:
+        return
+    print(
+        "Note: values shown are repr(value) "
+        "*except* for 'string' and 'fstring*' tokens."
+    )
+    tokens[0].dump_header()
+    for z in tokens:
+        print(z.dump())
+    print('')
+</t>
+<t tx="ekr.20241007011856.80">def do_verbatim(self) -&gt; None:
+    """
+    Handle one token in verbatim mode.
+    End verbatim mode when the appropriate comment is seen.
+    """
+    kind = self.input_token.kind
+    #
+    # Careful: tokens may contain '\r'
+    val = self.regularize_newlines(self.input_token.value)
+    if kind == 'comment':
+        if self.beautify_pat.match(val):
+            self.verbatim = False
+        val = val.rstrip()
+        self.gen_token('comment', val)
+        return
+    if kind == 'indent':
+        self.indent_level += 1
+        self.lws = self.indent_level * self.tab_width * ' '
+    if kind == 'dedent':
+        self.indent_level -= 1
+        self.lws = self.indent_level * self.tab_width * ' '
+    self.gen_token('verbatim', val)
+</t>
+<t tx="ekr.20241007011856.81">def do_ws(self) -&gt; None:
+    """
+    Handle the "ws" pseudo-token.  See Tokenizer.itok.do_token (the gem).
+
+    Put the whitespace only if if ends with backslash-newline.
+    """
+    val = self.input_token.value
+    last_token = self.input_tokens[self.index - 1]
+
+    if last_token.kind in ('nl', 'newline'):
+        self.pending_lws = val
+        self.pending_ws = ''
+    elif '\\\n' in val:
+        self.pending_lws = ''
+        self.pending_ws = val
+    else:
+        self.pending_ws = val
+</t>
+<t tx="ekr.20241007011856.82">def gen_blank(self) -&gt; None:
+    """
+    Queue a *request* a blank.
+    Change *neither* prev_output_kind *nor* pending_lws.
+    """
+
+    prev_kind = self.prev_output_kind
+    if prev_kind == 'op-no-blanks':
+        # A demand that no blank follows this op.
+        self.pending_ws = ''
+    elif prev_kind == 'hard-blank':
+        # Eat any further blanks.
+        self.pending_ws = ''
+    elif prev_kind in (
+        'dedent',
+        'file-start',
+        'indent',
+        'line-indent',
+        'newline',
+    ):
+        # Suppress the blank, but do *not* change the pending ws.
+        pass
+    elif self.pending_ws:
+        # Use the existing pending ws.
+        pass
+    else:
+        self.pending_ws = ' '
+</t>
+<t tx="ekr.20241007011856.83">def gen_token(self, kind: str, value: Any) -&gt; None:
+    """Add an output token to the code list."""
+
+    if self.pending_lws:
+        self.output_list.append(self.pending_lws)
+    elif self.pending_ws:
+        self.output_list.append(self.pending_ws)
+
+    self.output_list.append(value)
+    self.pending_lws = ''
+    self.pending_ws = ''
+    self.prev_output_value = value
+    self.prev_output_kind = kind
+</t>
+<t tx="ekr.20241007011856.84"># The parser calls scanner methods to move through the list of input tokens.
+</t>
+<t tx="ekr.20241007011856.85">def pre_scan(self) -&gt; None:
+    """
+    Scan the entire file in one iterative pass, adding context to a few
+    kinds of tokens as follows:
+
+    Token   Possible Contexts (or None)
+    =====   ===========================
+    ':'     'annotation', 'dict', 'complex-slice', 'simple-slice'
+    '='     'annotation', 'initializer'
+    '*'     'arg'
+    '**'    'arg'
+    '.'     'import'
+    """
+
+    # The main loop.
+    in_import = False
+    scan_stack: list[ScanState] = []
+    prev_token: Optional[InputToken] = None
+    for i, token in enumerate(self.input_tokens):
+        kind, value = token.kind, token.value
+        if kind in 'newline':
+            &lt;&lt; pre-scan 'newline' tokens &gt;&gt;
+        elif kind == 'op':
+            &lt;&lt; pre-scan 'op' tokens &gt;&gt;
+        elif kind == 'name':
+            &lt;&lt; pre-scan 'name' tokens &gt;&gt;
+        # Remember the previous significant token.
+        if kind not in self.insignificant_kinds:
+            prev_token = token
+    # Sanity check.
+    if scan_stack:  # pragma: no cover
+        print('pre_scan: non-empty scan_stack')
+        print(scan_stack)
+</t>
+<t tx="ekr.20241007011856.86"># 'import' and 'from x import' statements may span lines.
+# 'ws' tokens represent continued lines like this:   ws: ' \\\n    '
+if in_import and not scan_stack:
+    in_import = False
+</t>
+<t tx="ekr.20241007011856.87">top_state: Optional[ScanState] = scan_stack[-1] if scan_stack else None
+
+# Handle '[' and ']'.
+if value == '[':
+    scan_stack.append(ScanState('slice', token))
+elif value == ']':
+    assert top_state and top_state.kind == 'slice'
+    self.finish_slice(i, top_state)
+    scan_stack.pop()
+
+# Handle '{' and '}'.
+if value == '{':
+    scan_stack.append(ScanState('dict', token))
+elif value == '}':
+    assert top_state and top_state.kind == 'dict'
+    self.finish_dict(i, top_state)
+    scan_stack.pop()
+
+# Handle '(' and ')'
+elif value == '(':
+    if self.is_python_keyword(prev_token) or prev_token and prev_token.kind != 'name':
+        state_kind = '('
+    else:
+        state_kind = 'arg'
+    scan_stack.append(ScanState(state_kind, token))
+elif value == ')':
+    assert top_state and top_state.kind in ('(', 'arg'), repr(top_state)
+    if top_state.kind == 'arg':
+        self.finish_arg(i, top_state)
+    scan_stack.pop()
+
+# Handle interior tokens in 'arg' and 'slice' states.
+if top_state:
+    if top_state.kind in ('dict', 'slice') and value == ':':
+        top_state.value.append(i)
+    if top_state.kind == 'arg' and value in '**=:,':
+        top_state.value.append(i)
+
+# Handle '.' and '(' tokens inside 'import' and 'from' statements.
+if in_import and value in '(.':
+    self.set_context(i, 'import')
+</t>
+<t tx="ekr.20241007011856.88">prev_is_yield = prev_token and prev_token.kind == 'name' and prev_token.value == 'yield'
+if value in ('from', 'import') and not prev_is_yield:
+    # 'import' and 'from x import' statements should be at the outer level.
+    assert not scan_stack, scan_stack
+    in_import = True
+</t>
+<t tx="ekr.20241007011856.89">def finish_arg(self, end: int, state: Optional[ScanState]) -&gt; None:
+    """Set context for all ':' when scanning from '(' to ')'."""
+
+    # Sanity checks.
+    if not state:
+        return
+    assert state.kind == 'arg', repr(state)
+    token = state.token
+    assert token.value == '(', repr(token)
+    values = state.value
+    assert isinstance(values, list), repr(values)
+    i1 = token.index
+    assert i1 &lt; end, (i1, end)
+    if not values:
+        return
+
+    # Compute the context for each *separate* '=' token.
+    equal_context = 'initializer'
+    for i in values:
+        token = self.input_tokens[i]
+        assert token.kind == 'op', repr(token)
+        if token.value == ',':
+            equal_context = 'initializer'
+        elif token.value == ':':
+            equal_context = 'annotation'
+        elif token.value == '=':
+            self.set_context(i, equal_context)
+            equal_context = 'initializer'
+
+    # Set the context of all outer-level ':', '*', and '**' tokens.
+    prev: Optional[InputToken] = None
+    for i in range(i1, end):
+        token = self.input_tokens[i]
+        if token.kind not in self.insignificant_kinds:
+            if token.kind == 'op':
+                if token.value in ('*', '**'):
+                    if self.is_unary_op_with_prev(prev, token):
+                        self.set_context(i, 'arg')
+                elif token.value == '=':
+                    # The code above has set the context.
+                    assert token.context in ('initializer', 'annotation'), (i, repr(token.context))
+                elif token.value == ':':
+                    self.set_context(i, 'annotation')
+            prev = token
+</t>
+<t tx="ekr.20241007011856.9">def input_tokens_to_string(tokens: list[InputToken]) -&gt; str:  # pragma: no cover
+    """Return the string represented by the list of tokens."""
+    if tokens is None:
+        # This indicates an internal error.
+        print('')
+        print('===== input token list is None ===== ')
+        print('')
+        return ''
+    return ''.join([z.to_string() for z in tokens])
+</t>
+<t tx="ekr.20241007011856.90">def finish_slice(self, end: int, state: ScanState) -&gt; None:
+    """Set context for all ':' when scanning from '[' to ']'."""
+
+    # Sanity checks.
+    assert state.kind == 'slice', repr(state)
+    token = state.token
+    assert token.value == '[', repr(token)
+    colons = state.value
+    assert isinstance(colons, list), repr(colons)
+    i1 = token.index
+    assert i1 &lt; end, (i1, end)
+
+    # Do nothing if there are no ':' tokens in the slice.
+    if not colons:
+        return
+
+    # Compute final context by scanning the tokens.
+    final_context = 'simple-slice'
+    inter_colon_tokens = 0
+    prev = token
+    for i in range(i1 + 1, end - 1):
+        token = self.input_tokens[i]
+        kind, value = token.kind, token.value
+        if kind not in self.insignificant_kinds:
+            if kind == 'op':
+                if value == '.':
+                    # Ignore '.' tokens and any preceding 'name' token.
+                    if prev and prev.kind == 'name':  # pragma: no cover
+                        inter_colon_tokens -= 1
+                elif value == ':':
+                    inter_colon_tokens = 0
+                elif value in '-+':
+                    # Ignore unary '-' or '+' tokens.
+                    if not self.is_unary_op_with_prev(prev, token):
+                        inter_colon_tokens += 1
+                        if inter_colon_tokens &gt; 1:
+                            final_context = 'complex-slice'
+                            break
+                elif value == '~':
+                    # '~' is always a unary op.
+                    pass
+                else:
+                    # All other ops contribute.
+                    inter_colon_tokens += 1
+                    if inter_colon_tokens &gt; 1:
+                        final_context = 'complex-slice'
+                        break
+            else:
+                inter_colon_tokens += 1
+                if inter_colon_tokens &gt; 1:
+                    final_context = 'complex-slice'
+                    break
+            prev = token
+
+    # Set the context of all outer-level ':' tokens.
+    for i in colons:
+        self.set_context(i, final_context)
+</t>
+<t tx="ekr.20241007011856.91">def finish_dict(self, end: int, state: Optional[ScanState]) -&gt; None:
+    """
+    Set context for all ':' when scanning from '{' to '}'
+
+    Strictly speaking, setting this context is unnecessary because
+    tbo.gen_colon generates the same code regardless of this context.
+
+    In other words, this method can be a do-nothing!
+    """
+
+    # Sanity checks.
+    if not state:
+        return
+    assert state.kind == 'dict', repr(state)
+    token = state.token
+    assert token.value == '{', repr(token)
+    colons = state.value
+    assert isinstance(colons, list), repr(colons)
+    i1 = token.index
+    assert i1 &lt; end, (i1, end)
+
+    # Set the context for all ':' tokens.
+    for i in colons:
+        self.set_context(i, 'dict')
+</t>
+<t tx="ekr.20241007011856.92">def is_unary_op_with_prev(self, prev: Optional[InputToken], token: InputToken) -&gt; bool:
+    """
+    Return True if token is a unary op in the context of prev, the previous
+    significant token.
+    """
+    if token.value == '~':  # pragma: no cover
+        return True
+    if prev is None:
+        return True  # pragma: no cover
+    assert token.value in '**-+', repr(token.value)
+    if prev.kind in ('number', 'string'):
+        return_val = False
+    elif prev.kind == 'op' and prev.value in ')]':
+         # An unnecessary test?
+        return_val = False  # pragma: no cover
+    elif prev.kind == 'op' and prev.value in '{([:,':
+        return_val = True
+    elif prev.kind != 'name':
+        # An unnecessary test?
+        return_val = True  # pragma: no cover
+    else:
+        # prev is a'name' token.
+        return self.is_python_keyword(token)
+    return return_val
+</t>
+<t tx="ekr.20241007011856.93">def is_python_keyword(self, token: Optional[InputToken]) -&gt; bool:
+    """Return True if token is a 'name' token referring to a Python keyword."""
+    if not token or token.kind != 'name':
+        return False
+    return keyword.iskeyword(token.value) or keyword.issoftkeyword(token.value)
+</t>
+<t tx="ekr.20241007011856.94">def set_context(self, i: int, context: str) -&gt; None:
+    """
+    Set self.input_tokens[i].context, but only if it does not already exist!
+
+    See the docstring for pre_scan for details.
+    """
+
+    trace = False  # Do not delete the trace below.
+
+    valid_contexts = (
+        'annotation', 'arg', 'complex-slice', 'simple-slice',
+        'dict', 'import', 'initializer',
+    )
+    if context not in valid_contexts:
+        self.oops(f"Unexpected context! {context!r}")  # pragma: no cover
+
+    token = self.input_tokens[i]
+
+    if trace:  # pragma: no cover
+        token_s = f"&lt;{token.kind}: {token.show_val(12)}&gt;"
+        ignore_s = 'Ignore' if token.context else ' ' * 6
+        print(f"{i:3} {ignore_s} token: {token_s} context: {context}")
+
+    if not token.context:
+        token.context = context
 </t>
 </tnodes>
 </leo_file>
