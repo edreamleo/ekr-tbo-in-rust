@@ -113,6 +113,34 @@ impl Annotator<'_> {
             verbatim: false, 
         }
     }
+    //@+node:ekr.20241004095735.1: *3* Annotator.annotate
+    // fn annotate_tokens<'a>(&mut self, input_tokens: &'a Vec<InputTok<'a>>) -> Vec::<AnnotatedInputTok<'a>> {
+    // fn annotate<'a>(&mut self) -> Vec::<AnnotatedInputTok<'a>> {
+
+    fn annotate(&mut self) -> Vec::<AnnotatedInputTok> {
+
+        //! Do the prepass, returning tokens annotated with context.
+        
+        let mut result = Vec::new();
+        
+        // Create self.index_dict.
+        self.pre_scan();
+        
+        // Create the annotated tokens using self.index_dict.
+        for (i, token) in self.input_tokens.into_iter().enumerate() {
+            let context = match self.index_dict.get(&i) {
+                Some(x) => x,
+                None => &"".to_string(),
+            };
+            let context_string = context.to_string();
+            if !context_string.is_empty() {
+                println!("{i} {context_string}");
+            }
+            let annotated_token = AnnotatedInputTok::new(context_string, &token.kind, &token.value);
+            result.push(annotated_token);
+        }
+        return result;
+    }
     //@+node:ekr.20241005091217.1: *3* Annotator.is_python_keyword (to do)
     // def is_python_keyword(self, token: Optional[InputToken]) -> bool:
         // """Return True if token is a 'name' token referring to a Python keyword."""
@@ -171,7 +199,7 @@ impl Annotator<'_> {
     }
     //@+node:ekr.20241004153802.1: *3* Annotator.pre_scan & helpers
     fn pre_scan(&mut self) {
-        //! Scan the entire file in one iterative pass, adding context (in index_dict)
+        //! Scan the entire file in one iterative pass, adding context (in self.index_dict)
         //! to a few kinds of tokens as follows:
         //!
         //! Token   Possible Contexts (or None)
@@ -550,31 +578,6 @@ impl Beautifier {
             self.output_list.push(value.to_string())
         }
     }
-    //@+node:ekr.20241004095735.1: *3* LB::annotate_tokens
-    fn annotate_tokens<'a>(&mut self, input_tokens: &'a Vec<InputTok<'a>>) -> Vec::<AnnotatedInputTok<'a>> {
-        //! Do the prepass, returning tokens annotated with context.
-        
-        let mut result = Vec::new();
-        let mut annotator = Annotator::new(input_tokens);
-        
-        // set self.index_dict
-        annotator.pre_scan();
-        
-        // Create the annotated tokens using self.index_dict.
-        for (i, token) in input_tokens.into_iter().enumerate() {
-            let context = match annotator.index_dict.get(&i) {
-                Some(x) => x,
-                None => &"".to_string(),
-            };
-            let context_string = context.to_string();
-            if !context_string.is_empty() {
-                println!("{i} {context_string}");
-            }
-            let annotated_token = AnnotatedInputTok::new(context_string, &token.kind, &token.value);
-            result.push(annotated_token);
-        }
-        return result;
-    }
     //@+node:ekr.20240929074037.113: *3* LB::beautify
     fn beautify(&mut self, annotated_list: &Vec<AnnotatedInputTok>) -> String {
         //! Beautify the input_tokens, creating the output String.
@@ -700,7 +703,8 @@ impl Beautifier {
         self.stats.make_tokens_time += t2.elapsed().as_nanos();
         // Annotate tokens (the prepass).
         let t3 = std::time::Instant::now();
-        let annotated_tokens = self.annotate_tokens(&input_tokens);
+        let mut annotator = Annotator::new(&input_tokens);
+        let annotated_tokens = annotator.annotate();
         self.stats.annotation_time += t3.elapsed().as_nanos();
         // Beautify.
         let t4 = std::time::Instant::now();
@@ -1353,7 +1357,7 @@ impl Beautifier {
             )
         );
     }
-    //@+node:ekr.20241002163554.1: *3* LB::string_to_static_str
+    //@+node:ekr.20241002163554.1: *3* LB::string_to_static_str (not used)
     fn string_to_static_str(&self, s: String) -> &'static str {
         Box::leak(s.into_boxed_str())
     }

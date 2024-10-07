@@ -268,11 +268,13 @@
 <v t="ekr.20240928185643.1"><vh>Stats</vh></v>
 </v>
 <v t="ekr.20241007005233.1"></v>
+<v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
 <v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20241001104914.1"><vh>--- classes</vh>
 <v t="ekr.20241004095931.1"><vh>class AnnotatedInputTok</vh></v>
 <v t="ekr.20241004110721.1"><vh>class Annotator</vh>
 <v t="ekr.20241004153742.1"><vh>Annotator.new</vh></v>
+<v t="ekr.20241004095735.1"><vh>Annotator.annotate</vh></v>
 <v t="ekr.20241005091217.1"><vh>Annotator.is_python_keyword (to do)</vh></v>
 <v t="ekr.20241005092549.1"><vh>Annotator.is_unary_op_with_prev (to do)</vh></v>
 <v t="ekr.20241004153802.1"><vh>Annotator.pre_scan &amp; helpers</vh>
@@ -289,7 +291,6 @@
 <v t="ekr.20240929074037.1"><vh>class LeoBeautifier</vh>
 <v t="ekr.20240929074037.114"><vh> LB::new</vh></v>
 <v t="ekr.20240929074037.2"><vh>LB::add_output_string</vh></v>
-<v t="ekr.20241004095735.1"><vh>LB::annotate_tokens</vh></v>
 <v t="ekr.20240929074037.113"><vh>LB::beautify</vh>
 <v t="ekr.20241002062655.1"><vh>&lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;</vh></v>
 </v>
@@ -410,7 +411,7 @@
 </v>
 <v t="ekr.20240929074037.115"><vh>LB::show_args</vh></v>
 <v t="ekr.20240929074037.116"><vh>LB::show_help</vh></v>
-<v t="ekr.20241002163554.1"><vh>LB::string_to_static_str</vh></v>
+<v t="ekr.20241002163554.1"><vh>LB::string_to_static_str (not used)</vh></v>
 </v>
 <v t="ekr.20241004112826.1"><vh>class ParseState</vh>
 <v t="ekr.20241004113118.1"><vh>&lt;&lt; docstring: ParseState &gt;&gt;</vh></v>
@@ -427,10 +428,20 @@
 <v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.113"></v>
 </v>
-<v t="ekr.20241001213229.1"><vh>from tbo.beautify (finish: do not delete)</vh></v>
+<v t="ekr.20240929074037.5"></v>
 <v t="ekr.20241004153802.1"></v>
 <v t="ekr.20241004095735.1"></v>
+<v t="ekr.20241004110721.1"></v>
+<v t="ekr.20241007060538.7"><vh>diff: Changed</vh>
+<v t="ekr.20241007060538.10"><vh>diff: Annotator.annotate</vh>
+<v t="ekr.20241007060538.11"><vh>Old:LB::annotate_tokens</vh></v>
+<v t="ekr.20241004095735.1"></v>
+</v>
+<v t="ekr.20241007060538.12"><vh>diff: LB::beautify_one_file</vh>
+<v t="ekr.20241007060538.13"><vh>Old:LB::beautify_one_file</vh></v>
 <v t="ekr.20240929074037.5"></v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -1295,7 +1306,8 @@ fn add_output_string(&amp;mut self, kind: &amp;str, value: &amp;str) {
     self.stats.make_tokens_time += t2.elapsed().as_nanos();
     // Annotate tokens (the prepass).
     let t3 = std::time::Instant::now();
-    let annotated_tokens = self.annotate_tokens(&amp;input_tokens);
+    let mut annotator = Annotator::new(&amp;input_tokens);
+    let annotated_tokens = annotator.annotate();
     self.stats.annotation_time += t3.elapsed().as_nanos();
     // Beautify.
     let t4 = std::time::Instant::now();
@@ -2032,18 +2044,21 @@ pub fn main() {
 }
 </t>
 <t tx="ekr.20241004073317.1"></t>
-<t tx="ekr.20241004095735.1">fn annotate_tokens&lt;'a&gt;(&amp;mut self, input_tokens: &amp;'a Vec&lt;InputTok&lt;'a&gt;&gt;) -&gt; Vec::&lt;AnnotatedInputTok&lt;'a&gt;&gt; {
+<t tx="ekr.20241004095735.1">// fn annotate_tokens&lt;'a&gt;(&amp;mut self, input_tokens: &amp;'a Vec&lt;InputTok&lt;'a&gt;&gt;) -&gt; Vec::&lt;AnnotatedInputTok&lt;'a&gt;&gt; {
+// fn annotate&lt;'a&gt;(&amp;mut self) -&gt; Vec::&lt;AnnotatedInputTok&lt;'a&gt;&gt; {
+
+fn annotate(&amp;mut self) -&gt; Vec::&lt;AnnotatedInputTok&gt; {
+
     //! Do the prepass, returning tokens annotated with context.
     
     let mut result = Vec::new();
-    let mut annotator = Annotator::new(input_tokens);
     
-    // set self.index_dict
-    annotator.pre_scan();
+    // Create self.index_dict.
+    self.pre_scan();
     
     // Create the annotated tokens using self.index_dict.
-    for (i, token) in input_tokens.into_iter().enumerate() {
-        let context = match annotator.index_dict.get(&amp;i) {
+    for (i, token) in self.input_tokens.into_iter().enumerate() {
+        let context = match self.index_dict.get(&amp;i) {
             Some(x) =&gt; x,
             None =&gt; &amp;"".to_string(),
         };
@@ -2167,7 +2182,7 @@ The present states:
 }
 </t>
 <t tx="ekr.20241004153802.1">fn pre_scan(&amp;mut self) {
-    //! Scan the entire file in one iterative pass, adding context (in index_dict)
+    //! Scan the entire file in one iterative pass, adding context (in self.index_dict)
     //! to a few kinds of tokens as follows:
     //!
     //! Token   Possible Contexts (or None)
@@ -4998,5 +5013,113 @@ if value in ('from', 'import') and not prev_is_yield:
     if not token.context:
         token.context = context
 </t>
+<t tx="ekr.20241007060538.10">@ignore
+@nosearch
+@language patch
+--- HEAD
++++ uncommitted
+@@ -1,15 +1,18 @@
+-fn annotate_tokens&lt;'a&gt;(&amp;mut self, input_tokens: &amp;'a Vec&lt;InputTok&lt;'a&gt;&gt;) -&gt; Vec::&lt;AnnotatedInputTok&lt;'a&gt;&gt; {
++// fn annotate_tokens&lt;'a&gt;(&amp;mut self, input_tokens: &amp;'a Vec&lt;InputTok&lt;'a&gt;&gt;) -&gt; Vec::&lt;AnnotatedInputTok&lt;'a&gt;&gt; {
++// fn annotate&lt;'a&gt;(&amp;mut self) -&gt; Vec::&lt;AnnotatedInputTok&lt;'a&gt;&gt; {
++
++fn annotate(&amp;mut self) -&gt; Vec::&lt;AnnotatedInputTok&gt; {
++
+     //! Do the prepass, returning tokens annotated with context.
+     
+     let mut result = Vec::new();
+-    let mut annotator = Annotator::new(input_tokens);
+     
+-    // set self.index_dict
+-    annotator.pre_scan();
++    // Create self.index_dict.
++    self.pre_scan();
+     
+     // Create the annotated tokens using self.index_dict.
+-    for (i, token) in input_tokens.into_iter().enumerate() {
+-        let context = match annotator.index_dict.get(&amp;i) {
++    for (i, token) in self.input_tokens.into_iter().enumerate() {
++        let context = match self.index_dict.get(&amp;i) {
+             Some(x) =&gt; x,
+             None =&gt; &amp;"".to_string(),
+         };
+@language python
+</t>
+<t tx="ekr.20241007060538.11">fn annotate_tokens&lt;'a&gt;(&amp;mut self, input_tokens: &amp;'a Vec&lt;InputTok&lt;'a&gt;&gt;) -&gt; Vec::&lt;AnnotatedInputTok&lt;'a&gt;&gt; {
+    //! Do the prepass, returning tokens annotated with context.
+    
+    let mut result = Vec::new();
+    let mut annotator = Annotator::new(input_tokens);
+    
+    // set self.index_dict
+    annotator.pre_scan();
+    
+    // Create the annotated tokens using self.index_dict.
+    for (i, token) in input_tokens.into_iter().enumerate() {
+        let context = match annotator.index_dict.get(&amp;i) {
+            Some(x) =&gt; x,
+            None =&gt; &amp;"".to_string(),
+        };
+        let context_string = context.to_string();
+        if !context_string.is_empty() {
+            println!("{i} {context_string}");
+        }
+        let annotated_token = AnnotatedInputTok::new(context_string, &amp;token.kind, &amp;token.value);
+        result.push(annotated_token);
+    }
+    return result;
+}
+</t>
+<t tx="ekr.20241007060538.12">@ignore
+@nosearch
+@language patch
+--- HEAD
++++ uncommitted
+@@ -23,7 +23,8 @@
+     self.stats.make_tokens_time += t2.elapsed().as_nanos();
+     // Annotate tokens (the prepass).
+     let t3 = std::time::Instant::now();
+-    let annotated_tokens = self.annotate_tokens(&amp;input_tokens);
++    let mut annotator = Annotator::new(&amp;input_tokens);
++    let annotated_tokens = annotator.annotate();
+     self.stats.annotation_time += t3.elapsed().as_nanos();
+     // Beautify.
+     let t4 = std::time::Instant::now();
+@language python
+</t>
+<t tx="ekr.20241007060538.13">fn beautify_one_file(&amp;mut self, file_name: &amp;str) {
+    self.stats.n_files += 1;
+    if true {
+        // Testing only: print the short file name.
+        let file_path = path::Path::new(file_name);
+        let os_str = file_path.file_name().unwrap(); // &amp;OsStr
+        let short_file_name = os_str.to_str().unwrap();
+        println!("{short_file_name}");
+    }
+    // Read the file into contents (a String).
+    let t1 = std::time::Instant::now();
+    let contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
+    self.stats.read_time += t1.elapsed().as_nanos();
+    // Create (an immutable!) list of input tokens.
+    let t2 = std::time::Instant::now();
+    let input_tokens = self.make_input_list(&amp;contents);
+    if false {
+        println!("input tokens...");
+        for token in &amp;input_tokens {
+            println!("{token:?}");
+        }
+    }
+    self.stats.make_tokens_time += t2.elapsed().as_nanos();
+    // Annotate tokens (the prepass).
+    let t3 = std::time::Instant::now();
+    let annotated_tokens = self.annotate_tokens(&amp;input_tokens);
+    self.stats.annotation_time += t3.elapsed().as_nanos();
+    // Beautify.
+    let t4 = std::time::Instant::now();
+    self.beautify(&amp;annotated_tokens);
+    self.stats.beautify_time += t4.elapsed().as_nanos();
+}
+</t>
+<t tx="ekr.20241007060538.7"></t>
 </tnodes>
 </leo_file>
