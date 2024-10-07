@@ -262,6 +262,13 @@
 </v>
 </v>
 </v>
+<v t="ekr.20241007063926.1"><vh>--- Unused</vh>
+<v t="ekr.20241003094145.1"><vh> struct TestTok</vh></v>
+<v t="ekr.20241001093308.1"><vh>fn test &amp; helpers</vh>
+<v t="ekr.20241003094218.2"><vh>fn test_struct</vh></v>
+<v t="ekr.20241003094218.1"><vh>fn test_vec &amp; push_vec</vh></v>
+</v>
+</v>
 <v t="ekr.20240927154016.1"><vh>Notes</vh>
 <v t="ekr.20240929084852.1"><vh>Ownership and mutation</vh></v>
 <v t="ekr.20241001055017.1"><vh>Traits</vh></v>
@@ -283,7 +290,7 @@
 <v t="ekr.20241004154345.5"><vh>Annotator.finish_arg</vh></v>
 <v t="ekr.20241004154345.6"><vh>Annotator.finish_slice</vh></v>
 <v t="ekr.20241004154345.7"><vh>Annotator.finish_dict</vh></v>
-<v t="ekr.20241004163018.1"><vh>Annotator.set_context</vh></v>
+<v t="ekr.20241004163018.1"><vh>Annotator.set_context (never gets called)</vh></v>
 </v>
 </v>
 <v t="ekr.20240929024648.120"><vh>class InputTok</vh></v>
@@ -422,12 +429,15 @@
 <v t="ekr.20240929075236.1"><vh>Stats::report</vh></v>
 </v>
 </v>
-<v t="ekr.20241004073317.1"><vh>--- outer leveel</vh>
+<v t="ekr.20241004073317.1"><vh>--- outer level</vh>
 <v t="ekr.20241003093722.1"><vh>fn main</vh></v>
 <v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.113"></v>
 </v>
-<v t="ekr.20240929074037.113"></v>
+<v t="ekr.20241004095931.1"></v>
+<v t="ekr.20241004110721.1"></v>
+<v t="ekr.20241004095735.1"></v>
+<v t="ekr.20241004153802.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -1069,6 +1079,7 @@ impl Beautifier {
         // }
         
     for annotated_token in annotated_tokens {
+        println!("beautify: {annotated_token:?}");
         &lt;&lt; LB: beautify: dispatch on annotated_token.kind &gt;&gt;
     }
 
@@ -1312,12 +1323,6 @@ fn add_output_string(&amp;mut self, kind: &amp;str, value: &amp;str) {
     // Create (an immutable!) list of input tokens.
     let t2 = std::time::Instant::now();
     let input_tokens = self.make_input_list(&amp;contents);
-    if false {
-        println!("input tokens...");
-        for token in &amp;input_tokens {
-            println!("{token:?}");
-        }
-    }
     self.stats.make_tokens_time += t2.elapsed().as_nanos();
     // Annotate tokens (the prepass).
     let t3 = std::time::Instant::now();
@@ -1538,7 +1543,9 @@ fn add_output_string(&amp;mut self, kind: &amp;str, value: &amp;str) {
     // self.add_output_string("StartModule", "");
 }
 </t>
-<t tx="ekr.20240929074547.1">#[derive(Debug)]
+<t tx="ekr.20240929074547.1">// Allow unused write_time
+#[allow(dead_code)]
+#[derive(Debug)]
 pub struct Stats {
     // Cumulative statistics for all files.
     n_files: u64,     // Number of files.
@@ -1553,8 +1560,8 @@ pub struct Stats {
     write_time: u128,
 }
 
-// #[allow(dead_code)]
-// #[allow(non_snake_case)]
+// Calling Stats.report is optional.
+#[allow(dead_code)]
 impl Stats {
     @others
 }
@@ -1754,6 +1761,11 @@ fn returns_summarizable() -&gt; impl Summary {...}
 
 // We can call o.to_string method defined by the ToString trait on
 // any type that implements the Display trait. 
+</t>
+<t tx="ekr.20241001093308.1">fn test() {
+    test_vec();
+    test_struct();
+}
 </t>
 <t tx="ekr.20241001100954.1">pub fn new() -&gt; Stats {
     let x = Stats {
@@ -2012,6 +2024,73 @@ pub fn main() {
     }
 }
 </t>
+<t tx="ekr.20241003094145.1">#[derive(Clone, Debug)]
+#[allow(dead_code)]
+pub struct TestTok {
+    value: i32,
+}
+</t>
+<t tx="ekr.20241003094218.1">fn test_vec() {
+    //! Test code for Vec.
+    let mut v: Vec&lt;i32&gt; = Vec::new();
+    push_vec(&amp;mut v, 1);
+    push_vec(&amp;mut v, 2);
+    for i in [3, 4, 6] {
+        push_vec(&amp;mut v, i);
+    }
+    let mut i = 7;
+    while i &lt; 10 {
+        push_vec(&amp;mut v, i);
+        i += 1
+    }
+    println!("");
+    println!("v: {v:?}");
+}
+
+fn push_vec(v: &amp;mut Vec&lt;i32&gt;, val: i32) {
+    v.push(val);
+}
+</t>
+<t tx="ekr.20241003094218.2">fn test_struct() {
+    //! Test code for Vec.
+    let mut v: Vec&lt;TestTok&gt; = Vec::new();
+    push_struct(&amp;mut v, 1);
+    push_struct(&amp;mut v, 2);
+    for i in [3, 4, 6] {
+        push_struct(&amp;mut v, i);
+    }
+    let mut i = 7;
+    while i &lt; 10 {
+        push_struct(&amp;mut v, i);
+        i += 1
+    }
+    println!("");
+    for z in &amp;v {
+        // or just v.
+        println!("{z:?}");
+    }
+    let tok = &amp;v[0]; // v[0] fails.
+    println!("\ntok: {tok:?}");
+
+    // A data race happens when these three behaviors occur:
+
+    // - Two or more pointers access the same data at the same time.
+    // - At least one of the pointers is being used to write to the data.
+    // - There’s no mechanism being used to synchronize access to the data.
+
+    // So This fails
+    // {
+    // let tok = v[0];
+    // println!("{tok:?}");
+    // }
+}
+
+fn push_struct(v: &amp;mut Vec&lt;TestTok&gt;, val: i32) {
+    let mut tok = TestTok { value: 0 };
+    tok.value = val; // To test mutability.
+    v.push(tok);
+}
+</t>
 <t tx="ekr.20241004073317.1"></t>
 <t tx="ekr.20241004095735.1">fn annotate(&amp;mut self) -&gt; Vec::&lt;AnnotatedInputTok&gt; {
     //! Do the prepass, returning tokens annotated with context.
@@ -2021,35 +2100,51 @@ pub fn main() {
     self.pre_scan();
 
     // Create the annotated tokens using self.index_dict.
+    {
+        let n = self.input_tokens.len();
+        let d = &amp;self.index_dict;
+        println!("");
+        println!("annotate: self.input_tokens.len(): {n}");
+        println!("annotate: self.index_dict: {d:?}");
+        println!("");
+    }
     for (i, token) in self.input_tokens.into_iter().enumerate() {
+        // *** println!("annotate: token: {token:?}");
         let context = match self.index_dict.get(&amp;i) {
             Some(x) =&gt; x,
             None =&gt; "",
         };
-        let annotated_token = AnnotatedInputTok::new(&amp;context, &amp;token.kind, &amp;token.value);
+        // *** println!("annotate: context: {context:?}");
+        // *** let annotated_token = AnnotatedInputTok::new(&amp;context, &amp;token.kind, &amp;token.value);
+        let annotated_token = AnnotatedInputTok {
+            // context: context.to_string(), kind: &amp;token.kind, value: &amp;token.value
+            context: context, kind: &amp;token.kind, value: &amp;token.value
+        };
         result.push(annotated_token);
     }
     return result;
 }
 </t>
-<t tx="ekr.20241004095931.1">#[derive(Clone, Debug)]
+<t tx="ekr.20241004095931.1">#[derive(Debug)]
 struct AnnotatedInputTok&lt;'a&gt; {
-    context: String,
+    // context: String,
+    context: &amp;'a str,
     kind: &amp;'a str,
     value: &amp;'a str,
 }
 
-impl &lt;'a&gt; AnnotatedInputTok&lt;'_&gt; {
-    fn new(context: &amp;'a str, kind: &amp;'a str, value: &amp;'a str) -&gt; AnnotatedInputTok&lt;'a&gt; {
-        AnnotatedInputTok {
-            context: context.to_string(),
-            kind: kind,
-            value: value,
-        }
-    }
-}
+// impl &lt;'a&gt; AnnotatedInputTok&lt;'_&gt; {
+    // fn new(context: &amp;'a str, kind: &amp;'a str, value: &amp;'a str) -&gt; AnnotatedInputTok&lt;'a&gt; {
+        // AnnotatedInputTok {
+            // context: context.to_string(),
+            // kind: kind,
+            // value: value,
+        // }
+    // }
+// }
 </t>
-<t tx="ekr.20241004110721.1">struct Annotator&lt;'a&gt; {
+<t tx="ekr.20241004110721.1">#[allow(dead_code)]
+struct Annotator&lt;'a&gt; {
     // Classes of tokens
     insignificant_tokens: [&amp;'a str; 7],
     op_kinds: [&amp;'a str; 29],
@@ -2076,7 +2171,9 @@ impl Annotator&lt;'_&gt; {
     @others
 }
 </t>
-<t tx="ekr.20241004112826.1">struct ParseState {
+<t tx="ekr.20241004112826.1">// *** testing only.
+#[allow(dead_code)]
+struct ParseState {
     &lt;&lt; docstring: ParseState &gt;&gt;
     kind: String,
     value: String,
@@ -2163,7 +2260,7 @@ The present states:
     let mut prev_token = &amp;dummy_token;
     for (i, token) in self.input_tokens.into_iter().enumerate() {
         let (kind, value) = (token.kind, token.value);
-        println!("{kind:&gt;20} {value:?}");
+        // println!("pre_scan: {kind:&gt;20} {value:?}");
         if kind == "Newline" {
             &lt;&lt; pre-scan newline tokens &gt;&gt;
         }
@@ -2209,9 +2306,10 @@ if in_import &amp;&amp; scan_stack.len() == 0 {
 // The scan_stack always contains at least a dummy state.
 let top_state = &amp;mut scan_stack[scan_stack.len() - 1].clone();
 
-if false {  // ***
+if true {  // ***
     let top_state_kind = top_state.kind;
-    println!("&lt;pre-scan op tokens: top_state: {top_state_kind:20} {value:?}");
+    // top_state: {top_state_kind:20}
+    println!("pre_scan &lt;op tokens&gt;: kind: {kind:&gt;10} value: {value:?}");
 }
 
 // Handle "[" and "]".
@@ -2236,6 +2334,7 @@ else if value == "}" {
 
 // Handle "(" and ")"
 else if value == "(" {
+    println!("OPEN PAREN");
     if self.is_python_keyword(&amp;prev_token) || prev_token.kind != "name" {
         scan_stack.push(ScanState::new("(", &amp;token));
     }
@@ -4973,5 +5072,6 @@ if value in ('from', 'import') and not prev_is_yield:
     if not token.context:
         token.context = context
 </t>
+<t tx="ekr.20241007063926.1"></t>
 </tnodes>
 </leo_file>

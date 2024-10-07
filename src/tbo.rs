@@ -22,22 +22,23 @@ pub fn entry() {
     main();
 }
 //@+node:ekr.20241004095931.1: ** class AnnotatedInputTok
-#[derive(Clone, Debug)]
+#[derive(Debug)]
 struct AnnotatedInputTok<'a> {
-    context: String,
+    // context: String,
+    context: &'a str,
     kind: &'a str,
     value: &'a str,
 }
 
-impl <'a> AnnotatedInputTok<'_> {
-    fn new(context: &'a str, kind: &'a str, value: &'a str) -> AnnotatedInputTok<'a> {
-        AnnotatedInputTok {
-            context: context.to_string(),
-            kind: kind,
-            value: value,
-        }
-    }
-}
+// impl <'a> AnnotatedInputTok<'_> {
+    // fn new(context: &'a str, kind: &'a str, value: &'a str) -> AnnotatedInputTok<'a> {
+        // AnnotatedInputTok {
+            // context: context.to_string(),
+            // kind: kind,
+            // value: value,
+        // }
+    // }
+// }
 //@+node:ekr.20241004110721.1: ** class Annotator
 #[allow(dead_code)]
 struct Annotator<'a> {
@@ -112,13 +113,26 @@ impl Annotator<'_> {
         self.pre_scan();
 
         // Create the annotated tokens using self.index_dict.
+        {
+            let n = self.input_tokens.len();
+            let d = &self.index_dict;
+            println!("");
+            println!("annotate: self.input_tokens.len(): {n}");
+            println!("annotate: self.index_dict: {d:?}");
+            println!("");
+        }
         for (i, token) in self.input_tokens.into_iter().enumerate() {
+            // *** println!("annotate: token: {token:?}");
             let context = match self.index_dict.get(&i) {
                 Some(x) => x,
                 None => "",
             };
-            println!("AnnotatedInputTok.new!");
-            let annotated_token = AnnotatedInputTok::new(&context, &token.kind, &token.value);
+            // *** println!("annotate: context: {context:?}");
+            // *** let annotated_token = AnnotatedInputTok::new(&context, &token.kind, &token.value);
+            let annotated_token = AnnotatedInputTok {
+                // context: context.to_string(), kind: &token.kind, value: &token.value
+                context: context, kind: &token.kind, value: &token.value
+            };
             result.push(annotated_token);
         }
         return result;
@@ -202,7 +216,7 @@ impl Annotator<'_> {
         let mut prev_token = &dummy_token;
         for (i, token) in self.input_tokens.into_iter().enumerate() {
             let (kind, value) = (token.kind, token.value);
-            println!("{kind:>20} {value:?}");
+            // println!("pre_scan: {kind:>20} {value:?}");
             if kind == "Newline" {
                 //@+<< pre-scan newline tokens >>
                 //@+node:ekr.20241004154345.2: *4* << pre-scan newline tokens >>
@@ -222,9 +236,10 @@ impl Annotator<'_> {
                 // The scan_stack always contains at least a dummy state.
                 let top_state = &mut scan_stack[scan_stack.len() - 1].clone();
 
-                if false {  // ***
+                if true {  // ***
                     let top_state_kind = top_state.kind;
-                    println!("<pre-scan op tokens: top_state: {top_state_kind:20} {value:?}");
+                    // top_state: {top_state_kind:20}
+                    println!("pre_scan <op tokens>: kind: {kind:>10} value: {value:?}");
                 }
 
                 // Handle "[" and "]".
@@ -249,6 +264,7 @@ impl Annotator<'_> {
 
                 // Handle "(" and ")"
                 else if value == "(" {
+                    println!("OPEN PAREN");
                     if self.is_python_keyword(&prev_token) || prev_token.kind != "name" {
                         scan_stack.push(ScanState::new("(", &token));
                     }
@@ -488,7 +504,7 @@ impl Annotator<'_> {
             self.set_context(*i, "dict");
         }
     }
-    //@+node:ekr.20241004163018.1: *4* Annotator.set_context
+    //@+node:ekr.20241004163018.1: *4* Annotator.set_context (never gets called)
     fn set_context(&mut self, i: usize, context: &str) {
         //! Set self.index_dict[i], but only if it does not already exist!
 
@@ -592,6 +608,7 @@ impl Beautifier {
             // }
             
         for annotated_token in annotated_tokens {
+            println!("beautify: {annotated_token:?}");
             //@+<< LB: beautify: dispatch on annotated_token.kind >>
             //@+node:ekr.20241002062655.1: *4* << LB: beautify: dispatch on annotated_token.kind >>
             let kind = annotated_token.kind;
