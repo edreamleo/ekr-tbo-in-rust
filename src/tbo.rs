@@ -579,13 +579,41 @@ impl Beautifier {
         }
     }
     //@+node:ekr.20240929074037.113: *3* LB.beautify
-    fn beautify(&mut self, annotated_list: &Vec<AnnotatedInputTok>) -> String {
-        //! Beautify the input_tokens, creating the output String.
-        for input_token in annotated_list {
-            //@+<< LB: beautify: dispatch on input_token.kind >>
-            //@+node:ekr.20241002062655.1: *4* << LB: beautify: dispatch on input_token.kind >>
-            let kind = input_token.kind;  // ***.as_str();
-            let value = input_token.kind;  // ***.as_str();
+    fn beautify(&mut self, annotated_tokens: &Vec<AnnotatedInputTok>) -> String {
+        //! Beautify the annotated, creating the output String.
+
+        // Init ivars first.
+        // self.input_token = None;  // ???
+        // self.pending_lws = "";  // ???
+        // self.pending_ws = "";  // ???
+        // self.prev_output_kind = None;    // ???
+        // self.prev_output_value = None;  // ???
+
+        // // Init state.
+        // self.gen_token("file-start", "");
+        // self.push_state("file-start");
+
+        // // The main loop:
+        // prev_line_number: i32 = 0;
+        // for (self.index, self.input_token) in enumerate(input_tokens):
+            // // Set global for visitors.
+            // if prev_line_number != self.input_token.line_number {
+                // prev_line_number = self.input_token.line_number;
+            // }
+            // // Call the proper visitor.
+            // if self.verbatim {
+                // self.do_verbatim();
+            // } else {
+                // // Use match ???
+                // func = getattr(self, f"do_{self.input_token.kind}", self.no_visitor)
+                // func()
+            // }
+            
+        for annotated_token in annotated_tokens {
+            //@+<< LB: beautify: dispatch on annotated_token.kind >>
+            //@+node:ekr.20241002062655.1: *4* << LB: beautify: dispatch on annotated_token.kind >>
+            let kind = annotated_token.kind;
+            let value = annotated_token.kind;
             match kind {
                 // Some of these could be replaced by inline code.
                 "And" => self.do_And(),
@@ -656,9 +684,9 @@ impl Beautifier {
                 "ws" => self.do_ws(kind, value),
                 _ => println!("No visitor for: {kind}"),
             }
-            //@-<< LB: beautify: dispatch on input_token.kind >>
+            //@-<< LB: beautify: dispatch on annotated_token.kind >>
         }
-        // return ''.join(self.output_list);
+
         let mut result = String::new();
         for output_token in &self.output_list {
             result.push_str(output_token);
