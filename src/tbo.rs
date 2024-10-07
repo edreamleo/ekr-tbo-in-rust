@@ -45,7 +45,7 @@ impl <'a> AnnotatedInputTok<'_> {
 #[allow(dead_code)]
 struct Annotator<'a> {
     // Classes of tokens
-    insignificant_tokens: [&'a str; 7],
+    insignificant_tokens: [&'a str; 6],
     op_kinds: [&'a str; 29],
     // The present input token...
     input_tokens: &'a Vec<InputTok<'a>>,
@@ -82,7 +82,9 @@ impl Annotator<'_> {
             insignificant_tokens: [
                 //@+<< define Annotator::insignificant_tokens >>
                 //@+node:ekr.20241007085552.1: *4* << define Annotator::insignificant_tokens >>
-                "dummy", "ws",  // pseudo-tokens.
+                // *** "dummy",
+
+                "ws",  // pseudo-token.
                 "Comment", "Dedent", "Indent", "Newline", "Nl",  // Real tokens.
                 //@-<< define Annotator::insignificant_tokens >>
             ],
@@ -219,11 +221,11 @@ impl Annotator<'_> {
         // The main loop.
         let mut in_import = false;
         // Avoid Option complications by creating a dummy token and scan state.
-        let dummy_token = InputTok::new("dummy", "");
-        let dummy_state = ScanState::new("dummy-scan-state", &dummy_token);
+        // *** let dummy_token = InputTok::new("dummy", "");
+        // *** let dummy_state = ScanState::new("dummy-scan-state", &dummy_token);
         let mut scan_stack: Vec<ScanState> = Vec::new();
-        scan_stack.push(dummy_state);
-        let mut prev_token = &dummy_token;
+        // *** scan_stack.push(dummy_state);
+        let mut prev_token: Option<InputTok> = None;  // *** &dummy_token;
         for (i, token) in self.input_tokens.into_iter().enumerate() {
             let (kind, value) = (token.kind, token.value);
             if false {  // *** Testing only
@@ -312,11 +314,21 @@ impl Annotator<'_> {
                 // println!("Name: {value:?}");  // ***
                 //@+<< pre-scan name tokens >>
                 //@+node:ekr.20241004154345.4: *4* << pre-scan name tokens >>
+                // *** Python
+                // prev_is_yield = prev_token and prev_token.kind == 'name' and prev_token.value == 'yield'
+                // if value in ('from', 'import') and not prev_is_yield:
+                    // # 'import' and 'from x import' statements should be at the outer level.
+                    // assert not scan_stack, scan_stack
+                    // in_import = True
+
+
+
                 // *** WRONG: From and Import are separate tokens.
+
+
 
                 let prev_is_yield = prev_token.kind == "name" && prev_token.value == "yield";
 
-                // *** WRONG: if ["from", "import"].contains(value) && !prev_is_yield {
 
                 if !prev_is_yield && (value == "from" || value == "import") {
                     // "import" and "from x import" statements should be at the outer level.
@@ -348,31 +360,79 @@ impl Annotator<'_> {
             }
         }
     }
-    //@+node:ekr.20241004154345.5: *4* Annotator.finish_arg
-    fn finish_arg(&mut self, end: usize, state: &ScanState) {
+    //@+node:ekr.20241004154345.5: *4* Annotator.finish_arg***
+    // *** Python
+    // def finish_arg(self, end: int, state: Optional[ScanState]) -> None:
+        // """Set context for all ':' when scanning from '(' to ')'."""
+
+        // # Sanity checks.
+        // if not state:
+            // return
+        // assert state.kind == 'arg', repr(state)
+        // token = state.token
+        // assert token.value == '(', repr(token)
+        // values = state.value
+        // assert isinstance(values, list), repr(values)
+        // i1 = token.index
+        // assert i1 < end, (i1, end)
+        // if not values:
+            // return
+
+        // # Compute the context for each *separate* '=' token.
+        // equal_context = 'initializer'
+        // for i in values:
+            // token = self.input_tokens[i]
+            // assert token.kind == 'op', repr(token)
+            // if token.value == ',':
+                // equal_context = 'initializer'
+            // elif token.value == ':':
+                // equal_context = 'annotation'
+            // elif token.value == '=':
+                // self.set_context(i, equal_context)
+                // equal_context = 'initializer'
+
+        // # Set the context of all outer-level ':', '*', and '**' tokens.
+        // prev: Optional[InputToken] = None
+        // for i in range(i1, end):
+            // token = self.input_tokens[i]
+            // if token.kind not in self.insignificant_kinds:
+                // if token.kind == 'op':
+                    // if token.value in ('*', '**'):
+                        // if self.is_unary_op_with_prev(prev, token):
+                            // self.set_context(i, 'arg')
+                    // elif token.value == '=':
+                        // # The code above has set the context.
+                        // assert token.context in ('initializer', 'annotation'), (i, repr(token.context))
+                    // elif token.value == ':':
+                        // self.set_context(i, 'annotation')
+                // prev = token
+
+    // **** fn finish_arg(&mut self, end: usize, state: &ScanState) {
+    fn finish_arg(&mut self, end: usize, optional_state: &Option<ScanState>) {
         //! Set context for all ":" when scanning from "(" to ")".
         
         println!("finish_arg: {end} {state:?}");
-
+        
         // Sanity checks.
-        if state.kind == "dummy" {
-            return;
+        if !optional_state.is_some() {
+            return
         }
+        let state = Some(state);
         assert!(state.kind == "arg");
         assert!(state.token.value == "(");
-        let indices = &state.indices;
-        if indices.len() == 0 {
+        if state.indices.len() == 0 {
             return;
         }
-
-        // *** let mut i1 = token.index;
-        let i1 = 0;  // *** add mut later.
-        // assert i1 < end, (i1, end)
+        
+        // *** InputTok.index does not exist.
+        // *** Use i in the loop below.
+            // let mut i1 = indices[0];
+            // assert!(i1 < end);
 
         // Compute the context for each *separate* "=" token.
         let mut equal_context = "initializer";
-        for i in indices {
-            let token = &self.input_tokens[*i];
+        for i in state.indices {
+            let token = &self.input_tokens[i];
             println!("finish_arg: {i} {token:?}");
             assert!(token.kind == "op");
             if token.value == "," {
@@ -382,14 +442,19 @@ impl Annotator<'_> {
                 equal_context = "annotation";
             }
             else if token.value == "=" {
-                self.set_context(*i, equal_context);
+                self.set_context(i, equal_context);
                 equal_context = "initializer";
             }
         }
         // Set the context of all outer-level ":", "*", and "**" tokens.
-        let mut prev_token = &InputTok::new("dummy", "");
-        for i in i1..end {
-            let token = &self.input_tokens[i];
+        let mut prev_token: Option<InputTok> = None;  // *** prev_token = &InputTok::new("dummy", "");
+        // for i in i1..end {
+        //     let token = &self.input_tokens[i];
+        
+        // ***** InputTok MUST have index ivar!!1
+        
+        for (i, token) in self.input_tokens.into_iter().enumerate() {
+            
             if !self.insignificant_tokens.contains(&token.kind) {
                 if token.kind == "op" {
                     // if ["*", "**"].contains(token.value) {
@@ -517,7 +582,7 @@ impl Annotator<'_> {
             self.set_context(*i, "dict");
         }
     }
-    //@+node:ekr.20241004163018.1: *4* Annotator.set_context (never gets called)
+    //@+node:ekr.20241004163018.1: *4* Annotator.set_context
     fn set_context(&mut self, i: usize, context: &str) {
         //! Set self.index_dict[i], but only if it does not already exist!
 
@@ -540,13 +605,15 @@ impl Annotator<'_> {
 //@+node:ekr.20240929024648.120: ** class InputTok
 #[derive(Debug)]
 struct InputTok<'a> {
+    index: u32,
     kind: &'a str,
     value: &'a str,
 }
 
 impl <'a> InputTok<'_> {
-    fn new(kind: &'a str, value: &'a str) -> InputTok<'a> {
+    fn new(index: u32, kind: &'a str, value: &'a str) -> InputTok<'a> {
         InputTok {
+            index: index,
             kind: kind,
             value: value,
         }
@@ -1216,6 +1283,7 @@ impl Beautifier {
         let mut n_ws_tokens: u64 = 0;
         let mut prev_start: usize = 0;
         let mut result: Vec<InputTok> = Vec::new();
+        let mut index: u32 = 0;
         for token_tuple in lex(&contents, Mode::Module)
             .map(|tok| tok.expect("Failed to lex"))
             .collect::<Vec<_>>()
@@ -1231,7 +1299,7 @@ impl Beautifier {
             let end_i = usize::from(range.end());
             if start_i > prev_start {
                 let ws = &contents[prev_start..start_i];
-                result.push(InputTok::new("ws", ws));
+                result.push(InputTok::new(index, "ws", ws));
                 n_ws_tokens += 1
             }
             prev_start = end_i;
@@ -1352,7 +1420,8 @@ impl Beautifier {
             };
             //@-<< Calculate class_name using match token >>
             n_tokens += 1;
-            result.push(InputTok::new(class_name, tok_value));
+            result.push(InputTok::new(index, class_name, tok_value));
+            index += 1;
         }
         // Update counts.
         self.stats.n_tokens += n_tokens;
@@ -1429,6 +1498,13 @@ struct ParseState {
 }
 //@+node:ekr.20241004165555.1: ** class ScanState 
 #[derive(Clone, Debug)]
+
+// *** Python
+    // def __init__(self, kind: str, token: InputToken) -> None:
+        // self.kind = kind
+        // self.token = token
+        // self.value: list[int] = []  # Not always used
+
 struct ScanState<'a> {
     // A class representing tbo.pre_scan's scanning state.
     // Valid (kind, value) pairs:
