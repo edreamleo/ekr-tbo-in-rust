@@ -289,129 +289,129 @@
 </v>
 <v t="ekr.20240929024648.120"><vh>class InputTok</vh></v>
 <v t="ekr.20240929074037.1"><vh>class LeoBeautifier</vh>
-<v t="ekr.20240929074037.114"><vh> LB::new</vh></v>
-<v t="ekr.20240929074037.2"><vh>LB::add_output_string</vh></v>
-<v t="ekr.20240929074037.113"><vh>LB::beautify</vh>
+<v t="ekr.20240929074037.114"><vh> LB.new</vh></v>
+<v t="ekr.20240929074037.2"><vh>LB.add_output_string</vh></v>
+<v t="ekr.20240929074037.113"><vh>LB.beautify</vh>
 <v t="ekr.20241002062655.1"><vh>&lt;&lt; LB: beautify: dispatch on input_token.kind &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20240929074037.4"><vh>LB::beautify_all_files</vh></v>
-<v t="ekr.20240929074037.5"><vh>LB::beautify_one_file</vh></v>
-<v t="ekr.20240929074037.7"><vh>LB::do_*</vh>
+<v t="ekr.20240929074037.4"><vh>LB.beautify_all_files</vh></v>
+<v t="ekr.20240929074037.5"><vh>LB.beautify_one_file</vh></v>
+<v t="ekr.20240929074037.7"><vh>LB.do_*</vh>
 <v t="ekr.20241002071143.1"><vh>tbo.do_ws</vh></v>
 <v t="ekr.20240929074037.8"><vh>LB:Handlers with values</vh>
-<v t="ekr.20240929074037.9"><vh>LB::do_Comment</vh></v>
-<v t="ekr.20240929074037.10"><vh>LB::do_Complex</vh></v>
-<v t="ekr.20240929074037.11"><vh>LB::do_Float</vh></v>
-<v t="ekr.20240929074037.12"><vh>LB::do_Int</vh></v>
-<v t="ekr.20240929074037.13"><vh>LB::do_Name</vh></v>
-<v t="ekr.20240929074037.14"><vh>LB::do_String</vh></v>
+<v t="ekr.20240929074037.9"><vh>LB.do_Comment</vh></v>
+<v t="ekr.20240929074037.10"><vh>LB.do_Complex</vh></v>
+<v t="ekr.20240929074037.11"><vh>LB.do_Float</vh></v>
+<v t="ekr.20240929074037.12"><vh>LB.do_Int</vh></v>
+<v t="ekr.20240929074037.13"><vh>LB.do_Name</vh></v>
+<v t="ekr.20240929074037.14"><vh>LB.do_String</vh></v>
 </v>
 <v t="ekr.20240929074037.15"><vh>LB:Handlers using lws</vh>
-<v t="ekr.20240929074037.16"><vh>LB::do_Dedent</vh></v>
-<v t="ekr.20240929074037.17"><vh>LB::do_Indent</vh></v>
-<v t="ekr.20240929074037.18"><vh>LB::do_Newline</vh></v>
-<v t="ekr.20240929074037.19"><vh>LB::do_NonLogicalNewline</vh></v>
+<v t="ekr.20240929074037.16"><vh>LB.do_Dedent</vh></v>
+<v t="ekr.20240929074037.17"><vh>LB.do_Indent</vh></v>
+<v t="ekr.20240929074037.18"><vh>LB.do_Newline</vh></v>
+<v t="ekr.20240929074037.19"><vh>LB.do_NonLogicalNewline</vh></v>
 </v>
 <v t="ekr.20240929074037.20"><vh>LB:Handlers w/o values</vh>
-<v t="ekr.20240929074037.21"><vh>LB::do_Amper</vh></v>
-<v t="ekr.20240929074037.22"><vh>LB::do_AmperEqual</vh></v>
-<v t="ekr.20240929074037.23"><vh>LB::do_And</vh></v>
-<v t="ekr.20240929074037.24"><vh>LB::do_As</vh></v>
-<v t="ekr.20240929074037.25"><vh>LB::do_Assert</vh></v>
-<v t="ekr.20240929074037.26"><vh>LB::do_Async</vh></v>
-<v t="ekr.20240929074037.27"><vh>LB::do_At</vh></v>
-<v t="ekr.20240929074037.28"><vh>LB::do_AtEqual</vh></v>
-<v t="ekr.20240929074037.29"><vh>LB::do_Await</vh></v>
-<v t="ekr.20240929074037.30"><vh>LB::do_Break</vh></v>
-<v t="ekr.20240929074037.31"><vh>LB::do_Case</vh></v>
-<v t="ekr.20240929074037.32"><vh>LB::do_CircumFlex</vh></v>
-<v t="ekr.20240929074037.33"><vh>LB::do_CircumflexEqual</vh></v>
-<v t="ekr.20240929074037.34"><vh>LB::do_Class</vh></v>
-<v t="ekr.20240929074037.35"><vh>LB::do_Colon</vh></v>
-<v t="ekr.20240929074037.36"><vh>LB::do_ColonEqual</vh></v>
-<v t="ekr.20240929074037.37"><vh>LB::do_Comma</vh></v>
-<v t="ekr.20240929074037.38"><vh>LB::do_Continue</vh></v>
-<v t="ekr.20240929074037.39"><vh>LB::do_Def</vh></v>
-<v t="ekr.20240929074037.40"><vh>LB::do_Del</vh></v>
-<v t="ekr.20240929074037.41"><vh>LB::do_Dot</vh></v>
-<v t="ekr.20240929074037.42"><vh>LB::do_DoubleSlash</vh></v>
-<v t="ekr.20240929074037.43"><vh>LB::do_DoubleSlashEqual</vh></v>
-<v t="ekr.20240929074037.44"><vh>LB::do_DoubleStar</vh></v>
-<v t="ekr.20240929074037.45"><vh>LB::do_DoubleStarEqual</vh></v>
-<v t="ekr.20240929074037.46"><vh>LB::do_Elif</vh></v>
-<v t="ekr.20240929074037.47"><vh>LB::do_Ellipsis</vh></v>
-<v t="ekr.20240929074037.48"><vh>LB::do_Else</vh></v>
-<v t="ekr.20240929074037.49"><vh>LB::do_EndOfFile</vh></v>
-<v t="ekr.20240929074037.50"><vh>LB::do_EqEqual</vh></v>
-<v t="ekr.20240929074037.51"><vh>LB::do_Equal</vh></v>
-<v t="ekr.20240929074037.52"><vh>LB::do_Except</vh></v>
-<v t="ekr.20240929074037.53"><vh>LB::do_False</vh></v>
-<v t="ekr.20240929074037.54"><vh>LB::do_Finally</vh></v>
-<v t="ekr.20240929074037.55"><vh>LB::do_For</vh></v>
-<v t="ekr.20240929074037.56"><vh>LB::do_From</vh></v>
-<v t="ekr.20240929074037.57"><vh>LB::do_Global</vh></v>
-<v t="ekr.20240929074037.58"><vh>LB::do_Greater</vh></v>
-<v t="ekr.20240929074037.59"><vh>LB::do_GreaterEqual</vh></v>
-<v t="ekr.20240929074037.60"><vh>LB::do_If</vh></v>
-<v t="ekr.20240929074037.61"><vh>LB::do_Import</vh></v>
-<v t="ekr.20240929074037.62"><vh>LB::do_In</vh></v>
-<v t="ekr.20240929074037.63"><vh>LB::do_Is</vh></v>
-<v t="ekr.20240929074037.64"><vh>LB::do_Lambda</vh></v>
-<v t="ekr.20240929074037.65"><vh>LB::do_Lbrace</vh></v>
-<v t="ekr.20240929074037.66"><vh>LB::do_LeftShift</vh></v>
-<v t="ekr.20240929074037.67"><vh>LB::do_LeftShiftEqual</vh></v>
-<v t="ekr.20240929074037.68"><vh>LB::do_Less</vh></v>
-<v t="ekr.20240929074037.69"><vh>LB::do_LessEqual</vh></v>
-<v t="ekr.20240929074037.70"><vh>LB::do_Lpar</vh></v>
-<v t="ekr.20240929074037.71"><vh>LB::do_Lsqb</vh></v>
-<v t="ekr.20240929074037.72"><vh>LB::do_Match</vh></v>
-<v t="ekr.20240929074037.73"><vh>LB::do_Minus</vh></v>
-<v t="ekr.20240929074037.74"><vh>LB::do_MinusEqual</vh></v>
-<v t="ekr.20240929074037.75"><vh>LB::do_None</vh></v>
-<v t="ekr.20240929074037.76"><vh>LB::do_Nonlocal</vh></v>
-<v t="ekr.20240929074037.77"><vh>LB::do_Not</vh></v>
-<v t="ekr.20240929074037.78"><vh>LB::do_NotEqual</vh></v>
-<v t="ekr.20240929074037.79"><vh>LB::do_Or</vh></v>
-<v t="ekr.20240929074037.80"><vh>LB::do_Pass</vh></v>
-<v t="ekr.20240929074037.81"><vh>LB::do_Percent</vh></v>
-<v t="ekr.20240929074037.82"><vh>LB::do_PercentEqual</vh></v>
-<v t="ekr.20240929074037.83"><vh>LB::do_Plus</vh></v>
-<v t="ekr.20240929074037.84"><vh>LB::do_PlusEqual</vh></v>
-<v t="ekr.20240929074037.85"><vh>LB::do_Raise</vh></v>
-<v t="ekr.20240929074037.86"><vh>LB::do_Rarrow</vh></v>
-<v t="ekr.20240929074037.87"><vh>LB::do_Rbrace</vh></v>
-<v t="ekr.20240929074037.88"><vh>LB::do_Return</vh></v>
-<v t="ekr.20240929074037.89"><vh>LB::do_RightShift</vh></v>
-<v t="ekr.20240929074037.90"><vh>LB::do_RightShiftEqual</vh></v>
-<v t="ekr.20240929074037.91"><vh>LB::do_Rpar</vh></v>
-<v t="ekr.20240929074037.92"><vh>LB::do_Rsqb</vh></v>
-<v t="ekr.20240929074037.93"><vh>LB::do_Semi</vh></v>
-<v t="ekr.20240929074037.94"><vh>LB::do_Slash</vh></v>
-<v t="ekr.20240929074037.95"><vh>LB::do_SlashEqual</vh></v>
-<v t="ekr.20240929074037.96"><vh>LB::do_Star</vh></v>
-<v t="ekr.20240929074037.97"><vh>LB::do_StarEqual</vh></v>
-<v t="ekr.20240929074037.98"><vh>LB::do_StartExpression</vh></v>
-<v t="ekr.20240929074037.99"><vh>LB::do_StartInteractive</vh></v>
-<v t="ekr.20240929074037.100"><vh>LB::do_StarModule</vh></v>
-<v t="ekr.20240929074037.101"><vh>LB::do_Tilde</vh></v>
-<v t="ekr.20240929074037.102"><vh>LB::do_True</vh></v>
-<v t="ekr.20240929074037.103"><vh>LB::do_Try</vh></v>
-<v t="ekr.20240929074037.104"><vh>LB::do_Type</vh></v>
-<v t="ekr.20240929074037.105"><vh>LB::do_Vbar</vh></v>
-<v t="ekr.20240929074037.106"><vh>LB::do_VbarEqual</vh></v>
-<v t="ekr.20240929074037.107"><vh>LB::do_While</vh></v>
-<v t="ekr.20240929074037.108"><vh>LB::do_With</vh></v>
-<v t="ekr.20240929074037.109"><vh>LB::do_Yield</vh></v>
+<v t="ekr.20240929074037.21"><vh>LB.do_Amper</vh></v>
+<v t="ekr.20240929074037.22"><vh>LB.do_AmperEqual</vh></v>
+<v t="ekr.20240929074037.23"><vh>LB.do_And</vh></v>
+<v t="ekr.20240929074037.24"><vh>LB.do_As</vh></v>
+<v t="ekr.20240929074037.25"><vh>LB.do_Assert</vh></v>
+<v t="ekr.20240929074037.26"><vh>LB.do_Async</vh></v>
+<v t="ekr.20240929074037.27"><vh>LB.do_At</vh></v>
+<v t="ekr.20240929074037.28"><vh>LB.do_AtEqual</vh></v>
+<v t="ekr.20240929074037.29"><vh>LB.do_Await</vh></v>
+<v t="ekr.20240929074037.30"><vh>LB.do_Break</vh></v>
+<v t="ekr.20240929074037.31"><vh>LB.do_Case</vh></v>
+<v t="ekr.20240929074037.32"><vh>LB.do_CircumFlex</vh></v>
+<v t="ekr.20240929074037.33"><vh>LB.do_CircumflexEqual</vh></v>
+<v t="ekr.20240929074037.34"><vh>LB.do_Class</vh></v>
+<v t="ekr.20240929074037.35"><vh>LB.do_Colon</vh></v>
+<v t="ekr.20240929074037.36"><vh>LB.do_ColonEqual</vh></v>
+<v t="ekr.20240929074037.37"><vh>LB.do_Comma</vh></v>
+<v t="ekr.20240929074037.38"><vh>LB.do_Continue</vh></v>
+<v t="ekr.20240929074037.39"><vh>LB.do_Def</vh></v>
+<v t="ekr.20240929074037.40"><vh>LB.do_Del</vh></v>
+<v t="ekr.20240929074037.41"><vh>LB.do_Dot</vh></v>
+<v t="ekr.20240929074037.42"><vh>LB.do_DoubleSlash</vh></v>
+<v t="ekr.20240929074037.43"><vh>LB.do_DoubleSlashEqual</vh></v>
+<v t="ekr.20240929074037.44"><vh>LB.do_DoubleStar</vh></v>
+<v t="ekr.20240929074037.45"><vh>LB.do_DoubleStarEqual</vh></v>
+<v t="ekr.20240929074037.46"><vh>LB.do_Elif</vh></v>
+<v t="ekr.20240929074037.47"><vh>LB.do_Ellipsis</vh></v>
+<v t="ekr.20240929074037.48"><vh>LB.do_Else</vh></v>
+<v t="ekr.20240929074037.49"><vh>LB.do_EndOfFile</vh></v>
+<v t="ekr.20240929074037.50"><vh>LB.do_EqEqual</vh></v>
+<v t="ekr.20240929074037.51"><vh>LB.do_Equal</vh></v>
+<v t="ekr.20240929074037.52"><vh>LB.do_Except</vh></v>
+<v t="ekr.20240929074037.53"><vh>LB.do_False</vh></v>
+<v t="ekr.20240929074037.54"><vh>LB.do_Finally</vh></v>
+<v t="ekr.20240929074037.55"><vh>LB.do_For</vh></v>
+<v t="ekr.20240929074037.56"><vh>LB.do_From</vh></v>
+<v t="ekr.20240929074037.57"><vh>LB.do_Global</vh></v>
+<v t="ekr.20240929074037.58"><vh>LB.do_Greater</vh></v>
+<v t="ekr.20240929074037.59"><vh>LB.do_GreaterEqual</vh></v>
+<v t="ekr.20240929074037.60"><vh>LB.do_If</vh></v>
+<v t="ekr.20240929074037.61"><vh>LB.do_Import</vh></v>
+<v t="ekr.20240929074037.62"><vh>LB.do_In</vh></v>
+<v t="ekr.20240929074037.63"><vh>LB.do_Is</vh></v>
+<v t="ekr.20240929074037.64"><vh>LB.do_Lambda</vh></v>
+<v t="ekr.20240929074037.65"><vh>LB.do_Lbrace</vh></v>
+<v t="ekr.20240929074037.66"><vh>LB.do_LeftShift</vh></v>
+<v t="ekr.20240929074037.67"><vh>LB.do_LeftShiftEqual</vh></v>
+<v t="ekr.20240929074037.68"><vh>LB.do_Less</vh></v>
+<v t="ekr.20240929074037.69"><vh>LB.do_LessEqual</vh></v>
+<v t="ekr.20240929074037.70"><vh>LB.do_Lpar</vh></v>
+<v t="ekr.20240929074037.71"><vh>LB.do_Lsqb</vh></v>
+<v t="ekr.20240929074037.72"><vh>LB.do_Match</vh></v>
+<v t="ekr.20240929074037.73"><vh>LB.do_Minus</vh></v>
+<v t="ekr.20240929074037.74"><vh>LB.do_MinusEqual</vh></v>
+<v t="ekr.20240929074037.75"><vh>LB.do_None</vh></v>
+<v t="ekr.20240929074037.76"><vh>LB.do_Nonlocal</vh></v>
+<v t="ekr.20240929074037.77"><vh>LB.do_Not</vh></v>
+<v t="ekr.20240929074037.78"><vh>LB.do_NotEqual</vh></v>
+<v t="ekr.20240929074037.79"><vh>LB.do_Or</vh></v>
+<v t="ekr.20240929074037.80"><vh>LB.do_Pass</vh></v>
+<v t="ekr.20240929074037.81"><vh>LB.do_Percent</vh></v>
+<v t="ekr.20240929074037.82"><vh>LB.do_PercentEqual</vh></v>
+<v t="ekr.20240929074037.83"><vh>LB.do_Plus</vh></v>
+<v t="ekr.20240929074037.84"><vh>LB.do_PlusEqual</vh></v>
+<v t="ekr.20240929074037.85"><vh>LB.do_Raise</vh></v>
+<v t="ekr.20240929074037.86"><vh>LB.do_Rarrow</vh></v>
+<v t="ekr.20240929074037.87"><vh>LB.do_Rbrace</vh></v>
+<v t="ekr.20240929074037.88"><vh>LB.do_Return</vh></v>
+<v t="ekr.20240929074037.89"><vh>LB.do_RightShift</vh></v>
+<v t="ekr.20240929074037.90"><vh>LB.do_RightShiftEqual</vh></v>
+<v t="ekr.20240929074037.91"><vh>LB.do_Rpar</vh></v>
+<v t="ekr.20240929074037.92"><vh>LB.do_Rsqb</vh></v>
+<v t="ekr.20240929074037.93"><vh>LB.do_Semi</vh></v>
+<v t="ekr.20240929074037.94"><vh>LB.do_Slash</vh></v>
+<v t="ekr.20240929074037.95"><vh>LB.do_SlashEqual</vh></v>
+<v t="ekr.20240929074037.96"><vh>LB.do_Star</vh></v>
+<v t="ekr.20240929074037.97"><vh>LB.do_StarEqual</vh></v>
+<v t="ekr.20240929074037.98"><vh>LB.do_StartExpression</vh></v>
+<v t="ekr.20240929074037.99"><vh>LB.do_StartInteractive</vh></v>
+<v t="ekr.20240929074037.100"><vh>LB.do_StarModule</vh></v>
+<v t="ekr.20240929074037.101"><vh>LB.do_Tilde</vh></v>
+<v t="ekr.20240929074037.102"><vh>LB.do_True</vh></v>
+<v t="ekr.20240929074037.103"><vh>LB.do_Try</vh></v>
+<v t="ekr.20240929074037.104"><vh>LB.do_Type</vh></v>
+<v t="ekr.20240929074037.105"><vh>LB.do_Vbar</vh></v>
+<v t="ekr.20240929074037.106"><vh>LB.do_VbarEqual</vh></v>
+<v t="ekr.20240929074037.107"><vh>LB.do_While</vh></v>
+<v t="ekr.20240929074037.108"><vh>LB.do_With</vh></v>
+<v t="ekr.20240929074037.109"><vh>LB.do_Yield</vh></v>
 </v>
 </v>
-<v t="ekr.20240929074037.110"><vh>LB::enabled</vh></v>
-<v t="ekr.20240929074037.111"><vh>LB::get_args</vh></v>
-<v t="ekr.20240929074037.112"><vh>LB::make_input_list</vh>
+<v t="ekr.20240929074037.110"><vh>LB.enabled</vh></v>
+<v t="ekr.20240929074037.111"><vh>LB.get_args</vh></v>
+<v t="ekr.20240929074037.112"><vh>LB.make_input_list</vh>
 <v t="ekr.20241002113506.1"><vh>&lt;&lt; Calculate class_name using match token &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20240929074037.115"><vh>LB::show_args</vh></v>
-<v t="ekr.20240929074037.116"><vh>LB::show_help</vh></v>
-<v t="ekr.20241002163554.1"><vh>LB::string_to_static_str (not used)</vh></v>
+<v t="ekr.20240929074037.115"><vh>LB.show_args</vh></v>
+<v t="ekr.20240929074037.116"><vh>LB.show_help</vh></v>
+<v t="ekr.20241002163554.1"><vh>LB.string_to_static_str (not used)</vh></v>
 </v>
 <v t="ekr.20241004112826.1"><vh>class ParseState</vh>
 <v t="ekr.20241004113118.1"><vh>&lt;&lt; docstring: ParseState &gt;&gt;</vh></v>
@@ -432,16 +432,6 @@
 <v t="ekr.20241004153802.1"></v>
 <v t="ekr.20241004095735.1"></v>
 <v t="ekr.20241004110721.1"></v>
-<v t="ekr.20241007060538.7"><vh>diff: Changed</vh>
-<v t="ekr.20241007060538.10"><vh>diff: Annotator.annotate</vh>
-<v t="ekr.20241007060538.11"><vh>Old:LB::annotate_tokens</vh></v>
-<v t="ekr.20241004095735.1"></v>
-</v>
-<v t="ekr.20241007060538.12"><vh>diff: LB::beautify_one_file</vh>
-<v t="ekr.20241007060538.13"><vh>Old:LB::beautify_one_file</vh></v>
-<v t="ekr.20240929074037.5"></v>
-</v>
-</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -5013,113 +5003,5 @@ if value in ('from', 'import') and not prev_is_yield:
     if not token.context:
         token.context = context
 </t>
-<t tx="ekr.20241007060538.10">@ignore
-@nosearch
-@language patch
---- HEAD
-+++ uncommitted
-@@ -1,15 +1,18 @@
--fn annotate_tokens&lt;'a&gt;(&amp;mut self, input_tokens: &amp;'a Vec&lt;InputTok&lt;'a&gt;&gt;) -&gt; Vec::&lt;AnnotatedInputTok&lt;'a&gt;&gt; {
-+// fn annotate_tokens&lt;'a&gt;(&amp;mut self, input_tokens: &amp;'a Vec&lt;InputTok&lt;'a&gt;&gt;) -&gt; Vec::&lt;AnnotatedInputTok&lt;'a&gt;&gt; {
-+// fn annotate&lt;'a&gt;(&amp;mut self) -&gt; Vec::&lt;AnnotatedInputTok&lt;'a&gt;&gt; {
-+
-+fn annotate(&amp;mut self) -&gt; Vec::&lt;AnnotatedInputTok&gt; {
-+
-     //! Do the prepass, returning tokens annotated with context.
-     
-     let mut result = Vec::new();
--    let mut annotator = Annotator::new(input_tokens);
-     
--    // set self.index_dict
--    annotator.pre_scan();
-+    // Create self.index_dict.
-+    self.pre_scan();
-     
-     // Create the annotated tokens using self.index_dict.
--    for (i, token) in input_tokens.into_iter().enumerate() {
--        let context = match annotator.index_dict.get(&amp;i) {
-+    for (i, token) in self.input_tokens.into_iter().enumerate() {
-+        let context = match self.index_dict.get(&amp;i) {
-             Some(x) =&gt; x,
-             None =&gt; &amp;"".to_string(),
-         };
-@language python
-</t>
-<t tx="ekr.20241007060538.11">fn annotate_tokens&lt;'a&gt;(&amp;mut self, input_tokens: &amp;'a Vec&lt;InputTok&lt;'a&gt;&gt;) -&gt; Vec::&lt;AnnotatedInputTok&lt;'a&gt;&gt; {
-    //! Do the prepass, returning tokens annotated with context.
-    
-    let mut result = Vec::new();
-    let mut annotator = Annotator::new(input_tokens);
-    
-    // set self.index_dict
-    annotator.pre_scan();
-    
-    // Create the annotated tokens using self.index_dict.
-    for (i, token) in input_tokens.into_iter().enumerate() {
-        let context = match annotator.index_dict.get(&amp;i) {
-            Some(x) =&gt; x,
-            None =&gt; &amp;"".to_string(),
-        };
-        let context_string = context.to_string();
-        if !context_string.is_empty() {
-            println!("{i} {context_string}");
-        }
-        let annotated_token = AnnotatedInputTok::new(context_string, &amp;token.kind, &amp;token.value);
-        result.push(annotated_token);
-    }
-    return result;
-}
-</t>
-<t tx="ekr.20241007060538.12">@ignore
-@nosearch
-@language patch
---- HEAD
-+++ uncommitted
-@@ -23,7 +23,8 @@
-     self.stats.make_tokens_time += t2.elapsed().as_nanos();
-     // Annotate tokens (the prepass).
-     let t3 = std::time::Instant::now();
--    let annotated_tokens = self.annotate_tokens(&amp;input_tokens);
-+    let mut annotator = Annotator::new(&amp;input_tokens);
-+    let annotated_tokens = annotator.annotate();
-     self.stats.annotation_time += t3.elapsed().as_nanos();
-     // Beautify.
-     let t4 = std::time::Instant::now();
-@language python
-</t>
-<t tx="ekr.20241007060538.13">fn beautify_one_file(&amp;mut self, file_name: &amp;str) {
-    self.stats.n_files += 1;
-    if true {
-        // Testing only: print the short file name.
-        let file_path = path::Path::new(file_name);
-        let os_str = file_path.file_name().unwrap(); // &amp;OsStr
-        let short_file_name = os_str.to_str().unwrap();
-        println!("{short_file_name}");
-    }
-    // Read the file into contents (a String).
-    let t1 = std::time::Instant::now();
-    let contents = fs::read_to_string(file_name).expect("Error reading{file_name}");
-    self.stats.read_time += t1.elapsed().as_nanos();
-    // Create (an immutable!) list of input tokens.
-    let t2 = std::time::Instant::now();
-    let input_tokens = self.make_input_list(&amp;contents);
-    if false {
-        println!("input tokens...");
-        for token in &amp;input_tokens {
-            println!("{token:?}");
-        }
-    }
-    self.stats.make_tokens_time += t2.elapsed().as_nanos();
-    // Annotate tokens (the prepass).
-    let t3 = std::time::Instant::now();
-    let annotated_tokens = self.annotate_tokens(&amp;input_tokens);
-    self.stats.annotation_time += t3.elapsed().as_nanos();
-    // Beautify.
-    let t4 = std::time::Instant::now();
-    self.beautify(&amp;annotated_tokens);
-    self.stats.beautify_time += t4.elapsed().as_nanos();
-}
-</t>
-<t tx="ekr.20241007060538.7"></t>
 </tnodes>
 </leo_file>
