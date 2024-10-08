@@ -57,7 +57,7 @@ struct Annotator<'a> {
     in_arg_list: u32,  // > 0 if in an arg list of a def.
     in_doc_part: bool,
     state_stack: Vec<ParseState>,  // Stack of ParseState objects.
-    valid_contexts: [&'a str; 8],
+    valid_contexts: [&'a str; 7],
     verbatim: bool,  // True: don't beautify.
 }
 
@@ -103,7 +103,6 @@ impl Annotator<'_> {
             state_stack: Vec::new(),
             square_brackets_stack: Vec::new(),
             valid_contexts: [
-                "test",  // *** testing only.
                 "annotation", "arg", "complex-slice", "dict",
                 "import", "initializer", "simple-slice"],
             verbatim: false, 
@@ -124,15 +123,13 @@ impl Annotator<'_> {
             println!("");
             println!("annotate: self.input_tokens.len(): {input_tokens_len}");
             println!("annotate: self.index_dict: {dict_len}");
-            println!("");
         }
         for (i, token) in self.input_tokens.into_iter().enumerate() {
-            // *** println!("annotate: token: {token:?}");
             let context = match self.index_dict.get(&i) {
                 Some(x) => x,
                 None => "",
             };
-            // *** println!("annotate: context: {context:?}");
+            // println!("annotate: context: {context:?} token: {token:?}");
             let annotated_token = AnnotatedInputTok::new(&context, &token.kind, &token.value);
             result.push(annotated_token);
         }
@@ -154,7 +151,7 @@ impl Annotator<'_> {
         // Push a dummy token on the scan stack so it is never empty.
         let mut scan_stack: Vec<ScanState> = Vec::new();
         let dummy_token = InputTok::new(0, "dummy", "");
-        let dummy_state = ScanState::new("dummy-scan-state", &dummy_token);
+        let dummy_state = ScanState::new("dummy", &dummy_token);
         scan_stack.push(dummy_state);
         // Init prev_token to a dummy value.
         let mut prev_token = &dummy_token;
@@ -162,9 +159,6 @@ impl Annotator<'_> {
         let mut in_import = false;
         for (i, token) in self.input_tokens.into_iter().enumerate() {
             let (kind, value) = (token.kind, token.value);
-            if false {  // *** Testing only
-                self.set_context(i, "test");
-            }
             // println!("pre_scan: {kind:>20} {value:?}");
             if kind == "Newline" {
                 //@+<< pre-scan newline tokens >>
@@ -178,15 +172,12 @@ impl Annotator<'_> {
                 //@-<< pre-scan newline tokens >>
             }
             else if self.op_kinds.contains(&kind) {
-                // *** println!("   OP: kind: {kind:>12} value: {value:?}");
+                // println!("   OP: kind: {kind:>12} value: {value:?}");
                 //@+<< pre-scan op tokens >>
                 //@+node:ekr.20241004154345.3: *4* << pre-scan op tokens >>
                 // top_state: Optional[ScanState] = scan_stack[-1] if scan_stack else None
                 let mut top_state = scan_stack[scan_stack.len() - 1].clone();
-
-                if false {  // ***
-                    println!("   OP: kind: {kind:>12} value: {value:?}");
-                }
+                // println!("   OP: kind: {kind:>12} value: {value:?}");
 
                 // Handle "[" and "]".
                 if value == "[" {
@@ -226,14 +217,14 @@ impl Annotator<'_> {
                 }
 
                 // Handle interior tokens in "arg" and "slice" states.
-                if top_state.kind != "dummy-scan-state" {
+                if top_state.kind != "dummy" {
                     if value == ":" && ["dict", "slice"].contains(&top_state.kind) {
                         top_state.indices.push(i);
                     }
                     // *** There is a bug here.
-                    //  *** else if top_state.kind == "arg" && ["**", "*", "=", ":", ","].contains(&value) {
+                    // *** else if top_state.kind == "arg" && ["**", "*", "=", ":", ","].contains(&value) {
                     else if ["**", "*", "=", ":", ","].contains(&value) {
-                        // *** println!("FOUND: kind: {kind:>12} value: {value:?}");
+                        // println!("FOUND: kind: {kind:>12} value: {value:?}");
                         top_state.indices.push(i);
                     }
                 }
@@ -245,7 +236,7 @@ impl Annotator<'_> {
                 //@-<< pre-scan op tokens >>
             }
             else if kind == "Name" {
-                // *** println!("Name: {value:?}");
+                // println!("Name: {value:?}");
                 //@+<< pre-scan name tokens >>
                 //@+node:ekr.20241004154345.4: *4* << pre-scan name tokens >>
                 // *** Python
@@ -256,7 +247,6 @@ impl Annotator<'_> {
                         // # 'import' and 'from x import' statements should be at the outer level.
                         // assert not scan_stack, scan_stack
                         // in_import = True
-                        
 
                 let prev_is_yield = prev_token.kind == "name" && prev_token.value == "yield";
                 if !prev_is_yield && (value == "from" || value == "import") {
@@ -267,8 +257,7 @@ impl Annotator<'_> {
                 //@-<< pre-scan name tokens >>
             }
             else if ["Class", "Def"].contains(&kind) {
-                // *** println!("{kind}");
-                self.set_context(i, "test");
+                // println!("{kind}");
             }
             else if kind == "ws" {
             }
@@ -281,7 +270,7 @@ impl Annotator<'_> {
             }
         }
         // Sanity check.
-        if scan_stack.len() > 1 || scan_stack[0].kind != "dummy-scan-state" {
+        if scan_stack.len() > 1 || scan_stack[0].kind != "dummy" {
             println!("");
             println!("pre_scan: non-empty scan_stack");
             for scan_state in scan_stack {
@@ -289,7 +278,7 @@ impl Annotator<'_> {
             }
         }
     }
-    //@+node:ekr.20241004154345.5: *4* Annotator.finish_arg
+    //@+node:ekr.20241004154345.5: *4* Annotator.finish_arg (never called)
     // *** Python
     // def finish_arg(self, end: int, state: Optional[ScanState]) -> None:
         // """Set context for all ':' when scanning from '(' to ')'."""
@@ -341,20 +330,19 @@ impl Annotator<'_> {
         
         println!("finish_arg: {end} {state:?}");
         
-        // Sanity checks.
         if state.kind == "dummy" {
             println!("finish_arg: dummy state!");
             return
         }
-        assert!(state.kind == "arg");
-        assert!(state.token.value == "(");
         if state.indices.len() == 0 {
             return;
         }
-        // Convert token.index to usize for the slice i1..end below.
         let token = state.token;
-        let u32_i1 = token.index;
-        let i1 = usize::try_from(u32_i1).unwrap();
+        let i1 = token.index as usize;
+        
+        // Sanity checks.
+        assert!(state.kind == "arg");
+        assert!(state.token.value == "(");
         assert!(i1 < end);
 
         // Compute the context for each *separate* "=" token.
@@ -401,12 +389,13 @@ impl Annotator<'_> {
     fn finish_slice(&mut self, end: usize, state: &ScanState) {
         //! Set context for all ":" when scanning from "[" to "]".
 
+        if state.kind == "dummy" {
+            println!("finish_slice: dummy state!");
+            return;
+        }
         let indices = &state.indices;
         let token = state.token;
-
-        // Convert token.index to usize for the slice i1..end below.
-        let u32_i1 = token.index;
-        let i1 = usize::try_from(u32_i1).unwrap();
+        let i1 = token.index as usize;
 
         // Sanity checks.
         assert!(state.kind == "slice");
@@ -484,14 +473,14 @@ impl Annotator<'_> {
         //! 
         //! In other words, this method can be a do-nothing!
 
-        let token = state.token;
-        let u32_i1 = token.index;
-        let i1 = usize::try_from(u32_i1).unwrap();
-
-        // Sanity checks.
-        if state.kind == "Dummy" {
+        if state.kind == "dummy" {
+            println!("finish_dict: dummy state!");
             return;
         }
+        let token = state.token;
+        let i1 = token.index as usize;
+
+        // Sanity checks.
         assert!(state.kind == "dict");
         assert!(token.value == "{");
         assert!(i1 < end);
