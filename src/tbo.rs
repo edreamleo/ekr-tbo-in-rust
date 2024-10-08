@@ -4,13 +4,13 @@
 
 // From https://docs.rs/rustpython-parser/0.3.1/rustpython_parser/lexer/index.html
 
-// Must be first.
+// #! macros must be first.
 // #![allow(dead_code)]
 // #![allow(unused_imports)]
 // #![allow(unused_variables)]
 
 extern crate rustpython_parser;
-use rustpython_parser::{lexer::lex, Mode, Tok}; // text_size::TextRange
+use rustpython_parser::{lexer::lex, Mode, Tok};
 use std::env;
 use std::fs;
 use std::collections::HashMap;
@@ -18,7 +18,6 @@ use std::path;
 
 //@+others
 //@+node:ekr.20241004095931.1: ** class AnnotatedInputTok
-// *** Strange.
 #[allow(dead_code)]
 #[derive(Debug)]
 struct AnnotatedInputTok<'a> {
@@ -58,7 +57,7 @@ struct Annotator<'a> {
     in_arg_list: u32,  // > 0 if in an arg list of a def.
     in_doc_part: bool,
     state_stack: Vec<ParseState>,  // Stack of ParseState objects.
-    valid_contexts: [&'a str; 8],  // *** will be 7 w/o the "test" context.
+    valid_contexts: [&'a str; 8],
     verbatim: bool,  // True: don't beautify.
 }
 
@@ -135,11 +134,6 @@ impl Annotator<'_> {
             };
             // *** println!("annotate: context: {context:?}");
             let annotated_token = AnnotatedInputTok::new(&context, &token.kind, &token.value);
-            // ***
-            // let annotated_token = AnnotatedInputTok {
-                // // context: context.to_string(), kind: &token.kind, value: &token.value
-                // context: context, kind: &token.kind, value: &token.value
-            // };
             result.push(annotated_token);
         }
         return result;
@@ -184,7 +178,7 @@ impl Annotator<'_> {
                 //@-<< pre-scan newline tokens >>
             }
             else if self.op_kinds.contains(&kind) {
-                // *** println!("   OP: kind: {kind:>12} value: {value:?}");  // ***
+                // *** println!("   OP: kind: {kind:>12} value: {value:?}");
                 //@+<< pre-scan op tokens >>
                 //@+node:ekr.20241004154345.3: *4* << pre-scan op tokens >>
                 // top_state: Optional[ScanState] = scan_stack[-1] if scan_stack else None
@@ -232,10 +226,11 @@ impl Annotator<'_> {
                 }
 
                 // Handle interior tokens in "arg" and "slice" states.
-                if true { // *** top_state.kind != "dummy-scan-state" {
+                if top_state.kind != "dummy-scan-state" {
                     if value == ":" && ["dict", "slice"].contains(&top_state.kind) {
                         top_state.indices.push(i);
                     }
+                    // *** There is a bug here.
                     //  *** else if top_state.kind == "arg" && ["**", "*", "=", ":", ","].contains(&value) {
                     else if ["**", "*", "=", ":", ","].contains(&value) {
                         println!("FOUND: kind: {kind:>12} value: {value:?}");
@@ -250,7 +245,7 @@ impl Annotator<'_> {
                 //@-<< pre-scan op tokens >>
             }
             else if kind == "Name" {
-                // println!("Name: {value:?}");  // ***
+                // *** println!("Name: {value:?}");
                 //@+<< pre-scan name tokens >>
                 //@+node:ekr.20241004154345.4: *4* << pre-scan name tokens >>
                 // *** Python
@@ -272,10 +267,10 @@ impl Annotator<'_> {
                 //@-<< pre-scan name tokens >>
             }
             else if ["Class", "Def"].contains(&kind) {
-                // println!("{kind}");
+                // *** println!("{kind}");
                 self.set_context(i, "test");
             }
-            else if kind == "ws" {  // ***
+            else if kind == "ws" {
             }
             else {
                 // println!("Other: {kind:?}");
@@ -294,7 +289,7 @@ impl Annotator<'_> {
             }
         }
     }
-    //@+node:ekr.20241004154345.5: *4* Annotator.finish_arg***
+    //@+node:ekr.20241004154345.5: *4* Annotator.finish_arg
     // *** Python
     // def finish_arg(self, end: int, state: Optional[ScanState]) -> None:
         // """Set context for all ':' when scanning from '(' to ')'."""
@@ -403,17 +398,14 @@ impl Annotator<'_> {
     fn finish_slice(&mut self, end: usize, state: &ScanState) {
         //! Set context for all ":" when scanning from "[" to "]".
 
+        let indices = &state.indices;
+        let token = state.token;
+        let i1 = 0;  // *** must be token.index;
+        
         // Sanity checks.
         assert!(state.kind == "slice");
-        
-        let token = state.token;
         assert!(token.value == "[");
-
-        let indices = &state.indices;
-        
-        // *** let mut i1 = token.index;
-        let i1 = 0;
-        // assert i1 < end, (i1, end)
+        // *** assert(i1 < end);
 
         // Do nothing if there are no ":" tokens in the slice.
         if indices.len() == 0 {
