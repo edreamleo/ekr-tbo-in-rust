@@ -351,7 +351,10 @@ impl Annotator<'_> {
         if state.indices.len() == 0 {
             return;
         }
-        let i1 = state.indices[0];
+        // Convert token.index to usize for the slice i1..end below.
+        let token = state.token;
+        let u32_i1 = token.index;
+        let i1 = usize::try_from(u32_i1).unwrap();
         assert!(i1 < end);
 
         // Compute the context for each *separate* "=" token.
@@ -400,12 +403,15 @@ impl Annotator<'_> {
 
         let indices = &state.indices;
         let token = state.token;
-        let i1 = 0;  // *** must be token.index;
-        
+
+        // Convert token.index to usize for the slice i1..end below.
+        let u32_i1 = token.index;
+        let i1 = usize::try_from(u32_i1).unwrap();
+
         // Sanity checks.
         assert!(state.kind == "slice");
         assert!(token.value == "[");
-        // *** assert(i1 < end);
+        assert!(i1 < end);
 
         // Do nothing if there are no ":" tokens in the slice.
         if indices.len() == 0 {
@@ -478,18 +484,17 @@ impl Annotator<'_> {
         //! 
         //! In other words, this method can be a do-nothing!
 
+        let token = state.token;
+        let u32_i1 = token.index;
+        let i1 = usize::try_from(u32_i1).unwrap();
+
         // Sanity checks.
         if state.kind == "Dummy" {
             return;
         }
         assert!(state.kind == "dict");
-
-        let token = state.token;
         assert!(token.value == "{");
-
-        // *** Rewrite
-            // let i1 = token.index;
-            // assert i1 < end, (i1, end)
+        assert!(i1 < end);
 
         // Set the context for all ":" tokens.
         let indices = &state.indices;
