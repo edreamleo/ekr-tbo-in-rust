@@ -283,9 +283,7 @@
 <v t="ekr.20240927154016.1"><vh>Notes</vh>
 <v t="ekr.20240929084852.1"><vh>Ownership and mutation</vh></v>
 <v t="ekr.20241001055017.1"><vh>Traits</vh></v>
-<v t="ekr.20240928185643.1"><vh>Stats</vh></v>
 </v>
-<v t="ekr.20240927154323.1"><vh>** To do</vh></v>
 <v t="ekr.20241001104914.1"><vh>--- classes</vh>
 <v t="ekr.20241004095931.1"><vh>class AnnotatedInputTok</vh></v>
 <v t="ekr.20241004110721.1"><vh>class Annotator</vh>
@@ -298,7 +296,7 @@
 <v t="ekr.20241004154345.2"><vh>&lt;&lt; pre-scan newline tokens &gt;&gt;</vh></v>
 <v t="ekr.20241004154345.3"><vh>&lt;&lt; pre-scan op tokens &gt;&gt;</vh></v>
 <v t="ekr.20241004154345.4"><vh>&lt;&lt; pre-scan name tokens &gt;&gt;</vh></v>
-<v t="ekr.20241004154345.5"><vh>Annotator.finish_arg</vh></v>
+<v t="ekr.20241004154345.5"><vh>Annotator.finish_arg (never called)</vh></v>
 <v t="ekr.20241004154345.6"><vh>Annotator.finish_slice</vh></v>
 <v t="ekr.20241004154345.7"><vh>Annotator.finish_dict</vh></v>
 <v t="ekr.20241004163018.1"><vh>Annotator.set_context</vh></v>
@@ -451,6 +449,7 @@
 <v t="ekr.20241005091217.1"><vh>fn: is_python_keyword (to do)</vh></v>
 <v t="ekr.20241005092549.1"><vh>fn: is_unary_op_with_prev (to do)</vh></v>
 </v>
+<v t="ekr.20241007130048.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -835,33 +834,15 @@ subprocess.Popen(command, shell=True).communicate()
 @nowrap
 @nosearch
 
-code:
-
 ekr-tbo-in-rust: https://github.com/edreamleo/ekr-tbo-in-rust
 ruff_python_parser: https://github.com/astral-sh/ruff/tree/main/crates/ruff_python_parser/src
 lexer.rs: https://github.com/astral-sh/ruff/blob/main/crates/ruff_python_parser/src/lexer.rs
 
-docs:
-Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
-
-**Summary**
-
-- LB::make_input_list is too slow.
-  This code can not be significantly faster than Leo's python beautifier!
-  
-- LB:beautify is not the problem. It is fast enough.
-</t>
-<t tx="ekr.20240927154323.1">@language rest
-@wrap
-@nosearch
-
-Post: Use pointers, not objects.
-- Pointers keep borrow checker happy, provided lifetimes are given.
-- Optional data is a nightmare. Dummy data structures are much easier.
+**Won't do**
 
 - Improve test1.py: it doesn't check enough.
 - Finish LB:beautify.
-- Fix logic bugs?</t>
+- Fix logic bugs.</t>
 <t tx="ekr.20240928073118.1">@language python
 g.cls()
 import os
@@ -871,45 +852,6 @@ if c.changed:
     c.save()
 command = 'cargo fmt'
 subprocess.Popen(command, shell=True).communicate()
-</t>
-<t tx="ekr.20240928185643.1">@language rest
-@wrap
-
-Python (with extra tracing code in tbo.init_tokens_from_file:
-
-&gt; python -c "import leo.core.leoTokens" --all --report leo\core\leoFrame.py
-tbo: 0.03 sec. dirty: 0   checked: 1   beautified: 0   in leo\core\leoFrame.py
-
-       read:   0.28 ms
-make_tokens:  29.45 ms
-      total:  29.73 ms
-      
-Rust, with nanosecond resolution.
-
-=== Empty make_tokens loop.
-
-leoFrame.py
-
-     files: 1, tokens: 14619, ws tokens: 5156
-       read:    0.5 ms
-make_tokens:   10.7 ms  Empty loop
-   beautify:    7.3 ms
-      write:    0.0 ms
-      total:   18.5 ms
-
-=== Latest:
-
-leoFrame.py
-
-     files: 1, tokens: 14619, ws tokens: 5156
-       read:    0.55 ms
-make_tokens:   11.01 ms
-   annotate:    6.85 ms
-   beautify:    4.07 ms
-      write:    0.00 ms
-      total:   22.50 ms
-      
-Only about 10% faster than the Python beautifier.
 </t>
 <t tx="ekr.20240929024648.120">#[allow(dead_code)]
 #[derive(Debug)]
@@ -2122,15 +2064,13 @@ fn push_struct(v: &amp;mut Vec&lt;TestTok&gt;, val: i32) {
         println!("");
         println!("annotate: self.input_tokens.len(): {input_tokens_len}");
         println!("annotate: self.index_dict: {dict_len}");
-        println!("");
     }
     for (i, token) in self.input_tokens.into_iter().enumerate() {
-        // *** println!("annotate: token: {token:?}");
         let context = match self.index_dict.get(&amp;i) {
             Some(x) =&gt; x,
             None =&gt; "",
         };
-        // *** println!("annotate: context: {context:?}");
+        // println!("annotate: context: {context:?} token: {token:?}");
         let annotated_token = AnnotatedInputTok::new(&amp;context, &amp;token.kind, &amp;token.value);
         result.push(annotated_token);
     }
@@ -2176,7 +2116,7 @@ struct Annotator&lt;'a&gt; {
     in_arg_list: u32,  // &gt; 0 if in an arg list of a def.
     in_doc_part: bool,
     state_stack: Vec&lt;ParseState&gt;,  // Stack of ParseState objects.
-    valid_contexts: [&amp;'a str; 8],
+    valid_contexts: [&amp;'a str; 7],
     verbatim: bool,  // True: don't beautify.
 }
 
@@ -2234,7 +2174,6 @@ The present states:
         state_stack: Vec::new(),
         square_brackets_stack: Vec::new(),
         valid_contexts: [
-            "test",  // *** testing only.
             "annotation", "arg", "complex-slice", "dict",
             "import", "initializer", "simple-slice"],
         verbatim: false, 
@@ -2256,7 +2195,7 @@ The present states:
     // Push a dummy token on the scan stack so it is never empty.
     let mut scan_stack: Vec&lt;ScanState&gt; = Vec::new();
     let dummy_token = InputTok::new(0, "dummy", "");
-    let dummy_state = ScanState::new("dummy-scan-state", &amp;dummy_token);
+    let dummy_state = ScanState::new("dummy", &amp;dummy_token);
     scan_stack.push(dummy_state);
     // Init prev_token to a dummy value.
     let mut prev_token = &amp;dummy_token;
@@ -2264,24 +2203,20 @@ The present states:
     let mut in_import = false;
     for (i, token) in self.input_tokens.into_iter().enumerate() {
         let (kind, value) = (token.kind, token.value);
-        if false {  // *** Testing only
-            self.set_context(i, "test");
-        }
         // println!("pre_scan: {kind:&gt;20} {value:?}");
         if kind == "Newline" {
             &lt;&lt; pre-scan newline tokens &gt;&gt;
         }
         else if self.op_kinds.contains(&amp;kind) {
-            // *** println!("   OP: kind: {kind:&gt;12} value: {value:?}");
+            // println!("   OP: kind: {kind:&gt;12} value: {value:?}");
             &lt;&lt; pre-scan op tokens &gt;&gt;
         }
         else if kind == "Name" {
-            // *** println!("Name: {value:?}");
+            // println!("Name: {value:?}");
             &lt;&lt; pre-scan name tokens &gt;&gt;
         }
         else if ["Class", "Def"].contains(&amp;kind) {
-            // *** println!("{kind}");
-            self.set_context(i, "test");
+            // println!("{kind}");
         }
         else if kind == "ws" {
         }
@@ -2294,7 +2229,7 @@ The present states:
         }
     }
     // Sanity check.
-    if scan_stack.len() &gt; 1 || scan_stack[0].kind != "dummy-scan-state" {
+    if scan_stack.len() &gt; 1 || scan_stack[0].kind != "dummy" {
         println!("");
         println!("pre_scan: non-empty scan_stack");
         for scan_state in scan_stack {
@@ -2312,10 +2247,7 @@ if in_import &amp;&amp; scan_stack.len() == 0 {
 </t>
 <t tx="ekr.20241004154345.3">// top_state: Optional[ScanState] = scan_stack[-1] if scan_stack else None
 let mut top_state = scan_stack[scan_stack.len() - 1].clone();
-
-if false {  // ***
-    println!("   OP: kind: {kind:&gt;12} value: {value:?}");
-}
+// println!("   OP: kind: {kind:&gt;12} value: {value:?}");
 
 // Handle "[" and "]".
 if value == "[" {
@@ -2355,14 +2287,14 @@ else if value == ")" {
 }
 
 // Handle interior tokens in "arg" and "slice" states.
-if top_state.kind != "dummy-scan-state" {
+if top_state.kind != "dummy" {
     if value == ":" &amp;&amp; ["dict", "slice"].contains(&amp;top_state.kind) {
         top_state.indices.push(i);
     }
     // *** There is a bug here.
-    //  *** else if top_state.kind == "arg" &amp;&amp; ["**", "*", "=", ":", ","].contains(&amp;value) {
+    // *** else if top_state.kind == "arg" &amp;&amp; ["**", "*", "=", ":", ","].contains(&amp;value) {
     else if ["**", "*", "=", ":", ","].contains(&amp;value) {
-        // *** println!("FOUND: kind: {kind:&gt;12} value: {value:?}");
+        // println!("FOUND: kind: {kind:&gt;12} value: {value:?}");
         top_state.indices.push(i);
     }
 }
@@ -2380,7 +2312,6 @@ if in_import &amp;&amp; ["(", "."].contains(&amp;value) {
         // # 'import' and 'from x import' statements should be at the outer level.
         // assert not scan_stack, scan_stack
         // in_import = True
-        
 
 let prev_is_yield = prev_token.kind == "name" &amp;&amp; prev_token.value == "yield";
 if !prev_is_yield &amp;&amp; (value == "from" || value == "import") {
@@ -2440,20 +2371,19 @@ fn finish_arg(&amp;mut self, end: usize, state: &amp;ScanState) {
     
     println!("finish_arg: {end} {state:?}");
     
-    // Sanity checks.
     if state.kind == "dummy" {
         println!("finish_arg: dummy state!");
         return
     }
-    assert!(state.kind == "arg");
-    assert!(state.token.value == "(");
     if state.indices.len() == 0 {
         return;
     }
-    // Convert token.index to usize for the slice i1..end below.
     let token = state.token;
-    let u32_i1 = token.index;
-    let i1 = usize::try_from(u32_i1).unwrap();
+    let i1 = token.index as usize;
+    
+    // Sanity checks.
+    assert!(state.kind == "arg");
+    assert!(state.token.value == "(");
     assert!(i1 &lt; end);
 
     // Compute the context for each *separate* "=" token.
@@ -2500,12 +2430,13 @@ fn finish_arg(&amp;mut self, end: usize, state: &amp;ScanState) {
 <t tx="ekr.20241004154345.6">fn finish_slice(&amp;mut self, end: usize, state: &amp;ScanState) {
     //! Set context for all ":" when scanning from "[" to "]".
 
+    if state.kind == "dummy" {
+        println!("finish_slice: dummy state!");
+        return;
+    }
     let indices = &amp;state.indices;
     let token = state.token;
-
-    // Convert token.index to usize for the slice i1..end below.
-    let u32_i1 = token.index;
-    let i1 = usize::try_from(u32_i1).unwrap();
+    let i1 = token.index as usize;
 
     // Sanity checks.
     assert!(state.kind == "slice");
@@ -2583,14 +2514,14 @@ fn finish_dict(&amp;mut self, end: usize, state: &amp;ScanState) {
     //! 
     //! In other words, this method can be a do-nothing!
 
-    let token = state.token;
-    let u32_i1 = token.index;
-    let i1 = usize::try_from(u32_i1).unwrap();
-
-    // Sanity checks.
-    if state.kind == "Dummy" {
+    if state.kind == "dummy" {
+        println!("finish_dict: dummy state!");
         return;
     }
+    let token = state.token;
+    let i1 = token.index as usize;
+
+    // Sanity checks.
     assert!(state.kind == "dict");
     assert!(token.value == "{");
     assert!(i1 &lt; end);
@@ -5135,11 +5066,74 @@ if value in ('from', 'import') and not prev_is_yield:
 "Rarrow", "Rbrace", "Rpar", "Rsqb",
 "Star",
 </t>
-<t tx="ekr.20241007130048.1"># ekr-tbo-in-rust
+<t tx="ekr.20241007130048.1">@language md
 
-Leo's Token Based beautifier (TBO) transliterated to Rust.
+# ekr-tbo-in-rust
 
-This is a learning project. It won't ever be fast enough to replace Leo's Python beautifier.
+The project transliterates Leo's Token Based beautifier (TBO) from Python to Rust.
+
+### Status
+
+- The Rust code compiles correctly.
+- *This project is too slow to replace Leo's Python beautifier.*
+   The present code is only about 10% faster than the Python code!
+- *The project contains significant logic errors.*
+   In particular, no context is ever added to any annotated input token.
+   Fixing these errors is beyond the scope of the preset work.
+
+### Repos
+
+ekr-tbo-in-rust: https://github.com/edreamleo/ekr-tbo-in-rust
+ruff_python_parser: https://github.com/astral-sh/ruff/tree/main/crates/ruff_python_parser/src
+lexer.rs: https://github.com/astral-sh/ruff/blob/main/crates/ruff_python_parser/src/lexer.rs
+
+### Statistics
+
+This project is too slow to replace Leo's Python beautifier.
+As shown below, the culprit is `LB.make_input_tokens`.
+As a result, the project can not be significantly faster than Leo's python beautifier!
+
+**Python stats, with extra tracing code in tbo.init_tokens_from_file**:
+
+```
+python -c "import leo.core.leoTokens" --all --report leo\core\leoFrame.py
+tbo: 0.03 sec. dirty: 0   checked: 1   beautified: 0   in leo\core\leoFrame.py
+
+       read:   0.28 ms
+make_tokens:  29.45 ms
+      total:  29.73 ms
+```  
+**Rust, with an empty loop in make_input_tokens:**
+```
+leoFrame.py
+
+     files: 1, tokens: 14619, ws tokens: 5156
+       read:    0.5 ms
+make_tokens:   10.7 ms  Empty loop
+   beautify:    7.3 ms
+      write:    0.0 ms
+      total:   18.5 ms
+```
+**Rust, with latest code**:
+```
+leoFrame.py
+
+annotate: self.input_tokens.len(): 19775
+annotate: self.index_dict: 0
+
+     files: 1, tokens: 14619, ws tokens: 5156
+       read:    0.53 ms
+make_tokens:   11.75 ms
+   annotate:    6.69 ms
+   beautify:    4.11 ms
+      write:    0.00 ms
+      total:   23.10 ms
+```
+**Notes**:
+- The latest Rust code is only about 10% faster than the Python code.
+- The index dict contains no entries, so no annotated tokens contain any context.
+  This is a serious logic error. Fixing it is beyond the scope of this project.
+
 </t>
 <t tx="ekr.20241007141942.1">@nosearch
 
