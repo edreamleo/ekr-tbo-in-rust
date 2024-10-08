@@ -233,7 +233,7 @@ impl Annotator<'_> {
                     // *** There is a bug here.
                     //  *** else if top_state.kind == "arg" && ["**", "*", "=", ":", ","].contains(&value) {
                     else if ["**", "*", "=", ":", ","].contains(&value) {
-                        println!("FOUND: kind: {kind:>12} value: {value:?}");
+                        // *** println!("FOUND: kind: {kind:>12} value: {value:?}");
                         top_state.indices.push(i);
                     }
                 }
@@ -1597,13 +1597,13 @@ pub fn main() {
         // testing.
         println!("");
         for file_path in [
-            "C:\\Repos\\ekr-tbo-in-rust\\test\\test1.py",
-            // "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py",
+            // "C:\\Repos\\ekr-tbo-in-rust\\test\\test1.py",
+            "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py",
             // "C:\\Repos\\leo-editor\\leo\\core\\leoApp.py"
         ] {
             x.beautify_one_file(&file_path);
         }
-        // x.stats.report();
+        x.stats.report();
     } else {
         if x.enabled("--help") || x.enabled("-h") {
             x.show_help();

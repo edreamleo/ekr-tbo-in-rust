@@ -298,7 +298,7 @@
 <v t="ekr.20241004154345.2"><vh>&lt;&lt; pre-scan newline tokens &gt;&gt;</vh></v>
 <v t="ekr.20241004154345.3"><vh>&lt;&lt; pre-scan op tokens &gt;&gt;</vh></v>
 <v t="ekr.20241004154345.4"><vh>&lt;&lt; pre-scan name tokens &gt;&gt;</vh></v>
-<v t="ekr.20241004154345.5"><vh>Annotator.finish_arg***</vh></v>
+<v t="ekr.20241004154345.5"><vh>Annotator.finish_arg</vh></v>
 <v t="ekr.20241004154345.6"><vh>Annotator.finish_slice</vh></v>
 <v t="ekr.20241004154345.7"><vh>Annotator.finish_dict</vh></v>
 <v t="ekr.20241004163018.1"><vh>Annotator.set_context</vh></v>
@@ -445,15 +445,12 @@
 <v t="ekr.20240929074037.113"></v>
 </v>
 <v t="ekr.20241007144301.1"><vh>--- recent</vh>
-<v t="ekr.20241007085552.1"></v>
-<v t="ekr.20241007085705.1"></v>
 <v t="ekr.20241004095735.1"></v>
 <v t="ekr.20241004153802.1"></v>
 <v t="ekr.20241004163018.1"></v>
 <v t="ekr.20241005091217.1"><vh>fn: is_python_keyword (to do)</vh></v>
 <v t="ekr.20241005092549.1"><vh>fn: is_unary_op_with_prev (to do)</vh></v>
 </v>
-<v t="ekr.20240928161210.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -860,11 +857,11 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 
 Post: Use pointers, not objects.
 - Pointers keep borrow checker happy, provided lifetimes are given.
+- Optional data is a nightmare. Dummy data structures are much easier.
 
-- Make 
 - Improve test1.py: it doesn't check enough.
 - Finish LB:beautify.
-</t>
+- Fix logic bugs?</t>
 <t tx="ekr.20240928073118.1">@language python
 g.cls()
 import os
@@ -2026,13 +2023,13 @@ pub fn main() {
         // testing.
         println!("");
         for file_path in [
-            "C:\\Repos\\ekr-tbo-in-rust\\test\\test1.py",
-            // "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py",
+            // "C:\\Repos\\ekr-tbo-in-rust\\test\\test1.py",
+            "C:\\Repos\\leo-editor\\leo\\core\\leoFrame.py",
             // "C:\\Repos\\leo-editor\\leo\\core\\leoApp.py"
         ] {
             x.beautify_one_file(&amp;file_path);
         }
-        // x.stats.report();
+        x.stats.report();
     } else {
         if x.enabled("--help") || x.enabled("-h") {
             x.show_help();
@@ -2135,18 +2132,12 @@ fn push_struct(v: &amp;mut Vec&lt;TestTok&gt;, val: i32) {
         };
         // *** println!("annotate: context: {context:?}");
         let annotated_token = AnnotatedInputTok::new(&amp;context, &amp;token.kind, &amp;token.value);
-        // ***
-        // let annotated_token = AnnotatedInputTok {
-            // // context: context.to_string(), kind: &amp;token.kind, value: &amp;token.value
-            // context: context, kind: &amp;token.kind, value: &amp;token.value
-        // };
         result.push(annotated_token);
     }
     return result;
 }
 </t>
-<t tx="ekr.20241004095931.1">// *** Strange.
-#[allow(dead_code)]
+<t tx="ekr.20241004095931.1">#[allow(dead_code)]
 #[derive(Debug)]
 struct AnnotatedInputTok&lt;'a&gt; {
     // context: String,
@@ -2185,7 +2176,7 @@ struct Annotator&lt;'a&gt; {
     in_arg_list: u32,  // &gt; 0 if in an arg list of a def.
     in_doc_part: bool,
     state_stack: Vec&lt;ParseState&gt;,  // Stack of ParseState objects.
-    valid_contexts: [&amp;'a str; 8],  // *** will be 7 w/o the "test" context.
+    valid_contexts: [&amp;'a str; 8],
     verbatim: bool,  // True: don't beautify.
 }
 
@@ -2281,18 +2272,18 @@ The present states:
             &lt;&lt; pre-scan newline tokens &gt;&gt;
         }
         else if self.op_kinds.contains(&amp;kind) {
-            // *** println!("   OP: kind: {kind:&gt;12} value: {value:?}");  // ***
+            // *** println!("   OP: kind: {kind:&gt;12} value: {value:?}");
             &lt;&lt; pre-scan op tokens &gt;&gt;
         }
         else if kind == "Name" {
-            // println!("Name: {value:?}");  // ***
+            // *** println!("Name: {value:?}");
             &lt;&lt; pre-scan name tokens &gt;&gt;
         }
         else if ["Class", "Def"].contains(&amp;kind) {
-            // println!("{kind}");
+            // *** println!("{kind}");
             self.set_context(i, "test");
         }
-        else if kind == "ws" {  // ***
+        else if kind == "ws" {
         }
         else {
             // println!("Other: {kind:?}");
@@ -2364,13 +2355,14 @@ else if value == ")" {
 }
 
 // Handle interior tokens in "arg" and "slice" states.
-if true { // *** top_state.kind != "dummy-scan-state" {
+if top_state.kind != "dummy-scan-state" {
     if value == ":" &amp;&amp; ["dict", "slice"].contains(&amp;top_state.kind) {
         top_state.indices.push(i);
     }
+    // *** There is a bug here.
     //  *** else if top_state.kind == "arg" &amp;&amp; ["**", "*", "=", ":", ","].contains(&amp;value) {
     else if ["**", "*", "=", ":", ","].contains(&amp;value) {
-        println!("FOUND: kind: {kind:&gt;12} value: {value:?}");
+        // *** println!("FOUND: kind: {kind:&gt;12} value: {value:?}");
         top_state.indices.push(i);
     }
 }
@@ -2505,17 +2497,14 @@ fn finish_arg(&amp;mut self, end: usize, state: &amp;ScanState) {
 <t tx="ekr.20241004154345.6">fn finish_slice(&amp;mut self, end: usize, state: &amp;ScanState) {
     //! Set context for all ":" when scanning from "[" to "]".
 
+    let indices = &amp;state.indices;
+    let token = state.token;
+    let i1 = 0;  // *** must be token.index;
+    
     // Sanity checks.
     assert!(state.kind == "slice");
-    
-    let token = state.token;
     assert!(token.value == "[");
-
-    let indices = &amp;state.indices;
-    
-    // *** let mut i1 = token.index;
-    let i1 = 0;
-    // assert i1 &lt; end, (i1, end)
+    // *** assert(i1 &lt; end);
 
     // Do nothing if there are no ":" tokens in the slice.
     if indices.len() == 0 {
