@@ -17,10 +17,6 @@ use std::collections::HashMap;
 use std::path;
 
 //@+others
-//@+node:ekr.20241003093554.1: **  pub fn entry
-pub fn entry() {
-    main();
-}
 //@+node:ekr.20241004095931.1: ** class AnnotatedInputTok
 // *** Strange.
 #[allow(dead_code)]
@@ -68,102 +64,7 @@ struct Annotator<'a> {
 
 impl Annotator<'_> {
     //@+others
-    //@+node:ekr.20241004095735.1: *3* Annotator.annotate
-    fn annotate(&mut self) -> Vec::<AnnotatedInputTok> {
-        //! Do the prepass, returning tokens annotated with context.
-        let mut result = Vec::new();
-
-        // Create self.index_dict.
-        self.pre_scan();
-
-        // Create the annotated tokens using self.index_dict.
-        {
-            let input_tokens_len = self.input_tokens.len();
-            let dict_len = &self.index_dict.len();
-            println!("");
-            println!("annotate: self.input_tokens.len(): {input_tokens_len}");
-            println!("annotate: self.index_dict: {dict_len}");
-            println!("");
-        }
-        for (i, token) in self.input_tokens.into_iter().enumerate() {
-            // *** println!("annotate: token: {token:?}");
-            let context = match self.index_dict.get(&i) {
-                Some(x) => x,
-                None => "",
-            };
-            // *** println!("annotate: context: {context:?}");
-            let annotated_token = AnnotatedInputTok::new(&context, &token.kind, &token.value);
-            // ***
-            // let annotated_token = AnnotatedInputTok {
-                // // context: context.to_string(), kind: &token.kind, value: &token.value
-                // context: context, kind: &token.kind, value: &token.value
-            // };
-            result.push(annotated_token);
-        }
-        return result;
-    }
-    //@+node:ekr.20241005091217.1: *3* Annotator.is_python_keyword (to do)
-    // def is_python_keyword(self, token: Optional[InputToken]) -> bool:
-        // """Return True if token is a 'name' token referring to a Python keyword."""
-        // if not token or token.kind != 'name':
-            // return False
-        // return keyword.iskeyword(token.value) or keyword.issoftkeyword(token.value)
-        
-    // Keywords:
-    // False      await      else       import     pass
-    // None       break      except     in         raise
-    // True       class      finally    is         return
-    // and        continue   for        lambda     try
-    // as         def        from       nonlocal   while
-    // assert     del        global     not        with
-    // async      elif       if         or         yield
-
-    // Soft keywords:
-    // match, case, type and _
-
-    // *** Remove leading underscores.
-    fn is_python_keyword(&self, _token: &InputTok) -> bool {
-        return false;
-
-        // *** Not ready yet.
-            // //! Return True if token is a 'name' token referring to a Python keyword.
-            // if token.kind != "name" {
-                // return false;
-            // }
-            // // let word = &token.value;  // &String
-            // return false;  // ***
-    }
-    //@+node:ekr.20241005092549.1: *3* Annotator.is_unary_op_with_prev (to do)
-    // def is_unary_op_with_prev(self, prev: Optional[InputToken], token: InputToken) -> bool:
-        // """
-        // Return True if token is a unary op in the context of prev, the previous
-        // significant token.
-        // """
-        // if token.value == '~':  # pragma: no cover
-            // return True
-        // if prev is None:
-            // return True  # pragma: no cover
-        // assert token.value in '**-+', repr(token.value)
-        // if prev.kind in ('number', 'string'):
-            // return_val = False
-        // elif prev.kind == 'op' and prev.value in ')]':
-             // # An unnecessary test?
-            // return_val = False  # pragma: no cover
-        // elif prev.kind == 'op' and prev.value in '{([:,':
-            // return_val = True
-        // elif prev.kind != 'name':
-            // # An unnecessary test?
-            // return_val = True  # pragma: no cover
-        // else:
-            // # prev is a'name' token.
-            // return self.is_python_keyword(token)
-        // return return_val
-
-    // *** Remove leading underscores.
-    fn is_unary_op_with_prev(&self, _prev_token: &InputTok, _token: &InputTok) -> bool {
-        return false;  // ***
-    }
-    //@+node:ekr.20241004153742.1: *3* Annotator.new
+    //@+node:ekr.20241004153742.1: *3*  Annotator.new
     fn new<'a>(input_tokens: &'a Vec<InputTok>) -> Annotator<'a> {
         Annotator {
             curly_brackets_level: 0,
@@ -208,6 +109,40 @@ impl Annotator<'_> {
                 "import", "initializer", "simple-slice"],
             verbatim: false, 
         }
+    }
+    //@+node:ekr.20241004095735.1: *3* Annotator.annotate
+    fn annotate(&mut self) -> Vec::<AnnotatedInputTok> {
+        //! Do the prepass, returning tokens annotated with context.
+        let mut result = Vec::new();
+
+        // Create self.index_dict.
+        self.pre_scan();
+
+        // Create the annotated tokens using self.index_dict.
+        {
+            let input_tokens_len = self.input_tokens.len();
+            let dict_len = &self.index_dict.len();
+            println!("");
+            println!("annotate: self.input_tokens.len(): {input_tokens_len}");
+            println!("annotate: self.index_dict: {dict_len}");
+            println!("");
+        }
+        for (i, token) in self.input_tokens.into_iter().enumerate() {
+            // *** println!("annotate: token: {token:?}");
+            let context = match self.index_dict.get(&i) {
+                Some(x) => x,
+                None => "",
+            };
+            // *** println!("annotate: context: {context:?}");
+            let annotated_token = AnnotatedInputTok::new(&context, &token.kind, &token.value);
+            // ***
+            // let annotated_token = AnnotatedInputTok {
+                // // context: context.to_string(), kind: &token.kind, value: &token.value
+                // context: context, kind: &token.kind, value: &token.value
+            // };
+            result.push(annotated_token);
+        }
+        return result;
     }
     //@+node:ekr.20241004153802.1: *3* Annotator.pre_scan & helpers
     fn pre_scan(&mut self) {
@@ -281,7 +216,7 @@ impl Annotator<'_> {
 
                 // Handle "(" and ")"
                 else if value == "(" {
-                    if self.is_python_keyword(&prev_token) || prev_token.kind != "name" {
+                    if is_python_keyword(&prev_token) || prev_token.kind != "name" {
                         scan_stack.push(ScanState::new("(", &token));
                     }
                     else {
@@ -448,7 +383,7 @@ impl Annotator<'_> {
             if !self.insignificant_tokens.contains(&token.kind) {
                 if token.kind == "op" {
                     if ["*", "**"].contains(&token.value) {
-                        if self.is_unary_op_with_prev(&prev_token, &token) {
+                        if is_unary_op_with_prev(&prev_token, &token) {
                             self.set_context(i, "arg");
                         }
                     }
@@ -505,7 +440,7 @@ impl Annotator<'_> {
                     }
                     else if *value == *"-" || *value == *"+" {
                         // Ignore unary "-" or "+" tokens.
-                        if !self.is_unary_op_with_prev(&prev_token, &token) {
+                        if !is_unary_op_with_prev(&prev_token, &token) {
                             inter_colon_tokens += 1;
                             if inter_colon_tokens > 1 {
                                 final_context = "complex-slice";
@@ -1596,7 +1531,72 @@ impl Stats {
     }
     //@-others
 }
-//@+node:ekr.20241003093722.1: ** fn main
+//@+node:ekr.20241003093554.1: ** fn: entry
+pub fn entry() {
+    main();
+}
+//@+node:ekr.20241005091217.1: ** fn: is_python_keyword (to do)
+// def is_python_keyword(self, token: Optional[InputToken]) -> bool:
+    // """Return True if token is a 'name' token referring to a Python keyword."""
+    // if not token or token.kind != 'name':
+        // return False
+    // return keyword.iskeyword(token.value) or keyword.issoftkeyword(token.value)
+    
+// Keywords:
+// False      await      else       import     pass
+// None       break      except     in         raise
+// True       class      finally    is         return
+// and        continue   for        lambda     try
+// as         def        from       nonlocal   while
+// assert     del        global     not        with
+// async      elif       if         or         yield
+
+// Soft keywords:
+// match, case, type and _
+
+// *** Remove leading underscores.
+fn is_python_keyword(_token: &InputTok) -> bool {
+    return false;
+
+    // *** Not ready yet.
+        // //! Return True if token is a 'name' token referring to a Python keyword.
+        // if token.kind != "name" {
+            // return false;
+        // }
+        // // let word = &token.value;  // &String
+        // return false;  // ***
+}
+//@+node:ekr.20241005092549.1: ** fn: is_unary_op_with_prev (to do)
+// def is_unary_op_with_prev(self, prev: Optional[InputToken], token: InputToken) -> bool:
+    // """
+    // Return True if token is a unary op in the context of prev, the previous
+    // significant token.
+    // """
+    // if token.value == '~':  # pragma: no cover
+        // return True
+    // if prev is None:
+        // return True  # pragma: no cover
+    // assert token.value in '**-+', repr(token.value)
+    // if prev.kind in ('number', 'string'):
+        // return_val = False
+    // elif prev.kind == 'op' and prev.value in ')]':
+         // # An unnecessary test?
+        // return_val = False  # pragma: no cover
+    // elif prev.kind == 'op' and prev.value in '{([:,':
+        // return_val = True
+    // elif prev.kind != 'name':
+        // # An unnecessary test?
+        // return_val = True  # pragma: no cover
+    // else:
+        // # prev is a'name' token.
+        // return self.is_python_keyword(token)
+    // return return_val
+
+// *** Remove leading underscores.
+fn is_unary_op_with_prev(_prev_token: &InputTok, _token: &InputTok) -> bool {
+    return false;  // ***
+}
+//@+node:ekr.20241003093722.1: ** fn: main
 //@@language rust
 pub fn main() {
     // Main line of beautifier.

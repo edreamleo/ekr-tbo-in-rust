@@ -289,13 +289,11 @@
 <v t="ekr.20241001104914.1"><vh>--- classes</vh>
 <v t="ekr.20241004095931.1"><vh>class AnnotatedInputTok</vh></v>
 <v t="ekr.20241004110721.1"><vh>class Annotator</vh>
-<v t="ekr.20241004095735.1"><vh>Annotator.annotate</vh></v>
-<v t="ekr.20241005091217.1"><vh>Annotator.is_python_keyword (to do)</vh></v>
-<v t="ekr.20241005092549.1"><vh>Annotator.is_unary_op_with_prev (to do)</vh></v>
-<v t="ekr.20241004153742.1"><vh>Annotator.new</vh>
+<v t="ekr.20241004153742.1"><vh> Annotator.new</vh>
 <v t="ekr.20241007085552.1"><vh>&lt;&lt; define Annotator::insignificant_tokens &gt;&gt;</vh></v>
 <v t="ekr.20241007085705.1"><vh>&lt;&lt; define Annotator::op_kinds &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20241004095735.1"><vh>Annotator.annotate</vh></v>
 <v t="ekr.20241004153802.1"><vh>Annotator.pre_scan &amp; helpers</vh>
 <v t="ekr.20241004154345.2"><vh>&lt;&lt; pre-scan newline tokens &gt;&gt;</vh></v>
 <v t="ekr.20241004154345.3"><vh>&lt;&lt; pre-scan op tokens &gt;&gt;</vh></v>
@@ -442,7 +440,7 @@
 </v>
 </v>
 <v t="ekr.20241004073317.1"><vh>--- outer level</vh>
-<v t="ekr.20241003093722.1"><vh>fn main</vh></v>
+<v t="ekr.20241003093722.1"><vh>fn: main</vh></v>
 <v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.113"></v>
 </v>
@@ -450,11 +448,12 @@
 <v t="ekr.20241007085552.1"></v>
 <v t="ekr.20241007085705.1"></v>
 <v t="ekr.20241004095735.1"></v>
-<v t="ekr.20241005091217.1"></v>
-<v t="ekr.20241005092549.1"></v>
 <v t="ekr.20241004153802.1"></v>
 <v t="ekr.20241004163018.1"></v>
+<v t="ekr.20241005091217.1"><vh>fn: is_python_keyword (to do)</vh></v>
+<v t="ekr.20241005092549.1"><vh>fn: is_unary_op_with_prev (to do)</vh></v>
 </v>
+<v t="ekr.20240928161210.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -862,7 +861,7 @@ Rust Book: https://doc.rust-lang.org/stable/book/title-page.html
 Post: Use pointers, not objects.
 - Pointers keep borrow checker happy, provided lifetimes are given.
 
-- Add index field to InputTok.
+- Make 
 - Improve test1.py: it doesn't check enough.
 - Finish LB:beautify.
 </t>
@@ -2349,7 +2348,7 @@ else if value == "}" {
 
 // Handle "(" and ")"
 else if value == "(" {
-    if self.is_python_keyword(&amp;prev_token) || prev_token.kind != "name" {
+    if is_python_keyword(&amp;prev_token) || prev_token.kind != "name" {
         scan_stack.push(ScanState::new("(", &amp;token));
     }
     else {
@@ -2486,7 +2485,7 @@ fn finish_arg(&amp;mut self, end: usize, state: &amp;ScanState) {
         if !self.insignificant_tokens.contains(&amp;token.kind) {
             if token.kind == "op" {
                 if ["*", "**"].contains(&amp;token.value) {
-                    if self.is_unary_op_with_prev(&amp;prev_token, &amp;token) {
+                    if is_unary_op_with_prev(&amp;prev_token, &amp;token) {
                         self.set_context(i, "arg");
                     }
                 }
@@ -2543,7 +2542,7 @@ fn finish_arg(&amp;mut self, end: usize, state: &amp;ScanState) {
                 }
                 else if *value == *"-" || *value == *"+" {
                     // Ignore unary "-" or "+" tokens.
-                    if !self.is_unary_op_with_prev(&amp;prev_token, &amp;token) {
+                    if !is_unary_op_with_prev(&amp;prev_token, &amp;token) {
                         inter_colon_tokens += 1;
                         if inter_colon_tokens &gt; 1 {
                             final_context = "complex-slice";
@@ -2646,7 +2645,7 @@ fn finish_dict(&amp;mut self, end: usize, state: &amp;ScanState) {
 // match, case, type and _
 
 // *** Remove leading underscores.
-fn is_python_keyword(&amp;self, _token: &amp;InputTok) -&gt; bool {
+fn is_python_keyword(_token: &amp;InputTok) -&gt; bool {
     return false;
 
     // *** Not ready yet.
@@ -2684,7 +2683,7 @@ fn is_python_keyword(&amp;self, _token: &amp;InputTok) -&gt; bool {
     // return return_val
 
 // *** Remove leading underscores.
-fn is_unary_op_with_prev(&amp;self, _prev_token: &amp;InputTok, _token: &amp;InputTok) -&gt; bool {
+fn is_unary_op_with_prev(_prev_token: &amp;InputTok, _token: &amp;InputTok) -&gt; bool {
     return false;  // ***
 }
 </t>
