@@ -11,6 +11,7 @@ The project transliterates Leo's Token Based beautifier (TBO) from Python to Rus
 - *The project contains significant logic errors.*
    In particular, no context is ever added to any annotated input token.
    Fixing these errors is beyond the scope of the preset work.
+- *No further work is planned on this project*
 
 ### Repos
 
