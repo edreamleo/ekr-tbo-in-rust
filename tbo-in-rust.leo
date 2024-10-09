@@ -281,8 +281,16 @@
 </v>
 </v>
 <v t="ekr.20240927154016.1"><vh>Notes</vh>
+<v t="ekr.20241009160958.1"><vh>Links</vh></v>
 <v t="ekr.20240929084852.1"><vh>Ownership and mutation</vh></v>
 <v t="ekr.20241001055017.1"><vh>Traits</vh></v>
+</v>
+<v t="ekr.20241004073317.1"><vh>--- outer level</vh>
+<v t="ekr.20241003093722.1"><vh>fn: main</vh></v>
+<v t="ekr.20240929074037.5"><vh>LB.beautify_one_file</vh></v>
+<v t="ekr.20240929074037.113"><vh>LB.beautify</vh>
+<v t="ekr.20241002062655.1"><vh>&lt;&lt; LB: beautify: dispatch on annotated_token.kind &gt;&gt;</vh></v>
+</v>
 </v>
 <v t="ekr.20241001104914.1"><vh>--- classes</vh>
 <v t="ekr.20241004095931.1"><vh>class AnnotatedInputTok</vh></v>
@@ -306,11 +314,9 @@
 <v t="ekr.20240929074037.1"><vh>class LeoBeautifier</vh>
 <v t="ekr.20240929074037.114"><vh> LB.new</vh></v>
 <v t="ekr.20240929074037.2"><vh>LB.add_output_string</vh></v>
-<v t="ekr.20240929074037.113"><vh>LB.beautify</vh>
-<v t="ekr.20241002062655.1"><vh>&lt;&lt; LB: beautify: dispatch on annotated_token.kind &gt;&gt;</vh></v>
-</v>
+<v t="ekr.20240929074037.113"></v>
 <v t="ekr.20240929074037.4"><vh>LB.beautify_all_files</vh></v>
-<v t="ekr.20240929074037.5"><vh>LB.beautify_one_file</vh></v>
+<v t="ekr.20240929074037.5"></v>
 <v t="ekr.20240929074037.7"><vh>LB.do_*</vh>
 <v t="ekr.20241002071143.1"><vh>tbo.do_ws</vh></v>
 <v t="ekr.20240929074037.8"><vh>LB:Handlers with values</vh>
@@ -428,28 +434,18 @@
 <v t="ekr.20240929074037.116"><vh>LB.show_help</vh></v>
 <v t="ekr.20241002163554.1"><vh>LB.string_to_static_str (not used)</vh></v>
 </v>
-<v t="ekr.20241004112826.1"><vh>class ParseState</vh>
-<v t="ekr.20241004113118.1"><vh>&lt;&lt; docstring: ParseState &gt;&gt;</vh></v>
-</v>
 <v t="ekr.20240929074547.1"><vh>class Stats</vh>
 <v t="ekr.20241001100954.1"><vh> Stats::new</vh></v>
 <v t="ekr.20240929080242.1"><vh>Stats::fmt_ns</vh></v>
 <v t="ekr.20240929075236.1"><vh>Stats::report</vh></v>
 </v>
-</v>
-<v t="ekr.20241004073317.1"><vh>--- outer level</vh>
-<v t="ekr.20241003093722.1"><vh>fn: main</vh></v>
-<v t="ekr.20240929074037.5"></v>
-<v t="ekr.20240929074037.113"></v>
+<v t="ekr.20241004165555.1"><vh>class ScanState </vh></v>
 </v>
 <v t="ekr.20241007144301.1"><vh>--- recent</vh>
-<v t="ekr.20241004095735.1"></v>
-<v t="ekr.20241004153802.1"></v>
 <v t="ekr.20241004163018.1"></v>
 <v t="ekr.20241005091217.1"><vh>fn: is_python_keyword (to do)</vh></v>
 <v t="ekr.20241005092549.1"><vh>fn: is_unary_op_with_prev (to do)</vh></v>
 </v>
-<v t="ekr.20241007130048.1"></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20240927151701.1"></t>
@@ -831,18 +827,9 @@ subprocess.Popen(command, shell=True).communicate()
 <t tx="ekr.20240927153018.1"></t>
 <t tx="ekr.20240927154009.1"></t>
 <t tx="ekr.20240927154016.1">@language rest
-@nowrap
 @nosearch
 
-ekr-tbo-in-rust: https://github.com/edreamleo/ekr-tbo-in-rust
-ruff_python_parser: https://github.com/astral-sh/ruff/tree/main/crates/ruff_python_parser/src
-lexer.rs: https://github.com/astral-sh/ruff/blob/main/crates/ruff_python_parser/src/lexer.rs
-
-**Won't do**
-
-- Improve test1.py: it doesn't check enough.
-- Finish LB:beautify.
-- Fix logic bugs.</t>
+</t>
 <t tx="ekr.20240928073118.1">@language python
 g.cls()
 import os
@@ -2080,7 +2067,6 @@ fn push_struct(v: &amp;mut Vec&lt;TestTok&gt;, val: i32) {
 <t tx="ekr.20241004095931.1">#[allow(dead_code)]
 #[derive(Debug)]
 struct AnnotatedInputTok&lt;'a&gt; {
-    // context: String,
     context: &amp;'a str,
     kind: &amp;'a str,
     value: &amp;'a str,
@@ -2104,12 +2090,12 @@ struct Annotator&lt;'a&gt; {
     // The present input token...
     input_tokens: &amp;'a Vec&lt;InputTok&lt;'a&gt;&gt;,
     index: u32,  // The index within the tokens array of the token being scanned.
-    index_dict: HashMap&lt;usize, String&gt;,
+    index_dict: HashMap&lt;usize, &amp;'a str&gt;,
     lws: String,  // Leading whitespace. Required!
     // For whitespace.
     curly_brackets_level: u32,  // Number of unmatched '{' tokens.
     paren_level: u32,  // Number of unmatched '(' tokens.
-    square_brackets_stack: Vec&lt;bool&gt;,  // A stack of bools, for     gen_word().
+    square_brackets_stack: Vec&lt;bool&gt;,  // A stack of bools, for gen_word().
     indent_level: u32,  // Set only by do_indent and do_dedent.
     // Parse state.
     decorator_seen: bool,  // Set by do_name for do_op.
@@ -2123,35 +2109,6 @@ struct Annotator&lt;'a&gt; {
 impl Annotator&lt;'_&gt; {
     @others
 }
-</t>
-<t tx="ekr.20241004112826.1">#[allow(dead_code)]
-#[derive(Debug)]
-struct ParseState {
-    &lt;&lt; docstring: ParseState &gt;&gt;
-    kind: String,
-    value: String,
-}
-</t>
-<t tx="ekr.20241004113118.1">@language rest
-@doc
-
-A class representing items in the parse state stack.
-
-The present states:
-
-'file-start': Ensures the stack stack is never empty.
-
-'decorator': The last '@' was a decorator.
-
-    do_op():    push_state('decorator')
-    do_name():  pops the stack if state.kind == 'decorator'.
-
-'indent': The indentation level for 'class' and 'def' names.
-
-    do_name():      push_state('indent', self.level)
-    do_dendent():   pops the stack once or
-                    twice if state.value == self.level.
-
 </t>
 <t tx="ekr.20241004153742.1">fn new&lt;'a&gt;(input_tokens: &amp;'a Vec&lt;InputTok&gt;) -&gt; Annotator&lt;'a&gt; {
     Annotator {
@@ -2533,7 +2490,7 @@ fn finish_dict(&amp;mut self, end: usize, state: &amp;ScanState) {
     }
 }
 </t>
-<t tx="ekr.20241004163018.1">fn set_context(&amp;mut self, i: usize, context: &amp;str) {
+<t tx="ekr.20241004163018.1">fn set_context(&amp;mut self, i: usize, context: &amp;'static str) {
     //! Set self.index_dict[i], but only if it does not already exist!
 
     if !self.valid_contexts.contains(&amp;context) {
@@ -2546,8 +2503,41 @@ fn finish_dict(&amp;mut self, end: usize, state: &amp;ScanState) {
         println!("set_context: {token_kind:20}: {context:20} {token_value}");
     }
     if !self.index_dict.contains_key(&amp;i) {
-        // println!("set_context: {i} {context:?}");
-        self.index_dict.insert(i, context.to_string());
+        self.index_dict.insert(i, context);
+    }
+}
+</t>
+<t tx="ekr.20241004165555.1">#[derive(Clone, Debug)]
+
+// *** Python
+    // def __init__(self, kind: str, token: InputToken) -&gt; None:
+        // self.kind = kind
+        // self.token = token
+        // self.value: list[int] = []  # Not always used
+
+struct ScanState&lt;'a&gt; {
+    // A class representing tbo.pre_scan's scanning state.
+    // Valid (kind, value) pairs:
+    // kind  Value
+    // ====  =====
+    // "args" Not used
+    // "from" Not used
+    // "import" Not used
+    // "slice" list of colon indices
+    // "dict" list of colon indices
+
+    kind: &amp;'a str,
+    token: &amp;'a InputTok&lt;'a&gt;,
+    indices: Vec&lt;usize&gt;,  // Empty for most tokens.
+}
+
+impl &lt;'a&gt; ScanState&lt;'_&gt; {
+    fn new(kind: &amp;'a str, token: &amp;'a InputTok) -&gt; ScanState&lt;'a&gt; {
+        ScanState {
+            kind: kind,
+            token: token,
+            indices: Vec::new(),
+        }
     }
 }
 </t>
@@ -5049,7 +5039,8 @@ if value in ('from', 'import') and not prev_is_yield:
     if not token.context:
         token.context = context
 </t>
-<t tx="ekr.20241007063926.1"></t>
+<t tx="ekr.20241007063926.1">@nosearch
+</t>
 <t tx="ekr.20241007085552.1">"dummy", // placeholder so the token stack is never empty.
 "ws",  // pseudo-token.
 "Comment", "Dedent", "Indent", "Newline", "Nl",  // Real tokens.
@@ -5067,6 +5058,7 @@ if value in ('from', 'import') and not prev_is_yield:
 "Star",
 </t>
 <t tx="ekr.20241007130048.1">@language md
+@nosearch
 
 # ekr-tbo-in-rust
 
@@ -5355,5 +5347,14 @@ if value in ('from', 'import') and not prev_is_yield:
 </t>
 <t tx="ekr.20241007144301.1"></t>
 <t tx="ekr.20241007184818.1"></t>
+<t tx="ekr.20241009160958.1">@language rest
+@nowrap
+@nosearch
+
+ekr-tbo-in-rust: https://github.com/edreamleo/ekr-tbo-in-rust
+ruff_python_parser: https://github.com/astral-sh/ruff/tree/main/crates/ruff_python_parser/src
+lexer.rs: https://github.com/astral-sh/ruff/blob/main/crates/ruff_python_parser/src/lexer.rs
+
+</t>
 </tnodes>
 </leo_file>
