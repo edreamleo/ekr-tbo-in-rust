@@ -21,7 +21,6 @@ use std::path;
 #[allow(dead_code)]
 #[derive(Debug)]
 struct AnnotatedInputTok<'a> {
-    // context: String,
     context: &'a str,
     kind: &'a str,
     value: &'a str,
@@ -45,12 +44,12 @@ struct Annotator<'a> {
     // The present input token...
     input_tokens: &'a Vec<InputTok<'a>>,
     index: u32,  // The index within the tokens array of the token being scanned.
-    index_dict: HashMap<usize, String>,
+    index_dict: HashMap<usize, &'a str>,
     lws: String,  // Leading whitespace. Required!
     // For whitespace.
     curly_brackets_level: u32,  // Number of unmatched '{' tokens.
     paren_level: u32,  // Number of unmatched '(' tokens.
-    square_brackets_stack: Vec<bool>,  // A stack of bools, for     gen_word().
+    square_brackets_stack: Vec<bool>,  // A stack of bools, for gen_word().
     indent_level: u32,  // Set only by do_indent and do_dedent.
     // Parse state.
     decorator_seen: bool,  // Set by do_name for do_op.
@@ -492,7 +491,7 @@ impl Annotator<'_> {
         }
     }
     //@+node:ekr.20241004163018.1: *4* Annotator.set_context
-    fn set_context(&mut self, i: usize, context: &str) {
+    fn set_context(&mut self, i: usize, context: &'static str) {
         //! Set self.index_dict[i], but only if it does not already exist!
 
         if !self.valid_contexts.contains(&context) {
@@ -505,8 +504,7 @@ impl Annotator<'_> {
             println!("set_context: {token_kind:20}: {context:20} {token_value}");
         }
         if !self.index_dict.contains_key(&i) {
-            // println!("set_context: {i} {context:?}");
-            self.index_dict.insert(i, context.to_string());
+            self.index_dict.insert(i, context);
         }
     }
     //@-others
@@ -1403,8 +1401,8 @@ struct ParseState {
     //                     twice if state.value == self.level.
     //
     //@-<< docstring: ParseState >>
-    kind: String,
-    value: String,
+    // kind: String,
+    // value: String,
 }
 //@+node:ekr.20241004165555.1: ** class ScanState 
 #[derive(Clone, Debug)]
