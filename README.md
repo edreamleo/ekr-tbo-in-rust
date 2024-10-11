@@ -66,3 +66,14 @@ make_tokens:   11.75 ms
 - The index dict contains no entries, so no annotated tokens contain any context.
   This is a serious logic error. Fixing it is beyond the scope of this project.
 
+### Comparing the Python and Rust tokenizers
+
+This file also contains the source code for the Python and Rust tokenizers.
+
+The Python tokenizer is *highly* optimized:
+- `cpython/Lib/tokenize.py` calls `_tokenize._generate_tokens_from_c_tokenizer`.
+- `cpython/Python/Python-tokenize.c` defines both the `_tokenize` module and `_generate_tokens_from_c_tokenizer`.
+- Confusingly, most of the code in `tokenizer.py` pertains only to the `untokenize` method,
+  so the `untokenize` method is much less optimized than the `tokenize` method.
+
+
